@@ -11,7 +11,7 @@
 - \>**1400 个**单元测试
 - \~**80%**测试覆盖率
 
-![[2021-06-17]Mirror测试覆盖率达79.6% -包括所有[过时]](<../../.gitbook/assets/2021-06-17 - 79,6 percent - including obsoletes.png>)
+![[2021-06-17]Mirror测试覆盖率达79.6% -包括所有[过时]](../../.gitbook/assets/2021-06-17 - 79,6 percent - including obsoletes.png)
 
 {% hint style="success"%}
 据我们所知，**Mirror\*\***在 Unity\*\*的任何`MonoBehaviour`网络库中具有最高的测试覆盖率。x20;

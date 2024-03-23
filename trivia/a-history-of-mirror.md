@@ -14,39 +14,39 @@ We will keep updating this article as Mirror develops over time.
 
 ## UNET
 
-![](<../.gitbook/assets/image (49).png>)
+![](../.gitbook/assets/image (49).png)
 
 Back in summer 2015 Unity released a public beta of **UNET**. The idea of Unity worrying about networking so we could worry about our games sounded very tempting. UNET came with several interesting features:
 
-* **Server & Client in one project**. Most of the code is shared. Some is marked as \[Server] or \[Client] only.
-  * This allows for a major gain productivity since terrain, models, assets and code are all shared between server & client.
-* **\[SyncVars]** for automated serialization of selected variables.
-  * This was significant when coming from hand built Serialize/Deserialize functions. Simply adding a \[SyncVar] in front of Player. level was so much easier.
-* **\[Commands/Rpcs]** - wrapping a function with a \[Command] tag to automatically call it on the server was another huge gain productivity
-  * Compared to manually sending a message, deserializing all parameters and calling a function manually.
+- **Server & Client in one project**. Most of the code is shared. Some is marked as \[Server] or \[Client] only.
+  - This allows for a major gain productivity since terrain, models, assets and code are all shared between server & client.
+- **\[SyncVars]** for automated serialization of selected variables.
+  - This was significant when coming from hand built Serialize/Deserialize functions. Simply adding a \[SyncVar] in front of Player. level was so much easier.
+- **\[Commands/Rpcs]** - wrapping a function with a \[Command] tag to automatically call it on the server was another huge gain productivity
+  - Compared to manually sending a message, deserializing all parameters and calling a function manually.
 
 ## Hype
 
 Back in 2015, there seemed to be almost monthly UNET talks and videos like [Democratizing Multiplayer Development](https://www.youtube.com/watch?v=gZbbYXzyXKk). Everyone was excited, and the UNET team was working hard.
 
-![Sean Riley demonstrating UNET at Unite 2014](../.gitbook/assets/2021-04-02\_18-35-53@2x.png)
+![Sean Riley demonstrating UNET at Unite 2014](../.gitbook/assets/2021-04-02_18-35-53@2x.png)
 
-![One of the early UNET talks in 2015](../.gitbook/assets/2021-04-02\_12-36-24@2x.png)
+![One of the early UNET talks in 2015](../.gitbook/assets/2021-04-02_12-36-24@2x.png)
 
-![Alexey Abramychev's talk about LLAPI](../.gitbook/assets/2021-04-02\_18-45-38@2x.png)
+![Alexey Abramychev's talk about LLAPI](../.gitbook/assets/2021-04-02_18-45-38@2x.png)
 
 Back then, it was mostly:
 
-* **Alexey Abramychev**: the friendly Russian guy who worked on the low level Transport (LLAPI)
-* **Sean Riley**: who worked on World of Warcraft, now developing the high level API (HLAPI/UNET)
-* **Erik Juhl:** the UNET team lead, who said _MMOs were his passion_
+- **Alexey Abramychev**: the friendly Russian guy who worked on the low level Transport (LLAPI)
+- **Sean Riley**: who worked on World of Warcraft, now developing the high level API (HLAPI/UNET)
+- **Erik Juhl:** the UNET team lead, who said _MMOs were his passion_
 
 The UNET team had a big plans on their **roadmap**:
 
-* Cloud services like Relay/Matchmaking
-* One-click game server hosting right from the Unity Editor
-* The _simulation server_ which will power MMO scale networking
-* UNET 'Phase 3' aka automated server instances. Mark an area, it'll run as an instance.
+- Cloud services like Relay/Matchmaking
+- One-click game server hosting right from the Unity Editor
+- The _simulation server_ which will power MMO scale networking
+- UNET 'Phase 3' aka automated server instances. Mark an area, it'll run as an instance.
 
 Most multiplayer games never see the light of day, because finishing all that code is extremely difficult. With UNET, for the first time it seemed actually doable. An order of magnitude gain productivity for sure.
 
@@ -56,7 +56,7 @@ UNET was still in beta in 2015. There wasn't much documentation, but there were 
 
 I was already working on my MMO project before UNET. Moving balls sounded close enough to moving players, so I gave UNET a try.
 
-![UNET's movement demo with some early MMO features](../.gitbook/assets/2015-09-30\_unet\_noicons.png)
+![UNET's movement demo with some early MMO features](../.gitbook/assets/2015-09-30_unet_noicons.png)
 
 **Networked** NavMeshAgent movement, skills, equipment and an inventory were added easily thanks to SyncLists and all the \[SyncVar]/\[Rpc] convenience.
 
@@ -64,9 +64,9 @@ UNET wasn't very stable during the beta, but the productivity gain was massive a
 
 ## Meet Damon
 
-Around September I also started talking to Damon Slye, the guy who made [Red Baron](https://store.steampowered.com/app/263940/Red\_Baron\_Pack/) in 1990, published by Sierra.
+Around September I also started talking to Damon Slye, the guy who made [Red Baron](https://store.steampowered.com/app/263940/Red_Baron_Pack/) in 1990, published by Sierra.
 
-![Red Baron](<../.gitbook/assets/image (85).png>)
+![Red Baron](../.gitbook/assets/image (85).png)
 
 Damon and his new team Mad Otter Games actually made their own indie MMO, just like I planned to do. They didn't use Unity, but considered it for their next project. We've talked a lot about MMO tech, lessons learned and they even licensed me a couple of their models for my unnamed MMO project.
 
@@ -74,7 +74,7 @@ With the UNET team working tirelessly on networking and the MadOtter guys as liv
 
 ## What if...
 
-![The MMO Project in November 2015 with the licensed models.](../.gitbook/assets/2021-04-02\_13-00-01@2x.png)
+![The MMO Project in November 2015 with the licensed models.](../.gitbook/assets/2021-04-02_13-00-01@2x.png)
 
 In 2015, there wasn't any type of MMO toolkit available as far as I could tell. From my reverse engineering days I remembered Perfect World Entertainment licensing their MMO engine for $100,000 - $300,000. Which needless to say was out of my budget.
 
@@ -82,7 +82,7 @@ Since I was working on my own MMO code anyway, I figured might as well put it on
 
 [uMMORPG](https://assetstore.unity.com/packages/templates/systems/ummorpg-remastered-159401) was released on the Asset Store at December 23rd, 2015. One day before Christmas.
 
-![An early version of uMMORPG](<../.gitbook/assets/2017-01-11\_10-42-44 (1).png>)
+![An early version of uMMORPG](../.gitbook/assets/2017-01-11_10-42-44 (1).png)
 
 As it turns out, a lot of people had the same dream, but not enough money to license a AAA engine.
 
@@ -102,19 +102,19 @@ Every single day our users/customers came in with new UNET bugs. Bad reviews. Ra
 
 Worst of all, UNET didn't scale. 30-70 CCU and a dozen monsters were all it could do.
 
-![An early UNET community test with 57 connections and lots of bugs.](<../.gitbook/assets/57 (1).png>)
+![An early UNET community test with 57 connections and lots of bugs.](../.gitbook/assets/57 (1).png)
 
 At one point, I used reflection to fix the serialization bug in UNET. At the time, it was the highest rated networking bug on the Unity issue tracker. I've made detailed forum posts on why the bug happens and how to fix it. I reached out to Alexey, Erik, Larus, the Asset Store team, and QA.
 
 It was closed _by design_. Twice.
 
-!["By Design" - the UNET Bug that started Mirror](../.gitbook/assets/2021-04-02\_18-39-23@2x.png)
+!["By Design" - the UNET Bug that started Mirror](../.gitbook/assets/2021-04-02_18-39-23@2x.png)
 
 We've built our dreams on UNET, and in my case my livelihood. I needed UNET to pay the rent and eat. Yet the people we've put our full trust in had abandoned us.
 
-* **Sean Riley** was the driving force behind UNET. As it turns out, he left the team around the beta.
-* **Alexey** tried to fill the void as best as he could. For a while, he was on the forum on Sundays and even replied to my email during his vacation. At some point, he wasn't with Unity anymore either though.
-* **Erik Juhl** (the UNET team lead) went on to work for a web development company.
+- **Sean Riley** was the driving force behind UNET. As it turns out, he left the team around the beta.
+- **Alexey** tried to fill the void as best as he could. For a while, he was on the forum on Sundays and even replied to my email during his vacation. At some point, he wasn't with Unity anymore either though.
+- **Erik Juhl** (the UNET team lead) went on to work for a web development company.
 
 What's worse is that while everyone secretly left the sinking ship, there was no word from Unity. Dead silence. It took a couple of years for us to learn that the UNET core team wasn't even working for Unity anymore.
 
@@ -148,7 +148,7 @@ During the next couple of years, we fixed several hundred UNET bugs and cleaned 
 
 Still, nobody believed in UNET. Supposedly, the design didn't make sense, it would never scale and it would never work for any real game. The only people who believed in Mirror were those already using UNET for their projects, desperately needing bug fixes.
 
-![Early Mirror stress test with hundreds of monsters](../.gitbook/assets/2017-08-13\_stresstest.png)
+![Early Mirror stress test with hundreds of monsters](../.gitbook/assets/2017-08-13_stresstest.png)
 
 At one point, we asked Unity for a donation seeing how we carried their whole UNET community for free. They told us UNET wouldn't have a future and it makes no sense to invest into that technology anymore.
 
@@ -158,37 +158,37 @@ Our networking heroes had abandoned us, and told us our work was pointless.
 
 Step by step, we broke all the chains that still tied us into UNET.
 
-* Someone open sourced the **Weaver** after a while, so we could fix it too.
-* We replaced the **LLAPI** black box with Telepathy. We've got heavy criticism for using TCP. But at least, the black box was finally open and we could fix bugs for once. Over the years, we've added many other transports like KCP.
-* Paul figured out how to use **HLAPI** as source drop in, without DLL replacements.
-* **Websockets** were previously closed in LLAPI, now finally open too.
-* The UNET **Community** mostly converted to Mirror too.
+- Someone open sourced the **Weaver** after a while, so we could fix it too.
+- We replaced the **LLAPI** black box with Telepathy. We've got heavy criticism for using TCP. But at least, the black box was finally open and we could fix bugs for once. Over the years, we've added many other transports like KCP.
+- Paul figured out how to use **HLAPI** as source drop in, without DLL replacements.
+- **Websockets** were previously closed in LLAPI, now finally open too.
+- The UNET **Community** mostly converted to Mirror too.
 
 Until today, most of our work on Mirror was about breaking the chains and fixing all the bugs.
 
 Here are some screenshots that we gathered over the years. Enjoy the nostalgia.
 
-![UNET Weaver Project / DLL](../.gitbook/assets/2017-08-05\_patreon\_header.png)
+![UNET Weaver Project / DLL](../.gitbook/assets/2017-08-05_patreon_header.png)
 
-![Mirror's first example](../.gitbook/assets/2018-09-25\_movedemo.png)
+![Mirror's first example](../.gitbook/assets/2018-09-25_movedemo.png)
 
-![HLAPI's first community test](<../.gitbook/assets/Screenshot at Jul 28 13-09-17.png>)
+![HLAPI's first community test](../.gitbook/assets/Screenshot at Jul 28 13-09-17.png)
 
-![Geno Online, jagatai's early MMO attempt with Mirror](../.gitbook/assets/2017-09-08\_jagatai\_stream.png)
+![Geno Online, jagatai's early MMO attempt with Mirror](../.gitbook/assets/2017-09-08_jagatai_stream.png)
 
-![uMMORPG 500 CCU test. UNET handled \~70 CCU when we started.](../.gitbook/assets/2021-04-02\_17-38-22@2x.png)
+![uMMORPG 500 CCU test. UNET handled ~70 CCU when we started.](../.gitbook/assets/2021-04-02_17-38-22@2x.png)
 
-![20,000 monsters in Mirror. UNET handled 12 monsters back then.](<../.gitbook/assets/2020-10-12\_20-45-17 - x branch 20k monsters 19 FPS.png>)
+![20,000 monsters in Mirror. UNET handled 12 monsters back then.](../.gitbook/assets/2020-10-12_20-45-17 - x branch 20k monsters 19 FPS.png)
 
 ## Community
 
 It's been 6 years since the UNET beta. Mirror has grown to 100,000 downloads a year, a fantastic Discord community with 10,000 users, new team members like our famous networking legend MrGadget, Coburn, James, katori, Lymdum, uwee and many more.
 
-![](../.gitbook/assets/2021-04-02\_17-52-33@2x.png)
+![](../.gitbook/assets/2021-04-02_17-52-33@2x.png)
 
 Several [popular games](https://mirror-networking.com/showcase/) made with Mirror, and of course lots of [memes](https://www.youtube.com/watch?v=jNTFFYhNhiI).
 
-![Population: ONE - made with Mirror](<../.gitbook/assets/image (69).png>)
+![Population: ONE - made with Mirror](../.gitbook/assets/image (69).png)
 
 ## What's Next
 

@@ -2,8 +2,8 @@
 
 In Build Settings, remove all scenes and add both of the scenes from the Scenes folder in the following order:
 
-* Main
-* Game
+- Main
+- Game
 
 Open the Main scene in the Editor and make sure the Game Scene field in the MultiScene Network Manager on the Network scene object contains the Game scene. This is already setup by default, but if the Main scene was opened and saved before putting the scenes in the Build Settings list, the Game Scene field may be cleared accidentally.
 
@@ -27,9 +27,9 @@ Press Play in the Editor and click Host (Server + Client) in the HUD - This will
 
 Click Client in the built instances.
 
-* WASDQE keys to move & turn your player capsule, Space to jump.
-* Colliding with the small colored spheres scores points base on their color.
-* Colliding with the larger tumblers sends them rolling around...they're server-side non-kinematic rigidbodies.
-* Only scores for the players in the same subscene are shown at the top of the game window.
+- WASDQE keys to move & turn your player capsule, Space to jump.
+- Colliding with the small colored spheres scores points base on their color.
+- Colliding with the larger tumblers sends them rolling around...they're server-side non-kinematic rigidbodies.
+- Only scores for the players in the same subscene are shown at the top of the game window.
 
-![](<../../.gitbook/assets/image (126).png>)
+![](../../.gitbook/assets/image (126).png)

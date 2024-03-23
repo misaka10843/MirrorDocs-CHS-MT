@@ -1,6 +1,6 @@
 # 集成
 
-在这里，我们将维护一个已知与Mirror兼容的资产列表。 如果您知道其他人，请让出版商直接在我们[的Discord](https://discord.gg/2BvnM4R)联系我们。
+在这里，我们将维护一个已知与 Mirror 兼容的资产列表。 如果您知道其他人，请让出版商直接在我们[的 Discord](https://discord.gg/2BvnM4R)联系我们。
 
 ### [不和谐语音聊天](https://assetstore.unity.com/packages/tools/audio/dissonance-voice-chat-70078)<a href="#dissonance-voice-chat" id="dissonance-voice-chat"></a>
 
@@ -10,7 +10,7 @@
 
 </div>
 
-### [Steamworks网络](https://assetstore.unity.com/packages/tools/integration/steamworks-v2-complete-190316)<a href="#steamworks-networking" id="steamworks-networking"></a>
+### [Steamworks 网络](https://assetstore.unity.com/packages/tools/integration/steamworks-v2-complete-190316)<a href="#steamworks-networking" id="steamworks-networking"></a>
 
 <div align="left">
 
@@ -20,9 +20,9 @@
 
 ### [SmoothSync](https://assetstore.unity.com/packages/tools/network/smooth-sync-96925)<a href="#smoothsync" id="smoothsync"></a>
 
-![](<../../.gitbook/assets/image (5).png>）
+![](../../.gitbook/assets/image (5).png>）
 
-### [Noble Connect免费](https://assetstore.unity.com/packages/tools/network/noble-connect-free-141599)<a href="#noble-connect-free" id="noble-connect-free"></a>
+### [Noble Connect 免费](https://assetstore.unity.com/packages/tools/network/noble-connect-free-141599)<a href="#noble-connect-free" id="noble-connect-free"></a>
 
 <div align="left">
 
@@ -38,7 +38,7 @@
 
 </div>
 
-### [RTS引擎](https://assetstore.unity.com/packages/templates/packs/rts-engine-79732)<a href="#rts-engine" id="rts-engine"></a>
+### [RTS 引擎](https://assetstore.unity.com/packages/templates/packs/rts-engine-79732)<a href="#rts-engine" id="rts-engine"></a>
 
 <div align="left">
 

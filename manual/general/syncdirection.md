@@ -1,6 +1,6 @@
 # 同步方向
 
-![](<../../.gitbook/assets/2022-10-18 - SyncDirection.png>)
+![](../../.gitbook/assets/2022-10-18 - SyncDirection.png)
 
 我们最近添加了新的**SyncDirection**功能，因此这里是一个快速概述。
 

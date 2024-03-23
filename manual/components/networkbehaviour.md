@@ -1,7 +1,7 @@
 # Network Behaviour
 
 {% hint style="info" %}
-See also [NetworkBehaviour](https://storage.googleapis.com/mirror-api-docs/html/db/d21/class\_mirror\_1\_1\_network\_behaviour.html) in the API Reference.
+See also [NetworkBehaviour](https://storage.googleapis.com/mirror-api-docs/html/db/d21/class_mirror_1_1_network_behaviour.html) in the API Reference.
 {% endhint %}
 
 Network Behaviour scripts work with game objects that have a Network Identity component. These scripts can perform high-level API functions such as Commands, ClientRpc's, and SyncVars.
@@ -17,33 +17,33 @@ With the server-authoritative system of Mirror, the server must use the `Network
 
 ## Properties <a href="#properties" id="properties"></a>
 
-* **isServer**\
+- **isServer**\
   Returns true in server context if this game object has been spawned.
-* **isClient**\
+- **isClient**\
   Returns true in client context if this game object has been spawned by the server.
-* **isLocalPlayer**\
+- **isLocalPlayer**\
   Returns true on the client if this game object represents the player created for this client.
-* **isOwned** (formerly `hasAuthority`)\
+- **isOwned** (formerly `hasAuthority`)\
   Returns true on the client if this client has [authority](../guides/authority.md) over this game object. It is meaningless in server context.
-* **netId**\
+- **netId**\
   The unique network ID of this game object. The server assigns this at run time. It is unique for all game objects on the network.
-* **netIdentity**\
+- **netIdentity**\
   Returns the Network Identity of this object
-* **connectionToServer**\
+- **connectionToServer**\
   The Network Connection associated with the Network Identity component attached to this game object. This is only valid for the **local player object** on the client, and is null for other player objects that may exist on the client.
-* **connectionToClient**\
+- **connectionToClient**\
   The Network Connection associated with the Network Identity component attached to this game object. This is valid for game objects on the server that have been assigned to a specific client, e.g. player objects, pets, henchmen, or other objects a single client "owns".
 
 Network Behaviour scripts have the following features:
 
-* Synchronized variables
-* Network callbacks
-* Server and client functions
-* Sending commands
-* Client RPC calls
-* Networked events
+- Synchronized variables
+- Network callbacks
+- Server and client functions
+- Sending commands
+- Client RPC calls
+- Networked events
 
-![](<../../.gitbook/assets/image (96).png>)
+![](../../.gitbook/assets/image (96).png)
 
 ## Network Callbacks <a href="#network-callbacks" id="network-callbacks"></a>
 
@@ -66,14 +66,14 @@ public class SpaceShip : NetworkBehaviour
 
 The built-in callbacks are:
 
-* **OnStartServer** called on server when a game object spawns on the server, or when the server is started for game objects in the Scene
-* **OnStopServer** called on server when a game object is destroyed on the server, or when the server is stopped for game objects in the Scene
-* **OnStartClient** called on clients when the game object spawns on the client, or when the client connects to a server for game objects in the Scene
-* **OnStopClient** called on clients when the server destroys the game object
-* **OnStartLocalPlayer** called on clients after `OnStartClient` for the player game object on the local client
-* **OnStopLocalPlayer** called on clients before `OnStopClient` for the player game object on the local client
-* **OnStartAuthority** called on owner client when assigned authority by the server. `isOwned` will be true for such objects in client context.
-* **OnStopAuthority** called on owner client when authority is removed by the server.
+- **OnStartServer** called on server when a game object spawns on the server, or when the server is started for game objects in the Scene
+- **OnStopServer** called on server when a game object is destroyed on the server, or when the server is stopped for game objects in the Scene
+- **OnStartClient** called on clients when the game object spawns on the client, or when the client connects to a server for game objects in the Scene
+- **OnStopClient** called on clients when the server destroys the game object
+- **OnStartLocalPlayer** called on clients after `OnStartClient` for the player game object on the local client
+- **OnStopLocalPlayer** called on clients before `OnStopClient` for the player game object on the local client
+- **OnStartAuthority** called on owner client when assigned authority by the server. `isOwned` will be true for such objects in client context.
+- **OnStopAuthority** called on owner client when authority is removed by the server.
 
 Note that in a peer-hosted setup, when one of the clients is acting as both host and client, both `OnStartServer` and `OnStartClient` are called on the same game object. Both these functions are useful for actions that are specific to either the client or server, such as suppressing effects on a server, or setting up client-side events.
 
@@ -123,8 +123,8 @@ This allows you to write scripts which can register for a callback when an event
 
 To define a Networked event in your code, you must write a function which both:
 
-* Has a name that begins with `Event`
-* Has the `SyncEvent` attribute
+- Has a name that begins with `Event`
+- Has the `SyncEvent` attribute
 
 You can use events to build powerful networked game systems that can be extended by other scripts. This example shows how an effect script on the client can respond to events generated by a combat script on the server.
 
