@@ -2,7 +2,7 @@
 
 A simple example for "How to built a multiplayer game with Mirror" is Pong, which is included in the AssetStore package of Mirror. It illustrates the usage of NetworkManager, NetworkManagerHUD, NetworkBehaviour, NetworkIdentity, NetworkTransform, NetworkStartPosition and NetworkingAttributes.
 
-![](../../.gitbook/assets/image (78).png)
+![](<../../.gitbook/assets/image (78).png>)
 
 ## Setting the number of players <a href="#setting-the-number-of-players" id="setting-the-number-of-players"></a>
 
@@ -12,13 +12,13 @@ First of all, let's have a look at the NetworkManager object in the main scene. 
 
 Furthermore every player needs a racket to play with. Each player who joins the game will have his own controllable object, which represents him within the game. This gameobject is called _PlayerObject_. For spawning the _PlayerObject_ a prefab has to be created, containing at least a NetworkIdentity component with **Local Player Authority** checked. The **Local Player Authority** allows the player to control and modify the gameobjects properties (e.g. for movement). The NetworkManager needs a reference to this prefab, which is located in **Spawn Info/Player Prefab**. To have the player movement synchronized over the network, the player prefab also contains a NetworkTransform.
 
-![](../../.gitbook/assets/image (110).png)
+![](<../../.gitbook/assets/image (110).png>)
 
 ## Player start position <a href="#player-start-position" id="player-start-position"></a>
 
 The main scene contains 2 gameobjects with only a NetworkStartPosition component (gameobjects RacketSpawnLeft, RacketSpawnRight in the scene). These transforms will be automatically registered by the NetworkManager as spawning positions.
 
-![](../../.gitbook/assets/image (91).png)
+![](<../../.gitbook/assets/image (91).png>)
 
 ## Setting up the network <a href="#setting-up-the-network" id="setting-up-the-network"></a>
 

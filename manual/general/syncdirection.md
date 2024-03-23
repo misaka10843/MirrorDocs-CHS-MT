@@ -1,6 +1,6 @@
 # 同步方向
 
-![](../../.gitbook/assets/2022-10-18 - SyncDirection.png)
+![](<../../.gitbook/assets/2022-10-18 - SyncDirection.png>)
 
 我们最近添加了新的**SyncDirection**功能，因此这里是一个快速概述。
 
@@ -8,7 +8,7 @@
 
 通常，数据在 OnSerialize 中从服务器同步到客户端。
 
-但是，某些组件（如 NetworkTransform）需要能够在客户端权限移动时从客户端同步到服务器。
+但是，某些组件(如 NetworkTransform)需要能够在客户端权限移动时从客户端同步到服务器。
 
 以前，我们必须使用\[Command]s 来将客户端权威 NetworkTransform 数据同步到服务器，因为 OnSerialize 只会从服务器到客户端。 这有几个缺点：
 
@@ -28,7 +28,7 @@ _在客户端授权 NetworkTransform 的情况下，这意味着您的本地移�
 
 总结一下：
 
-- **ServerToClient**是默认值。 **OnSerialize**（以及所有 SyncVar、SyncLists）在每个 syncInterval 从服务器发送到客户端。 在客户端上调用**Oncurialize**。
+- **ServerToClient**是默认值。 **OnSerialize**(以及所有 SyncVar、SyncLists)在每个 syncInterval 从服务器发送到客户端。 在客户端上调用**Oncurialize**。
 - **ClientToServer**用于客户端授权组件。 **OnSerialize 在**每个**syncInterval**在所有者客户端上被调用。 然后将其发送到服务器，在那里调用**Oncurialize**。 然后，服务器向除所有者之外的所有其他客户端广播。 然后在其他客户端上调用**Oncurialize**。
 
 请注意，ClientToServer 数据仍然可以在服务器上的 Onticalize 中进行验证。 这就是为什么它在技术上不是"客户端权限"，因此命名为 SyncDirection。 例如，虽然所有者客户端可以将 NetworkTransform 数据同步到服务器，但您仍然可以在应用和广播之前验证服务器的 Onticalize 中的每个移动。

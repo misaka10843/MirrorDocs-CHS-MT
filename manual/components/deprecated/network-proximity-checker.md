@@ -10,15 +10,15 @@ description: 'Deprecated: Use Spatial Hash or Distance Interest Management inste
 
 The Network Proximity Checker component controls the visibility of game objects for network clients, based on proximity to players.
 
-![](../../../.gitbook/assets/image (138).png)
+![](<../../../.gitbook/assets/image (138).png>)
 
-- **Vis Range**\
+* **Vis Range**\
   &#x20;Define the range that the game object should be visible to observers.
-- **Vis Update Interval**\
+* **Vis Update Interval**\
   &#x20;Define how often (in seconds) the game object should check for observers entering its visible range.
-- **Check Method**\
+* **Check Method**\
   &#x20;Define which type of physics (2D or 3D) to use for proximity checking.
-- **Force Hidden**\
+* **Force Hidden**\
   &#x20;Tick this checkbox to hide this object from all players.
 
 With the Network Proximity Checker, a game running on a client doesn’t have information about game objects that are not visible. This has two main benefits: it reduces the amount of data sent across the network, and it makes your game more secure against hacking.

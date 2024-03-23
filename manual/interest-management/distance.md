@@ -6,7 +6,7 @@ description: Distance Interest Management
 
 ## Distance Interest Management
 
-The straight forward, brute force solution for Interest Management is to simply send all entities to all connections within range. This is what **Network Proximity Checker** did:
+The straight forward, brute force solution for Interest Management is to simply send all entities to all connections within range.  This is what **Network Proximity Checker** did:
 
 ```csharp
 foreach spawned entity:
@@ -19,9 +19,9 @@ The only downside is that it's relatively expensive to check every entity agains
 
 ### Setting Up
 
-Add the **Distance Interest Management** component to the same object as your **Network Manager**:
+Add the **Distance Interest Management** component  to the same object as your **Network Manager**:
 
-![](../../.gitbook/assets/image (122).png)
+![](<../../.gitbook/assets/image (122).png>)
 
 The **Vis Range** defines the radius around a player from which it receives world updates.
 
@@ -31,4 +31,4 @@ The **Rebuild Interval** is in seconds, and determines how often Mirror recalcul
 
 The Vis Range setting above applies to all networked objects as the "default" range. You can override this value on objects that need a different range, e.g. exception cases for things that are very large or very small, relative to most other things in the scene. To do this, just add a **Distance Interest Management Custom Range** component to those objects and set the Vis Range values for those objects according to your needs.
 
-![](../../.gitbook/assets/image (20).png)
+![](<../../.gitbook/assets/image (20).png>)

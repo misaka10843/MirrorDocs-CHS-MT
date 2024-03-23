@@ -26,7 +26,7 @@
 - 在游戏中找到玩家游戏对象的预置，或从玩家游戏对象创建预置
 - 将 NetworkIdentity 组件添加到播放器预置
 - 将 NetworkManager 的 Spawn Info 部分中的`Player Prefab`设置为 Player 预置
-- 从场景中移除玩家游戏对象实例（如果它存在于场景中
+- 从场景中移除玩家游戏对象实例(如果它存在于场景中
 
 有关详细信息，请参见[播放器对象](../guides/gameobjects/player-gameobjects.md)。
 
@@ -81,7 +81,7 @@ public class Controls : NetworkBehaviour
 ## 产卵鱼<a href="#spawners" id="spawners"></a>
 
 - 可能将 spawner 脚本更改为 NetworkBehaviours
-- 修改派生程序使其仅在服务器上运行（使用 isServer 属性或`OnStartServer()`函数）
+- 修改派生程序使其仅在服务器上运行(使用 isServer 属性或`OnStartServer()`函数)
 - 调用`NetworkServer.Spawn()`获取创建的游戏对象
 
 ## 玩家的产卵位置<a href="#spawn-positions-for-players" id="spawn-positions-for-players"></a>

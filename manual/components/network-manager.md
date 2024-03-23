@@ -1,14 +1,14 @@
 # Network Manager
 
-The Network Manager is a component for managing the networking aspects of a multiplayer game. It wraps up a lot of useful functionality into a single place, and makes creating, running and debugging multiplayer games as simple as possible.
+The Network Manager is a component for managing the networking aspects of a multiplayer game.  It wraps up a lot of useful functionality into a single place, and makes creating, running and debugging multiplayer games as simple as possible.
 
 The Network Manager features include:
 
-- Game state management
-- Spawn management
-- Scene management
-- Debugging information
-- Customization
+* Game state management
+* Spawn management
+* Scene management
+* Debugging information
+* Customization
 
 ## Getting Started with the Network Manager <a href="#getting-started-with-the-network-manager" id="getting-started-with-the-network-manager"></a>
 
@@ -32,20 +32,20 @@ A Networking multiplayer game can run in three modes - as a client, as a dedicat
 
 If you’re using the [Network Manager HUD](network-manager-hud.md), it automatically tells the Network Manager which mode to start in, based on which button the player clicks. If you’re writing your own UI that allows the player to start the game, you’ll need to call these from your own code. These methods are:
 
-- StartClient
-- StartServer
-- StartHost
+* StartClient
+* StartServer
+* StartHost
 
 Whichever mode the game starts in (client, server, or host), the Network Address and Transport configuration are used.
 
-- In client mode, the game attempts to connect to the network address specified. A fully-qualified domain name (FQDN) can also be used for the Network Address, e.g. "game.example.com".
-- In server or host mode, the game listens for incoming connections on `localhost` which includes the local network IP address of the server machine.
+* In client mode, the game attempts to connect to the network address specified. A fully-qualified domain name (FQDN) can also be used for the Network Address, e.g. "game.example.com".
+* In server or host mode, the game listens for incoming connections on `localhost` which includes the local network IP address of the server machine.
 
 ## Spawn Management <a href="#spawn-management" id="spawn-management"></a>
 
 Use the Network Manager to manage the spawning (networked instantiation) of networked game objects from Prefabs.
 
-![](../../.gitbook/assets/image (119).png)
+![](<../../.gitbook/assets/image (119).png>)
 
 Most games have a Prefab which represents the player, so the Network Manager has a Player Prefab slot. You should assign this slot with your player Prefab. When you have a player Prefab set, a player game object is automatically spawned from that Prefab for each user in the game. This applies to the local player on a hosted server, and remote players on remote clients. You must attach a Network Identity component to the Player Prefab before assigning it to this field.
 
@@ -61,8 +61,8 @@ If you have one Network Manager that is persisted through scenes via Don't Destr
 
 The Network Manager will spawn Player Prefab at their defined transform position and rotation by default, however the Player Spawn Method property allows you to control how start positions are chosen in conjunction with [Network Start Position](network-start-position.md) components.
 
-- Choose Random to spawn players at randomly chosen startPosition options.
-- Choose Round Robin to cycle through startPosition options in a set list.
+* Choose Random to spawn players at randomly chosen startPosition options.
+* Choose Round Robin to cycle through startPosition options in a set list.
 
 If the Random or Round Robin modes don’t suit your game, you can customize how the start positions are selected by using code. You can access the available Network Start Position components by the list `NetworkManager.startPositions`, and you can use the helper method `GetStartPosition` on the Network Manager that can be used in an implementation of `OnServerAddPlayer` to find a start position.
 

@@ -6,7 +6,7 @@ To solve this problem you can use Network Discovery. When your game starts, it s
 
 Mirror comes with a simple implementation of Network Discovery you can simply use in your game. It also provides a way for you to extend it so that you can pass additional data during the discovery phase.
 
-![](../../.gitbook/assets/image (97).png)
+![](<../../.gitbook/assets/image (97).png>)
 
 NetworkDiscovery and NetworkDiscoveryHUD components are included, or you can make your own from a [ScriptTemplate](../general/script-templates.md).
 
@@ -43,11 +43,11 @@ You can completely replace the user interface by adding your own interface (typi
 
 Sometimes you want to provide more information in the discovery messages. Some use cases could include:
 
-- The client can show if the server is in PvP or PvE mode
-- The client can show how full the servers are.
-- The client can show the ping to each server so the player can chose the fastest server
-- The client can show the language
-- The client can show if the server is password protected
+* The client can show if the server is in PvP or PvE mode
+* The client can show how full the servers are.
+* The client can show the ping to each server so the player can chose the fastest server
+* The client can show the language
+* The client can show if the server is password protected
 
 To do this, we've provided a [Template](../general/script-templates.md), so from the Assets menu, click Create > Mirror > Network Discovery.
 
@@ -85,7 +85,7 @@ The custom NetworkDiscovery class contains the overrides for handling the messag
 You may want to refer to the NetworkDiscovery.cs script in the Components/Discovery folder to see how these should be implemented.
 
 ```csharp
-public class NewNetworkDiscovery: NetworkDiscoveryBase
+public class NewNetworkDiscovery: NetworkDiscoveryBase 
 {
     #region Server
 
@@ -94,9 +94,9 @@ public class NewNetworkDiscovery: NetworkDiscoveryBase
         base.ProcessClientRequest(request, endpoint);
     }
 
-    protected override DiscoveryResponse ProcessRequest(DiscoveryRequest request, IPEndPoint endpoint)
+    protected override DiscoveryResponse ProcessRequest(DiscoveryRequest request, IPEndPoint endpoint) 
     {
-        // TODO: Create your response and return it
+        // TODO: Create your response and return it   
         return new DiscoveryResponse();
     }
 

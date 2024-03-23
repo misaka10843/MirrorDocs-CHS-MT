@@ -8,7 +8,7 @@
 
 为了最小化性能开销，在我们决定回滚哪些玩家之前，首先对`HistoryBounds`转换可能很有用。
 
-&#x20;基本上是一个四维边界框：（x，y，z，time）。
+&#x20;基本上是一个四维边界框：(x，y，z，time)。
 换句话说，一个边界框包含了球员在最后一秒左右的所有位置。
 
 {% embed url="https://www.youtube.com/watch? v=LPfbAAIM3LY"%}

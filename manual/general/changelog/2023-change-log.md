@@ -49,7 +49,7 @@
 - 更改：示例中的一些重复脚本合并到\_Common 文件夹。
 - 已更改：`ConnectionQuality`已移动到`NetworkClient`。
 - 更改：`GUIConsole`布局更新为不与`NetworkHUD`冲突。
-  - 默认热键更改为 tick（`），以便在WebGL构建中更安全地使用。` `
+  - 默认热键更改为 tick(`)，以便在WebGL构建中更安全地使用。` `
 - 更改：KCP 传输`ToString`现在包括端口。
 - 改变：心灵感应传输`ToString`被简化和缩短。
 - 更改：KCP 和心灵感应传输现在在`Available`检查中使用编译器符号。
@@ -70,7 +70,7 @@
 - 修复：SimpleWebTransport 条件删除，使用户可以看到错误 M...
 - kcp2k V1.37 - 2019 -07-31
 - Unity 2021.3.29 LTS 最新修复
-- 功能：历史边界 MVP（#3563）
+- 功能：历史边界 MVP(#3563)
 - 坦克合作社的例子，采取车辆通过镜子管理局控制.
 - 修复：NetworkReader Readbits/Array/List 分配限制到前.
 - 删除未使用的导入
@@ -78,24 +78,24 @@
 - NetworkReader/Writer 读/写列表：注释
 - 修复：NetworkConnection"无法发送大于...的数据包"消息 n.
 - 修复：NetworkMessages.MaxContentSize 现在考虑 channelId 而不是.
-- 功能：恢复 NetworkServer.disconnectInactiveConnections（#3556）
+- 功能：恢复 NetworkServer.disconnectInactiveConnections(#3556)
 - 修复：删除冗余的 RPC 缓冲。 节省了带宽但引入了
-- 修复：NetworkIdentity.AssignAssetId（）现在正确保存。 修复一个 b.
+- 修复：NetworkIdentity.AssignAssetId()现在正确保存。 修复一个 b.
 - 修复：NetworkTime RTT 现在检查来自未来的恶意时间戳
 - 压缩：删除不必要的 QuaternionElement 函数
 - 压缩：更明显的 TenBitsMax 表示
-- 功能：NetworkConnectionToClient.rtt via Ping & Pong Messages（#3545）
+- 功能：NetworkConnectionToClient.rtt via Ping & Pong Messages(#3545)
 - 示例：默认发送速率从 30 Hz 增加到 60 Hz，用于同步...
 - perf：默认发送速率从 30 Hz 增加到 60 Hz，供用户使用。
 - 坦克演示：增加发送速率从 30 赫兹到 120 赫兹，以避免 rtt bein.
-- NetworkBehaviour. Ontario：GetBullentInParent（bool）2020 support.
-- NetworkIdentity：correct GetBidentInParent explanations（credit：F.
+- NetworkBehaviour. Ontario：GetBullentInParent(bool)2020 support.
+- NetworkIdentity：correct GetBidentInParent explanations(credit：F.
 - NetworkIdentity：在构建中公开 AssetGuidToUint
 - 修复：NetworkBehaviour. Ontario 无法找到父 NetworkIdentity 是.
 - 修复：坦克演示：替换炮塔过时 NetworkTransform 与 Networ.
 - perf：删除一些不必要的内联以优化指令缓存
 - NetworkIdentity：将 AssetId 暴露给 Guid 转换函数
-- 修复：2019 测试再次工作（#3547）
+- 修复：2019 测试再次工作(#3547)
 - 修复：NetworkBehaviour Ontario #ifdef 为 Unity 2020.3.19 调整.
 - 针对\[SyncVar]名称为.的情况改进了#3525 的错误消息。
 - 通过应用#3525 的解决方法修复 NetworkIdentityTests
@@ -104,15 +104,15 @@
 - 中断：NetworkTime.PingFrequency 重命名为 PingInterval。 让它...
 - 修复最近修复后的 PrepareToSpawnSceneObjects 测试
 - NetworkTime：更易读的 ping 间隔检查
-- 修复：#3538 在 DestroyOwnedObjects（#.
+- 修复：#3538 在 DestroyOwnedObjects(#.
 - 修复：PrepareToSpawnSceneObjects 检查 netId 而不是 activeSelf \[f.]
-- 功能：滞后补偿 V1（#3534）
+- 功能：滞后补偿 V1(#3534)
 - 测试：修复失败的 NetworkManagerTests，因为 Deepware Tested 测试没有...
 - NetworkTime：rttVar 重命名为 rttVariance，以与旧 M...
-- 修复：SnapshotInterpolation.Insert（）现在有一个 bufferLimit 来避免 ev.
+- 修复：SnapshotInterpolation.Insert()现在有一个 bufferLimit 来避免 ev.
 - perf：NetworkTransformBase SortedLists 现在使用默认 ca 分配.
 - 更新了自述文件：阐明激励措施，修复错别字，改进格式
-- 功能：ConnectionQuality 启发式+回调+ GUI（#3526）
+- 功能：ConnectionQuality 启发式+回调+ GUI(#3526)
 - 网络时间：重新引入往返时间差异，为连接做好准备。
 - NetworkClient：initialBufferTime 用于调试、比较和调试。
 - 坦克演示：始终显示时间插值 GUI，便于调试
@@ -122,7 +122,7 @@
 - Weaver：SyncVarsity Replacer：pass Logging
 - Weaver：SyncVarsity Replacer：语法和注释使其更明显
 - 修复：Weaver 现在在嵌套类型定义中编织 NetworkBehavious
-- 功能：Weaver 将'bool Weaved（）'添加到每个 NetworkBehaviour 中，这.
+- 功能：Weaver 将'bool Weaved()'添加到每个 NetworkBehaviour 中，这.
 - 测试：删除未使用的"using"
 - 修复：测试工作在 Unity 2022.2+ \[imer]
 - Weaver ILPostProcessorAssemblyResolver：使用 GetFileNameWithoutExtension
@@ -182,7 +182,7 @@
 - 修正：网络消息现在使用静态 NetworkMessageId 类和静态 ushort Id。
 - 修正：Weaver 现在为 RPC 编织预先计算的函数哈希。
 - 修正：快照插值收到各种更新。
-- 修复：NetworkTransform（可靠）收到各种性能更新，修复抖动。
+- 修复：NetworkTransform(可靠)收到各种性能更新，修复抖动。
 - 更改：兴趣管理现在从抽象基类派生。
 - 已更改：NetworkWriter - MaxStringLength 更改为 ushort. MaxValue。
 - **突破性变化：**

@@ -55,7 +55,7 @@
   - 脚本模板也已更新。
 - **突破**：`NetworkTransform`可靠和不可靠
   - 不可靠的版本取代旧的`NetworkTransform`。
-  - `SyncInterval`现在由` NetworkServer``sendRate `（在 Network Manager 中设置）管理。
+  - `SyncInterval`现在由` NetworkServer``sendRate `(在 Network Manager 中设置)管理。
   - `NetworkTransformChild`删除.使用网络转换并将目标设置为子对象。
   - `clientAuthority`已废弃，以支持在先前版本中实现的`syncDirection`。
 
@@ -206,7 +206,7 @@
 - 已更改：`SyncVar`的内部代码。 可能需要重置非默认检查器值。
 - 改变：坦克的例子更新。
 - 更改：聊天示例更新.真的彻底改造了。
-- 更改：网络读取器/写入器现在尽可能使用可直接复制的序列化（性能提高 4- 6 倍）。
+- 更改：网络读取器/写入器现在尽可能使用可直接复制的序列化(性能提高 4- 6 倍)。
 - **中断**：删除过时`ConfigureServerFrameRate`\
   请改用`ConfigureHeadlessFrameRate`。
 - **中断**：删除过时的`PersistNetworkManagerToOfflineScene`。

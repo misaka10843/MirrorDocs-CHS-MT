@@ -93,10 +93,10 @@
 - 修复：`OnClientChangeScene`未为主机客户端触发。
 - 修正：避免 NRE 在`UnpackAndInvoke`。
 - 修复：`WriteUri`和`ReadUri`中的错误处理。
-- 修正：当`customHandling`为 true 时，不应调用`FinishLoadScene`（添加场景）。
+- 修正：当`customHandling`为 true 时，不应调用`FinishLoadScene`(添加场景)。
 - 修正：防止 assetId 被设置为空字符串。
 - 修正：`clientAuthority`现在在`NetworkRigidbody`/`NetworkRigidbody2D`中公开。
-- 更改：在场景加载期间不再暂停（禁用）传输。 消息处理器现在可以正确处理这个问题，因此可以简化传输。
+- 更改：在场景加载期间不再暂停(禁用)传输。 消息处理器现在可以正确处理这个问题，因此可以简化传输。
 
 ## v40.0.9 -- 2021 年 6 月 8 日
 
@@ -140,8 +140,8 @@
 - 修正：`NetworkIdentity.Reset`现在重置`isLocalPlayer`_after_ the`isLocalPlayer`/`ClearLocalPlayer`检查。
 - 修正：如果我们仍然是本地玩家`NetworkIdentity.OnDestroy`现在只清除`NetworkClient.localPlayer`。
 - 修正：客户端停止不再通过用户代码调用`StopClient`运行两次。
-- 已修复：`SyncVar`字段标签未在 Unity 2020 版本中显示（Unity 错误）。
-- 更改：网络管理器`OnServerAddPlayer`现在将连接 ID 添加到对象名称（仅在服务器上，不同步到客户端）。
+- 已修复：`SyncVar`字段标签未在 Unity 2020 版本中显示(Unity 错误)。
+- 更改：网络管理器`OnServerAddPlayer`现在将连接 ID 添加到对象名称(仅在服务器上，不同步到客户端)。
 - 更改：`NetworkTime`中的几个字段已重命名。 以前的字段名称仍然存在，并**已过时**，将在以后的版本中删除。
 - 更改：大多数`ClientScene`现在已经**过时**，在`NetworkClient`中使用相同或相似的属性。 `ClientScene`将在以后的版本中完全弃用并删除。
 - 更改：包含` NetworkConnection``NetworkClient.RegisterHandler `重载现在已**过时**，并将在以后的版本中删除。 处理程序可以直接使用`NetworkClient.connection`。
@@ -154,16 +154,16 @@
 
 - 新增：`NetworkIdentity`现在有`isServer`/`isClientOnly`。
 - 补充：全球利益管理。 这可能最终导致替换场景渲染、匹配渲染和所有者渲染组件。
-- 添加：GUI 控制台从 uMMORPG 移植（F12 显示/隐藏）。
+- 添加：GUI 控制台从 uMMORPG 移植(F12 显示/隐藏)。
 - 添加：网络管理器现在在定义离线场景时将自己从`StopServer`/`StopClient`中的 DDOL 中取出，以避免单例冲突。
 - 添加：消息。 在网络管理器中启用。
 - 添加：自定义播放器循环：
-  - `NetworkEarlyUpdate`（在任何更新/固定更新之前）
-  - `NetworkLateUpdate`（在任何 Update/FixedUpdate/LateUpdate 之后）循环
+  - `NetworkEarlyUpdate`(在任何更新/固定更新之前)
+  - `NetworkLateUpdate`(在任何 Update/FixedUpdate/LateUpdate 之后)循环
 - 增加：KCP Tick 分为`TickIncoming`/`TickOutgoing`，以利用新的 NetworkEarly/LateUpdate 功能...最小化延迟。
 - 添加：推>拉广播部分 1.
 - 修正：心灵感应 1.7 接收超时默认禁用，增加`MirrorTransport`超时从 5 秒到 30 秒，以涵盖场景的变化。
-- 修复：`NetworkServer.SpawnObserversForConnection`重构以支持所有可见性情况（`ForceShown`/`ForceHidden`/`Default`）和所有系统（legacy / new / default）。
+- 修复：`NetworkServer.SpawnObserversForConnection`重构以支持所有可见性情况(`ForceShown`/`ForceHidden`/`Default`)和所有系统(legacy / new / default)。
 - 修复：`NetworkManager.StopServer/StopClient`：在`OnApplicationQuit`或测试中调用时避免`NullReferenceException`。
 - 修正：`NetworkServer.Update`：非活动连接检查移动到主连接`foreach`循环. 消除`foreach`-connections 循环。
 - 修正：`NetworkServer.Update`：单独的连接更新循环移动到主循环中. 现在只有一个连接循环。

@@ -6,7 +6,7 @@
 
 您发送的每条消息都将被批处理，直到帧结束，以最小化带宽和传输调用。 例如，如果您发送了大量 10 字节的消息，那么我们通常可以将其中的 120 个放入一个**MTU**大小的大约 1200 字节的批中。
 
-对于传输，以 1200 字节的块发送消息是非常方便的（参见*[\_MTU*](https://en.wikipedia.org/wiki/Maximum\_transmission\_unit)_）。 大于**MTU**的消息作为单个批发送。 确切地说，Transport 通过`Transport.GetBatchThreshold()`决定 Mirror 所针对的批大小。
+对于传输，以 1200 字节的块发送消息是非常方便的(参见*[\_MTU*](https://en.wikipedia.org/wiki/Maximum\_transmission\_unit)_)。 大于**MTU**的消息作为单个批发送。 确切地说，Transport 通过`Transport.GetBatchThreshold()`决定 Mirror 所针对的批大小。
 
 镜子是双向的。 这意味着客户机和服务器都将它们的消息批处理，并在帧的末尾将它们刷新出来。
 
@@ -32,7 +32,7 @@ public void RpcPositionUpdate(float timestamp, Vector3 position)
 
 事实上，这正是我们新`NetworkTransform`组件的早期版本所做的。
 
-对于上面的代码，我们付出了很大的带宽成本，因为对于每个位置消息，我们还需要包括一个 4 字节`float`（或者更好的是，一个 8 字节`double`以获得更高的精度）。 在大世界同步的时候，带宽会迅速增加。
+对于上面的代码，我们付出了很大的带宽成本，因为对于每个位置消息，我们还需要包括一个 4 字节`float`(或者更好的是，一个 8 字节`double`以获得更高的精度)。 在大世界同步的时候，带宽会迅速增加。
 
 `NetworkTransform`只是众多组件之一。 其他几个可能也需要时间戳，这将进一步增加带宽。
 

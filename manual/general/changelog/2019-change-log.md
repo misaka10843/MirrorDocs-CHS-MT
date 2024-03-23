@@ -14,7 +14,7 @@
 - 修正：在调用 OnStartClient 和 OnStartLocalPlayer 之前设置 hasAuthority。
 - 更改：connectionToClient 现在用于分配客户端权限。
 - 改变：在许多方面，主机玩家的行为更像一个客户端，将更好地揭示错误。
-- 更改：ReplacePlayerForConnection 现在有一个可选的 bool 来保留前一个对象的权限（默认值= false）。
+- 更改：ReplacePlayerForConnection 现在有一个可选的 bool 来保留前一个对象的权限(默认值= false)。
 - 已删除：不建议使用`NetworkServer.SpawnWithClientAuthority`，以支持`NetworkServer.Spawn`的重载。
 
 ## V5.0.2 - 2019- 11 -03<a href="#version-502---2019-nov-03" id="version-502---2019-nov-03"></a>
@@ -65,7 +65,7 @@
 ## v3.17.4 - 2019-九月-04<a href="#version-3174---2019-sep-04" id="version-3174---2019-sep-04"></a>
 
 - 新增：自定义网络阅读器和作家通过扩展方法.
-- 新增：组件上的网络同步模式选择器，用于同步到观察者（默认）或仅所有者。
+- 新增：组件上的网络同步模式选择器，用于同步到观察者(默认)或仅所有者。
 - 新增：SyncVars 现在支持其他程序集中的结构和枚举。
 - 增加：支持读取和写入数组段.
 - 新增：Network Animator 现在支持图层。
@@ -96,7 +96,7 @@
 
 ## v3.10.10 - 2019-Jun-19<a href="#version-31010---2019-jun-19" id="version-31010---2019-jun-19"></a>
 
-- 增加：场景消息现在支持场景模式（正常/添加）和物理模式（2D / 3D）的参数。
+- 增加：场景消息现在支持场景模式(正常/添加)和物理模式(2D / 3D)的参数。
 - 新增：ClientScene.Send 现在有一个可选的参数"ClientId"。
 - 添加：ASMDEF 到 Examples 文件夹。
 - 新增：支持发送和接收 ArraySegment
@@ -106,7 +106,7 @@
 - 修正：TelepathyTransport.GetMaxPacketSize 使用新的可配置的最大大小。
 - 修正：内存分配和垃圾回收的显著减少。
 - 更改：使用 transform.localPosition 和 transform.localRotation 以获得更好的 VR 支持。
-- 删除：Websockets 发送队列（它们从未工作过）和 SSL（暂时因为它不工作）。
+- 删除：Websockets 发送队列(它们从未工作过)和 SSL(暂时因为它不工作)。
 
 ## v3.6.7 -- 2019 年 4 月 28 日<a href="#version-367----2019-apr-28" id="version-367----2019-apr-28"></a>
 
@@ -125,7 +125,7 @@
 - 修正：网络身份场景 ID 生成现在使用 RNG 加密服务提供程序。
 - 修正：场景照明在加法的例子。
 - 固定：球员预置转换的细节现在尊重时，在没有 NetworkStartPosition 实例化。
-- 删除：Unity 软件包生成中的 Tests 文件夹（无最终用户值）。
+- 删除：Unity 软件包生成中的 Tests 文件夹(无最终用户值)。
 
 ## v3.5.9 -- 2019 年 4 月 12 日<a href="#version-359----2019-apr-12" id="version-359----2019-apr-12"></a>
 
@@ -146,7 +146,7 @@
 
 ## v3.4.9 -- 2019 年 4 月 6 日<a href="#version-349----2019-apr-6" id="version-349----2019-apr-6"></a>
 
-- 添加：语义版本控制（这就是为什么我们从 1.6 跳到 3.4.9）。
+- 添加：语义版本控制(这就是为什么我们从 1.6 跳到 3.4.9)。
 - 标签：SyncDictionary[](https://mirror-networking.com/docs/Articles/Guides/Sync/SyncDictionary.html)
 - 标签：[SyncHashSet](https://mirror-networking.com/docs/Articles/Guides/Sync/SyncHashSet.html)
 - 添加：[SyncSortedSet](https://mirror-networking.com/docs/Articles/Guides/Sync/SyncSortedSet.html)。
@@ -191,33 +191,33 @@
 - 修改：Weaver 现在是完整的源...终于！
 - 更改：ClientScene.AddPlayer 第二个参数现在是`字节 extraData`而不是`MessageBase extraMessage`。
   - 请参考[此处](https://mirror-networking.com/docs/Articles/Guides/GameObjects/SpawnPlayerCustom.html)的代码示例以了解如何更新代码。
-- 更改：网络管理器-无头自动启动从`Awake()`）移动到`Start()`。
+- 更改：网络管理器-无头自动启动从`Awake()`)移动到`Start()`。
 - 更改：删除所有消息的消息 ID-请参阅[网络消息](https://mirror-networking.com/docs/Articles/Guides/Communications/NetworkMessages.html)了解详情。
   - 消息 ID 现在根据消息名称自动生成。
-  - 以前您会调用 Send（MyMessage.MsgId，message），现在您调用 Send（message）。
+  - 以前您会调用 Send(MyMessage.MsgId，message)，现在您调用 Send(message)。
 - 已删除：Groove 传输的文档-请改用 Websockets 传输。
 
 ## v1.5 -- 2019 年 3 月 1 日<a href="#version-15----2019-mar-01" id="version-15----2019-mar-01"></a>
 
-- 添加：**迁移工具**（大部分）自动从 UNet 转换。
+- 添加：**迁移工具**(大部分)自动从 UNet 转换。
 - 新增：完全支持 WebSockets 和 WebSocketsSecure 以取代 UNet LLAPI。
 - 增加：传输多路复用器-允许使用多个并发传输。
 - 添加：NetworkLobbyManager 和 NetworkLobbyPlayer 与示例游戏。
 - 新增：可配置的服务器在网络管理器滴答率.
 - 新增：新的虚拟 OnClientChangeScene 会在 SceneManager.LoadSceneAsync 执行之前触发。
 - 添加：Weaver 的单元测试。
-- 修正：垃圾分配从很多东西中删除（我们知道还有更多的工作要做）。
+- 修正：垃圾分配从很多东西中删除(我们知道还有更多的工作要做)。
 - 修正：NetworkProximityNode 现在使用`OverlapSphereNonAlloc`和`OverlapCircleNonAlloc`。
 - 修正：SyncVar 钩子在客户端加入时不触发。
-- 修正：网络管理器不再假设它在构建设置中的场景（0）上。
+- 修正：网络管理器不再假设它在构建设置中的场景(0)上。
 - 修正：网络动画不再限于 6 个变量。
 - 修正：TelepathyTransport 在禁用时传递消息。
 - 已更改：最低 Unity 版本：**2018.3.6**
-- 删除：SceneAttribute.cs（合并到 CustomAttributes.cs）。
-- 删除：`NetworkClient.allClients`（使用`NetworkClient.singleton`代替）。
-- 删除：`NetworkServer.hostId`和`NetworkConnection.hostId`（LLAPI 的保留）。
-- 删除：`NetworkConnection.isConnected`（网络连接始终处于连接状态）。
-- 删除：`Transport.GetConnectionInfo`（改用`ServerGetClientAddress`）。
+- 删除：SceneAttribute.cs(合并到 CustomAttributes.cs)。
+- 删除：`NetworkClient.allClients`(使用`NetworkClient.singleton`代替)。
+- 删除：`NetworkServer.hostId`和`NetworkConnection.hostId`(LLAPI 的保留)。
+- 删除：`NetworkConnection.isConnected`(网络连接始终处于连接状态)。
+- 删除：`Transport.GetConnectionInfo`(改用`ServerGetClientAddress`)。
 
 ## v1.4 -- 2019 年 2 月 1 日<a href="#version-14----2019-feb-01" id="version-14----2019-feb-01"></a>
 
@@ -240,6 +240,6 @@
 - 已更改：`NetworkConnection.Dispose`使用`NetworkIdentity.spawned`spawned。
 - 更改：`NetworkReader.ReadTransform`现在使用`NetworkIdentity.spawned`。
 - 更改：网络转换重新实现-物理删除，代码简化。
-- 删除：`NetworkClient.hostPort`（端口在传输级别处理）。
-- 删除：`NetworkServer.FindLocalObject`（改用`NetworkIdentity.spawned[netId]`）。
-- 已删除：`ClientScene.FindLocalObject`（改用`NetworkIdentity.spawned[netId]`）。
+- 删除：`NetworkClient.hostPort`(端口在传输级别处理)。
+- 删除：`NetworkServer.FindLocalObject`(改用`NetworkIdentity.spawned[netId]`)。
+- 已删除：`ClientScene.FindLocalObject`(改用`NetworkIdentity.spawned[netId]`)。

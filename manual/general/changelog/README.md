@@ -25,7 +25,7 @@
 ### 固定
 
 - 修正：Weaver 自定义读/写方法的序列化现在工作在整个程序集定义。
-- 修复：EdgegapKcp StopHost（）空引用异常。
+- 修复：EdgegapKcp StopHost()空引用异常。
 - 修正：ILPostProcessorAssemblyResolver 现在更好地忽略 Bee.BeeDriver。
 - 固定：简单的 Web 传输现在本地范围`websocket`和`Runtime`。
 
@@ -63,7 +63,7 @@
 - 修正：NetworkServer 和 NetworkClient 尊重异常 Disconnect。
 - 修正：现在使用`FindAnyObjectByType`为以后的 Unity 版本。
 - 修正：`NetworkServer.Destroy`重构.
-- 固定：`NetworkServer.Spawn`现在激活不活动的游戏对象（在案件未产生）。
+- 固定：`NetworkServer.Spawn`现在激活不活动的游戏对象(在案件未产生)。
 
 ### 改变
 

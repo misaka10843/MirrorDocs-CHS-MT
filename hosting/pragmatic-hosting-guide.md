@@ -42,8 +42,8 @@ _... except for LAN parties, if you still remember those._&#x20;
 
 Still, letting players host their own games can be useful. You will save money on server hosting costs and players will create their servers on demand. We just need to solve the connectivity issue. For that, we can combine two tools:
 
-- **NAT Punchthrough**: a hacky technique to 'punch a whole' through your router / firewall so that others can connect to your game. This requires one central server for players to connect to **once**. After the initial connect to the central server, your router / firewall will most likely allow outside packets from other players directly. This works about **70% of the time**.&#x20;
-- **Relay**: to avoid headaches, you can offer your own (or rent) a Relay server, which basically forwards traffic between players. Instead of talking to each other, your players all talk through a central Relay. This solves our router + firewall issues 100% of the time. However, you'll usually have to pay for bandwidth.
+* **NAT Punchthrough**: a hacky technique to 'punch a whole' through your router / firewall so that others can connect to your game. This requires one central server for players to connect to **once**. After the initial connect to the central server, your router / firewall will most likely allow outside packets from other players directly. This works about **70% of the time**.&#x20;
+* **Relay**: to avoid headaches, you can offer your own (or rent) a Relay server, which basically forwards traffic between players. Instead of talking to each other, your players all talk through a central Relay. This solves our router + firewall issues 100% of the time. However, you'll usually have to pay for bandwidth.
 
 Note that **Uptime, Security and Latency** are still not solved here. However, a decent Relay may reduce your latency to be good enough.
 
@@ -85,8 +85,8 @@ You could even configure your server once, and then spin up additional servers b
 
 Cloud hosting **works for all games** as well. However, keep in mind that:
 
-- Virtual CPUs are \~20% slower than dedicated CPUs.
-- Pricing is noticeably higher than for dedicated servers.
+* Virtual CPUs are \~20% slower than dedicated CPUs.
+* Pricing is noticeably higher than for dedicated servers.
 
 You essentially pay more for extra **convenience**. New servers can be set up with just a few clicks, and once you don't need them anymore you can simply remove them. There's no need to sign contracts & wait for support all the time.
 
@@ -100,7 +100,7 @@ At Mirror we use Google Cloud for our CCU tests & Discord Bots.
 
 ## **5.) Orchestration**
 
-![](../.gitbook/assets/edgegap (1).png)
+![](<../.gitbook/assets/edgegap (1).png>)
 
 Orchestration aims to automate hosting for session based games, on demand.
 
@@ -118,11 +118,12 @@ Again, I don't want to worry about hosting. I want to upload my server image, an
 
 {% hint style="success" %}
 **Multiplay**, **Edgegap** and **AWS Gamelift** are popular choices.\
-We use EdgeGap because it's the [easiest to use](https://docs.edgegap.com/docs/sample-projects/mirror-on-edgegap) with the most [advanced network](https://en.wikipedia.org/wiki/Edge_computing).
+We use EdgeGap because it's the [easiest to use](https://docs.edgegap.com/docs/sample-projects/mirror-on-edgegap) with the most [advanced network](https://en.wikipedia.org/wiki/Edge\_computing).
 {% endhint %}
 
 ## Update: Edgegap Unity Plugin 🇨🇦
 
 Great news, Mirror now has Edgegap's Hosting / Orchestration plugin built in!
 
-Check out our step by step guide to get started: [edgegap-hosting-plugin-guide.md](edgegap-hosting-plugin-guide.md 'mention')
+Check out our step by step guide to get started: [edgegap-hosting-plugin-guide.md](edgegap-hosting-plugin-guide.md "mention")
+

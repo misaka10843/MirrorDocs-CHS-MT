@@ -1,6 +1,6 @@
 # 弃用
 
-Unity Networking（UNet）的某些功能因各种原因从 Mirror 中删除或修改。 此页面将标识所有更改和删除的功能、属性和方法，更改或删除的原因以及可能的替代方案。
+Unity Networking(UNet)的某些功能因各种原因从 Mirror 中删除或修改。 此页面将标识所有更改和删除的功能、属性和方法，更改或删除的原因以及可能的替代方案。
 
 {% hint style="info"%}
 **注意：**本文档中的某些更改可能适用于即将发布到资产存储的版本。
@@ -92,9 +92,9 @@ Unity Networking（UNet）的某些功能因各种原因从 Mirror 中删除或�
 - `IsClientConnected()`\
   请改用静态属性`NetworkClient.isConnected`。
 - `onlineScene`和`offlineScene`\
-  &#x20;这些函数现在存储完整的路径，因此使用 SceneManager.GetActiveScene（）.path 代替。
+  &#x20;这些函数现在存储完整的路径，因此使用 SceneManager.GetActiveScene().path 代替。
 - `OnStartClient(NetworkClient client)`\
-  &#x20;改用 OnStartClient（），因为所有`NetworkClient`方法现在都是静态的。
+  &#x20;改用 OnStartClient()，因为所有`NetworkClient`方法现在都是静态的。
 - `OnClientChangeScene(string newSceneName)`\
   &#x20;将其改为`OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)`。
 - `OnClientChangeScene(string newSceneName, SceneOperation sceneOperation)`\
@@ -138,7 +138,7 @@ Unity Networking（UNet）的某些功能因各种原因从 Mirror 中删除或�
 - `clientAuthorityOwner`\
   &#x20;使用 connectionToClient 代替
 - `GetSceneIdenity`\
-  &#x20;使用`GetSceneIdentity`代替（原始名称中的排印错误）
+  &#x20;使用`GetSceneIdentity`代替(原始名称中的排印错误)
 - `RemoveClientAuthority(NetworkConnection conn)`\
   &#x20;不再需要 NetworkConnection 参数，并且不返回任何内容
 - `spawned`字典
@@ -254,7 +254,7 @@ Unity Networking（UNet）的某些功能因各种原因从 Mirror 中删除或�
   &#x20;使用`RegisterHandler(T msg)`代替。
 - `RegisterHandler(MsgType msgType, NetworkMessageDelegate handler)`\
   &#x20;使用`RegisterHandler(T msg)`代替。
-- `注册表（Action<NetworkConnection，T>  handler, bool requireAuthentication = true)`
+- `注册表(Action<NetworkConnection，T>  handler, bool requireAuthentication = true)`
 
   Use `RegisterHandler(Action<T> handler, bool requireAuthentication = true)` instead.
 
@@ -282,7 +282,7 @@ Unity Networking（UNet）的某些功能因各种原因从 Mirror 中删除或�
 
 ### 网络邻近度
 
-- [空间散列](../interest-management/spatial-hashing.md)/[距离](../interest-management/distance.md)兴趣管理（Space Hash / Distance Interest Management）
+- [空间散列](../interest-management/spatial-hashing.md)/[距离](../interest-management/distance.md)兴趣管理(Space Hash / Distance Interest Management)
 
 ### 网络比赛
 
@@ -331,7 +331,7 @@ NetworkMessage 在所有情况下都需要结构体-不再支持类
 
 ### 网络阅读器<a href="#networkreader" id="networkreader"></a>
 
-- `读取（字节 buffer, int offset, int count)`\
+- `读取(字节 buffer, int offset, int count)`\
   &#x20;请改用`ReadBytes`。
 - `ReadPackedInt32(int value)`使用`ReadInt32(int value)`代替。
 - `ReadPackedUInt32(uint value)`使用`ReadUInt32(uint value)`代替。
@@ -404,7 +404,7 @@ NetworkMessage 在所有情况下都需要结构体-不再支持类
   &#x20;请改用`WriteNetworkIdentity`。
 - `Write(GameObject value)`\
   &#x20;使用`WriteGameObject`代替。
-- `写（字节 buffer, int offset, int count)`\
+- `写(字节 buffer, int offset, int count)`\
   &#x20;请使用`WriteBytes`代替。
 - `WritePackedInt32(int value)`\
   &#x20;使用`WriteInt32(int value)`代替

@@ -133,7 +133,7 @@
 - 固定：网络室经理不再做多余的球员预置注册`OnStartClient`。
 - 修正：网络室播放器`OnClientEnterRoom`现在正确地只在客户端上发射。
 - 修正：`RegisterClientMessages`在每次场景更改时都被错误调用。
-- 修正：网络行为`SyncMode`和`SyncInterval`在某些情况下未显示在检查器中（回归）。
+- 修正：网络行为`SyncMode`和`SyncInterval`在某些情况下未显示在检查器中(回归)。
 - 修正：网络管理器现在在服务器停止时更好地清理网络对象。
 - 修正：网络管理器不再尝试在`StopClient`中冗余地更改为离线场景。
 - 修正：网络连接的`lastMessageTime`没有被正确初始化，导致不正确的空闲超时断开连接。
@@ -180,7 +180,7 @@
 - 修正：网络房间管理器不再错误地破坏游戏玩家对象。 它留在游戏场景中，当场景改变时由 Unity 清理。
 - 修复：`StopHost`在网络管理器中正确引发`OnServerDisconnect`，并在关闭服务器之前正确解绕。
 - 修正：在网络身份的`OnDestroy`中，`isServer`在服务器上不再是错误的 false。
-- 更改：网络管理器`offlineScene`和`onlineScene`现在存储完整路径，因此使用 SceneManager.GetActiveScene（）.path 代替。
+- 更改：网络管理器`offlineScene`和`onlineScene`现在存储完整路径，因此使用 SceneManager.GetActiveScene().path 代替。
 - 更改：网络管理器 HUD 现在更恰当地调用`StopHost`/`StopServer`/`StopClient`。
 - 更改：网络管理器 HUD 标签不再显示 LAN。 相关文档也进行了清理，以消除镜像是唯一的 LAN 解决方案的误解。
 - 更改：删除网络转换压缩，消息处理现在更简单。
@@ -204,8 +204,8 @@
 - 已修正：Network Server 对 SendToAll、SendToReady 和 SendToObservers 的调用会发送到被检测为本地连接的确切连接，而不是回退到. localConnection。
 - 修正：网络服务器。如果服务器没有运行，SpawnObjects 返回 false。
 - 修正：改进了网络变换旋转检测。
-- 修正：Weaver 生成的代码现在可以为 IL2CPP 正确构建（再次）。
-- 更改：网络管理器中的 StartHost 不再是虚拟方法（也不应该是）。 而不是 OnStartHost。
+- 修正：Weaver 生成的代码现在可以为 IL2CPP 正确构建(再次)。
+- 更改：网络管理器中的 StartHost 不再是虚拟方法(也不应该是)。 而不是 OnStartHost。
 - 更改：网络室管理器的 OnRoomServerSceneLoadedForPlayer 现在包括 NetworkConnection 参数。
 - 更改：网络场景切换现在从 OnEnable 而不是 Awake 工作，并使用场景而不是场景名称。
 - 更改：重命名为 NetworkWriter。写入 WriteMessage 以保持一致性。
@@ -225,8 +225,8 @@
 - 修正：网络转换和网络动画现在尊重客户端拥有的对象`hasAuthority`。
 - 修正：如果时间/距离太大，网络转换将正确传送。
 - 修正：当 clientAuthority 为 false 时，Network Animator 现在可以正确同步。
-- 修正：客户端拥有的对象现在在客户端断开连接时被销毁（回归）。
-- 修正：在 DontDestroyOnLoad（DDOL）中，客户端权限现在为通过场景更改携带的网络对象保留。
+- 修正：客户端拥有的对象现在在客户端断开连接时被销毁(回归)。
+- 修正：在 DontDestroyOnLoad(DDOL)中，客户端权限现在为通过场景更改携带的网络对象保留。
 - 修正：取消客户端连接后立即启动服务器不再抛出 NRE。
 - 修复：IL2CPP 构建在停止服务器时不再触发断言。
 - 修正：在钩子被调用之前，同步变量现在被设置为主机播放器。
@@ -235,11 +235,11 @@
 - 修正：网络室管理器 roomSlots 现在正确管理服务器和客户端.
 - 修正：网络室管理器现在正确地支持多个游戏场景，并增加了一个虚拟`OnRoomServerAddPlayer`。
 - 修正：添加场景操作不再错误地导致来自客户端的无关 AddPlayer 消息。
-- 修正：`NetworkWriterPool`现在在任何地方都使用，而不是`new NetworkWriter`（我们在实现池时错过了一对夫妇）。
+- 修正：`NetworkWriterPool`现在在任何地方都使用，而不是`new NetworkWriter`(我们在实现池时错过了一对夫妇)。
 - 修复：Unity 2019.3.x`RequestScriptReload`修补程序已从 UnityEditorInternal.InternalEditorUtility 移动到 EditorUtility。
 - 修正：自定义类型的数组现在被正确支持。
 - 更改：精简了逻辑。
-- 更改：`NetworkIdentity.GetSceneIdenity`方法重命名为`GetSceneIdentity`（名称拼写错误）。
+- 更改：`NetworkIdentity.GetSceneIdenity`方法重命名为`GetSceneIdentity`(名称拼写错误)。
 - 更改：OnApplicationQuit 虚拟方法添加到 Transport 类，并且不再从 Network Manager 调用`Transport.activeTransport.Shutdown()`。
 - **中断：**SyncVar 钩子现在需要**两个**参数，一个用于旧值，一个用于新值，并且现在**在**调用钩子之前设置属性值。
 

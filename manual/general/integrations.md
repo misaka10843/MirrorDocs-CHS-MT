@@ -20,7 +20,7 @@
 
 ### [SmoothSync](https://assetstore.unity.com/packages/tools/network/smooth-sync-96925)<a href="#smoothsync" id="smoothsync"></a>
 
-![](../../.gitbook/assets/image (5).png)
+![](<../../.gitbook/assets/image (5).png>)
 
 ### [Noble Connect 免费](https://assetstore.unity.com/packages/tools/network/noble-connect-free-141599)<a href="#noble-connect-free" id="noble-connect-free"></a>
 

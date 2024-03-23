@@ -1,6 +1,6 @@
 # 迁移指南
 
-## 从 UNet 迁移项目（HLAPI）<a href="#migrating-a-project-from-unet-hlapi" id="migrating-a-project-from-unet-hlapi"></a>
+## 从 UNet 迁移项目(HLAPI)<a href="#migrating-a-project-from-unet-hlapi" id="migrating-a-project-from-unet-hlapi"></a>
 
 本指南为您提供了将项目从 UNET 迁移到 Mirror 的分步说明。 Mirror 是 UNET 的一个分支。 因此，对于大多数项目来说，迁移是直接的。
 
@@ -180,7 +180,7 @@ public  class MyBehaviour : NetworkBehaviour
 
 ### 10. 更新扩展组件<a href="#10-update-extended-components" id="10-update-extended-components"></a>
 
-一些常用的扩展组件（如 NetworkManager）已更改了 Mirror 中的方法参数。 一个常用的覆盖是 OnServerAddPlayer。 使用原始的 HLAPI，您的覆盖可能看起来像这样：
+一些常用的扩展组件(如 NetworkManager)已更改了 Mirror 中的方法参数。 一个常用的覆盖是 OnServerAddPlayer。 使用原始的 HLAPI，您的覆盖可能看起来像这样：
 
 ```csharp
 public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId, NetworkReader extraMessageReader)
@@ -218,7 +218,7 @@ LLAPI 使用 UDP。 默认情况下，Mirror 使用 TCP。 这意味着您可能
 
 看看 uMMORPG 是如何迁移到 Mirror 的：
 
-[http：//www.youtube.com/watch？v = LF9rTSS3rlI]（http：//www.youtube.com/watch？v = LF9rTSS3rlI）
+[http：//www.youtube.com/watch？v = LF9rTSS3rlI](http：//www.youtube.com/watch？v = LF9rTSS3rlI)
 
 ## 可能的错误消息<a href="#possible-error-messages" id="possible-error-messages"></a>
 

@@ -23,9 +23,9 @@ TCP 和 UDP 都是用于通过互联网发送信息的协议-事实上，它们�
 - [心灵感应](../transports/telepathy-transport.md)
 - [WebSockets](../transports/websockets-transport/)
 
-## [UDP（用户数据报协议）](https://en.wikipedia.org/wiki/User_Datagram_Protocol)<a href="#udp-user-datagram-protocol" id="udp-user-datagram-protocol"></a>
+## [UDP(用户数据报协议)](https://en.wikipedia.org/wiki/User_Datagram_Protocol)<a href="#udp-user-datagram-protocol" id="udp-user-datagram-protocol"></a>
 
-UDP 用于实时应用，如快节奏的动作游戏或 IP 语音（VoIP），其中低延迟比可靠性更重要。 应用程序的例子包括 Skype，Discord，Zoom 和许多其他。x20;
+UDP 用于实时应用，如快节奏的动作游戏或 IP 语音(VoIP)，其中低延迟比可靠性更重要。 应用程序的例子包括 Skype，Discord，Zoom 和许多其他。x20;
 
 在游戏环境中，可以利用 UDP 的原始功能来更好地控制数据的发送方式，从而更快地发送非关键数据。 这反过来又使 UDP 更适合快节奏的游戏，其中服务器和客户端之间的延迟很重要，如果丢失了一些数据包，游戏可以恢复。
 
@@ -43,6 +43,6 @@ UDP 用于实时应用，如快节奏的动作游戏或 IP 语音（VoIP），�
 
 ## 选择权在你<a href="#the-choice-is-yours" id="the-choice-is-yours"></a>
 
-Mirror 是独立于传输的，它们可以简单地添加到您的 NetworkManager GameObject 中。 默认情况下，Mirror 带有[KCP](../transports/kcp-transport.md)传输*（WebGL 以外的所有平台）*和[Websocket](../transports/websockets-transport/)*（WebGL）*传输。 有关运输的更多信息，请参阅[运输](../transports/)页面。
+Mirror 是独立于传输的，它们可以简单地添加到您的 NetworkManager GameObject 中。 默认情况下，Mirror 带有[KCP](../transports/kcp-transport.md)传输*(WebGL 以外的所有平台)*和[Websocket](../transports/websockets-transport/)*(WebGL)*传输。 有关运输的更多信息，请参阅[运输](../transports/)页面。
 
 选择最适合您和您的游戏的任何运输工具。 我们建议您在做出最终决定之前分析游戏的网络并收集真实世界的数字。
