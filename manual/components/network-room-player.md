@@ -1,23 +1,23 @@
-# Network Room Player
+# 网络房间玩家(Network Room Player)
 
-The Network Room Player stores per-player state for the [Network Room Manager](network-room-manager.md) while in the room. When using this component, you need to write a script which allows players to indicate they are ready to begin playing, which sets the ReadyToBegin property.
+网络房间玩家(Network Room Player)在房间中为[网络房间管理器(Network Room Manager)](network-room-manager.md)存储每个玩家的状态。当使用此组件时，您需要编写一个脚本，允许玩家指示他们已准备好开始游戏，从而设置ReadyToBegin属性。
 
-A game object with a Network Room Player component must also have a Network Identity component. When you create a Network Room Player component on a game object, Unity also creates a Network Identity component on that game object if it does not already have one.
+拥有网络房间玩家组件的游戏对象还必须具有网络身份(Network Identity)组件。当您在游戏对象上创建网络房间玩家组件时，如果该游戏对象尚未具有网络身份组件，Unity也会在该游戏对象上创建一个网络身份组件。
 
 ![](<../../.gitbook/assets/image (80).png>)
 
-* **Show Room GUI**\
-  Enable this to show the developer GUI for players in the room. This UI is only intended to be used for ease of development. This is enabled by default.
-* **Ready To Begin**\
-  Diagnostic indicator that a player is Ready.
-* **Index**\
-  Diagnostic index of the player, e.g. Player 1, Player 2, etc.
-* **Network Sync Interval**\
-  The rate at which information is sent from the Network Room Player to the server.
+* **显示房间GUI(Show Room GUI)**\
+  启用此选项以在房间中为玩家显示开发人员GUI。此UI仅用于开发便利。默认情况下启用。
+* **准备开始(Ready To Begin)**\
+  表示玩家已准备好的诊断指示器。
+* **索引(Index)**\
+  玩家的诊断索引，例如Player 1，Player 2等。
+* **网络同步间隔(Network Sync Interval)**\
+  从网络房间玩家发送信息到服务器的速率。
 
-## Methods <a href="#methods" id="methods"></a>
+## 方法 <a href="#methods" id="methods"></a>
 
-### Client Virtual SyncVar Hook Methods <a href="#client-virtual-syncvar-methods" id="client-virtual-syncvar-methods"></a>
+### 客户端虚拟SyncVar钩子方法 <a href="#client-virtual-syncvar-methods" id="client-virtual-syncvar-methods"></a>
 
 ```csharp
 public virtual void IndexChanged(int oldIndex, int newIndex) { }
@@ -25,7 +25,7 @@ public virtual void ReadyStateChanged(bool oldReadyState, bool newReadyState) { 
 
 ```
 
-### Client Virtual Methods <a href="#client-virtual-methods" id="client-virtual-methods"></a>
+### 客户端虚拟方法 <a href="#client-virtual-methods" id="client-virtual-methods"></a>
 
 ```csharp
 public virtual void OnClientEnterRoom() { }

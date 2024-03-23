@@ -1,7 +1,7 @@
-# Network Statistics
+# 网络统计
 
-Network Statistics component shows messages and bytes per second sent and received.
+网络统计组件显示每秒发送和接收的消息和字节数。
 
-Add this component to Network Manager object (or any object in an online scene).
+将此组件添加到网络管理器对象（或在线场景中的任何对象）。
 
 ![](<../../.gitbook/assets/image (116).png>)

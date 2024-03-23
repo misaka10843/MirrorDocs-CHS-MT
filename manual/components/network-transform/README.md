@@ -1,52 +1,53 @@
-# Network Transform
+# 网络变换
 
-The Network Transform component synchronizes the position, rotation, and scale of networked game objects across the network.
+网络变换组件同步网络游戏对象的位置、旋转和缩放。
 
 <div align="center">
 
-<figure><img src="../../../.gitbook/assets/image (63).png" alt=""><figcaption><p>Network Transform Component</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (63).png" alt=""><figcaption><p>网络变换组件</p></figcaption></figure>
 
 </div>
 
 {% hint style="info" %}
-Mirror currently provides **two** NetworkTransform variations:
+Mirror 目前提供**两种** NetworkTransform 变体：
 
-* Reliable: low bandwidth, same latency as Rpcs/Cmds/etc.
-* Unreliable: high bandwidth, extremely low latency
+* 可靠（Reliable）：低带宽，与 Rpcs/Cmds 等具有相同的延迟。
+* 不可靠（Unreliable）：高带宽，极低延迟
 
-Use NetworkTransform**Reliable** unless you need super low latency.
+除非需要极低延迟，否则请使用 NetworkTransform**Reliable**。
 
 
 {% endhint %}
 
 
 
-A game object with a Network Transform component must also have a Network Identity component. When you add a Network Transform component to a game object, Mirror also adds a Network Identity component on that game object if it does not already have one.
+具有网络变换组件的游戏对象还必须具有网络标识（Network Identity）组件。当您向游戏对象添加网络变换组件时，如果该游戏对象尚未具有网络标识组件，Mirror 也会在该游戏对象上添加网络标识组件。
 
-By default, Network Transform is server-authoritative unless you change the Sync Direction to Client To Server. Client Authority applies to player objects as well as non-player objects that have been specifically assigned to a client, but only for this component. With this enabled, position changes are send from the client to the server.
+默认情况下，网络变换是服务器授权的，除非您将同步方向更改为客户端到服务器（Client To Server）。客户端权限适用于玩家对象以及已专门分配给客户端的非玩家对象，但仅适用于此组件。启用此功能后，位置更改将从客户端发送到服务器。
 
-You can use the **Sync Interval** to specify how often it syncs (in seconds).
+您可以使用**同步间隔（Sync Interval）**指定同步频率（以秒为单位）。
 
-### Smooth Movement during Latency, Packet Loss & Jitter
+### 在延迟、丢包和抖动期间实现平滑移动
 
-`NetworkTransform` sends movement updates every `sendInterval` over the `Unreliable` channel.
+`NetworkTransform` 在 `Unreliable` 通道上每 `sendInterval` 发送一次移动更新。
 
-Network conditions are never ideal, so those updates may come in out of order, delayed or get dropped somewhere on the way.
+网络条件永远不理想，因此这些更新可能会以无序、延迟或在传输过程中丢失的方式到达。
 
-Smooth movement over non ideal network conditions is one of the more difficult problems in game networking. Our `NetworkTransform` component solves it by using [Snapshot Interpolation](snapshot-interpolation.md). We recommend reading through the linked chapter to understand it in detail.
+在非理想的网络条件下实现平滑移动是游戏网络中较难的问题之一。我们的 `NetworkTransform` 组件通过使用[快照插值（Snapshot Interpolation）](snapshot-interpolation.md)来解决这个问题。我们建议阅读链接的章节以深入了解。
 
-In short, smooth movement over non ideal conditions is achieved through buffering. The worse the conditions, the higher the **Buffer Time Multiplier** needs to be. However, the higher it is the longer it buffers too.&#x20;
+简而言之，在非理想条件下实现平滑移动是通过缓冲来实现的。网络条件越糟糕，**缓冲时间倍增器（Buffer Time Multiplier）**就需要越高。然而，它越高，缓冲时间也越长。
 
-The total buffer time is calculated by `sendInterval * Buffer Time Multiplier`. It's usually recommended to use a factor of '3'.&#x20;
+总缓冲时间由 `sendInterval * 缓冲时间倍增器(Buffer Time Multiplier)` 计算。通常建议使用因子 '3'。
 
-This means that while you can **increase** the `Buffer Time Multiplier` to make up for worse conditions, you could also **decrease** the `sendInterval` to still keep a reasonably low buffering delay.
+这意味着，虽然你可以**增加** `缓冲时间倍增器(Buffer Time Multiplier)` 来弥补更糟糕的条件，但你也可以**减少** `sendInterval` 以保持相对较低的缓冲延迟。
 
-Our new Network Transform is already used in production by several real world game projects. Check out [this video](https://www.youtube.com/watch?v=z2JpT\_qLmzk) for a comparison between our old & new **Network Transform** components.
+我们的新网络变换(Network Transform)已经被几个真实世界的游戏项目使用在生产中。查看[这个视频](https://www.youtube.com/watch?v=z2JpT_qLmzk)来比较我们旧版和新版的**网络变换(Network Transform)**组件。
 
 
 
 {% hint style="info" %}
-Note:\
-In Newer Mirror versions, sync interval has moved to NetworkManager as "Send Rate".\
-Send rate of 10, would be 0.1 sync interval.
+注意：\
+在更新的 Mirror 版本中，同步间隔已移至 NetworkManager，称为 "发送速率(Send Rate)"。\
+发送速率为 10，将对应 0.1 的同步间隔。
 {% endhint %}
+

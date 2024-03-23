@@ -1,81 +1,80 @@
-# Snapshot Interpolation
+# 快照插值
 
-Mirror's `NetworkTransform` component uses [**Snapshot Interpolation**](https://gafferongames.com/post/snapshot\_interpolation/).
-
-{% hint style="info" %}
-If you are not familiar with the term: **Snapshot Interpolation** interpolates through snapshots, while buffering enough of them to make up for non-ideal networking conditions like latency, packet loss and scramble.
-{% endhint %}
-
-When developing the new `NetworkTransform` component, we've had two goals:
-
-* **Make it stable**: We needed something that can be used by thousands of projects without _any_ surprises. Major hits already use Mirror and production, so we needed to be extremely careful to get this right.
-* **Make it reusable**: NetworkTransform is one of many components that need Snapshot Interpolation. Someone might need it for 3D / 2D Rigidbodies, Character Controllers and more. The algorithm however is always the same.
-
-In order to achieve both goals, we decided to split the **Snapshot Interpolation** algorithm into a standalone class that can be used by anyone. It's raw C#, completely independent from Mirror & Unity. You can use it in Mirror, or in standalone servers or in different game engines.
-
-In short, we wanted to **solve the problem** once and for all, so we have an algorithm that we can use for decades, no matter which engine.
+Mirror的`NetworkTransform`组件使用[**快照插值**](https://gafferongames.com/post/snapshot\_interpolation/)。
 
 {% hint style="info" %}
-The approach is comparable to **kcp**, which is merely a reliability algorithm that can be used in all languages & engines. For our kcp transport, we simply wrap it in server & client classes and send the results over UDP sockets.
+如果您对术语不熟悉：**快照插值**通过快照进行插值，同时缓冲足够多的快照来弥补网络条件不佳，如延迟、丢包和混乱。
 {% endhint %}
 
-## Simulations & Tests
+在开发新的`NetworkTransform`组件时，我们有两个目标：
 
-**Snapshot Interpolation** is quite difficult to get right. Not only do we operate on two timelines (local & remote), we also have to deal with adverse network conditions like latency spikes, packet loss and scramble. To make matters worse, servers & clients might also be under heavy load and update on significantly different frequencies at times.
+- **使其稳定**：我们需要一个可以被成千上万个项目使用而没有任何意外的东西。主要游戏已经使用Mirror并投入生产，因此我们需要非常小心地做对这件事。
+- **使其可重用**：NetworkTransform是许多需要快照插值的组件之一。有人可能需要它用于3D / 2D刚体、角色控制器等。但算法始终是相同的。
+
+为了实现这两个目标，我们决定将**快照插值**算法拆分为一个独立的类，任何人都可以使用它。它是原始的C#，完全独立于Mirror和Unity。您可以在Mirror中使用它，也可以在独立服务器或不同游戏引擎中使用它。
+
+简而言之，我们希望一劳永逸地**解决问题**，这样我们就有一个算法可以在未来几十年中使用，无论使用哪个引擎。
 
 {% hint style="info" %}
-To put things into perspective: the Snapshot Interpolation algorithm took us **4 months** of work to get it work. More than half the time was spent on tests & simulations to guarantee stability.
+这种方法类似于**kcp**，它只是一个可用于所有语言和引擎的可靠性算法。对于我们的kcp传输，我们只需将其包装在服务器和客户端类中，并通过UDP套接字发送结果。
 {% endhint %}
 
-Developing Snapshot Interpolation as a standalone algorithm allows us to **simulate** the different scenarios without even running latency simulation or Mirror:
+## 模拟与测试
 
-* We can simulate exactly how the snapshot interpolation algorithm behaves if the remote is at t=5, we are at t=3 and we have three snapshots at t=0, 1, 2, while **sampling** through different points of the interpolation.&#x20;
-* We can simulate what happens if someone only has two snapshots, reached the end of the interpolation and is still **waiting** for the next one.
-* We can simulate how the algorithm behaves if a mobile user switches back to the game after a **100s delay**.
-* We can simulate extremely poor network conditions like 99% **packet loss & scramble**.
-* We can **catch-up** if the buffer gets too large.
-* And many more..
+**快照插值**非常难以做到正确。我们不仅要在两个时间轴（本地和远程）上操作，还必须处理不利的网络条件，如延迟突增、丢包和混乱。更糟糕的是，服务器和客户端有时可能也承受着沉重的负载，并且更新频率可能明显不同。
 
-![Snapshot Interpolation Simulations](../../../.gitbook/assets/2021-07-06\_20-23-58@2x.png)
+{% hint style="info" %}
+为了让事情明朗：快照插值算法花费我们**4个月**的时间来完善。超过一半的时间用于测试和模拟以确保稳定性。
+{% endhint %}
 
-**As result**
+开发快照插值作为一个独立的算法，使我们能够模拟不同的场景，甚至无需运行延迟模拟或Mirror：
 
-_It's only a matter of computing with snapshots & parameters in, result out._intended
+- 我们可以模拟快照插值算法在远程处于 t=5，我们处于 t=3，并且在 t=0, 1, 2 有三个快照的情况下，通过不同的插值点进行模拟。
+- 我们可以模拟如果有人只有两个快照，到达插值的末尾，仍在等待下一个快照的情况。
+- 我们可以模拟移动用户在延迟 100 秒后重新回到游戏的算法行为。
+- 我们可以模拟极端恶劣的网络条件，如 99% 的丢包和乱序。
+- 如果缓冲区变得过大，我们可以进行追赶。
+- 还有许多其他情况...
 
-## Using the Algorithm
+![快照插值模拟](../../../.gitbook/assets/2021-07-06\_20-23-58@2x.png)
 
-Please read through our `SnapshotInterpolation.cs` code in Mirror to see the algorithm & helper functions, and then read through `NetworkTransform` as usage example.
+**作为结果**
 
-To summarize, there are a few key aspects:
+_这只是一个计算快照和参数，得到结果的过程。_ 预期
 
-* The **Snapshot** **interface**: your `RigidbodySnapshot`, `CharacterControllerSnapshot` etc. structs have to implement that interface.
-* The **Time Buffer**, which is a `SortedList<timestamp, Snapshot>` buffer. We offer several helper functions like `InsertIfNewEnough` for convenience.&#x20;
-  * All of those functions are heavily covered with unit tests.
-* The **Compute()** algorithm: given a snapshot buffer, time, deltaTime and configuration parameters, it spits out the next interpolated Snapshot (if any).&#x20;
-  * This function comes with heavy test coverage, in fact it's likely the most tested function in all of Mirror.
+## 使用该算法
+
+请阅读我们在 Mirror 中的 `SnapshotInterpolation.cs` 代码，以查看算法和辅助函数，然后阅读 `NetworkTransform` 作为使用示例。
+
+总结一下，有几个关键方面：
+
+- **快照** **接口**：你的 `RigidbodySnapshot`、`CharacterControllerSnapshot` 等结构体必须实现该接口。
+- **时间缓冲区**，这是一个 `SortedList<timestamp, Snapshot>` 缓冲区。我们提供了几个辅助函数，如 `InsertIfNewEnough` 以方便使用。
+  - 所有这些函数都经过了大量的单元测试。
+- **Compute()** 算法：给定一个快照缓冲区、时间、deltaTime 和配置参数，它会输出下一个插值的快照（如果有的话）。
+  - 这个函数经过了大量的测试覆盖，事实上，这可能是 Mirror 中所有函数中测试最多的函数。
 
 {% hint style="success" %}
-Make sure to read the [Snapshot Interpolation](https://gafferongames.com/post/snapshot\_interpolation/) article to understand how it all works, and then look through`SnapshotInterpolation.cs` and `NetworkTransformBase.cs`to see it in action. Even with our provided algorithm, it's still not an easy topic to understand and implement correctly.
+确保阅读 [快照插值](https://gafferongames.com/post/snapshot\_interpolation/) 文章，以了解它是如何工作的，然后查看 `SnapshotInterpolation.cs` 和 `NetworkTransformBase.cs`，看看它是如何运作的。即使有了我们提供的算法，理解和正确实现它仍然不是一件容易的事情。
 {% endhint %}
 
 {% hint style="warning" %}
-Note how`NetworkTransform` sends snapshots **every**`sendInterval`over the **unreliable** channel. Do not send **only if changed**, this would require knowledge about the other end's last received snapshot (either over **reliable**, or with a **notify** algorithm).
+请注意，`NetworkTransform` 每隔`sendInterval`通过**不可靠**通道发送快照。不要仅在**发生更改时**发送，这将需要了解另一端上次接收到的快照（无论是通过**可靠**方式，还是使用**通知**算法）。
 {% endhint %}
 
 {% hint style="info" %}
-Note that NetworkTransform sends **every**`sendInterval`. Bandwidth will be significantly reduced once we implement **Bitpacking** and **Delta Compression** into Mirror.
+请注意，NetworkTransform 每隔`sendInterval`发送一次。一旦我们将**Bitpacking**和**Delta Compression**引入 Mirror，带宽将显着减少。
 {% endhint %}
 
-## Benchmarks & Results
+## 基准测试和结果
 
-We recommend using Mirror's **LatencySimulationTransport** to try it yourself, for example with our **Benchmark** demo. Even for poor networking conditions, Snapshot Interpolation will perform well as long as the **bufferMultiplier** is high enough.
+我们建议使用 Mirror 的**LatencySimulationTransport**自行尝试，例如使用我们的**Benchmark**演示。即使在网络条件较差的情况下，只要**bufferMultiplier**足够高，快照插值的性能就会很好。
 
-#### Some test videos:
+#### 一些测试视频：
 
-* NetworkTransform [old vs. new comparison](https://youtu.be/z2JpT\_qLmzk) on Youtube (secret project).
-* See the original [Pull Request](https://github.com/vis2k/Mirror/pull/2791) progress videos. You can see how latency, loss & scramble are gradually solved with every added feature.
-* JesusLovsYooh old vs. new NetworkTransform _(watch the left build, OG NT is the old one and NT 2k is the new one)_
+* NetworkTransform [旧版与新版比较](https://youtu.be/z2JpT\_qLmzk) 在 Youtube 上（秘密项目）。
+* 查看原始[Pull Request](https://github.com/vis2k/Mirror/pull/2791)进度视频。您可以看到每添加一个功能，延迟、丢包和混乱是如何逐渐解决的。
+* JesusLovsYooh 旧版与新版 NetworkTransform _(观看左侧版本，OG NT 是旧版，NT 2k 是新版)_
 
 {% embed url="https://www.youtube.com/watch?v=fu7w9vlG7yQ" %}
-Skip halfway through to see new NT under bad network conditions.
-{% endembed %}
+跳到一半查看在糟糕网络条件下的新 NT。

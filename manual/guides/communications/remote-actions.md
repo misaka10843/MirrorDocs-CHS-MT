@@ -10,9 +10,9 @@ The diagram below shows the directions that remote actions take:
 
 Commands are sent from player objects on the client to player objects on the server. For security, Commands can only be sent from YOUR player object by default, so you cannot control the objects of other players. You can bypass the authority check using `[Command(requiresAuthority = false)]`.
 
-To make a function into a command, add the \[Command] custom attribute to it, and optionally add the "Cmd" prefix for naming convention. This function will now be run on the server when it is called on the client. Any parameters of [allowed data type](../data-types.md) will be automatically passed to the server with the command.
+To make a function into a command, add the \[Command] custom attribute to it, and optionally add the “Cmd” prefix for naming convention. This function will now be run on the server when it is called on the client. Any parameters of [allowed data type](../data-types.md) will be automatically passed to the server with the command.
 
-Commands functions should have the prefix "Cmd" and cannot be static. This is a hint when reading code that calls the command - this function is special and is not invoked locally like a normal function.
+Commands functions should have the prefix “Cmd” and cannot be static. This is a hint when reading code that calls the command - this function is special and is not invoked locally like a normal function.
 
 ```csharp
 public class Player : NetworkBehaviour
@@ -48,11 +48,11 @@ Be careful of sending commands from the client every frame! This can cause a lot
 
 It is possible to invoke commands on non-player objects if any of the following are true:
 
-- The object was spawned with client authority
-- The object has client authority set with `NetworkIdentity.AssignClientAuthority`
-- the Command has the `requiresAuthority` option set false.
-  - You can include an optional `NetworkConnectionToClient sender = null` parameter in the Command method signature and Mirror will fill in the sending client for you.
-  - Do not try to set a value for this optional parameter...it will be ignored.
+* The object was spawned with client authority
+* The object has client authority set with `NetworkIdentity.AssignClientAuthority`
+* the Command has the `requiresAuthority` option set false.
+  * You can include an optional `NetworkConnectionToClient sender = null` parameter in the Command method signature and Mirror will fill in the sending client for you.
+  * Do not try to set a value for this optional parameter...it will be ignored.
 
 Commands sent from these objects are run on the server instance of the object, not on the associated player object for the client.
 
@@ -66,7 +66,7 @@ public class Door : NetworkBehaviour
 {
     [SyncVar]
     public DoorState doorState;
-
+    
     [Client]
     void OnMouseUpAsButton()
     {
@@ -77,19 +77,19 @@ public class Door : NetworkBehaviour
     public void CmdSetDoorState(NetworkConnectionToClient sender = null)
     {
         bool hasDoorKey = sender.identity.GetComponent<PlayerState>().hasDoorKey;
-
+        
         if (doorState == DoorState.Open)
         {
             doorState = hasDoorKey ? DoorState.Locked : DoorState.Closed;
             return;
         }
-
+        
         if (doorState == DoorState.Locked && hasDoorKey)
         {
             doorState = DoorState.Open;
             return;
         }
-
+        
         if (doorState == DoorState.Closed)
             doorState = DoorState.Open;
     }
@@ -98,9 +98,9 @@ public class Door : NetworkBehaviour
 
 ## ClientRpc Calls <a href="#clientrpc-calls" id="clientrpc-calls"></a>
 
-ClientRpc calls are sent from objects on the server to objects on clients. They can be sent from any server object with a NetworkIdentity that has been spawned. Since the server has authority, then there no security issues with server objects being able to send these calls. To make a function into a ClientRpc call, add the \[ClientRpc] custom attribute to it, and optionally add the "Rpc" prefix for naming convention. This function will now be run on clients when it is called on the server. Any parameters of [allowed data type](../data-types.md) will automatically be passed to the clients with the ClientRpc call..
+ClientRpc calls are sent from objects on the server to objects on clients. They can be sent from any server object with a NetworkIdentity that has been spawned. Since the server has authority, then there no security issues with server objects being able to send these calls. To make a function into a ClientRpc call, add the \[ClientRpc] custom attribute to it, and optionally add the “Rpc” prefix for naming convention. This function will now be run on clients when it is called on the server. Any parameters of [allowed data type](../data-types.md) will automatically be passed to the clients with the ClientRpc call..
 
-ClientRpc functions should have the prefix "Rpc" and cannot be static. This is a hint when reading code that calls the method - this function is special and is not invoked locally like a normal function.
+ClientRpc functions should have the prefix “Rpc” and cannot be static. This is a hint when reading code that calls the method - this function is special and is not invoked locally like a normal function.
 
 ```csharp
 public class Player : NetworkBehaviour
@@ -135,8 +135,8 @@ TargetRpc functions are called by user code on the server, and then invoked on t
 
 **Context Matters:**
 
-- If the first parameter of your TargetRpc method is a `NetworkConnection` then that's the connection that will receive the message regardless of context.
-- If the first parameter is any other type, then the owner client of the object with the script containing your TargetRpc will receive the message.
+* If the first parameter of your TargetRpc method is a `NetworkConnection` then that's the connection that will receive the message regardless of context.
+* If the first parameter is any other type, then the owner client of the object with the script containing your TargetRpc will receive the message.
 
 This example shows how a client can use a Command to make a request to the server (`CmdMagic`) by including another Player's `connectionToClient` as one of the parameters of the TargetRpc invoked directly from that Command:
 

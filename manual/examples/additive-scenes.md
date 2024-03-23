@@ -1,27 +1,27 @@
-# Additive Scenes
+# 添加式场景
 
-IMPORTANT: Make sure you have a layer in project settings called Player for this example to work well.
+重要提示: 确保在项目设置中有一个名为 Player 的层，以便本示例能够正常工作。
 
-In Build Settings, remove all scenes and add all of the scenes from the Scenes folder in the following order:
+在构建设置中，移除所有场景，并按照以下顺序添加 Scenes 文件夹中的所有场景:
 
 * MainScene
 * SubScene
 
-Open the MainScene in the Editor and make sure the Sub Scenes list in the Network Manager component on the Network scene object contains the SubScene scene. This is already setup by default, but if the MainScene was opened and saved before putting the scenes in the Build Settings list, the Sub Scenes list may be cleared accidentally.
+在编辑器中打开 MainScene，并确保 Network Manager 组件上的 Network 场景对象的 Sub Scenes 列表包含 SubScene 场景。这已经默认设置好了，但如果在将场景放入构建设置列表之前打开并保存了 MainScene，则 Sub Scenes 列表可能会被意外清除。
 
-File -> Build and Run
+文件 -> 构建并运行
 
-Start up to 3 built instances: These will all be client players.
+启动最多 3 个已构建的实例: 这些都将是客户端玩家。
 
-Press Play in the Editor and click Host (Server + Client) in the HUD
+在编辑器中按 Play，然后在 HUD 中点击 Host (服务器 + 客户端)
 
-* This will be the host and the 1st player of up to 4. You can also use Server Only if you prefer.
+* 这将是主机和最多 4 个玩家中的第一个。您也可以选择仅服务器。
 
-Click Client in the built instances.
+在已构建的实例中点击 Client。
 
-* WASDQE keys to move & turn your player capsule.
-* There are objects in the corners of the scene hidden by Proximity Checkers.
-* The big area in the middle is where the subscene will be loaded when you get near the shelter.
-* There are also networked objects inside the subscene, also with Proximity Checkers.
-* Since subscenes are only loaded for individual clients, other clients that are outside the middle Zone won't see what those in the subscene can see.
-* If you play a built instance as Host or Server and play as client in the editor, you'll see the subscene content load and unload in the hierarchy as you move in and out of the middle Zone.
+* 使用 WASDQE 键移动和转动您的玩家胶囊。
+* 场景角落有一些被 Proximity Checkers 隐藏的物体。
+* 中间的大区域是当您靠近庇护所时将加载子场景的地方。
+* 子场景中还有一些网络化的物体，也带有 Proximity Checkers。
+* 由于子场景仅为各个客户端加载，因此在中间区域之外的其他客户端将看不到子场景中的内容。
+* 如果您在主机或服务器上以客户端身份播放已构建的实例，并在编辑器中以客户端身份播放，则当您在中间区域内移动时，您将看到子场景内容在层次结构中加载和卸载。

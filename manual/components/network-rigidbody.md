@@ -1,21 +1,23 @@
-# Network Rigidbody
+# 网络刚体(Network Rigidbody)
 
-> The Network Rigidbody classed as "Experimental" for now so please share any problems or bugs you find with it and use at your own risk if production builds.
+> 目前，"网络刚体(Network Rigidbody)"类别被标记为"实验性"，因此如果在生产版本中使用，请注意任何问题或错误，并自行承担风险。
 
-The Network Rigidbody component synchronizes velocity and other properties of a rigidbody across the network. This component is useful when you have a non-kinematic rigidbody that have constant forces applied to them, like gravity, but also want to apply forces or change velocity to that rigidbody or server or client with authority. For example, objects that move and jump using rigidbody using gravity.
+"网络刚体(Network Rigidbody)"组件会在网络中同步刚体的速度和其他属性。当您有一个非运动学刚体，对其施加恒定力（如重力），但又想在服务器或客户端上对该刚体施加力或改变速度时，这个组件就非常有用。例如，使用重力移动和跳跃的物体。
 
-A game object with a Network Rigidbody component must also have a Network Identity component. When you add a Network Rigidbody component to a game object, Mirror also adds a Network Identity component on that game object if it does not already have one.
+拥有"网络刚体(Network Rigidbody)"组件的游戏对象还必须具有"网络标识(Network Identity)"组件。当您向游戏对象添加"网络刚体(Network Rigidbody)"组件时，如果游戏对象尚未具有"网络标识(Network Identity)"组件，Mirror也会在该游戏对象上添加一个"网络标识(Network Identity)"组件。
 
-Network Rigidbody works best when there is also a NetworkTransform for the object to keep position as well as velocity in sync.
+当对象还有一个"网络变换(NetworkTransform)"组件时，"网络刚体(Network Rigidbody)"的效果最佳，以保持位置和速度同步。
 
 ![](<../../.gitbook/assets/image (39).png>)
 
-By default, Network Rigidbody is server-authoritative unless you check the box for **Client Authority**. Client Authority applies to player objects as well as non-player objects that have been specifically assigned to a client, but only for this component. With this enabled, value changes are send from the client to the server.
+默认情况下，"网络刚体(Network Rigidbody)"是服务器权威的，除非您勾选**客户端权限(Client Authority)**框。客户端权限适用于玩家对象以及已被明确分配给客户端的非玩家对象，但仅适用于此组件。启用此功能后，值的更改将从客户端发送到服务器。
 
-The **Sensitivity** options allow you to set a minimum thresholds before values are send over network. This helps minimize network traffic for very small changes.
+**灵敏度(Sensitivity)**选项允许您设置在值发送到网络之前的最小阈值。这有助于减少非常小的更改的网络流量。
 
-For some object you may not want them to rotate but don't need to sync the Angular Velocity. The **Clear Angular Velocity** will set the Angular Velocity to zero each frame causing the minimizing when objects rotation. The same can apply to **Clear Velocity**. If **Clear Velocity Velocity** is enabled then clear is ignored.
+对于某些对象，您可能不希望它们旋转，但又不需要同步角速度。**清除角速度(Clear Angular Velocity)**将使每帧将角速度设置为零，从而最小化对象旋转时的影响。同样的方法也适用于**清除速度(Clear Velocity)**。如果启用了**清除速度(Clear Velocity)**，则清除将被忽略。
 
-Normally, changes are sent to all observers of the object this component is on. Setting **Sync Mode** to Owner Only makes the changes private between the server and the client owner of the object.
+通常，更改会发送给此组件所在对象的所有观察者。将**同步模式(Sync Mode)**设置为仅所有者(Owner Only)会使更改在服务器和对象的客户端所有者之间保持私有。
 
-You can use the **Sync Interval** to specify how often it syncs (in seconds). This applies both to Client Authority and Server Authority.
+您可以使用**同步间隔(Sync Interval)**指定同步的频率（以秒为单位）。这适用于客户端权限和服务器权限。
+
+请提供您要翻译的 Markdown 内容。

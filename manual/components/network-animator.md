@@ -1,25 +1,27 @@
-# Network Animator
+# 网络动画师(Network Animator)
 
-The Network Animator component allows you to synchronize animation states for networked objects. It synchronizes state and parameters from an Animator Controller.
+网络动画师组件允许您同步网络对象的动画状态。它会同步来自动画控制器的状态和参数。
 
-Note that if you create a Network Animator component on an empty game object, Mirror also creates a Network Identity component and an Animator component on that game object.
+请注意，如果您在空游戏对象上创建一个网络动画师组件，Mirror 也会在该游戏对象上创建一个网络身份(Network Identity)组件和一个动画师(Animator)组件。
 
-* **Client Authority**\
-  &#x20;Enable this to have changes to animation parameters sent from client to server.
-* **Animator**\
-  &#x20;Use this field to define the Animator component you want the Network Animator to synchronize with.
+* **客户端权限(Client Authority)**\
+  &#x20;启用此选项可使来自客户端对服务器的动画参数更改被发送。
+* **动画师(Animator)**\
+  &#x20;使用此字段定义您希望网络动画师同步的动画师组件。
 
-Normally, changes are sent to all observers of the object this component is on. Setting **Sync Mode** to Owner Only makes the changes private between the server and the client owner of the object.
+通常，更改会发送给此组件所在对象的所有观察者。将**同步模式(Sync Mode)**设置为仅所有者(Owner Only)会使更改在服务器和对象的客户端所有者之间保持私有。
 
 ![](<../../.gitbook/assets/image (139).png>)
 
-You can use the **Sync Interval** to specify how often it syncs (in seconds).
+您可以使用**同步间隔(Sync Interval)**来指定同步的频率(以秒为单位)。
 
-## Details <a href="#details" id="details"></a>
+## 详细信息 <a href="#details" id="details"></a>
 
-The Network Animator ensures the synchronization of game object animation across the network, meaning that all players see the animation happen at the same. There are two kinds of authority for networked animation (see documentation on [Network Authority](../guides/authority.md)):
+网络动画师确保游戏对象动画在网络中同步，这意味着所有玩家都会同时看到动画发生。网络动画有两种权限类型(请参阅[网络权限(Network Authority)](../guides/authority.md)文档)：
 
-> **NOTE:** Animator Triggers are not synced directly. Call `NetworkAnimator.SetTrigger` instead. A game object with authority can use the SetTrigger function to fire an animation trigger on other clients.
+> **注意:** 动画师触发器不会直接同步。请调用 `NetworkAnimator.SetTrigger`。具有权限的游戏对象可以使用 SetTrigger 函数在其他客户端上触发动画触发器。
 
-* If the game object has authority on the client, you should animate it locally on the client that owns the game object. That client sends the animation state information to the server, which broadcasts it to all the other clients. For example, this may be suitable for player characters with client authority.
-* If the game object has authority on the server, then you should animate it on the server. The server then sends state information to all clients. This is common for animated game objects that are not related to a specific client, such as scene objects and non-player characters, or server-authoritative clients.
+* 如果游戏对象在客户端上具有权限，则应在拥有游戏对象的客户端上本地进行动画。该客户端将动画状态信息发送到服务器，服务器将其广播给所有其他客户端。例如，这可能适用于具有客户端权限的玩家角色。
+* 如果游戏对象在服务器上具有权限，则应在服务器上进行动画。服务器然后将状态信息发送给所有客户端。这适用于与特定客户端无关的动画游戏对象，例如场景对象和非玩家角色，或服务器具有权限的客户端。
+
+请提供要翻译的 Markdown 内容。

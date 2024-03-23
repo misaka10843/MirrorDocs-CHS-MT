@@ -1,11 +1,11 @@
-# Network Start Position
+# 网络开始位置
 
-To control where players are spawned, you can use the Network Start Position component.
+要控制玩家生成的位置，您可以使用 Network Start Position（网络开始位置）组件。
 
-To use these, attach a Network Start Position component to a game object in the scene, and position the game object where you would like one of the players to start. You can add as many start positions to your Scene as you like. The Network Manager detects all start positions in your Scene, and when it spawns each player instance, it uses the position and orientation of one of them.
+要使用这些组件，请将 Network Start Position 组件附加到场景中的一个游戏对象上，并将游戏对象定位到您希望其中一个玩家开始的位置。您可以在场景中添加任意数量的开始位置。网络管理器会检测场景中的所有开始位置，并在生成每个玩家实例时，使用其中一个的位置和方向。
 
-The Network Manager will spawn players at (0, 0, 0) by default. Adding this component to a game object will automatically register/unregister its game object's transform to the Network Manager as an available spawning position.
+网络管理器默认会在 (0, 0, 0) 处生成玩家。将此组件添加到游戏对象将自动将其游戏对象的变换注册/注销到网络管理器，作为可用的生成位置。
 
-Depending on the Network Manager Player Spawn Method setting the spawning is either Random (possible that the same spawn position will be used by two or more players) or Round Robin (use every available position, until there are more clients than spawn points).
+根据网络管理器的玩家生成方法设置，生成方式可以是随机（可能会有两个或更多玩家使用相同的生成位置）或循环轮换（使用每个可用位置，直到客户端数量超过生成点）。
 
-![](<../../.gitbook/assets/image (90).png>)
+![](<../../.gitbook/assets/image (90).png>){/*examples*/}

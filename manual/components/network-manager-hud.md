@@ -1,66 +1,66 @@
-# Network Manager HUD
+# 网络管理器 HUD
 
-The Network Manager HUD ("heads-up display") is a quick-start tool to help you start building your multiplayer game straight away, without first having to build a user interface for game creation/connection/joining. It allows you to jump straight into your game play programming, and means you can build your own version of these controls later in your development schedule.
+网络管理器 HUD（“heads-up display”）是一个快速启动工具，帮助您立即开始构建多人游戏，而无需首先构建用于游戏创建/连接/加入的用户界面。它允许您直接开始游戏编程，并且意味着您可以在开发进度表中稍后构建这些控件的自定义版本。
 
-It is not, however, intended to be included in finished games. The idea is that these controls are useful to get you started, but you should create your own UI later on, to allow your players to find and join games in a way that suits your game. For example, you might want to stylize the design of the screens, buttons and list of available games to match the overall style of your game.
+然而，它并不打算包含在完成的游戏中。这些控件的理念是帮助您入门，但您应该稍后创建自己的用户界面，以便让您的玩家以适合您的游戏的方式找到并加入游戏。例如，您可能希望设计屏幕、按钮和可用游戏列表的样式，以匹配您游戏的整体风格。
 
-To start using the Network Manager HUD, either add the component to the same scene object that has the Network Manager component, or create an empty game object in your scene (menu: game object > Create Empty) and add the Network Manager HUD component to the new game object.
+要开始使用网络管理器 HUD，可以将该组件添加到具有网络管理器组件的同一场景对象中，或者在场景中创建一个空的游戏对象（菜单：游戏对象 > 创建空对象），并将网络管理器 HUD 组件添加到新的游戏对象中。
 
 ![](<../../.gitbook/assets/image (92).png>)
 
-- **Show GUI**\
-  &#x20;Tick this checkbox to show the HUD GUI at run time. This allows you to reveal or hide it for quick debugging.
-- **Offset X**\
-  &#x20;Set the horizontal **pixel** offset of the HUD GUI, measured from the left edge of the screen.
-- **Offset Y**\
-  &#x20;Set the vertical pixel offset of the HUD GUI, measured from the top edge of the screen.
+* **显示 GUI**\
+  &#x20;选中此复选框以在运行时显示 HUD GUI。这允许您快速调试时显示或隐藏它。
+* **水平偏移**\
+  &#x20;设置 HUD GUI 的水平像素偏移，从屏幕左边缘测量。
+* **垂直偏移**\
+  &#x20;设置 HUD GUI 的垂直像素偏移，从屏幕顶部边缘测量。
 
-The Network Manager HUD provides the basic functions so that people playing your game can start hosting a networked game, or find and join an existing networked game. Unity displays the Network Manager HUD as a collection of simple UI buttons in the Game view.
+网络管理器 HUD 提供基本功能，使玩家可以开始托管网络游戏，或查找并加入现有的网络游戏。Unity 在游戏视图中显示网络管理器 HUD 作为一组简单的 UI 按钮。
 
 ![](<../../.gitbook/assets/image (8).png>)
 
-## Using the HUD <a href="#using-the-hud" id="using-the-hud"></a>
+## 使用 HUD <a href="#using-the-hud" id="using-the-hud"></a>
 
-The Network Manager HUD starts in Server + Client mode, and displays buttons relating to hosting and joining a multiplayer game.
+网络管理器 HUD 以服务器 + 客户端模式启动，并显示与托管和加入多人游戏相关的按钮。
 
-### Host (Server + Client) <a href="#host-server--client" id="host-server--client"></a>
+### 托管（服务器 + 客户端）<a href="#host-server--client" id="host-server--client"></a>
 
-Click the Host (Server + Client) button to start a game as a host on the local network. This client is both the host _and_ one of the players in the game. It uses the information from the Network Info section in the inspector to host the game.
+点击主机（服务器 + 客户端）按钮以在本地网络上作为主机启动游戏。此客户端既是主机 _也是_ 游戏中的一名玩家。它使用检视器中“网络信息”部分的信息来托管游戏。
 
-When you click this button, the HUD switches to a simple display of network details, and a Stop button which allows you to stop hosting the game and return to the main HUD menu.
+当您点击此按钮时，HUD 切换为网络详细信息的简单显示，并显示一个“停止”按钮，允许您停止托管游戏并返回到主 HUD 菜单。
 
 ![](<../../.gitbook/assets/image (10).png>)
 
-When you have started a game as a host, other players of the game can then connect to the host to join the game.
+当您作为主机启动游戏后，游戏的其他玩家可以连接到主机以加入游戏。
 
-Click the Stop button to disconnect from the host. Clicking Stop also returns to the main HUD menu.
+点击“停止”按钮以断开与主机的连接。单击“停止”也会返回到主 HUD 菜单。
 
-### Client <a href="#client" id="client"></a>
+### 客户端（Client）{/*client*/}
 
-To connect to a host on the internet use the text field to the right of the Client button to specify the address of the host. The default host address is "localhost", which means the client looks on its own computer for the game host. In addition to _localhost_, you can specify an IPv4 address, and IPv6 address, or a fully-qualified domain name (FQDN), e.g. _game.example.com_, and the transport with resolve the name using DNS. Click Client to attempt to connect to the host address you have specified.
+要连接到互联网上的主机，请使用“客户端”按钮右侧的文本字段指定主机的地址。默认主机地址为“localhost”，这意味着客户端在自己的计算机上寻找游戏主机。除了 _localhost_，您还可以指定 IPv4 地址、IPv6 地址或完全限定域名（FQDN），例如 _game.example.com_，传输将使用 DNS 解析名称。单击“客户端”以尝试连接到您指定的主机地址。
 
-Use the default "localhost" in this field if you are running multiple instances of your game on one computer, to test multiplayer interactivity. To do this, you can create a standalone build of your game, and then launch it multiple times on your computer. This is a common way to quickly test that your networked game interactions are functioning as you expect, without you needing to deploy your game to multiple computers or devices.
+如果您在一台计算机上运行多个游戏实例以测试多人互动性，请在此字段中使用默认的“localhost”。为此，您可以创建游戏的独立构建，然后在计算机上多次启动它。这是一种快速测试您的网络游戏交互是否按预期运行的常见方式，而无需将游戏部署到多台计算机或设备上。
 
 ![](<../../.gitbook/assets/image (135).png>)
 
-When you want to test your game on multiple machines you need to put the address of the computer acting as host into the address text field.
+当您想要在多台计算机上测试游戏时，您需要将充当主机的计算机地址放入地址文本字段中。
 
-The computer acting as the host needs to tell their IP address to everyone running clients, so that you can type this into the box. For local clients on a LAN, that's the local IP address. For remote clients, that's the WAN IP address of the router of the host. Firewall rules and port-forwarding are generally required for a computer to act as host and accept connections from other computers, whether they're on the LAN or the internet.
+充当主机的计算机需要将其 IP 地址告诉所有运行客户端的人，以便您可以将其输入到框中。对于局域网上的本地客户端，这是本地 IP 地址。对于远程客户端，这是主机路由器的 WAN IP 地址。通常需要防火墙规则和端口转发，以便计算机充当主机并接受来自其他计算机的连接，无论它们是在局域网还是互联网上。
 
-Enter the IP address (or leave it as "localhost" if you are testing it on your own machine), then click Client to attempt to connect to the host.
+输入 IP 地址（如果在自己的机器上测试，请将其保留为“localhost”），然后单击 Client（客户端）以尝试连接到主机。
 
-When the client is attempting to connect, the HUD displays a Cancel Connection Attempt button. Click this if you want to stop trying to connect to the host.
+当客户端尝试连接时，HUD 显示一个“取消连接尝试”按钮。如果您想要停止尝试连接到主机，请单击此按钮。
 
 ![](<../../.gitbook/assets/image (26).png>)
 
-If the connection is successful, the HUD displays the Stop button. Click this if you want to stop the game on the client and disconnect from the host:
+如果连接成功，HUD 将显示“停止”按钮。如果您想要停止客户端上的游戏并断开与主机的连接，请单击此按钮：
 
 ![](<../../.gitbook/assets/image (48).png>)
 
-### Server Only <a href="#server-only" id="server-only"></a>
+### 仅服务器（Server Only）<a href="#server-only" id="server-only"></a>
 
-Click Server Only to start a game which acts as a server that other clients can connect to, but which does not act as a client to the game itself. This type of game is often called a "dedicated server". A user cannot play the game on this particular instance of your game. All players must connect as clients, and nobody plays on the instance that is running as the server.
+单击“Server Only”以启动一个游戏，该游戏充当其他客户端可以连接的服务器，但不充当游戏本身的客户端。这种类型的游戏通常被称为“专用服务器”（dedicated server）。用户无法在您的游戏的这个特定实例上玩游戏。所有玩家必须作为客户端连接，没有人在作为服务器运行的实例上进行游戏。
 
-A dedicated server results in better performance for all connected players, because the server doesn’t need to process a local player’s game play in addition to acting as server.
+专用服务器可以提高所有连接玩家的性能，因为服务器无需处理本地玩家的游戏玩法，而只需充当服务器。
 
-You might also choose this option if you want to host a game that can be played over the internet (rather than just within a local network), but want to maintain control of the server yourself - for example, to prevent cheating by one of the clients, because only the server has authority over the game. To do this, you would need to run the game in Server Only mode on a computer with a public IP address.
+您也可以选择此选项，如果您想要托管一个可以通过互联网进行游玩的游戏（而不仅限于本地网络），但又想要自己控制服务器 - 例如，防止其中一个客户端作弊，因为只有服务器对游戏有权。为此，您需要在具有公共 IP 地址的计算机上以“Server Only”模式运行游戏。

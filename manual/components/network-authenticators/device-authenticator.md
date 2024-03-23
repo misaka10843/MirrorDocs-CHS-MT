@@ -1,17 +1,17 @@
-# Device Authenticator
+# 设备验证器
 
-Device Authenticator uses the `SystemInfo.deviceUniqueIdentifier` to identify the client.
+设备验证器使用 `SystemInfo.deviceUniqueIdentifier` 来识别客户端。
 
-For platforms that don't support `deviceUniqueIdentifier` a GUID is generated and stored in `PlayerPrefs`.
+对于不支持 `deviceUniqueIdentifier` 的平台，会生成一个 GUID 并存储在 `PlayerPrefs` 中。
 
 {% hint style="warning" %}
-NOTE: deviceUniqueIdentifier can be spoofed, so there's no guarantee of security.
+注意：`deviceUniqueIdentifier` 可以被伪造，因此无法保证安全性。
 {% endhint %}
 
-* Drag the Device Authenticator script to the inspector of the object in your scene that has Network Manager
-* The Device Authenticator component will automatically be assigned to the Authenticator field in Network Manager
+* 将设备验证器脚本拖动到场景中具有网络管理器的对象的检查器中
+* 设备验证器组件将自动分配给网络管理器中的验证器字段
 
-When you're done, it should look like this:
+完成后，应该如下所示：
 
 <div align="left">
 
@@ -26,5 +26,5 @@ When you're done, it should look like this:
 </div>
 
 {% hint style="info" %}
-You don't need to assign anything to the event lists unless you want to subscribe to the events in your own code for your own purposes. Mirror has internal listeners for both events.
+除非您想要订阅自己代码中的事件以供自己使用，否则无需将任何内容分配给事件列表。Mirror 对两个事件都有内部监听器。
 {% endhint %}

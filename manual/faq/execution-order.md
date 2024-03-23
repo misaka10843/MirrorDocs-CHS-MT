@@ -1,8 +1,8 @@
 ---
-description: Graphs courtesy from @ray in Discord.
+description: Discord 中 @ray 提供的图表。
 ---
 
-# Execution Order
+# 执行顺序
 
 ![](<../../.gitbook/assets/image (95).png>)
 

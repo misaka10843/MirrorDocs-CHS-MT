@@ -1,10 +1,10 @@
-# FAQ
+# 常见问题解答
 
-## How to Send/Sync custom data types?
+## 如何发送/同步自定义数据类型？
 
-Mirror can automatically create Serialization functions for many custom data types when your scripts are compiled.
+当您的脚本被编译时，Mirror 可以自动为许多自定义数据类型创建序列化函数。
 
-For example, mirror will automatically create a functions for `MyCustomStruct` so that it can be sent without any extra work.
+例如，Mirror 将自动为 `MyCustomStruct` 创建函数，以便可以在不进行任何额外工作的情况下发送它。
 
 ```csharp
 [ClientRpc]
@@ -20,122 +20,122 @@ struct MyCustomStruct
 }
 ```
 
-For More details
+更多详情请查看
 
-* [Data Types](https://mirror-networking.gitbook.io/docs/guides/data-types)
-* [Serialization](https://mirror-networking.gitbook.io/docs/guides/serialization)
+* [数据类型](https://mirror-networking.gitbook.io/docs/guides/data-types)
+* [序列化](https://mirror-networking.gitbook.io/docs/guides/serialization)
 
-## How do I connect to another Mirror instance?
+## 如何连接到另一个 Mirror 实例？
 
-### To another instance on the same device
+### 连接到同一设备上的另一个实例
 
-Ensure you're connecting to "localhost". Localhost basically means "local host" which is your local machine.
+确保您连接到 "localhost"。Localhost 基本上意味着 "本地主机"，即您的本地计算机。
 
-Make sure the Network Address field on NetworkManager is set to "localhost", or if using the NetworkManagerHUD that the text box is "localhost". Make sure you don't include the quotes.
+确保 NetworkManager 上的 Network Address 字段设置为 "localhost"，或者如果使用 NetworkManagerHUD，则文本框设置为 "localhost"。确保不包含引号。
 
-Please note that this won't work on mobile devices, as neither iOS or Android support running two instances of the same application side-by-side. This is more suited for desktop testing and development use.
+请注意，这在移动设备上不起作用，因为 iOS 和 Android 都不支持同时在同一应用程序中运行两个实例。这更适用于桌面测试和开发用途。
 
-### **To another instance on the same network (LAN)**
+### 连接到同一网络（LAN）上的另一个实例
 
-Make sure the Network Address field on NetworkManager is set to the LAN IP of the host, or if using the NetworkManagerHUD that the text box is set to the LAN IP of the host.
+确保 NetworkManager 上的 Network Address 字段设置为主机的 LAN IP，或者如果使用 NetworkManagerHUD，则文本框设置为主机的 LAN IP。
 
-A correct setting, for example, is "192.168.8.100", "10.0.0.100", "172.16.42.69"\
-An incorrect setting, for example, is "localhost" or "203.200.110.100"&#x20;
+正确的设置示例包括 "192.168.8.100"，"10.0.0.100"，"172.16.42.69"。\
+不正确的设置示例包括 "localhost" 或 "203.200.110.100"。
 
-_In some cases you may need additional steps, check below_
+_在某些情况下，您可能需要额外的步骤，请查看下面_
 
-To check your LAN IP on Windows you can open PowerShell/Command Prompt and use the `ipconfig` command, then under your current adapter (ethernet/wifi/etc) look for the _IPv4 Address_ entry like so:
+要在 Windows 上检查您的 LAN IP，您可以打开 PowerShell/命令提示符并使用 `ipconfig` 命令，然后在当前适配器（以太网/无线等）下查找 _IPv4 地址_ 条目，如下所示：
 
-`IPv4 Address. . . . . . . . . . . : 192.168.x.x`
+`IPv4 地址. . . . . . . . . . . : 192.168.x.x`
 
-On Mac OS, you can use Network Settings in the Settings application, while on Linux you can either use `ifconfig`, `ip addr` or a GUI like _NetworkManager_ or _wicd_ to get your LAN IP depending if you are running a desktop environment or going commando at the command line.
+在 Mac OS 上，您可以在设置应用程序中使用网络设置，而在 Linux 上，您可以使用 `ifconfig`、`ip addr` 或类似 _NetworkManager_ 或 _wicd_ 的 GUI 来获取您的 LAN IP，具体取决于您是在运行桌面环境还是在命令行中操作。
 
-### To another instance (Internet/WAN)
+### 到另一个实例（互联网/WAN）
 
-Set the networkAddress field to be the IP address of the host (google 'whats my IP')
+将networkAddress字段设置为主机的IP地址（搜索“我的IP是多少”）
 
 {% hint style="warning" %}
-This section does not cover Relays, Dedicated VPSes or Headless Features.
+本节不涵盖中继（Relays）、专用VPS或无头特性。
 {% endhint %}
 
-For this to work, you will need to do **some** of the following, most of these depend on your set up and router:
+为了使其正常工作，您需要执行以下**一些**操作，大多数取决于您的设置和路由器：
 
-* **Port forwarding**:
-  * Ensure your ISP allows you to host servers on your own connection, some ISPs do not allow this and will filter incoming connections. **If in doubt, check with your ISP.** _Knowledge is power._
-  * Ensure your ISP allows you to change settings on your router. Some can be very strict and reset settings that you changed randomly.
-  * Either forward your game port (default is 7777) for your PC's local IP, 192.168.1.20 for example. Ensure that you specify the correct protocol, incoming UDP connections won't work if you have it only set to accept incoming TCP connections and vice versa. If your router supports it, you can use the "BOTH" setting to bypass this headache; **OR**
-  * Pull a quick (but less safe) trick add that local IP to the routers' DMZ for desperate measures.
+* **端口转发**：
+  * 确保您的ISP允许您在自己的连接上托管服务器，一些ISP不允许此操作，并会过滤传入连接。**如有疑问，请与您的ISP联系。** _知识就是力量。_
+  * 确保您的ISP允许您更改路由器设置。有些可能非常严格，并会随机重置您更改的设置。
+  * 要么将您的游戏端口（默认为7777）转发到您PC的本地IP，例如192.168.1.20。确保指定正确的协议，如果您只设置为接受传入TCP连接或者只设置为接受传入UDP连接，则传入UDP连接将无法工作。如果您的路由器支持，您可以使用“BOTH”设置来避免这个麻烦；**或者**
+  * 采取一个快速（但不太安全）的技巧，将该本地IP添加到路由器的DMZ中以采取绝望措施。
 
 {% hint style="danger" %}
-DMZ can be a very useful tool but **be warned:** _with great power comes great responsibility!_ \
-The computer that has the IP address you specify will be exposed on the internet without the router firewall filtering bad inbound traffic. That means if you're running any private web server or application, you may have intrusions from others located elsewhere on the internet.\
+DMZ可以是一个非常有用的工具，但**请注意：** _伴随着巨大的力量而来的是巨大的责任！_ \
+您指定的具有IP地址的计算机将在互联网上暴露，没有路由器防火墙来过滤不良的入站流量。这意味着如果您运行任何私人网络服务器或应用程序，您可能会受到来自互联网其他地方的入侵。\
 \
-**DO NOT USE** this DMZ option if you are running an unpatched operating system (for example, a old version of Microsoft Windows) or you risk your computer security being compromised. Ensure your security is enabled and your anti-virus/anti-malware software is fully updated before playing with DMZ settings.
+如果您正在运行未打补丁的操作系统（例如，旧版本的Microsoft Windows），或者您的计算机安全性可能会受到威胁，请**不要使用**此DMZ选项。在调整DMZ设置之前，请确保您的安全性已启用，并且您的防病毒/防恶意软件已完全更新。
 {% endhint %}
 
-* **PC Firewalls**:
-  * You can turn it off for a quick test to see if your firewall is being annoying. **Make sure you turn it back on later.**
-  * Manually allow the editor and any builds you create in your Firewall settings.
-* Try from a build rather than the Unity Editor as sometimes Unity Editor can be janky.
-* Some anti-virus/mobile devices may have additional blocking layers:
-  * If you can, try turning them off for a quick test. **Ensure you turn it back on later.**
-* In rare cases ISPs or companies/schools block ports and connections, this is harder to adjust yourself.
+* **PC防火墙**：
+  * 您可以关闭它进行快速测试，以查看您的防火墙是否在起作用。**确保稍后重新打开。**
+  * 在防火墙设置中手动允许编辑器和您创建的任何构建。
+* 有时候从构建中尝试而不是从Unity编辑器中尝试，因为Unity编辑器有时可能会有问题。
+* 一些防病毒软件/移动设备可能具有额外的阻止层：
+  * 如果可以的话，尝试关闭它们进行快速测试。**确保稍后重新打开。**
+* 在极少数情况下，ISP或公司/学校可能会阻止端口和连接，这很难自行调整。
 
-If you need more help it is best to google for guide for your setup and router. An sure-fire alternative to the above is to use a Dedicated Server/VPS or use a Relay.
+如果需要更多帮助，最好是搜索您的设置和路由器的指南。 除此之外，使用专用服务器/VPS或使用中继是一个确保的替代方案。
 
-## Host Migration
+## 主机迁移
 
-Host migration alternatives and work-around.
+主机迁移的替代方案和解决方法。
 
-Host migration as of writing is not built into Mirror, and it is best to avoid Host Migration completely if you can. Below are some tips as to why, and how you can add a host migration-like alternative.
+截至目前，Mirror中没有内置主机迁移功能，最好尽量避免主机迁移。以下是一些提示，说明为什么以及如何添加类似主机迁移的替代方案。
 
-* Dedicated hosts should rarely ever be closed, if you are doing games that need to stay open such as MMO's.
-* Short arena maps, take players back to the games list/matchmaker, so they can just join another, nice and simple.
+* 专用主机应该很少关闭，如果您正在开发需要保持开放状态的游戏，比如MMO（大型多人在线）游戏。
+* 短暂的竞技场地图，将玩家带回游戏列表/匹配器，这样他们就可以简单地加入另一个游戏。
 
-The work around is to basically fake the host migration, store info of a backup host on players game, upon disconnection, reconnect everyone in the game to that new host, then restore positions and variable data back to how it was before the original host disappeared.
+解决方法基本上是模拟主机迁移，将备用主机的信息存储在玩家游戏中，在断开连接时，重新连接游戏中的每个人到新主机，然后将位置和变量数据恢复到原始主机消失之前的状态。
 
-* Test players connections when they join, find one with unblocked ports, and decent ping/latency.
-* Send this players data (IP and Port) on all connected players games.
-* Save various player info, either locally or on that backup host, such as player positions, health etc
-* Upon disconnection from server, call a function to connect to the backup hoster. For example, `StartClient( BackupIP - BackupPort )`
-* As the scenes will most likely reset, along with players re-spawning, you now need to set player position back to your stored one that was saved either via checkpoints, or in the disconnect detection callback.
-* Cover all this up with a UI, saying please wait (optional, should happen in the blink of an eye).
+* 当玩家加入时测试他们的连接，找到一个具有未阻止端口和良好ping/延迟的玩家。
+* 在所有连接的玩家游戏中发送此玩家的数据（IP和端口）。
+* 保存各种玩家信息，可以是本地保存，也可以保存在备用主机上，比如玩家位置、生命值等。
+* 在与服务器断开连接时，调用一个函数连接到备用主机。例如，`StartClient(备用IP - 备用端口)`
+* 由于场景很可能会重置，玩家也会重新生成，现在您需要将玩家位置设置回您通过检查点保存的位置，或者在断开连接检测回调中保存的位置。
+* 用一个UI覆盖所有这些，显示请稍候（可选，应该在眨眼之间完成）。
 
-Depending on what your game is like, it'll either be easy or difficult to add the work-around. An example of these are:
+根据您的游戏类型，添加这个解决方法可能会很容易或很困难。以下是这些的示例：
 
-* (easier) A game only needing player position data such as "Fall Guys".
-* (difficult) Forge of Empires, a game where created objects are placed, soldiers, vehicles, various other crafts and upgrades, all with their own levels/stats.
+* （较容易）只需要玩家位置数据的游戏，比如“Fall Guys”。
+* （困难）像“帝国时代”的游戏，其中放置了创建的对象、士兵、车辆、各种其他工艺品和升级，所有这些都有自己的等级/统计数据。
 
-## Master / List Servers and Simple Matchmaker
+## 主/列表服务器和简单匹配器{/*examples*/}
 
-A database of world-wide registered host data.
+一个全球注册主机数据的数据库。
 
-All the hosts, dedicated or player hosts, get added into a list database, players get the list and can choose who to join. Using a list server means players do not have to manually enter IP addresses and Ports, it is all done behind the scenes, and works for localhost, LAN, and WAN connection types. You can show as much, or as little data as you like to the players, such as host name, type (deathmatch), player count (45 / 50), ping, enemy difficulty, map, region etc
+所有主机，无论是专用主机还是玩家主机，都会被添加到一个列表数据库中，玩家可以获取列表并选择加入哪个主机。使用列表服务器意味着玩家不必手动输入 IP 地址和端口，一切都在幕后完成，并且适用于本地主机、局域网和广域网连接类型。您可以向玩家展示尽可能多或尽可能少的数据，比如主机名称、类型（死斗）、玩家数量（45 / 50）、延迟、敌人难度、地图、地区等。
 
-* Node ListServer: Free, but you host the files yourself on an unblocked PC, like a VPS. Has a wide variety of customisable features, best option if you want self hosted dedicated games.
-* Light Reflective Mirror: This is a list server and a relay, it is free, but you host and manage the files yourself. Relays offer an unblocked route of traffic, but at the cost of extra latency/increased ping. This relay will test for a direct connection first, then fallback to routed traffic if that fails. Both the list server and relayed traffic is optional, you can use one part, and not the other. This is the best option for player hosted games, where router port blocks are common.
-* Epic and Steam, these are hosted for you.\
-  Check Discords Addons and Transports sections for more information, and for other non-listed ways of matchmaking and list servers.&#x20;
+* 节点列表服务器（Node ListServer）：免费，但您需要在未被阻止的个人电脑上托管文件，比如 VPS。具有各种可定制功能，如果您想要自托管的专用游戏，这是最佳选择。
+* 轻量级反射镜（Light Reflective Mirror）：这是一个列表服务器和中继，免费，但您需要自行托管和管理文件。中继提供了一个未被阻止的流量路径，但会增加额外的延迟/延迟。该中继将首先测试直接连接，然后在失败时回退到路由流量。列表服务器和中继流量都是可选的，您可以使用其中一个部分，而不使用另一个部分。这是玩家托管游戏的最佳选择，其中路由器端口阻止很常见。
+* Epic 和 Steam，这些是为您托管的。\
+  查看 Discord 的插件和传输部分以获取更多信息，以及其他未列出的匹配和列表服务器的方式。&#x20;
 
-### Simple Matchmaker
+### 简单匹配器
 
-* You can make matchmakers out of these list servers, simply hide the list to players, have them auto join a game with space. You could also filter out various requirements the player has set, for example, "USA" Region only, or "Lava Island" map.
+* 您可以利用这些列表服务器制作匹配器，简单地隐藏列表给玩家，让他们自动加入有空位的游戏。您还可以过滤玩家设置的各种要求，例如，“仅限美国”地区，或“熔岛”地图。
 
-## How to get the player count?
+## 如何获取玩家数量？
 
-There are a few ways to do this, each with their own unique benefit.
+有几种方法可以做到这一点，每种方法都有其独特的好处。
 
 **NetworkServer.connections.Count**
 
-* Socket connections, includes people without spawned prefabs, non authenticated, or that may have bugged out during spawn, but have connected temporarily (Android users minimising game). Only host / server can check this.
+* 套接字连接，包括没有生成预制体的人员、未经身份验证的人员，或在生成期间出现故障但暂时连接的人员（Android 用户最小化游戏）。只有主机/服务器可以检查这一点。
 
 **NetworkManager.singleton.numPlayers**
 
-* Number of active spawned player objects on the server (only the host / server can check this)
+* 服务器上活跃生成的玩家对象数量（只有主机/服务器可以检查）
 
-**Find by GameObject Tag**
+**通过游戏对象标签查找**
 
-* Works client-side, doesn't require network code, and a good way to distinguish between player states, by applying gameobject tags for certain situations, for example, 'not ready/Default', 'Dead', 'Spectator'.
+* 在客户端工作，不需要网络代码，并且是区分玩家状态的好方法，通过为特定情况应用游戏对象标签，例如，“未准备/默认”，“死亡”，“旁观者”。
 
 ```csharp
 public GameObject[] playersArray;

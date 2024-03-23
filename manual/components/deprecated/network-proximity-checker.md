@@ -1,30 +1,30 @@
 ---
-description: 'Deprecated: Use Spatial Hash or Distance Interest Management instead.'
+description: '已弃用：请改用空间哈希（Spatial Hash）或距离兴趣管理（Distance Interest Management）代替。'
 ---
 
-# Network Proximity Checker
+# 网络接近性检查器（Network Proximity Checker）
 
 {% hint style="danger" %}
-**Network Proximity Checker is Obsolete - use** [**Spatial Hash**](../../interest-management/spatial-hashing.md) **or** [**Distance**](../../interest-management/distance.md) **Interest Management instead.**
+**网络接近性检查器已过时 - 请改用** [**空间哈希**](../../interest-management/spatial-hashing.md) **或** [**距离**](../../interest-management/distance.md) **兴趣管理。**
 {% endhint %}
 
-The Network Proximity Checker component controls the visibility of game objects for network clients, based on proximity to players.
+网络接近性检查器组件控制网络客户端的游戏对象的可见性，根据其与玩家的接近程度。
 
 ![](<../../../.gitbook/assets/image (138).png>)
 
-* **Vis Range**\
-  &#x20;Define the range that the game object should be visible to observers.
-* **Vis Update Interval**\
-  &#x20;Define how often (in seconds) the game object should check for observers entering its visible range.
-* **Check Method**\
-  &#x20;Define which type of physics (2D or 3D) to use for proximity checking.
-* **Force Hidden**\
-  &#x20;Tick this checkbox to hide this object from all players.
+* **可见范围（Vis Range）**\
+  定义游戏对象应对观察者可见的范围。
+* **可见更新间隔（Vis Update Interval）**\
+  定义游戏对象应检查观察者进入其可见范围的频率（以秒为单位）。
+* **检查方法（Check Method）**\
+  定义用于接近性检查的物理类型（2D或3D）。
+* **强制隐藏（Force Hidden）**\
+  选中此复选框可将此对象从所有玩家隐藏。
 
-With the Network Proximity Checker, a game running on a client doesn’t have information about game objects that are not visible. This has two main benefits: it reduces the amount of data sent across the network, and it makes your game more secure against hacking.
+使用网络接近性检查器，运行在客户端上的游戏不会有关于不可见游戏对象的信息。这有两个主要好处：减少通过网络发送的数据量，并使您的游戏更安全防止黑客攻击。
 
-This component relies on physics to calculate visibility, so observer game objects must also have a collider component on it.
+此组件依赖于物理计算可见性，因此观察者游戏对象也必须在其上具有碰撞器组件。
 
-A game object with a Network Proximity Checker component must also have a Network Identity component. When you create a Network Proximity Checker component on a game object, Mirror also creates a Network Identity component on that game object if it does not already have one.
+具有网络接近性检查器组件的游戏对象还必须具有网络身份（Network Identity）组件。当您在游戏对象上创建网络接近性检查器组件时，如果该游戏对象尚未具有网络身份组件，则Mirror也会在该游戏对象上创建网络身份组件。
 
-Scene objects with a Network Proximity Checker component are disabled when they're out of range, and spawned objects are destroyed when they're out of range.
+具有网络接近性检查器组件的场景对象在超出范围时会被禁用，并且生成的对象在超出范围时会被销毁。

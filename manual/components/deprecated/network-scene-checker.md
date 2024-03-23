@@ -1,41 +1,41 @@
 ---
-description: 'Deprecated: Use Scene Interest Management instead.'
+description: '已弃用: 使用场景兴趣管理替代。'
 ---
 
-# Network Scene Checker
+# 网络场景检查器
 
 {% hint style="danger" %}
-**Network Scene Checker is Obsolete - use** [**Scene Interest Management**](../../interest-management/scene.md) **instead.**
+**网络场景检查器已过时 - 请改用** [**场景兴趣管理**](../../interest-management/scene.md) **。**
 {% endhint %}
 
-The Network Scene Checker component controls the visibility of game objects for network clients, based on which scene they're in.
+网络场景检查器组件控制网络客户端的游戏对象可见性，根据它们所在的场景。
 
 ![](<../../../.gitbook/assets/image (83).png>)
 
-* **Force Hidden**\
-  &#x20;Tick this checkbox to hide this object from all players.
+* **强制隐藏**\
+  &#x20;选中此复选框可将此对象从所有玩家中隐藏。
 
-With the Network Scene Checker, a game running on a client doesn’t have information about game objects that are not visible. This has two main benefits: it reduces the amount of data sent across the network, and it makes your game more secure against hacking.
+使用网络场景检查器，运行在客户端上的游戏没有关于不可见游戏对象的信息。这有两个主要好处：减少通过网络发送的数据量，并使您的游戏更安全，防止黑客攻击。
 
-This component would typically be used when the server has several subscenes loaded and needs to isolate networked objects to the subscene they're in.
+此组件通常在服务器加载了几个子场景并需要将网络对象隔离到它们所在的子场景时使用。
 
-A game object with a Network Scene Checker component must also have a Network Identity component. When you create a Network Scene Checker component on a game object, Mirror also creates a Network Identity component on that game object if it does not already have one.
+具有网络场景检查器组件的游戏对象还必须具有网络标识组件。当您在游戏对象上创建网络场景检查器组件时，如果该游戏对象尚未具有网络标识组件，Mirror 也会在该游戏对象上创建网络标识组件。
 
-Scene objects with a Network Scene Checker component are disabled when they're not in the same scene, and spawned objects are destroyed when they're not in the same scene.
+具有网络场景检查器组件的场景对象在不在同一场景时会被禁用，并且生成的对象在不在同一场景时会被销毁。
 
-## Use with Additive Scenes <a href="#use-with-additive-scenes" id="use-with-additive-scenes"></a>
+## 与附加场景一起使用 <a href="#use-with-additive-scenes" id="use-with-additive-scenes"></a>
 
-In Mirror, the Server and connected Clients are always on the same main scene, however the server and clients can have various combinations of smaller subscenes loaded additively. The server may load all subscenes at start, or it may dynamically load and unload subscenes where players or other activity is going on as needed.
+在 Mirror 中，服务器和连接的客户端始终位于相同的主场景上，但服务器和客户端可以具有各种组合的较小子场景以附加方式加载。服务器可能在启动时加载所有子场景，或者根据需要动态加载和卸载子场景，以满足玩家或其他活动的需求。
 
-All player objects are always first spawned in the main scene, which may or may not have visual content, networked objects, etc. With this component attached to all networked objects, whenever the player object is moved to a subscene (from the main or from another subscene), the observers lists for objects in both the new scene and the prior scene are updated accordingly.
+所有玩家对象始终首先生成在主场景中，该场景可能具有视觉内容、网络对象等。通过将此组件附加到所有网络对象，每当玩家对象从主场景或其他子场景移动到子场景时，新场景和先前场景中对象的观察者列表会相应更新。
 
-Loading the subscene(s) on the server is through the normal process with `SceneManager`:
+在服务器上加载子场景是通过`SceneManager`的正常流程进行的：
 
 ```csharp
 SceneManager.LoadSceneAsync(subScene, LoadSceneMode.Additive);
 ```
 
-Next, you will send a `SceneMessage` to the client telling it to load a subscene additively:
+接下来，您将向客户端发送一个`SceneMessage`，告诉它以附加方式加载子场景：
 
 ```csharp
 SceneMessage msg = new SceneMessage
@@ -47,7 +47,7 @@ SceneMessage msg = new SceneMessage
 connectionToClient.Send(msg);
 ```
 
-Then, on the server only, you just move the player object to the subscene:
+然后，在仅服务器端，您只需将玩家对象移动到子场景中：
 
 ```csharp
 // Position the player object in world space first
@@ -58,6 +58,6 @@ player.transform.position = new Vector3(100, 1, 100);
 SceneManager.MoveGameObjectToScene(player, subScene);
 ```
 
-Optionally you can send another `SceneMessage` to the client with `SceneOperation.UnloadAdditive` to remove any previous additive scene the client no longer needs. This would apply to a game that has levels after a level change. A short delay may be necessary before removal to allow the client to get fully synced.
+可选地，您可以向客户端发送另一个带有`SceneOperation.UnloadAdditive`的`SceneMessage`，以移除客户端不再需要的任何先前的附加场景。这适用于在关卡更改后有关卡的游戏。在移除之前可能需要短暂延迟，以允许客户端完全同步。
 
-Depending on the complexity of your game, you may find it helpful when switching a player between subscenes to move the player object to the main scene first, yield 100 ms, re-position it, and finally move it to the new subscene.
+根据您的游戏复杂性，当在子场景之间切换玩家时，将玩家对象首先移动到主场景，等待100毫秒，重新定位它，最后将其移动到新的子场景可能会有所帮助。

@@ -1,21 +1,23 @@
 ---
-description: 'Deprecated: Use Match Interest Management instead.'
+description: '已弃用：请改用匹配兴趣管理（Match Interest Management）代替。'
 ---
 
-# Network Match Checker
+# 网络匹配检查器（Network Match Checker）
 
 {% hint style="danger" %}
-**Network Match Checker is Obsolete - use** [**Network Match**](../../interest-management/match.md) **component instead.**
+**网络匹配检查器已过时 - 请改用** [**网络匹配（Network Match）**](../../interest-management/match.md) **组件。**
 {% endhint %}
 
-The Network Match Checker component controls visibility of networked objects based on match id.
+网络匹配检查器组件根据匹配 ID 控制网络对象的可见性。
 
 ![](<../../../.gitbook/assets/image (29).png>)
 
-Any object with this component on it will only be visible to other objects in the same match.
+任何带有此组件的对象只会对同一匹配中的其他对象可见。
 
-This would be used to isolate players to their respective matches within a single game server instance.
+这可用于将玩家隔离到单个游戏服务器实例中的各自匹配中。
 
-When you create a match, generate and store, in a List for example, a new match id with `System.Guid.NewGuid();` and assign the same match id to the Network Match Checker via `GetComponent<NetworkMatchChecker>().matchId`.
+创建匹配时，例如生成并存储一个新的匹配 ID（使用 `System.Guid.NewGuid();`），然后通过 `GetComponent<NetworkMatchChecker>().matchId` 将相同的匹配 ID 分配给网络匹配检查器。
 
-Mirror's built-in Observers system will isolate SyncVar's and ClientRpc's on networked objects to only send updates to clients with the same match id.
+Mirror 内置的观察者系统将会将网络对象上的 SyncVar 和 ClientRpc 隔离，仅向具有相同匹配 ID 的客户端发送更新。 
+
+{/*examples*/}

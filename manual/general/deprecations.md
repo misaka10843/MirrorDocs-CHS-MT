@@ -1,448 +1,435 @@
-# 弃用
+# 废弃功能
 
-Unity Networking(UNet)的某些功能因各种原因从 Mirror 中删除或修改。 此页面将标识所有更改和删除的功能、属性和方法，更改或删除的原因以及可能的替代方案。
+Unity Networking (UNet) 的某些功能已从 Mirror 中移除或修改，原因各不相同。本页面将识别所有已更改和移除的功能、属性和方法，变更或移除的原因，以及可能的替代方案。
 
-{% hint style="info"%}
-**注意：**本文档中的某些更改可能适用于即将发布到资产存储的版本。
-联系我们
+{% hint style="info" %}
+**注意：** 本文档中的某些更改可能适用于即将发布到 Asset Store 的版本。
+{% endhint %}
 
-## 匹配空间和主机迁移<a href="#match-namespace--host-migration" id="match-namespace--host-migration"></a>
+## 匹配命名空间和主机迁移 <a href="#match-namespace--host-migration" id="match-namespace--host-migration"></a>
 
-作为 Unity 服务的一部分，整个命名空间已被删除。 它一开始就工作得不好，而且作为核心网络包的一部分非常复杂。 我们预计这一点，以及其他后端服务，将通过集成到 Mirror 的独立应用程序提供。
+作为 Unity 服务的一部分，整个命名空间已被移除。一开始就不太好用，并且作为核心网络包的一部分非常复杂。我们预计，这个命名空间以及其他后端服务将通过独立应用程序提供，这些应用程序与 Mirror 集成。
 
-## 网络服务器简单<a href="#network-server-simple" id="network-server-simple"></a>
+## 简化网络服务器 <a href="#network-server-simple" id="network-server-simple"></a>
 
-这是太复杂和不切实际的维护什么小它做，并被删除。 有更简单的方法来制作一个基本的监听服务器，无论是否使用我们的传输。
+这个功能过于复杂且难以维护，所以被移除。有更简单的方法来创建基本的监听服务器，无论是否使用我们的传输方式。
 
-## 治疗床合作<a href="#couch-co-op" id="couch-co-op"></a>
+## 本地合作 <a href="#couch-co-op" id="couch-co-op"></a>
 
-核心网络通过移除这个容易实现的目标而得到了极大的简化。 这是错误的，太复杂了，不值得修复。 对于那些需要类似的东西的人来说，考虑定义一个不可见的播放器预制件作为一个消息管道，产生具有客户端权限的实际播放器预制件。 所有的输入都将通过管道预制件来控制玩家对象。
+通过移除这个低 hanging fruit，核心网络功能得到了极大简化。这个功能存在 bug，并且过于复杂，不值得修复。对于那些需要类似功能的人，考虑将一个不可见的玩家预制体定义为消息导管，用于生成具有客户端权限的实际玩家预制体。所有输入将通过导管预制体路由到控制玩家对象。
 
-## 消息类型<a href="#message-types" id="message-types"></a>
+## 消息类型 <a href="#message-types" id="message-types"></a>
 
-`MsgType`枚举已删除。 所有消息类型都是动态生成的。 请改用`Send`。
+`MsgType` 枚举已被移除。所有消息类型都是动态生成的。请使用 `Send` 代替。
 
-## 网络转型<a href="#network-transform" id="network-transform"></a>
+## 网络变换 <a href="#network-transform" id="network-transform"></a>
 
-[网络变换](../components/network-transform/)被完全替换，因此它只同步位置，旋转和缩放，具有这些以及是否插值的控制选项，并使用快照插值。 它也有一堆虚方法，还有一个[脚本模板](script-templates.md)用于创建自己的派生版本。 为了支持单独的[网络刚体](../components/network-rigidbody.md)组件，删除了刚体支持。
+[网络变换](../components/network-transform/) 已完全替换，现在只同步位置、旋转和缩放，具有这些控制选项以及是否插值它们，并使用快照插值。它还有一堆虚拟方法，还有一个用于创建自己的派生版本的[脚本模板](script-templates.md)。刚体支持已被移除，取而代之的是单独的[网络刚体](../components/network-rigidbody.md) 组件。
 
-## 网络动画师<a href="#network-animator" id="network-animator"></a>
+## 网络动画器(Network Animator) <a href="#network-animator" id="network-animator"></a>
 
-[Network Animator](../components/network-animator.md)也得到了简化，因为它将所有 Animator 参数批处理到单个更新消息中。
+[网络动画器(Network Animator)](../components/network-animator.md)也进行了简化，因为它将所有动画器参数批量处理为单个更新消息。
 
-## SyncVar 钩参数<a href="#syncvar-hook-parameters" id="syncvar-hook-parameters"></a>
+## SyncVar 钩子参数(SyncVar Hook Parameters) <a href="#syncvar-hook-parameters" id="syncvar-hook-parameters"></a>
 
-[SyncVar](../guides/synchronization/syncvars.md)属性值现在会在调用钩子之前更新，钩子现在需要两个与属性类型相同的参数：`oldValue`和`newValue`
+[SyncVar](../guides/synchronization/syncvars.md) 属性值现在在调用钩子之前更新，并且钩子现在需要两个与属性相同类型的参数：`oldValue` 和 `newValue`。
 
-## 同步列表 CT<a href="#syncliststruct" id="syncliststruct"></a>
+## SyncListSTRUCT <a href="#syncliststruct" id="syncliststruct"></a>
 
-请改用[SyncList](../guides/synchronization/synclists.md)。
+请使用[SyncList](../guides/synchronization/synclists.md)。
 
 ## SyncList 类
 
-- `SyncListString`已替换为`SyncList<string>`。
-- `SyncListFloat`已被`SyncList<float>`取代。
-- `SyncListInt`已被`SyncList<int>`取代。
-- `SyncListUInt`已替换为`SyncList<uint>`。
-- `SyncListBool`被`SyncList<bool>`取代。
+* `SyncListString` 被替换为 `SyncList<string>`。
+* `SyncListFloat` 被替换为 `SyncList<float>`。
+* `SyncListInt` 被替换为 `SyncList<int>`。
+* `SyncListUInt` 被替换为 `SyncList<uint>`。
+* `SyncListBool` 被替换为 `SyncList<bool>`。
 
-如需详细信息，请参阅[文件](../guides/synchronization/synclists.md)。
+查看[文档](../guides/synchronization/synclists.md)以获取更多详细信息。
 
-## SyncList 操作<a href="#synclist-operations" id="synclist-operations"></a>
+## SyncList 操作 <a href="#synclist-operations" id="synclist-operations"></a>
 
-- `OP_REMOVE`替换为`OP_REMOVEAT`
-- `OP_DIRTY`已替换为`OP_SET`
+* `OP_REMOVE` 被替换为 `OP_REMOVEAT`。
+* `OP_DIRTY` 被替换为 `OP_SET`。
 
-如需详细信息，请参阅[文件](../guides/synchronization/synclists.md)。
+查看[文档](../guides/synchronization/synclists.md)以获取更多详细信息。
 
-## SyncDictionary 操作<a href="#syncidictionary-operations" id="syncidictionary-operations"></a>
+## SyncDictionary 操作 <a href="#syncidictionary-operations" id="syncidictionary-operations"></a>
 
-- `OP_DIRTY`已替换为`OP_SET`
+* `OP_DIRTY` 被替换为 `OP_SET`。
 
-如需详细信息，请参阅[文件](../guides/synchronization/syncdictionary.md)。
+查看[文档](../guides/synchronization/syncdictionary.md)以获取更多详细信息。
 
 ## SyncObject
 
-- 这是一个类而不是一个接口。
-- `Flush`-使用`ClearChanges`代替。
-
-## 服务质量标志<a href="#quality-of-service-flags" id="quality-of-service-flags"></a>
-
-在传统的 UNet 中，QoS 标志用于确定数据包如何到达远端。 例如，如果您需要在队列中对数据包进行优先级排序，您可以指定一个高优先级标志，然后 Unity LLAPI 将接收并适当处理该标志。 不幸的是，这导致了传输层的大量额外工作，并且由于依赖于太多魔法的错误代码，一些 QoS 标志不能按预期工作。
-
-在 Mirror 中，QoS 标志被"Channels"系统取代。 虽然默认传输[Telepathy](../transports/telepathy-transport.md)根本不使用通道，因为它是基于 TCP 的，但其他传输，如[Ignorance](../transports/ignorance.md)和[LiteNetLib](../transports/litenetlib-transport.md)，确实支持它们。
-
-当前定义的通道为：
-
-- `Channels.Reliable = 0`
-- `Channels.Unreliable = 1`
-
-## 按类别更改<a href="#changes-by-class" id="changes-by-class"></a>
-
-### NetworkManager<a href="#networkmanager" id="networkmanager"></a>
-
-- `NetworkConnection`在许多地方被`NetworkConnectionToClient`取代。
-- `networkPort`\
-  作为分离传输至组件的一部分而删除。 并非所有的传输都使用端口，但是那些确实有端口的传输都有一个字段。更多信息请参见[传输](../transports/)。
-- `IsHeadless()`\
-  使用编译器符号`UNITY_SERVER`代替。
-- `ConfigureServerFrameRate`已重命名为`ConfigureHeadlessFrameRate`。
-- `client`\
-  直接使用 NetworkClient，它很快就会变成静态的。 例如，使用`NetworkClient.Send(message)`而不是`NetworkManager.client.Send(message)`。
-- `IsClientConnected()`\
-  请改用静态属性`NetworkClient.isConnected`。
-- `onlineScene`和`offlineScene`\
-  &#x20;这些函数现在存储完整的路径，因此使用 SceneManager.GetActiveScene().path 代替。
-- `OnStartClient(NetworkClient client)`\
-  &#x20;改用 OnStartClient()，因为所有`NetworkClient`方法现在都是静态的。
-- `OnClientChangeScene(string newSceneName)`\
-  &#x20;将其改为`OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)`。
-- `OnClientChangeScene(string newSceneName, SceneOperation sceneOperation)`\
-  &#x20;将其改为`OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)`。
-- `OnServerAddPlayer(NetworkConnection conn, AddPlayerMessage extraMessage)`\
-  &#x20;请改用`OnServerAddPlayer(NetworkConnection conn)`。 有关详细信息，请参阅[自定义玩家生成指南](../guides/gameobjects/custom-character-spawning.md)。
-- `OnServerRemovePlayer(NetworkConnection conn, NetworkIdentity player)`\
-  &#x20;使用`NetworkServer.RemovePlayerForConnection(NetworkConnection conn, GameObject player, bool keepAuthority = false)`代替。
-- `OnServerError(NetworkConnection conn, int errorCode)`
-
-  Replaced with `OnServerError(NetworkConnection conn, Exception exception)`.
-
-- `OnClientError(NetworkConnection conn, int errorCode)`
-
-  Replaced with `OnClientError(Exception exception)`.
-
-- 已删除`disconnectInactiveConnections`和`disconnectInactiveTimeout`。
-- OnClient\* 虚拟方法不再采用`NetworkConnection`参数。 从重写中删除该参数，并在代码中使用`NetworkClient.connection`。
-- `serverTickRate`重命名为`sendRate`。
-- `serverTickInterval`已移动到`NetworkServer`。
-
-### 网络管理器 HUD
-
-- `showGUI`已删除。
-
-  Disable the component instead.
-
-### 网络室管理器<a href="#networkroommanager" id="networkroommanager"></a>
-
-- `NetworkConnection`在许多地方被`NetworkConnectionToClient`取代。
-- `OnRoomServerCreateGamePlayer(NetworkConnection conn)`\
-  &#x20;请改用`OnRoomServerCreateGamePlayer(NetworkConnection conn, GameObject roomPlayer)`。
-- `OnRoomServerSceneLoadedForPlayer(GameObject roomPlayer, GameObject gamePlayer)`\
-  &#x20;请改用`OnRoomServerSceneLoadedForPlayer(NetworkConnection conn, GameObject roomPlayer, GameObject gamePlayer)`。
-- 客户端虚拟方法不再采用`NetworkConnection`参数。
-
-  Use `NetworkClient.connection` within your overrides.
-
-### 网络身份<a href="#networkidentity" id="networkidentity"></a>
-
-- `clientAuthorityOwner`\
-  &#x20;使用 connectionToClient 代替
-- `GetSceneIdenity`\
-  &#x20;使用`GetSceneIdentity`代替(原始名称中的排印错误)
-- `RemoveClientAuthority(NetworkConnection conn)`\
-  &#x20;不再需要 NetworkConnection 参数，并且不返回任何内容
-- `spawned`字典
-
-  This has been split up to `NetworkServer.spawned` and `NetworkClient.spawned` dictionaries.
-
-- 本地播放器权限复选框\
-  &#x20;不再需要此复选框，并且我们简化[了权限](../guides/authority.md)在 Mirror 中的工作方式。
-
-### 网络行为<a href="#networkbehaviour" id="networkbehaviour"></a>
-
-- `NetworkConnection`在许多地方被`NetworkConnectionToClient`取代。
-- `sendInterval`属性\
-  &#x20;请改用`NetworkBehaviour.syncInterval`字段。 也可以在检查器中修改。
-- `List m_SyncObjects`\
-  &#x20;请改用`List syncObjects`。
-- `OnSetLocalVisibility(bool visible)`\
-  &#x20;请改为使用`OnSetHostVisibility(bool visible)`。
-- `OnRebuildObservers`、`OnCheckObserver`和`OnSetHostVisibility`已移至名为`NetworkVisibility`的单独类
-- `NetworkBehaviour.OnNetworkDestroy`已重命名为`NetworkBehaviour.OnStopClient`。
-- `getSyncVarHookGuard`重命名为`GetSyncVarHookGuard`。
-- `setSyncVarHookGuard`-重命名为`SetSyncVarHookGuard`。
-- `SetDirtyBit`-使用`SetSyncVarDirtyBit`代替。
-- `[命令]`属性参数`ignoreAuthority`替换为`requiresAuthority`。
-- `[ClientRpc]`属性参数`includeOwner`替换为`excludeOwner`。
-- `hasAuthority`重命名为`isOwned`。
-
-### 网络连接<a href="#networkconnection" id="networkconnection"></a>
-
-- `hostId`\
-  &#x20;删除是因为自从我们将 LLAPI 作为默认值删除后就不再需要它了。 对于常规连接，它始终为 0，对于本地连接，它始终为-1。 使用`connection.GetType() == typeof(NetworkConnection)`检查它是常规连接还是本地连接。
-- `isConnected`\
-  &#x20;因为这毫无意义。 `NetworkConnection`始终处于连接状态。
-- `InvokeHandlerNoData(int msgType)`\
-  &#x20;使用`InvokeHandler`代替。
-- `playerController`\
-  &#x20;重命名为`identity`，因为它就是：连接的`NetworkIdentity`。
-- `RegisterHandler(short msgType, NetworkMessageDelegate handler)`\
-  &#x20;请改用`NetworkServer.RegisterHandler()`或`NetworkClient.RegisterHandler()`。
-- `UnregisterHandler(short msgType)`\
-  &#x20;请改用`NetworkServer.UnregisterHandler()`或`NetworkClient.UnregisterHandler()`。
-- `Send(int msgType, MessageBase msg, int channelId = Channels.Reliable)`\
-  &#x20;使用`Send(msg, channelId)`代替。
-- `clientOwnedObjects`重命名为`owned`。
-
-### 网络服务器<a href="#networkserver" id="networkserver"></a>
-
-- `NetworkConnection`在许多地方被`NetworkConnectionToClient`取代。
-- `FindLocalObject(uint netId)`\
-  &#x20;请改用`NetworkServer.spawned[netId].gameObject`。
-- `RegisterHandler(int msgType, NetworkMessageDelegate handler)`\
-  &#x20;使用`RegisterHandler(T msg)`代替。
-- `RegisterHandler(MsgType msgType, NetworkMessageDelegate handler)`\
-  &#x20;使用`RegisterHandler(T msg)`代替。
-- `RegisterHandler(Action handler, bool requireAuthentication = true)`
-
-  Use `RegisterHandler(Action<NetworkConnection, T), requireAuthentication = true)` instead.
-
-- `UnregisterHandler(int msgType)`\
-  &#x20;使用`UnregisterHandler(T msg)`代替。
-- `UnregisterHandler(MsgType msgType)`\
-  &#x20;使用`UnregisterHandler(T msg)`代替。
-- `SendToAll(int msgType, MessageBase msg, int channelId = Channels.Reliable)`\
-  &#x20;使用`SendToAll(T msg, int channelId = Channels.Reliable)`代替。
-- `SendToClient(int connectionId, int msgType, MessageBase msg)`\
-  使用`NetworkConnection.Send(T msg, int channelId = Channels.Reliable)`代替。
-- `SendToClient(int connectionId, T msg)`\
-  使用`NetworkConnection.Send(T msg, int channelId = Channels.Reliable)`代替。
-- `SendToClientOfPlayer(NetworkIdentity identity, int msgType, MessageBase msg)`\
-  使用`identity.connectionToClient.Send(T message, int channelId = Channels.Reliable)`代替。
-- `SendToReady(NetworkIdentity identity, short msgType, MessageBase msg, int channelId = Channels.Reliable)`\
-  &#x20;请改用`identity.connectionToClient.Send()`。
-- `SendToReady(NetworkIdentity identity, T message, bool includeOwner = true, int channelId = Channels.Reliable)`
-
-  Renamed to `SendToReadyObservers`.
-
-- `SpawnWithClientAuthority(GameObject obj, GameObject player)`\
-  &#x20;使用`Spawn(GameObject obj, GameObject player)`代替。
-- `SpawnWithClientAuthority(GameObject obj, NetworkConnection ownerConnection)`\
-  &#x20;使用`Spawn(GameObject obj, NetworkConnection ownerConnection)`代替。
-- `SpawnWithClientAuthority(GameObject obj, Guid assetId, NetworkConnection ownerConnection)`\
-  &#x20;使用`Spawn(GameObject obj, Guid assetId, NetworkConnection ownerConnection)`代替。
-- 已删除`disconnectInactiveConnections`和`disconnectInactiveTimeout`。
-- `NoConnections`已重命名为`NoExternalConnections`。
-- `DisconnectAllExternalConnections`/`DisconnectAllConnections`
-
-  Use `DisconnectAll` instead.
-
-- 为清晰`OnError`重命名为`OnTransportError`。
-
-### 网络客户端<a href="#networkclient" id="networkclient"></a>
-
-- `NetworkClient singleton`\
-  &#x20;直接使用`NetworkClient`。 Singleton 不再需要了，因为现在所有的函数都是静态的。
-  &#x20;示例：`NetworkClient.Send(message)`而不是`NetworkClient.singleton.Send(message)`。
-- `allClients`\
-  &#x20;直接使用`NetworkClient`代替。 永远只有一个客户。
-- `GetRTT()`\
-  &#x20;请改用`NetworkTime.rtt`。
-- `readyConnection`
-
-  Use `connection` instead.
-
-- `isLocalClient`
-
-  Use `isHostClient` instead.
-
-- `DisconnectLocalServer()`
-
-  Use `NetworkClient.Disconnect()` instead.
-
-- `RegisterHandler(int msgType, NetworkMessageDelegate handler)`\
-  &#x20;使用`RegisterHandler(T msg)`代替。
-- `RegisterHandler(MsgType msgType, NetworkMessageDelegate handler)`\
-  &#x20;使用`RegisterHandler(T msg)`代替。
-- `注册表(Action<NetworkConnection，T>  handler, bool requireAuthentication = true)`
-
-  Use `RegisterHandler(Action<T> handler, bool requireAuthentication = true)` instead.
-
-- `UnregisterHandler(int msgType)`\
-  &#x20;使用`UnregisterHandler(T msg)`代替。
-- `UnregisterHandler(MsgType msgType)`\
-  &#x20;使用`UnregisterHandler(T msg)`代替。
-- `Ready(NetworkConnection conn)`
-
-  Use `Ready()` without the `NetworkConnection` parameter instead.
-
-- `Send(short msgType, MessageBase msg)`\
-  &#x20;使用`Send(T msg, int channelId = Channels.Reliable)`，而不使用消息 ID
-- `ShutdownAll()`\
-  &#x20;请`Shutdown()`。 只有一个客户。
-- 为清晰`OnError`重命名为`OnTransportError`。
-
-### 客户端场景<a href="#clientscene" id="clientscene"></a>
-
-- 合并到`NetworkClient`。
-
-### 网络场景
-
-- 被[场景兴趣管理](../interest-management/scene.md)取代。
-
-### 网络邻近度
-
-- [空间散列](../interest-management/spatial-hashing.md)/[距离](../interest-management/distance.md)兴趣管理(Space Hash / Distance Interest Management)
-
-### 网络比赛
-
-- 替换为网络匹配，需要[匹配兴趣](../interest-management/match.md)管理。
-
-### 网络所有者
-
-- 由网络团队取代，需要[团队兴趣管理](../interest-management/team.md)。
-
-### 网络认证符
-
-- `NetworkConnection`在许多地方被`NetworkConnectionToClient`取代。
-- `OnClientAuthenticate`不再采用`NetworkConnection`参数。\
-  根据需要使用`NetworkClient.connection`。
-- `OnClientAuthenticated`事件不再采用`NetworkConnection`参数。\
-  根据需要使用`NetworkClient.connection`。
-- 客户端消息处理程序中不再使用`NetworkConnection`。
-
-  Use `NetworkClient.connection` within your handlers instead.
-
-- `ClientAccept`和`ClientReject`不再需要`NetworkConnection`参数。
-
-### 网络时间
-
-- `NetworkTime.timeVar`已重命名为`timeVariance`。
-- `NetworkTime.timeSd`已重命名为`timeStandardDeviation`。
-- 已将`NetworkTime.rttVar`重命名为`rttVariance`。
-- 已将`NetworkTime.rttSd`重命名为`rttStandardDeviation`。
-
-### 运输
-
-- `activeTransport`重命名为`active`。
-
-### 消息<a href="#messages" id="messages"></a>
-
-简单类型的基本消息都被删除了，因为不必要的膨胀。 您可以创建自己的消息类。
-
-- `StringMessage`
-- `ByteMessage`
-- `BytesMessage`
-- `IntegerMessage`
-- `DoubleMessage`
-- `EmptyMessage`
-
-NetworkMessage 在所有情况下都需要结构体-不再支持类
-
-### 网络阅读器<a href="#networkreader" id="networkreader"></a>
-
-- `读取(字节 buffer, int offset, int count)`\
-  &#x20;请改用`ReadBytes`。
-- `ReadPackedInt32(int value)`使用`ReadInt32(int value)`代替。
-- `ReadPackedUInt32(uint value)`使用`ReadUInt32(uint value)`代替。
-- `ReadPackedUInt64(ulong value)`使用`ReadUInt64(ulong value)`代替。
-- `ReadBoolean`重命名为`ReadBool`。
-- `ReadInt16`重命名为`ReadShort`。
-- `ReadInt32`重命名为`ReadInt`。
-- `Readint64`重命名为`ReadLong`。
-- `ReadSingle`重命名为`ReadFloat`。
-
-### 网络作家<a href="#networkwriter" id="networkwriter"></a>
-
-- `Write(bool value)`\
-  &#x20;使用`WriteBool`代替。
-- `Write(byte value)`\
-  &#x20;使用`WriteByte`代替。
-- `Write(sbyte value)`\
-  &#x20;请改用`WriteSByte`。
-- `Write(short value)`\
-  &#x20;使用`WriteShort`代替。
-- `Write(ushort value)`\
-  &#x20;使用`WriteUShort`代替。
-- `Write(int value)`\
-  &#x20;使用`WriteInt`代替。
-- `Write(uint value)`\
-  &#x20;使用`WriteUInt`代替。
-- `Write(long value)`\
-  &#x20;使用`WriteLong`代替。
-- `Write(ulong value)`\
-  &#x20;使用`WriteULong`代替。
-- `Write(float value)`\
-  &#x20;使用`WriteFloat`代替。
-- `Write(double value)`\
-  &#x20;使用`WriteDouble`代替。
-- `Write(decimal value)`\
-  &#x20;使用`WriteDecimal`代替。
-- `Write(string value)`\
-  &#x20;使用`WriteString`代替。
-- `Write(char value)`\
-  &#x20;使用`WriteChar`代替。
-- `Write(Vector2 value)`\
-  &#x20;使用`WriteVector2`代替。
-- `Write(Vector2Int value)`\
-  &#x20;使用`WriteVector2Int`代替。
-- `Write(Vector3 value)`\
-  &#x20;使用`WriteVector3`代替。
-- `Write(Vector3Int value)`\
-  &#x20;使用`WriteVector3Int`代替。
-- `Write(Vector4 value)`\
-  &#x20;使用`WriteVector4`代替。
-- `Write(Color value)`\
-  &#x20;使用`WriteColor`代替。
-- `Write(Color32 value)`\
-  &#x20;使用`WriteColor32`代替。
-- `Write(Guid value)`\
-  &#x20;请改用`WriteGuid`。
-- `Write(Transform value)`\
-  &#x20;请改用`WriteTransform`。
-- `Write(Quaternion value)`\
-  &#x20;请改用"`WriteQuaternion`。
-- `Write(Rect value)`\
-  &#x20;使用`WriteRect`代替。
-- `Write(Plane value)`\
-  &#x20;请改用`WritePlane`。
-- `Write(Ray value)`\
-  &#x20;使用`WriteRay`代替。
-- `Write(Matrix4x4 value)`\
-  &#x20;使用`WriteMatrix4x4`代替。
-- `Write(NetworkIdentity value)`\
-  &#x20;请改用`WriteNetworkIdentity`。
-- `Write(GameObject value)`\
-  &#x20;使用`WriteGameObject`代替。
-- `写(字节 buffer, int offset, int count)`\
-  &#x20;请使用`WriteBytes`代替。
-- `WritePackedInt32(int value)`\
-  &#x20;使用`WriteInt32(int value)`代替
-- `WritePackedUInt32(uint value)`\
-  &#x20;使用`WriteUInt32(uint value)`代替
-- `WritePackedUInt64(ulong value)`\
-  &#x20;使用`WriteUInt64(ulong value)`代替
+* 现在是一个类而不是一个接口。
+* `Flush` - 使用 `ClearChanges` 代替。
+
+## 服务质量标志(Quality of Service Flags) <a href="#quality-of-service-flags" id="quality-of-service-flags"></a>
+
+在经典 UNet 中，QoS 标志用于确定数据包如何到达远程端。例如，如果您需要一个数据包在队列中优先处理，您可以指定一个高优先级标志，然后 Unity LLAPI 将接收并适当处理。不幸的是，这给传输层带来了很多额外工作，并且一些 QoS 标志由于依赖过多魔法的错误代码而无法按预期工作。
+
+在 Mirror 中，QoS 标志被替换为了一个“Channels”系统。虽然默认传输方式 [Telepathy](../transports/telepathy-transport.md) 不使用任何通道，因为它基于 TCP，但其他传输方式，比如 [Ignorance](../transports/ignorance.md) 和 [LiteNetLib](../transports/litenetlib-transport.md)，支持通道。
+
+当前定义的通道包括：
+
+* `Channels.Reliable = 0`（可靠通道）
+* `Channels.Unreliable = 1`（不可靠通道）
+
+## 按类别的更改 <a href="#changes-by-class" id="changes-by-class"></a>
+
+### NetworkManager <a href="#networkmanager" id="networkmanager"></a>
+
+* 在许多地方，`NetworkConnection` 被替换为了 `NetworkConnectionToClient`。
+* `networkPort`\
+  已移除，作为将传输方式分离为组件的一部分。并非所有传输方式都使用端口，但那些使用端口的传输方式有相应的字段。查看 [Transports](../transports/) 获取更多信息。
+* `IsHeadless()`\
+  使用编译符号 `UNITY_SERVER` 代替。
+* `ConfigureServerFrameRate` 被重命名为 `ConfigureHeadlessFrameRate`。
+* `client`\
+  直接使用 NetworkClient，它很快将被设为静态。例如，使用 `NetworkClient.Send(message)` 而不是 `NetworkManager.client.Send(message)`。
+* `IsClientConnected()`\
+  使用静态属性 `NetworkClient.isConnected` 代替。
+* `onlineScene` 和 `offlineScene`\
+  &#x20;现在存储完整路径，因此请使用 SceneManager.GetActiveScene().path。
+* `OnStartClient(NetworkClient client)`\
+  &#x20;改为重写 OnStartClient()，因为所有 `NetworkClient` 方法现在都是静态的。
+* `OnClientChangeScene(string newSceneName)`\
+  &#x20;改为重写 `OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)`。
+* `OnClientChangeScene(string newSceneName, SceneOperation sceneOperation)`\
+  &#x20;改为重写 `OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)`。
+* `OnServerAddPlayer(NetworkConnection conn, AddPlayerMessage extraMessage)`\
+  &#x20;改为重写 `OnServerAddPlayer(NetworkConnection conn)`。查看 [自定义玩家生成指南](../guides/gameobjects/custom-character-spawning.md) 获取详细信息。
+* `OnServerRemovePlayer(NetworkConnection conn, NetworkIdentity player)`\
+  &#x20;使用 `NetworkServer.RemovePlayerForConnection(NetworkConnection conn, GameObject player, bool keepAuthority = false)` 代替。
+*   `OnServerError(NetworkConnection conn, int errorCode)`
+
+- 用 `OnServerError(NetworkConnection conn, Exception exception)` 替换。
+* 用 `OnClientError(Exception exception)` 替换。
+* 移除了 `disconnectInactiveConnections` 和 `disconnectInactiveTimeout`。
+* 在 `OnClient\*` 虚方法中不再需要 `NetworkConnection` 参数。从你的重写中移除该参数，而是在代码中使用 `NetworkClient.connection`。
+* 将 `serverTickRate` 重命名为 `sendRate`。
+* `serverTickInterval` 移至 `NetworkServer`。
+
+### NetworkManagerHUD
+
+* 移除了 `showGUI`。
+
+    禁用组件即可。
+
+### NetworkRoomManager <a href="#networkroommanager" id="networkroommanager"></a>
+
+* 在许多地方，`NetworkConnection` 被替换为 `NetworkConnectionToClient`。
+* `OnRoomServerCreateGamePlayer(NetworkConnection conn)`\
+  使用 `OnRoomServerCreateGamePlayer(NetworkConnection conn, GameObject roomPlayer)` 替代。
+* `OnRoomServerSceneLoadedForPlayer(GameObject roomPlayer, GameObject gamePlayer)`\
+  使用 `OnRoomServerSceneLoadedForPlayer(NetworkConnection conn, GameObject roomPlayer, GameObject gamePlayer)` 替代。
+* 客户端虚方法不再需要 `NetworkConnection` 参数。
+
+    在你的重写中使用 `NetworkClient.connection`。
+
+### NetworkIdentity <a href="#networkidentity" id="networkidentity"></a>
+
+* `clientAuthorityOwner`\
+  使用 `connectionToClient` 代替
+* `GetSceneIdenity`\
+  使用 `GetSceneIdentity` 代替（原名称中有拼写错误）
+* `RemoveClientAuthority(NetworkConnection conn)`\
+  不再需要 `NetworkConnection` 参数，也不返回任何内容
+* `spawned` 字典
+
+    已拆分为 `NetworkServer.spawned` 和 `NetworkClient.spawned` 字典。
+* 本地玩家权限复选框\
+  不再需要此复选框，我们简化了 Mirror 中 [Authority](../guides/authority.md) 的工作方式。
+
+### NetworkBehaviour <a href="#networkbehaviour" id="networkbehaviour"></a>
+
+* 在许多地方，`NetworkConnection` 被替换为 `NetworkConnectionToClient`。
+* `sendInterval` 属性\
+  使用 `NetworkBehaviour.syncInterval` 字段代替。也可以在检查器中进行修改。
+* `List m_SyncObjects`\
+  使用 `List syncObjects` 代替。
+* `OnSetLocalVisibility(bool visible)`\
+  改为重写 `OnSetHostVisibility(bool visible)`。
+* `OnRebuildObservers`、`OnCheckObserver` 和 `OnSetHostVisibility` 移至名为 `NetworkVisibility` 的单独类。
+* `NetworkBehaviour.OnNetworkDestroy` 重命名为 `NetworkBehaviour.OnStopClient`。
+* `getSyncVarHookGuard` 重命名为 `GetSyncVarHookGuard`。
+* `setSyncVarHookGuard` - 重命名为 `SetSyncVarHookGuard`。
+* `SetDirtyBit` - 使用 `SetSyncVarDirtyBit` 代替。
+* `[Command]` 属性参数 `ignoreAuthority` 替换为 `requiresAuthority`。
+* `[ClientRpc]` 属性参数 `includeOwner` 替换为 `excludeOwner`。
+* `hasAuthority` 重命名为 `isOwned`。
+
+### NetworkConnection <a href="#networkconnection" id="networkconnection"></a>
+
+* `hostId`\
+  &#x20;因为自从我们移除了 LLAPI 作为默认选项后就不再需要了。对于常规连接，它始终为 0，对于本地连接则为 -1。使用 `connection.GetType() == typeof(NetworkConnection)` 来检查是常规连接还是本地连接。
+* `isConnected`\
+  &#x20;因为毫无意义而被移除。`NetworkConnection` 总是连接的。
+* `InvokeHandlerNoData(int msgType)`\
+  &#x20;改用 `InvokeHandler`。
+* `playerController`\
+  &#x20;重命名为 `identity`，因为它就是：连接的 `NetworkIdentity`。
+* `RegisterHandler(short msgType, NetworkMessageDelegate handler)`\
+  &#x20;改用 `NetworkServer.RegisterHandler()` 或 `NetworkClient.RegisterHandler()`。
+* `UnregisterHandler(short msgType)`\
+  &#x20;改用 `NetworkServer.UnregisterHandler()` 或 `NetworkClient.UnregisterHandler()`。
+* `Send(int msgType, MessageBase msg, int channelId = Channels.Reliable)`\
+  &#x20;改用 `Send(msg, channelId)`。
+
+### NetworkServer <a href="#networkserver" id="networkserver"></a>
+
+* `NetworkConnection` 在许多地方被替换为 `NetworkConnectionToClient`。
+* `FindLocalObject(uint netId)`\
+  &#x20;改用 `NetworkServer.spawned[netId].gameObject`。
+* `RegisterHandler(int msgType, NetworkMessageDelegate handler)`\
+  &#x20;改用 `RegisterHandler(T msg)`。
+* `RegisterHandler(MsgType msgType, NetworkMessageDelegate handler)`\
+  &#x20;改用 `RegisterHandler(T msg)`。
+*   `RegisterHandler(Action handler, bool requireAuthentication = true)`
+
+    改用 `RegisterHandler(Action<NetworkConnection, T), requireAuthentication = true)`。
+* `UnregisterHandler(int msgType)`\
+  &#x20;改用 `UnregisterHandler(T msg)`。
+* `UnregisterHandler(MsgType msgType)`\
+  &#x20;改用 `UnregisterHandler(T msg)`。
+* `SendToAll(int msgType, MessageBase msg, int channelId = Channels.Reliable)`\
+  &#x20;改用 `SendToAll(T msg, int channelId = Channels.Reliable)`。
+* `SendToClient(int connectionId, int msgType, MessageBase msg)`\
+  改用 `NetworkConnection.Send(T msg, int channelId = Channels.Reliable)`。
+* `SendToClient(int connectionId, T msg)`\
+  改用 `NetworkConnection.Send(T msg, int channelId = Channels.Reliable)`。
+* `SendToClientOfPlayer(NetworkIdentity identity, int msgType, MessageBase msg)`\
+  改用 `identity.connectionToClient.Send<T>(T message, int channelId = Channels.Reliable)`。
+* `SendToReady(NetworkIdentity identity, short msgType, MessageBase msg, int channelId = Channels.Reliable)`\
+  &#x20;改用 `identity.connectionToClient.Send()`。
+*   `SendToReady(NetworkIdentity identity, T message, bool includeOwner = true, int channelId = Channels.Reliable)`
+
+- 已更名为 `SendToReadyObservers`。
+* `SpawnWithClientAuthority(GameObject obj, GameObject player)`\
+  &#x20;改用 `Spawn(GameObject obj, GameObject player)`。
+* `SpawnWithClientAuthority(GameObject obj, NetworkConnection ownerConnection)`\
+  &#x20;改用 `Spawn(GameObject obj, NetworkConnection ownerConnection)`。
+* `SpawnWithClientAuthority(GameObject obj, Guid assetId, NetworkConnection ownerConnection)`\
+  &#x20;改用 `Spawn(GameObject obj, Guid assetId, NetworkConnection ownerConnection)`。
+* `disconnectInactiveConnections` 和 `disconnectInactiveTimeout` 已移除。
+* `NoConnections` 已更名为 `NoExternalConnections`。
+*   `DisconnectAllExternalConnections`  / `DisconnectAllConnections`
+
+    改用 `DisconnectAll`。
+* `OnError` 更名为 `OnTransportError` 以增强清晰度。
+
+### NetworkClient <a href="#networkclient" id="networkclient"></a>
+
+* `NetworkClient singleton`\
+  &#x20;直接使用 `NetworkClient`。不再需要 Singleton，因为所有函数现在都是静态的。\
+  &#x20;示例：使用 `NetworkClient.Send(message)` 而不是 `NetworkClient.singleton.Send(message)`。
+* `allClients`\
+  &#x20;直接使用 `NetworkClient`。始终只有一个客户端。
+* `GetRTT()`\
+  &#x20;改用 `NetworkTime.rtt`。
+*   `readyConnection`
+
+    改用 `connection`。
+*   `isLocalClient`
+
+    改用 `isHostClient`。
+*   `DisconnectLocalServer()`
+
+    改用 `NetworkClient.Disconnect()`。
+* `RegisterHandler(int msgType, NetworkMessageDelegate handler)`\
+  &#x20;改用 `RegisterHandler(T msg)`。
+* `RegisterHandler(MsgType msgType, NetworkMessageDelegate handler)`\
+  &#x20;改用 `RegisterHandler(T msg)`。
+*   `RegisterHandler(Action<NetworkConnection, T> handler, bool requireAuthentication = true)`
+
+    改用 `RegisterHandler(Action<T> handler, bool requireAuthentication = true)`。
+* `UnregisterHandler(int msgType)`\
+  &#x20;改用 `UnregisterHandler(T msg)`。
+* `UnregisterHandler(MsgType msgType)`\
+  &#x20;改用 `UnregisterHandler(T msg)`。
+*   `Ready(NetworkConnection conn)`{/*examples*/}
+
+使用 `Ready()` 而不带 `NetworkConnection` 参数。
+
+* `Send(short msgType, MessageBase msg)`\
+  使用 `Send(T msg, int channelId = Channels.Reliable)` 而不带消息 id。
+
+* `ShutdownAll()`\
+  使用 `Shutdown()`。只有一个客户端。
+
+* `OnError` 更名为 `OnTransportError` 以增加清晰度。
+
+### ClientScene <a href="#clientscene" id="clientscene"></a>
+
+* 已合并到 `NetworkClient`。
+
+### Network Scene Checker
+
+* 已被 [场景兴趣管理](../interest-management/scene.md) 取代。
+
+### Network Proximity Checker
+
+* 已被 [空间哈希](../interest-management/spatial-hashing.md) / [距离](../interest-management/distance.md) 兴趣管理取代。
+
+### Network Match Checker
+
+* 已被 Network Match 取代，并需要 [匹配兴趣管理](../interest-management/match.md)。
+
+### Network Owner Checker
+
+* 已被 Network Team 取代，并需要 [团队兴趣管理](../interest-management/team.md)。
+
+### Network Authenticator
+
+* `NetworkConnection` 在许多地方被 `NetworkConnectionToClient` 取代。
+* `OnClientAuthenticate` 不再接受 `NetworkConnection` 参数。\
+  需要时请使用 `NetworkClient.connection`。
+* `OnClientAuthenticated` 事件不再接受 `NetworkConnection` 参数。\
+  需要时请使用 `NetworkClient.connection`。
+* 在客户端消息处理程序中不再使用 `NetworkConnection`。
+
+  请在处理程序中使用 `NetworkClient.connection`。
+* `ClientAccept` 和 `ClientReject` 不再需要 `NetworkConnection` 参数。
+
+### NetworkTime
+
+* `NetworkTime.timeVar` 更名为 `timeVariance`。
+* `NetworkTime.timeSd` 更名为 `timeStandardDeviation`。
+* `NetworkTime.rttVar` 更名为 `rttVariance`。
+* `NetworkTime.rttSd` 更名为 `rttStandardDeviation`。
+
+### Transport
+
+* `activeTransport` 更名为 `active`。
+
+### Messages <a href="#messages" id="messages"></a>
+
+基本的简单类型消息都被移除，因为它们是多余的。您可以自己创建消息类。
+
+* `StringMessage`
+* `ByteMessage`
+* `BytesMessage`
+* `IntegerMessage`
+* `DoubleMessage`
+* `EmptyMessage`
+
+### NetworkMessage 需要在所有情况下使用结构体 - 不再支持类
+
+### NetworkReader <a href="#networkreader" id="networkreader"></a>
+
+* `Read(byte[] buffer, int offset, int count)`\
+  &#x20;使用 `ReadBytes` 代替。
+* `ReadPackedInt32(int value)` 使用 `ReadInt32(int value)` 代替。
+* `ReadPackedUInt32(uint value)` 使用 `ReadUInt32(uint value)` 代替。
+* `ReadPackedUInt64(ulong value)` 使用 `ReadUInt64(ulong value)` 代替。
+* `ReadBoolean` 重命名为 `ReadBool`。
+* `ReadInt16` 重命名为 `ReadShort`。
+* `ReadInt32` 重命名为 `ReadInt`。
+* `Readint64` 重命名为 `ReadLong`。
+* `ReadSingle` 重命名为 `ReadFloat`。
+
+### NetworkWriter <a href="#networkwriter" id="networkwriter"></a>
+
+* `Write(bool value)`\
+  &#x20;使用 `WriteBool` 代替。
+* `Write(byte value)`\
+  &#x20;使用 `WriteByte` 代替。
+* `Write(sbyte value)`\
+  &#x20;使用 `WriteSByte` 代替。
+* `Write(short value)`\
+  &#x20;使用 `WriteShort` 代替。
+* `Write(ushort value)`\
+  &#x20;使用 `WriteUShort` 代替。
+* `Write(int value)`\
+  &#x20;使用 `WriteInt` 代替。
+* `Write(uint value)`\
+  &#x20;使用 `WriteUInt` 代替。
+* `Write(long value)`\
+  &#x20;使用 `WriteLong` 代替。
+* `Write(ulong value)`\
+  &#x20;使用 `WriteULong` 代替。
+* `Write(float value)`\
+  &#x20;使用 `WriteFloat` 代替。
+* `Write(double value)`\
+  &#x20;使用 `WriteDouble` 代替。
+* `Write(decimal value)`\
+  &#x20;使用 `WriteDecimal` 代替。
+* `Write(string value)`\
+  &#x20;使用 `WriteString` 代替。
+* `Write(char value)`\
+  &#x20;使用 `WriteChar` 代替。
+* `Write(Vector2 value)`\
+  &#x20;使用 `WriteVector2` 代替。
+* `Write(Vector2Int value)`\
+  &#x20;使用 `WriteVector2Int` 代替。
+* `Write(Vector3 value)`\
+  &#x20;使用 `WriteVector3` 代替。
+* `Write(Vector3Int value)`\
+  &#x20;使用 `WriteVector3Int` 代替。
+* `Write(Vector4 value)`\
+  &#x20;使用 `WriteVector4` 代替。
+* `Write(Color value)`\
+  &#x20;使用 `WriteColor` 代替。
+* `Write(Color32 value)`\
+  &#x20;使用 `WriteColor32` 代替。
+* `Write(Guid value)`\
+  &#x20;使用 `WriteGuid` 代替。
+* `Write(Transform value)`\
+  &#x20;使用 `WriteTransform` 代替。
+* `Write(Quaternion value)`\
+  &#x20;使用 `WriteQuaternion` 代替。
+* `Write(Rect value)`\
+  &#x20;使用 `WriteRect` 代替。
+* `Write(Plane value)`\
+  &#x20;使用 `WritePlane` 代替。
+* `Write(Ray value)`\
+  &#x20;使用 `WriteRay` 代替。
+* `Write(Matrix4x4 value)`\
+  &#x20;使用 `WriteMatrix4x4` 代替。
+* `Write(NetworkIdentity value)`\
+  &#x20;使用 `WriteNetworkIdentity` 代替。
+* `Write(GameObject value)`\
+  &#x20;使用 `WriteGameObject` 代替。
+* `Write(byte[] buffer, int offset, int count)`\
+  &#x20;使用 `WriteBytes` 代替。
+* `WritePackedInt32(int value)`\
+  &#x20;使用 `WriteInt32(int value)` 代替
+* `WritePackedUInt32(uint value)`\
+  &#x20;使用 `WriteUInt32(uint value)` 代替
+* `WritePackedUInt64(ulong value)`\
+  &#x20;使用 `WriteUInt64(ulong value)` 代替
 
 ### RemoteCallHelper
 
-- 已重命名为`RemoteProcedureCalls`。
-- `CmdDelegate`重命名为`RemoteCallDelegate`。
-- 已`MirrorInvokeType`重命名为`RemoteCallType`。
+* 已重命名为 `RemoteProcedureCalls`（远程过程调用）。
+* `CmdDelegate`（命令委托）已重命名为 `RemoteCallDelegate`（远程调用委托）。
+* `MirrorInvokeType`（Mirror调用类型）已重命名为 `RemoteCallType`（远程调用类型）。
 
-### 运输<a href="#transport" id="transport"></a>
+### Transport <a href="#transport" id="transport"></a>
 
-- `GetConnectionInfo(int connectionId, out string address)`\
-  &#x20;使用`ServerGetClientAddress(int connectionId)`代替。
-- `GetMaxBatchSize`重命名为`GetMaxPacketSize`。
-- `ClientSend(int channelId, ArraySegment segment)`
+* `GetConnectionInfo(int connectionId, out string address)`\
+  &#x20;改用 `ServerGetClientAddress(int connectionId)`（服务器获取客户端地址）。
+* `GetMaxBatchSize`（获取最大批处理大小）已重命名为 `GetMaxPacketSize`（获取最大数据包大小）。
+*   `ClientSend(int channelId, ArraySegment segment)`
 
-  Use `ClientSend(segment, channelId)` instead.
+    改用 `ClientSend(segment, channelId)`（客户端发送）。
+*   `ServerSend(int connectionId, int channelId, ArraySegment segment)`
 
-- `ServerSend(int connectionId, int channelId, ArraySegment segment)`
+    改用 `ServerSend(connectionId, segment, channelId)`（服务器发送）。
 
-  Use `ServerSend(connectionId, segment, channelId)` instead.
+### Telepathy Transport <a href="#telepathytransport" id="telepathytransport"></a>
 
-### 心灵感应传送<a href="#telepathytransport" id="telepathytransport"></a>
+* `MaxMessageSize`（最大消息大小）\
+  &#x20;改用 `MaxMessageSizeFromClient`（来自客户端的最大消息大小）或 `MaxMessageSizeFromServer`（来自服务器的最大消息大小）。
 
-- `MaxMessageSize`\
-  &#x20;请改用`MaxMessageSizeFromClient`或`MaxMessageSizeFromServer`。
+### Fallback Transport
 
-### 后备运输
-
-- 这一点已被删除。
+* 已移除。
 
 ### Utils
 
-- 已删除`Version`枚举。
-- `DefaultReliable`重命名为`Reliable`。
-- `DefaultUnreliable`重命名为`Unreliable`。
+* `Version`（版本）枚举已移除。
+* `DefaultReliable`（默认可靠）已重命名为 `Reliable`（可靠）。
+* `DefaultUnreliable`（默认不可靠）已重命名为 `Unreliable`（不可靠）。

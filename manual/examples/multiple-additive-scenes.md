@@ -1,35 +1,35 @@
-# Multiple Additive Scenes
+# 多个附加场景
 
-In Build Settings, remove all scenes and add both of the scenes from the Scenes folder in the following order:
+在**构建设置**中，删除所有场景，并按以下顺序添加**Scenes**文件夹中的两个场景：
 
-* Main
-* Game
+* 主场景（Main）
+* 游戏场景（Game）
 
-Open the Main scene in the Editor and make sure the Game Scene field in the MultiScene Network Manager on the Network scene object contains the Game scene. This is already setup by default, but if the Main scene was opened and saved before putting the scenes in the Build Settings list, the Game Scene field may be cleared accidentally.
+在编辑器中打开**主场景**，确保**多场景网络管理器**（MultiScene Network Manager）中的**游戏场景**字段包含**游戏场景**。这通常已经默认设置好了，但如果在将场景放入**构建设置**列表之前打开并保存了**主场景**，可能会意外清除**游戏场景**字段。
 
-## MultiScene Network Manager <a href="#multiscene-network-manager" id="multiscene-network-manager"></a>
+## 多场景网络管理器 <a href="#multiscene-network-manager" id="multiscene-network-manager"></a>
 
-The MultiScene Network Manager is derived from the base Network Manager and is responsible for additively loading the subscene instances and placing the players in their respective subscene instances and initializing player SyncVars. It has a Game Scene field where the Game subscene is assigned, and an Instances field to set how many instances are loaded on the server.
+**多场景网络管理器**派生自基本**网络管理器**，负责附加加载子场景实例，并将玩家放置在各自的子场景实例中，并初始化玩家的同步变量。它有一个**游戏场景**字段，用于指定**游戏子场景**，以及一个**实例**字段，用于设置服务器上加载多少个实例。
 
-Additionally, the `NetworkManager` object has the [Scene Interest Management](../interest-management/) component.
+此外，`NetworkManager`对象具有[场景兴趣管理](../interest-management/)组件。
 
-In this example, the subscene instances are additively loaded on the server with `localPhysicsMode = LocalPhysicsMode.Physics3D`. Physics subscenes do not auto-simulate, so each scene has a game object with a generic `PhysicsSimulator` script on it. This script does nothing on the client, only on the server.
+在此示例中，子场景实例在服务器上使用`localPhysicsMode = LocalPhysicsMode.Physics3D`进行附加加载。物理子场景不会自动模拟，因此每个场景都有一个带有通用`PhysicsSimulator`脚本的游戏对象。此脚本在客户端上不起作用，只在服务器上起作用。
 
-Clients only ever have one instance of the subscene additively loaded (without `localPhysicsMode`), while server has them all.
+客户端只会加载一个附加的子场景实例（不带`localPhysicsMode`），而服务器会加载所有子场景实例。
 
-## Playing in the Instances <a href="#playing-in-the-instances" id="playing-in-the-instances"></a>
+## 在实例中进行游戏 <a href="#playing-in-the-instances" id="playing-in-the-instances"></a>
 
-File -> Build and Run
+文件 -> 构建并运行
 
-Start at least 3 built instances: These will all be client players.
+至少启动3个已构建的实例：这些都将是客户端玩家。
 
-Press Play in the Editor and click Host (Server + Client) in the HUD - This will be the host and the 1st player. You can also use Server Only if you prefer.
+在编辑器中点击播放，然后在 HUD 中点击**主机**（服务器 + 客户端）- 这将是主机和第一个玩家。您也可以选择**仅服务器**。
 
-Click Client in the built instances.
+在已构建的实例中点击**客户端**。
 
-* WASDQE keys to move & turn your player capsule, Space to jump.
-* Colliding with the small colored spheres scores points base on their color.
-* Colliding with the larger tumblers sends them rolling around...they're server-side non-kinematic rigidbodies.
-* Only scores for the players in the same subscene are shown at the top of the game window.
+* 使用 WASDQE 键移动和转动您的玩家胶囊，空格键跳跃。
+* 与小彩色球碰撞会根据它们的颜色得分。
+* 与较大的滚筒碰撞会使它们滚动...它们是服务器端的非动力学刚体。
+* 只有在同一子场景中的玩家的得分才会显示在游戏窗口顶部。
 
 ![](<../../.gitbook/assets/image (126).png>)

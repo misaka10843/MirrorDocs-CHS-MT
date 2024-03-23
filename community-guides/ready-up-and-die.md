@@ -6,9 +6,9 @@ description: Written by JesusLuvsYooh / StephenAllenGames.co.uk
 
 ## End Result:
 
-1: To create a "ready up" feature, this will prevent players from moving until server/host says go.
+1: To create a “ready up” feature, this will prevent players from moving until server/host says go.
 
-2: An "isDead" player status to create a death and respawn.
+2: An “isDead” player status to create a death and respawn.
 
 ![](../.gitbook/assets/RUAD9.jpg)
 
@@ -36,10 +36,9 @@ Add this script onto a game object in the scene, also named SceneScript, this wi
 
 ## **Part 3:**
 
-Open up this SceneScript.cs, and add the following code, parts will be commented to explain :)
+Open up this SceneScript.cs, and add the following code, parts will be commented to explain  :)
 
 {% code title="SceneScript.cs" %}
-
 ```csharp
 using UnityEngine;
 using UnityEngine.UI;
@@ -71,7 +70,7 @@ namespace Mirror.Examples.Tanks
         public Tank playerScript; // this is set by local player, so UI has reference to your player only
         public Text statusText;
         public Button buttonReady, buttonDeath, buttonRespawn;
-
+        
 
         private void Start()
         {
@@ -145,7 +144,6 @@ namespace Mirror.Examples.Tanks
      }
 }
 ```
-
 {% endcode %}
 
 ## **Part 4:**
@@ -159,12 +157,11 @@ This will stop the tanks below code (movement and projectile firing) from runnin
 
 ![](../.gitbook/assets/RUAD6.jpg)
 
-Add the code at the bottom of Tank.cs, after the "RpcOnFire" ends.
+Add the code at the bottom of Tank.cs, after the “RpcOnFire” ends.
 
-(But still inside the namespace { } )
+(But still inside the namespace { }  )
 
 {% code title="Tank" %}
-
 ```csharp
 public GameObject[] objectsToHide;
 private SceneScript sceneScript;
@@ -228,23 +225,22 @@ public void CmdPlayerStatus(bool _value)
     isDead = _value;
 }
 ```
-
 {% endcode %}
 
 ## **Part 5:**
 
 For this method during death and respawn, rather than destroying the player, we will hide and reshow it.
 
-Open up the Tank player prefab, and add the two child objects to the "Objects To Hide" array, "ProjectileMount" is just an empty position marker, and does not need to be added.
+Open up the Tank player prefab, and add the two child objects to the “Objects To Hide” array, “ProjectileMount” is just an empty position marker, and does not need to be added.
 
-Upon the sync var change of "isDead", the hook callback will cycle through this array.
+Upon the sync var change of “isDead”, the hook callback will cycle through this array.
 
 ![](../.gitbook/assets/RUAD7.jpg)
 
 ## **Part 6:**
 
 Create a Canvas in the scene, by either right clicking, UI canvas, or the menu at top, GameObject, UI, Canvas.\
-Set the canvas scaler to "Scale with Screen Size", this will help with keeping everything same size, on both low and high resolution screens, and is best to set before adding Canvas contents.
+Set the canvas scaler to “Scale with Screen Size”, this will help with keeping everything same size, on both low and high resolution screens, and is best to set before adding Canvas contents.
 
 ![](../.gitbook/assets/Canvas4.jpg)
 
@@ -259,8 +255,11 @@ After this set the variables to the correct UI on your SceneScript, like below.
 
 Build and Run!
 
-Enjoy :)
+Enjoy  :)
 
-(To help with side by side play testing - Project settings, Player, Resolution and Presentation, Fullscreen Mode to "Windowed".)
+(To help with side by side play testing - Project settings, Player, Resolution and Presentation, Fullscreen Mode to “Windowed”.)
 
 ![](../.gitbook/assets/RUAD9.jpg)
+
+
+

@@ -1,15 +1,15 @@
 ---
-description: 'Deprecated: Use Team Interest Management instead.'
+description: '已弃用：请改用团队兴趣管理（Team Interest Management）替代。'
 ---
 
-# Network Owner Checker
+# 网络所有者检查器（Network Owner Checker）
 
 {% hint style="danger" %}
-**Network Owner Checker is Obsolete - use** [**Network Team**](../../interest-management/team.md) **component instead.**
+**网络所有者检查器已过时 - 请改用** [**网络团队（Network Team）**](../../interest-management/team.md) **组件。**
 {% endhint %}
 
-The Network Owner Checker component controls visibility of networked objects based on owner client.
+网络所有者检查器组件根据所有者客户端控制网络对象的可见性。
 
-Any object with this component on it will only be visible to the client that has authority ownership of it.
+任何带有此组件的对象只对拥有其所有权的客户端可见。
 
-This can be used when you want to spawn a network object with client authority and only have it appear for the owner, e.g. an interactive UI or NPC. Since clients can call commands on objects they have authority over, such objects can have Network Behaviors with commands in them that can be called directly by the client.
+当您想要生成具有客户端所有权的网络对象并且仅对所有者可见时，可以使用此功能，例如交互式 UI 或 NPC。由于客户端可以在拥有权限的对象上调用命令，因此这些对象可以具有包含命令的网络行为，客户端可以直接调用这些命令。

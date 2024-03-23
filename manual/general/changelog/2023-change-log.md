@@ -1,231 +1,233 @@
-# 2023 变更日志
+# 2023 更新日志
 
-{% hint style="info"%}
-镜像将在每月初发布到[资产存储中](https://assetstore.unity.com/packages/tools/network/mirror-129321)，除非某些关键问题导致延迟。
-联系我们
+{% hint style="info" %}
+Mirror 每个月初发布到 [Asset Store](https://assetstore.unity.com/packages/tools/network/mirror-129321)，除非某些关键问题导致延迟。
+{% endhint %}
 
-{% hint style="info"%}
-镜像使用语义版本控制，此处显示的版本是发布到资产存储的版本，偶尔会在存储提交之间的月中发生重大版本冲突，因此此处不单独显示。
-联系我们
+{% hint style="info" %}
+Mirror 使用语义化版本控制，这里显示的版本是发布到 Asset Store 的版本，有时会在商店提交之间发生主要版本升级，因此这里不会单独显示。
+{% endhint %}
 
-{% hint style="info"%}
-有关版本及其特定更改日志的详细信息，请参阅 github 发布页面：\
+{% hint style="info" %}
+有关版本及其具体更新日志的详细信息，请参阅 github 发布页面：\
 [https://github.com/MirrorNetworking/Mirror/releases](https://github.com/MirrorNetworking/Mirror/releases)
-联系我们
+{% endhint %}
 
-## v86.13.4 -- 2023 年 12 月 24 日
+## v86.13.4 -- 2023年12月24日
 
-- 修正：在某些情况下，KCP 会泛洪超时警告。
-- 修正：压缩旋转`NetworkTransform`现在正确地考虑本地或世界坐标。
-- 修正：`NetworkPingDisplay`变宽了一点，这样 RTT 就不会被切断。
-- 修正：`PredictedRigidbody`和材料处理的几个更新
-- 修正：`PredictedRigidbody`视觉旋转插值现在可以正常工作。
+* 修复：在某些条件下，KCP 会导致超时警告泛滥。
+* 修复：在 `NetworkTransform` 上压缩旋转现在正确考虑本地或世界坐标。
+* 修复：`NetworkPingDisplay` 稍微加宽，以防止 RTT 被截断。
+* 修复：对 `PredictedRigidbody` 和材质处理进行了几处更新。
+* 修复：`PredictedRigidbody` 的可视旋转插值现在正常工作。
 
-## v86.13.0 -- 2023 年 12 月 12 日
+## v86.13.0 -- 2023年12月12日
 
-- 新增：`NetworkDiagnosticsDebugger`记录发送和接收的消息。
-- 新增：`NetworkPingDisplay`现在显示连接质量。
-- 新增：`PredictedRigidbody`可视化插值对象。
-- 添加：LayerMask 支持网络读取器/写入器
-- 新增：网络管理器现在有切换到禁用自动启动无头服务器/客户端在编辑器。
-- 新增：网络管理器现在有切换到不断开客户端的消息异常。
-- 新增：网络管理器现在有一个"填充可生成的预制件"按钮。
-- 添加：Utils 现在有`isWebGL`和`isDebug`。
-- 添加：SimpleWebTransport 现在返回远程地址从反向代理时可用。
-- 添加：已添加其他示例。
-- 修正：Edgegap 托管注册表，图像名称和标签字符串被修剪，以避免尾随空格的错误。
-- 修正：SyncVar 钩子调用不再在每次调用时实例化一个新的 Action 委托。
-- 修正：Ping 消息现在包括场景哈希，以防止长时间场景加载后的高 RTT。
-- 修正：` NetworkTransform``OnTeleport `不再调用`Reset`，这会导致`NT Reliable`增量不同步。
-- 修正：` NetworkBehaviour``authority `现在正确评估主机客户端。
-- 修正：`LatencySimulation`现在正确地将延迟应用于两个通道。
-- 修正：消息 ID 哈希改进，以尽量减少冲突。
-- 更改：EdgeGap 插件更新到版本 2。
-- 更改：网络管理器自动启动无头被重构。
-- 更改：多路传输现在是`PortTransport`。
-- 更改：一些示例现在使用`NetworkTransformReliable`。
-- 更改：`NetworkTransformReliable`现在可以切换旋转压缩。
-- 更改：`NetworkTransformReliable`现在总是使用带宽节省。
-- 更改：示例中的一些重复脚本合并到\_Common 文件夹。
-- 已更改：`ConnectionQuality`已移动到`NetworkClient`。
-- 更改：`GUIConsole`布局更新为不与`NetworkHUD`冲突。
-  - 默认热键更改为 tick(`)，以便在WebGL构建中更安全地使用。` `
-- 更改：KCP 传输`ToString`现在包括端口。
-- 改变：心灵感应传输`ToString`被简化和缩短。
-- 更改：KCP 和心灵感应传输现在在`Available`检查中使用编译器符号。
-- 更改：KCP 传输更新到版本 1.39。
-- 变更：已更新各种示例。
-- 更改：[脚本模板](../script-templates.md)已更新。
-- **重大更改**
-  - SimpleWebTransport 设置和日志记录已重构。
-    - There are now separate port fields for server and clients so you don't have to change them for building server and client.
-  - SimpleWebTransport 使用 cert.json 和 SSL 证书已在组件检查器中标记为过时。
-    - This feature will be removed eventually. 反向代理应该始终实施，因为它的性能更好，更容易维护。
+* 新增：`NetworkDiagnosticsDebugger` 用于记录发送和接收的消息。
+* 新增：`NetworkPingDisplay` 现在显示连接质量。
+* 新增：`PredictedRigidbody` 可视插值对象。
+* 新增：在 Network Reader / Writer 中添加 LayerMask 支持。
+* 新增：Network Manager 现在有一个开关来禁用编辑器中自动启动 Headless 服务器 / 客户端。
+* 新增：Network Manager 现在有一个开关，遇到消息异常时不断开客户端。
+* 新增：Network Manager 现在有一个 Populate Spawnable Prefabs 按钮。
+* 新增：Utils 现在有 `isWebGL` 和 `isDebug`。
+* 新增：SimpleWebTransport 现在在可用时从反向代理返回远程地址。
+* 新增：添加了额外的示例。
+* 修复：Edgegap Hosting 注册表、图像名称和标签字符串被修剪以避免尾随空格导致错误。
+* 修复：SyncVar 钩子调用不再在每次调用时实例化新的 Action 委托。
+* 修复：Ping 消息现在包含场景哈希以防止长场景加载后高 RTT。
+* 修复：`NetworkTransform` 的 `OnTeleport` 不再调用 `Reset`，这会导致 `NT Reliable` 的增量不同步。
+* 修复：`NetworkBehaviour` 的 `authority` 现在正确评估主机客户端。
+* 修复：`LatencySimulation` 现在正确应用延迟到两个通道。
+* 修复：消息 ID 哈希改进以最小化冲突。
+* 更改：EdgeGap 插件更新到版本 2。
+* 更改：Network Manager Auto-Start Headless 重构。
+* 更改：Multiplex Transport 现在是一个 `PortTransport`。
+* 更改：一些示例现在使用 `NetworkTransformReliable`。
+* 更改：`NetworkTransformReliable` 现在有旋转压缩的开关。
+* 更改：`NetworkTransformReliable` 现在始终使用带宽节省。
+* 更改：一些示例中重复的脚本合并到 \_Common 文件夹。
+* 更改：`ConnectionQuality` 移动到 `NetworkClient`。
+* 更改：`GUIConsole` 布局更新，以避免与 `NetworkHUD` 冲突。
+  * 默认热键更改为反引号（`` ` ``），以在 WebGL 构建中更安全地使用。
+* 更改：KCP Transport 的 `ToString` 现在包括端口。
+* 更改：Telepathy Transport 的 `ToString` 已简化和缩短。
+* 更改：KCP 和 Telepathy 传输现在在 `Available` 检查中使用编译器符号。
+* 更改：KCP Transport 更新到版本 1.39。
+* 更改：更新了各种示例。
+* 更改：[脚本模板](../script-templates.md) 已更新。
+* **重大变更**
+  * SimpleWebTransport 设置和日志已重构。
+    * 现在服务器和客户端有单独的端口字段，因此您不必为构建服务器和客户端而更改它们。
+  * SimpleWebTransport 使用 cert.json 和 SSL 证书已在组件检查器中标记为过时。
+    * 此功能最终将被移除。始终应实现反向代理，因为它的性能更好且更易于维护。
 
-## v81.4.0 -- 2023 年 8 月 3 日
+## v81.4.0 -- 2023年8月3日
 
-- 示例：添加了 BenchmarkIdle 演示，以使用 80%空闲对象进行测试
-- 功能：NetworkTransform WorldScale 选项
-- NetworkClient：improve"未找到同步消息的目标"警告
-- 修复：SimpleWebTransport 条件删除，使用户可以看到错误 M...
-- kcp2k V1.37 - 2019 -07-31
-- Unity 2021.3.29 LTS 最新修复
-- 功能：历史边界 MVP(#3563)
-- 坦克合作社的例子，采取车辆通过 Mirror 管理局控制.
-- 修复：NetworkReader Readbits/Array/List 分配限制到前.
-- 删除未使用的导入
-- NetworkWriter：清理旧的 UIntDouble 注释
-- NetworkReader/Writer 读/写列表：注释
-- 修复：NetworkConnection"无法发送大于...的数据包"消息 n.
-- 修复：NetworkMessages.MaxContentSize 现在考虑 channelId 而不是.
-- 功能：恢复 NetworkServer.disconnectInactiveConnections(#3556)
-- 修复：删除冗余的 RPC 缓冲。 节省了带宽但引入了
-- 修复：NetworkIdentity.AssignAssetId()现在正确保存。 修复一个 b.
-- 修复：NetworkTime RTT 现在检查来自未来的恶意时间戳
-- 压缩：删除不必要的 QuaternionElement 函数
-- 压缩：更明显的 TenBitsMax 表示
-- 功能：NetworkConnectionToClient.rtt via Ping & Pong Messages(#3545)
-- 示例：默认发送速率从 30 Hz 增加到 60 Hz，用于同步...
-- perf：默认发送速率从 30 Hz 增加到 60 Hz，供用户使用。
-- 坦克演示：增加发送速率从 30 赫兹到 120 赫兹，以避免 rtt bein.
-- NetworkBehaviour. Ontario：GetBullentInParent(bool)2020 support.
-- NetworkIdentity：correct GetBidentInParent explanations(credit：F.
-- NetworkIdentity：在构建中公开 AssetGuidToUint
-- 修复：NetworkBehaviour. Ontario 无法找到父 NetworkIdentity 是.
-- 修复：坦克演示：替换炮塔过时 NetworkTransform 与 Networ.
-- perf：删除一些不必要的内联以优化指令缓存
-- NetworkIdentity：将 AssetId 暴露给 Guid 转换函数
-- 修复：2019 测试再次工作(#3547)
-- 修复：NetworkBehaviour Ontario #ifdef 为 Unity 2020.3.19 调整.
-- 针对\[SyncVar]名称为.的情况改进了#3525 的错误消息。
-- 通过应用#3525 的解决方法修复 NetworkIdentityTests
-- 修复：#3525 通过解释错误消息中的解决方案。
-- NetworkClient OnGUI：更好的 rtt 显示
-- 中断：NetworkTime.PingFrequency 重命名为 PingInterval。 让它...
-- 修复最近修复后的 PrepareToSpawnSceneObjects 测试
-- NetworkTime：更易读的 ping 间隔检查
-- 修复：#3538 在 DestroyOwnedObjects(#.
-- 修复：PrepareToSpawnSceneObjects 检查 netId 而不是 activeSelf \[f.]
-- 功能：滞后补偿 V1(#3534)
-- 测试：修复失败的 NetworkManagerTests，因为 Deepware Tested 测试没有...
-- NetworkTime：rttVar 重命名为 rttVariance，以与旧 M...
-- 修复：SnapshotInterpolation.Insert()现在有一个 bufferLimit 来避免 ev.
-- perf：NetworkTransformBase SortedLists 现在使用默认 ca 分配.
-- 更新了自述文件：阐明激励措施，修复错别字，改进格式
-- 功能：ConnectionQuality 启发式+回调+ GUI(#3526)
-- 网络时间：重新引入往返时间差异，为连接做好准备。
-- NetworkClient：initialBufferTime 用于调试、比较和调试。
-- 坦克演示：始终显示时间插值 GUI，便于调试
-- 修复：NetworkClient TimeInterpolation：add 'current' bufferTimeMultipl.
-- 现在禁用失败的测试，所以至少项目编译时...
-- 修复：韦弗 SyncVarAttributeReplacer 现在检测修改\[Syn.
-- Weaver：SyncVarsity Replacer：pass Logging
-- Weaver：SyncVarsity Replacer：语法和注释使其更明显
-- 修复：Weaver 现在在嵌套类型定义中编织 NetworkBehavious
-- 功能：Weaver 将'bool Weaved()'添加到每个 NetworkBehaviour 中，这.
-- 测试：删除未使用的"using"
-- 修复：测试工作在 Unity 2022.2+ \[imer]
-- Weaver ILPostProcessorAssemblyResolver：使用 GetFileNameWithoutExtension
-- perf：Weaver ILPostProcessorAssemblyResolver FindFile searches dllnam.
-- Weaver：ILPostProcessorAssemblyResolver FindFile 注释
-- Weaver：ILPostProcessorAssemblyResolver caches FindFile for a 50x imp.
-- perf：Weaver ILPostProcessorAssemblyResolver FindFile caches exeName，.
-- Weaver ILPostProcessorAssemblyResolver：FindFile uses string name par.
-- perf：Weaver ILPostProcessorAssemblyResolver uses ConcurrentDictionar.
-- RigidbodyPhysics 演示：禁用"onlySyncOnChange"，直到修复#3519
-- Examples/VR link
-- Unbatcher：Unity 2019 修复
-- 修复：批处理 VarInt 大小头添加到修复自定义序列化 Net.
-- 功能：NetworkRigidbody Benchmark 演示
-- 修复：NetworkRigidbody/2D 现在使用.target 的 Rigidbody 并支持 ch.
-- NetworkRigidbody：MovePosition 覆盖注释
-- 功能：NetworkMessageId 类型查找和日志功能，用于调试...
-- Unbatcher：简化 GetNextMessage
-- 功能：VarInt 大小预测
-- NetworkMessages：保留 GetId 以方便使用
-- 中断：NetworkTransform 重命名为 NetworkTransformUnreliable，用于...
-- 删除重复的 NetworkRigidbody 脚本
-- NetworkTransform：将所有相关脚本移动到一个 NetworkTransform 中...
-- perf：NetworkRigidbody Reliable/Unreliable via NetworkTransform for s...
-- 修复：NetworkBehaviourInspector 'had no target'警告
-- 自述文件：信息安全指南
-- NetworkTransform：将 Gizmos 显示为 WriteCube 而不是实体 Cube，用于.
-- 刚体示例：灰色背景，以便我们更容易看到叠加
-- 刚体示例：显示时间插值 GUI
-- RigidbodyPhysics 示例：修复缺少组件的警告
-- 修复：Weaver 运行时熔丝，以确保编织成功之前开始...
-- 快照插值示例：自述文件
-- 添加说明
-- 修复 NetworkClientTests for Unity 2019
-- NetworkMessages.Wraptool：改进日志消息，使其更容易.
-- 修复：NetworkClient unbatcher 现在重置在主机模式连接以及.
-- 取消批处理：只读字段
-- 修复：KcpServer.停止现在清除连接，使他们不被携带过.
-- 修复：修复 2020 年新 C#的使用
-- feat：添加选项以获取反向代理背后的 IP
+* 示例: 添加了BenchmarkIdle演示，用于测试80%空闲对象
+* 功能: NetworkTransform世界缩放选项
+* NetworkClient: 改进了“未找到同步消息目标”的警告
+* 修复: SimpleWebTransport条件已移除，用户可以看到错误消息...
+* kcp2k V1.37 \[2023-07-31]
+* Unity 2021.3.29 LTS 以获取最新修复
+* 功能: HistoryBounds MVP (#3563)
+* 坦克合作示例，通过Mirror的Authority控制车辆...
+* 修复: NetworkReader ReadBytes/Array/List 分配限制为...
+* 移除未使用的导入
+* NetworkWriter: 清理旧的UIntDouble注释
+* NetworkReader/Writer Read/WriteList: 注释
+* 修复: NetworkConnection“无法发送大于…”消息
+* 修复: NetworkMessages.MaxContentSize现在考虑channelId而不是...
+* 功能: 恢复NetworkServer.disconnectInactiveConnections (#3556)
+* 修复: 移除冗余的RPC缓冲。节省带宽，但引入了...
+* 修复: NetworkIdentity.AssignAssetId()现在保存正确。修复了一个b...
+* 修复: NetworkTime RTT现在检查来自未来的恶意时间戳
+* 压缩: 移除不必要的QuaternionElement函数
+* 压缩: 更明显的TenBitsMax表示
+* 功能: NetworkConnectionToClient通过Ping和Pong消息获取rtt (#3545)
+* 示例: 默认发送速率从30 Hz增加到60 Hz以保持...
+* 性能: 默认发送速率从30 Hz增加到60 Hz，以便用户获得...
+* 坦克演示: 将发送速率从30 Hz增加到120 Hz以避免rtt...
+* NetworkBehaviour.OnValidate: GetComponentInParent(bool) 2020支持...
+* NetworkIdentity: 修正GetComponentInParent解释（来源: F...）
+* NetworkIdentity: 在构建中公开AssetGuidToUint
+* 修复: NetworkBehaviour.OnValidate找不到父NetworkIdentity的...
+* 修复: 坦克演示: 用NetworkTransform替换过时的Turret...
+* 性能: 移除一些不必要的内联以优化指令缓存
+* NetworkIdentity: 在构建中公开AssetId到Guid转换函数
+* 修复: 2019测试再次可用 (#3547)
+* 修复: NetworkBehaviour OnValidate #ifdef 调整为Unity 2020.3.19...
+* 改进#3525的错误消息，用于\ [SyncVar]名称...
+* 通过应用#3525的解决方案修复NetworkIdentityTests
+* 修复: #3525通过在错误消息中解释解决方案。
+* NetworkClient OnGUI: 更好的rtt显示
+* 破坏性更改: NetworkTime.PingFrequency重命名为PingInterval。使...
+* 修复最近修复后的PrepareToSpawnSceneObjects测试
+* NetworkTime: 更易读的ping间隔检查
+* 修复: #3538在DestroyOwnedObjects中调用场景对象上的unspawn (#...
+* 修复: PrepareToSpawnSceneObjects检查netId而不是activeSelf \[f...
+* 功能: 拉格补偿V1 (#3534)
+* 修复因DeeplyTested测试未通过而导致NetworkManagerTests失败
+* NetworkTime: rttVar重命名为rttVariance以与旧M一致...
+* 修复: SnapshotInterpolation.Insert()现在具有缓冲限制以避免...
+* 性能: NetworkTransformBase SortedLists现在使用默认ca...
+* 更新自述文件: 澄清激励，修正拼写错误，改进格式
+* 功能: 连接质量启发式+回调+GUI (#3526)
+* NetworkTime: 重新引入往返时间方差以准备Conn...
+* NetworkClient: 用于调试、比较和...
+* 坦克演示: 始终显示时间插值GUI以便更轻松调试
+* 修复: NetworkClient TimeInterpolation: 添加'current' bufferTimeMultipl...
+* 暂时禁用失败的测试，以便至少项目可以编译w...
+* 修复: Weaver SyncVarAttributeAccessReplacer现在检测修改\ [Syn...
+* Weaver: SyncVarAccessReplacer: 传递日志
+* Weaver: SyncVarAccessReplacer: 语法和注释使其更明显
+* 修复: Weaver现在在嵌套类型定义中编织NetworkBehavious
+* 功能: Weaver为每个NetworkBehaviour添加'bool Weaved()'，该函数...
+* 测试: 移除未使用的'using'
+* 修复: 在Unity 2022.2+上运行测试 \[imer]
+* Weaver ILPostProcessorAssemblyResolver: 使用GetFileNameWithoutExtension
+* 性能: Weaver ILPostProcessorAssemblyResolver FindFile搜索dllnam...
+* Weaver: ILPostProcessorAssemblyResolver注释
+* Weaver: ILPostProcessorAssemblyResolver为50x imp...缓存FindFile
+* 性能: Weaver ILPostProcessorAssemblyResolver FindFile缓存exeName,...
+* Weaver ILPostProcessorAssemblyResolver: FindFile使用字符串名称par...
+* 性能: Weaver ILPostProcessorAssemblyResolver使用ConcurrentDictionar...
+* RigidbodyPhysics演示: 在#3519修复之前禁用'onlySyncOnChange'
+* 示例/VR链接
+* Unbatcher: Unity 2019修复
+* 修复: 添加了批处理VarInt大小标头以修复自定义序列化Net...
+* 功能: NetworkRigidbody基准演示
+* 修复: NetworkRigidbody/2D现在使用.target的Rigidbody并支持ch...
+* NetworkRigidbody: MovePosition覆盖注释
+* 功能: NetworkMessageId <> 类型查找和用于调试的日志函数...
+* Unbatcher: 简化GetNextMessage
+* 功能: VarInt大小预测
+* NetworkMessages: 保留GetId以方便使用
+* 破坏性更改: NetworkTransform重命名为NetworkTransformUnreliable以...
+* 移除重复的NetworkRigidbody脚本
+* NetworkTransform: 将所有相关脚本移动到一个NetworkTransform...
+* 性能: NetworkRigidbody可靠/不可靠通过NetworkTransform进行s...
+* 修复: NetworkBehaviourInspector“没有目标”的警告
+* 自述文件: 信息安全指南
+* NetworkTransform: 将Gizmos显示为WriteCube而不是实心Cube以...
+* Rigidbody示例: 灰色背景，以便更容易看到叠加
+* Rigidbody示例: 显示时间插值GUI
+* RigidbodyPhysics示例: 修复缺少组件警告
+* 修复: Weaver运行时保险丝以确保编织成功后才启动...
+* Snapshot Interpolation示例: 自述文件
+* CompilationFinishedHook: 添加说明
+* 修复Unity 2019的NetworkClientTests
+* NetworkMessages.WrapHandler: 改进日志消息，使其更容易...
+* 修复: NetworkClient unbatcher现在在主机模式连接时也会重置...
+* Unbatcher: 只读字段
+* 修复: KcpServer.Stop现在清除连接，以便它们不会被带到...
+* 修复: 修复在2020中使用新c#的问题
+* 功能: 添加选项以获取反向代理后面的IP
 
-## v79.0.0 -- 2023 年 6 月 7 日
+## v79.0.0 -- 2023年6月7日
 
-- 添加：Writer / Reader 支持`DateTime`数据类型。
-- 新增：`NetworkRoomManager`-`ReadyStatusChange`现在是一个虚拟方法。
-- 新增：现在可以禁用 pos / rot / scale 的`NetworkTransform`插值。
-- 增加：`ExponentialMovingAverage`现在有一`Reset`方法。
-- 新增：`NetworkClient`的快照插值设置暴露在网络管理器中。
-- 修正：`NetworkBehaviour`SyncVar 使用`netId`查找。
-- 修正：不再为 SyncVars 使用自定义`NetworkBehaviour`编写器。
-- 修正：非衍生`NetworkBehaviour`的 Writer 只为`netId`写入 0。
-- 修正：KCP 更新到 1.33 版本。
-- 修正：简单的 Web 传输改进了日志记录。
-- 修正：`NetworkTime`-`PingWindowSize`从 10 缩短为 6，并在`ExponentialMovingAverage`中使用。
-- 修正：当域缓存被禁用时，NetworkLoop 不再添加两次功能。
-- 修正：NetworkLoop 不再以编辑模式运行。
-- 修正：网络消息现在使用静态 NetworkMessageId 类和静态 ushort Id。
-- 修正：Weaver 现在为 RPC 编织预先计算的函数哈希。
-- 修正：快照插值收到各种更新。
-- 修复：NetworkTransform(可靠)收到各种性能更新，修复抖动。
-- 更改：兴趣管理现在从抽象基类派生。
-- 已更改：NetworkWriter - MaxStringLength 更改为 ushort. MaxValue。
-- **突破性变化：**
-  - 删除过时的 OnServerError / OnClientError。
-  - 删除了旧的 Unity 2018 / 2019_3 编译器定义。
-  - 删除 NetworkClient.serverIp。
-  - AsmDef 文件更新和简化。
+* 新增：`DateTime` 数据类型的 Writer / Reader 支持。
+* 新增：`NetworkRoomManager` - `ReadyStatusChange` 现在是一个虚方法（virtual method）。
+* 新增：`NetworkTransform` 插值现在可以在位置（pos）/ 旋转（rot）/ 缩放（scale）上禁用。
+* 新增：`ExponentialMovingAverage` 现在有一个 `Reset` 方法。
+* 新增：`NetworkClient` 的快照插值设置在 Network Manager 中暴露。
+* 修复：`NetworkBehaviour` SyncVar 使用 `netId` 查找。
+* 修复：不再为 SyncVars 使用自定义的 `NetworkBehaviour` writers。
+* 修复：非生成的 `NetworkBehaviour` 的 Writer 现在只为 `netId` 写入 0。
+* 修复：KCP 更新至版本 1.33。
+* 修复：Simple Web Transport 改进日志记录。
+* 修复：`NetworkTime` - `PingWindowSize` 从 10 缩短到 6 并在 `ExponentialMovingAverage` 中使用。
+* 修复：当域重新加载被禁用时，NetworkLoop 不再添加函数两次。
+* 修复：NetworkLoop 不再在编辑模式下运行。
+* 修复：网络消息现在使用静态的 NetworkMessageId 类和静态的 ushort Id。
+* 修复：Weaver 现在为 RPCs 编织预先计算的函数哈希。
+* 修复：快照插值收到各种更新。
+* 修复：NetworkTransform（可靠）收到各种性能更新，修复抖动。
+* 更改：兴趣管理现在派生自一个抽象基类。
+* 更改：NetworkWriter - MaxStringLength 更改为 ushort.MaxValue。
+* **重大更改：**
+  * 移除过时的 OnServerError / OnClientError。
+  * 移除旧的 Unity 2018 / 2019\_3 编译器定义。
+  * 移除 NetworkClient.serverIp。
+  * 更新和简化了 AsmDef 文件。
 
-## v73.0.0 -- 2023 年 2 月 9 日
+## v73.0.0 -- 2023年2月9日
 
-- 新增：`NetworkClient.OnGUI`现在包含`bufferTimeMultiplier`的 BTM。
-- 修正：客户端对象现在在产生处理程序之前被清除。
-- 修正：`NetworkIdentity`不再重置`SyncObjects`。
-  - 您可以自己在 Sync\* 集合上调用 Reset 方法。
-- 固定：InitSyncObject Isrecordable/IsRecording 权限固定为主机模式和客户端上的其他播放器对象。
-- 固定：同步\* 集合现在可以修改之前再次产卵。
-- 修正：客户端同步\* 集合现在可以在离线时修改。
-- 修正：处理程序不再为 Sync\* 集合双重触发。
-- 固定：OP_SET 索引参数的 SyncList 处理程序固定。
-- 固定：`SpawnObjects`现在激活，但不产卵下不活跃的父对象。
-- 修正：`NetworkTransformBase`现在检查 OnGUI 中缺少的主摄像头。
-- 修正：`NetworkTransformBase`现在重置时，改变客户端到服务器模式的权限。
-- 修正：`NetworkTransformBase`OnClientAuthorityChanged 仅适用于服务器。
-- 修正：`NetworkTransformReliable`现在正确使用`localScale`同步比例。
-- 修正：`NetworkTransformReliable`现在检查以前的更改应用后的更改。
-- 修复：`NetworkTransformReliable`发送最后一个已知快照时的抖动。
-- 修正：`NetworkServer.DisconnectAll`不再将 active 设置为 false.它会切断所有的连接
-  - `Shutdown`仍然正确地清理所有对象并将 active 设置为 false。
-- 修正：重置`NetworkClient`和`NetworkServer`中的静态数据。
-- 修正：`ChangeOwner`消息处理程序现在添加/删除客户端连接`owned`HashSet。
-- 修正：`NetworkClient`现在在`OnStartAuthority`/`OnStartClient`被调用之前设置`NetworkIdentity.connectionToServer`。
-- 修正：`isClient`和`isOwned`现在在`OnStartAuthority`中正确设置。
-- 修正：当涉及利息管理时，`isClient`和`isOwned`现在正确设置。
-- 修正：KCP 更新到 1.29 版本。
-- 修正：OnClientDisconnect 现在可以正确调用 DNS 解析失败。
-- 修正：从 KCP 程序集定义文件中删除无效引用。
-- 修正：在镜像.传输程序集定义文件中添加了 SimpleWebTransport。
-- 修正：大多数示例都进行了审查和更新，改进了 PlayerController。
-- 修正：距离兴趣管理现在缓存引用自定义距离组件。
-- 更改：`OnClientConnect`现在在任何场景更改之前，只要经过身份验证就会触发。
-- 已更改：对所有组件定义文件使用已启用的"组件"。
-- 更改：网络管理器 HUD 布局现在有点宽，减少包装。
-- 更改：网络客户端中的 OnGUI 现在是公开的。
-- 变更：已剔除覆盖过去 12 个月的符号，并将继续剔除到滚动的 12 个月时间段。
-- 更改：延迟模拟传输配置已修改。
-- 突破性的变化：旧的过时的属性和方法已被删除。
+* 新增：`NetworkClient.OnGUI` 现在包括 `bufferTimeMultiplier` 的 BTM。
+* 修复：在生成处理程序之前现在清除客户端对象。
+* 修复：`NetworkIdentity` 不再重置 `SyncObjects`。
+  * 您可以在 Sync\* 集合上自行调用 Reset 方法。
+* 修复：在主机模式和客户端上的其他玩家对象上修复了 InitSyncObject IsWritable/IsRecording 权限。
+* 修复：再次生成之前现在可以修改 Sync\* 集合。
+* 修复：客户端 Sync\* 集合现在可以在离线时修改。
+* 修复：处理程序不再为 Sync\* 集合双重触发。
+* 修复：SyncList 处理程序的 OP\_SET 索引参数修复。
+* 修复：`SpawnObjects` 现在激活但不在非活动父级下生成对象。
+* 修复：`NetworkTransformBase` 现在在 OnGUI 中检查缺失的主摄像机。
+* 修复：在客户端到服务器模式中更改权限时，`NetworkTransformBase` 现在重置。
+* 修复：`NetworkTransformBase` OnClientAuthorityChanged 仅服务器端执行。
+* 修复：`NetworkTransformReliable` 现在正确使用 `localScale` 进行缩放同步。
+* 修复：`NetworkTransformReliable` 现在在应用先前更改后检查更改。
+* 修复：从 `NetworkTransformReliable` 发送最后已知快照的抖动修复。
+* 修复：`NetworkServer.DisconnectAll` 不再将 active 设置为 false...只是断开所有连接。
+  * `Shutdown` 仍然正确清理所有对象并将 active 设置为 false。
+* 修复：在 `NetworkClient` 和 `NetworkServer` 中的静态重置。
+* 修复：`ChangeOwner` 消息处理程序现在向客户端连接的 `owned` HashSet 添加/移除。
+* 修复：`NetworkClient` 现在在调用 `OnStartAuthority` / `OnStartClient` 之前设置 `NetworkIdentity.connectionToServer`。
+* 修复：在 `OnStartAuthority` 中现在正确设置 `isClient` 和 `isOwned`。
+* 修复：在涉及兴趣管理时，现在正确设置 `isClient` 和 `isOwned`。
+* 修复：KCP 更新至版本 1.29。
+* 修复：现在对于 DNS 解析失败正确调用 OnClientDisconnect。
+* 修复：从 KCP Assembly Definition 文件中移除无效引用。
+* 修复：将 SimpleWebTransport 添加到 Mirror.Transports Assembly Definition 文件。
+* 修复：大多数示例已经过审查和更新，改进了 PlayerController。
+* 修复：距离兴趣管理现在缓存到自定义距离组件的引用。
+* 更改：`OnClientConnect` 现在在认证后立即触发，而不是在任何场景更改之前。
+* 更改：对所有 Assembly Definition 文件启用了使用 GUID。
+* 更改：Network Manager HUD 布局现在更宽以减少换行。
+* 更改：Network Client 中的 OnGUI 现在是公共的。
+* 更改：编译器符号已被削减到覆盖过去12个月的符号，并将继续削减到滚动的12个月时间段。
+* 更改：延迟模拟传输配置已进行了改进。
+* **重大更改：** 移除了较旧的已弃用属性和方法。
+
+请提供要翻译的 Markdown 内容。

@@ -1,65 +1,67 @@
-# Examples
+# 示例
 
-Mirror includes several small examples to help you learn how to use various features and how to set things up so they work together.\
-Only a select few have documentation pages, check the Mirror/Examples directory in your Unity Project for more examples of how to use Mirror.
+Mirror 包含几个小示例，帮助您学习如何使用各种功能以及如何设置它们以使其协同工作。\
+只有少数示例有文档页面，请在您的 Unity 项目中的 Mirror/Examples 目录中查看更多如何使用 Mirror 的示例。
 
-*   [Additive Levels](additive-levels.md)
+*   [Additive Levels（附加级别）](additive-levels.md)
 
-    &#x20;The Additive Levels example demonstrates using Additive Scenes as levels with Scene Interest Management, custom scene loading with a fade transition, and teleporting the player from one scene to another via respawning.
-* [Additive Scenes](additive-scenes.md)\
-  &#x20;The Additive Scenes example demonstrates a server additively loading a sub-scene into a main scene at startup, and having a server-only trigger that generates a message to any client whose player enters the trigger zone to also load the sub-scene, and subsequently unload it when they leave the trigger zone. Only players inside the trigger zone can see the objects in the sub-scene. Network Proximity Checker components are key to making this scenario work.
-* [Basic](basic.md)\
-  &#x20;Basic is what it sounds like...the most rudimentary baseline of a networked game. Features SyncVars updating random UI data for each player.
-* Benchmark\
-  &#x20;Allows for mass testing of Enemy NPC's (monsterous red cubes!).\
-  See the Spatial Hashing Interest Management component at work, joining clients will only receive data from nearby enemies.
-* Benchmark Idle\
-  &#x20;Similar to above, mass test idle networked objects each with a colour sync var, settings can be changed via NetworkManager inspector.
-* Billiards\
-  &#x20;Mouse drag the white ball to apply force, hits are send to server via \[Command].
-* Billiards Predicted\
-  &#x20;Similar to above, but with prediction, this solves the possible delay that a Command->ClientRpc/NetworkTransform position result, would normally have.
-* CCU\
-  &#x20;SoonTM&#x20;
-* Character Selection\
-  &#x20;Demonstrates how to use multiple prefabs for player spawns in your game, along with name and colour customisation.
-* Chat\
-  &#x20;A simple text chat example, send messages between players that login via Network Authenticator.
-* Common\
-  &#x20;Contains miscellaneous features that are not full examples.
-* Couch Co-Op\
-  &#x20;Add additional local players to your game, they all share same screen, different controls.\
-  Remote joining clients can do the same, allows for a combination of local players vs remote players, such as 2 vs 4, or 1 vs 4 vs 99 (granted you would have to setup 99 different controller/keyboard inputs for this).
-* Discovery\
-  &#x20;Broadcasts on local network, clients can find servers without needing to input IP address or ports.\
-  Another popular use is, it can be adjusted to auto join first broadcasted game thats found (or create a game if none), a feature used often in VR or LAN game types.&#x20;
-*   Lag Compensation\
-    &#x20;Rollback / Lag Compensation is a standalone, Unity / netcode independent algorithm. This is a simple demo to test it, without Mirror. We want this to be usable in all game engines.
+    &#x20;Additive Levels 示例演示了如何使用附加场景作为级别，使用场景兴趣管理，自定义场景加载带有淡入淡出过渡，以及通过重生将玩家从一个场景传送到另一个场景。
+* [Additive Scenes（附加场景）](additive-scenes.md)\
+  &#x20;Additive Scenes 示例演示了服务器在启动时将一个子场景附加加载到主场景中，并具有仅服务器端触发器，当玩家进入触发区域时向任何客户端生成消息以加载子场景，当他们离开触发区域时卸载子场景。只有在触发区域内的玩家才能看到子场景中的对象。网络接近检查器组件对使此场景工作至关重要。
+* [Basic（基础）](basic.md)\
+  &#x20;Basic 就像它听起来的那样...一个网络游戏的最基本基线。功能包括 SyncVars 更新每个玩家的随机 UI 数据。
+* Benchmark（基准测试）\
+  &#x20;允许对敌人 NPC（巨大的红色立方体！）进行大规模测试。\
+  查看空间哈希兴趣管理组件的工作方式，加入的客户端只会接收附近敌人的数据。
+* Benchmark Idle（基准测试空闲）\
+  &#x20;类似于上面，大规模测试空闲的网络化对象，每个对象都有一个颜色同步变量，可以通过 NetworkManager 检查器进行更改设置。
+* Billiards（台球）\
+  &#x20;鼠标拖动白球施加力量，击球通过 \[Command] 发送到服务器。
+* Billiards Predicted（预测台球）\
+  &#x20;类似于上面，但具有预测功能，这解决了 Command->ClientRpc/NetworkTransform 位置结果可能存在的延迟问题。
+* CCU（同时在线用户数）\
+  &#x20;即将推出™&#x20;
+* Character Selection（角色选择）\
+  &#x20;演示了如何在游戏中为玩家生成多个预制体，以及名称和颜色的自定义。
+* Chat（聊天）\
+  &#x20;一个简单的文本聊天示例，玩家之间通过 Network Authenticator 登录后可以发送消息。
+* Common（常见）\
+  &#x20;包含一些不是完整示例的杂项功能。
+* Couch Co-Op（沙发合作）\
+  &#x20;向您的游戏添加额外的本地玩家，他们共享同一屏幕，但具有不同的控制方式。\
+  远程加入的客户端也可以这样做，允许本地玩家与远程玩家组合，例如 2 对 4，或 1 对 4 对 99（当然，您需要为此设置 99 种不同的控制器/键盘输入）。
+* Discovery（发现）\
+  &#x20;在本地网络上进行广播，客户端可以找到服务器，而无需输入 IP 地址或端口。\
+  另一个常见用途是，可以调整为自动加入找到的第一个广播游戏（或者如果没有，则创建一个游戏），这是 VR 或局域网游戏类型中经常使用的功能。&#x20;
+*   Lag Compensation（延迟补偿）\
+    &#x20;回滚 / 延迟补偿是一个独立的、与 Unity / 网络代码无关的算法。这是一个简单的演示来测试它，没有使用 Mirror。我们希望这可以在所有游戏引擎中使用。{/*examples*/}
 
-    The demo intentionally introduces latency so that server / client cubes are at different positions when clicking.
-* [Multiple Additive Scenes](multiple-additive-scenes.md)\
-  &#x20;The Multiple Concurrent Additive Scenes example demonstrates a server additively loading multiple instances of a sub-scene into a main scene at startup, with physics separation, and assigning players to the instances to play matches independently. [NetworkSceneChecker](../components/deprecated/network-scene-checker.md) is the key component that makes this example work.
-*   Multiple Matches\
-    &#x20;This example demonstrates how to run a large number of non-physics games concurrently in a single game server instance.
+    演示故意引入延迟，以便在单击时服务器/客户端立方体处于不同位置。
+* [多个附加场景](multiple-additive-scenes.md)\
+  &#x20;多个并发附加场景示例演示了服务器在启动时附加加载多个子场景实例到主场景中，具有物理分离，并将玩家分配到实例中以独立进行比赛。[NetworkSceneChecker（网络场景检查器）](../components/deprecated/network-scene-checker.md)是使此示例工作的关键组件。
+*   多个比赛\
+    &#x20;此示例演示了如何在单个游戏服务器实例中同时运行大量非物理游戏。
 
-    This would be most appropriate for Card, Board, Puzzle, and Arcade games where there is no physics involved, just presentation and messaging.
+    这对于卡牌、棋盘、益智和街机游戏最为合适，其中不涉及物理，只涉及展示和消息传递。
 
-    While this example is turn-based, real-time games work just as well.
-* [Pong](pong.md)\
-  &#x20;A simple example for "How to build a multiplayer game with Mirror" is Pong. It illustrates the usage of `NetworkManager`, `NetworkManagerHUD`, NetworkBehaviour, NetworkIdentity, `NetworkTransform`, `NetworkStartPosition`and various Attributes.
-* Rigidbody Benchmark\
-  &#x20;Mass test networked physics.
-* Rigidbody Physics\
-  &#x20;Test differences between physics and network setups to find what is ideal for your scenario.
-* [Room System](room.md)\
-  &#x20;The Room System example demonstrates how to set up a "staging" scene where players assemble before starting a match. When all players are ready, the server sends them all a message to change scenes (along with the server itself) to the actual game play scene so they all come in at once. Includes fully playable game with a character controller where players collect server-spawned prizes for score.
-* Snapshot Interpolation\
-  &#x20;Snapshot Interpolation is a standalone, Unity / netcode independent algorithm. This is a simple demo to test it, without Mirror. We want this to be usable in all game engines.
-* Sync Direction\
-  &#x20;Sync List and Sync Var example, controlled via Client->Server sync direction.
-* [Tanks](tanks.md)\
-  &#x20;This is a simple scene with animated tanks, networked rigidbody projectiles, and NavMesh movement.
-* Tanks Co-Op\
-  &#x20;Take control of tank Vehicles, spawn as regular player prefab, interact with tank to enter, drive and shoot, exit to continue being regular player.
+    虽然此示例是回合制的，但实时游戏同样适用。
+* [乒乓球](pong.md)\
+  &#x20;一个关于“如何使用Mirror构建多人游戏”的简单示例是乒乓球。它演示了`NetworkManager`、`NetworkManagerHUD`、NetworkBehaviour、NetworkIdentity、`NetworkTransform`、`NetworkStartPosition`以及各种属性的用法。
+* 刚体基准\
+  &#x20;测试网络物理的负载能力。
+* 刚体物理\
+  &#x20;测试物理和网络设置之间的差异，以找到适合您场景的最佳设置。
+* [房间系统](room.md)\
+  &#x20;房间系统示例演示了如何设置一个“临时”场景，在那里玩家在开始比赛之前集合。当所有玩家准备就绪时，服务器会发送给他们所有人一个消息，以改变场景（以及服务器本身）到实际的游戏场景，以便他们一起进入。包括一个完全可玩的游戏，其中玩家通过角色控制器收集服务器生成的奖品以获得分数。
+* 快照插值\
+  &#x20;快照插值是一个独立的、与Unity/netcode无关的算法。这是一个简单的演示，用于测试它，不使用Mirror。我们希望这可以在所有游戏引擎中使用。
+* 同步方向\
+  &#x20;同步列表和同步变量示例，通过客户端->服务器同步方向进行控制。
+* [坦克](tanks.md)\
+  &#x20;这是一个简单的场景，带有动画坦克、网络刚体抛射物和NavMesh移动。
+* 坦克合作\
+  &#x20;控制坦克车辆，生成为常规玩家预制件，与坦克交互以进入、驾驶和射击，退出以继续成为常规玩家。
 * VR\
-  &#x20;A selectoin of multiplayer-ready virtual reality examples that use Unitys XR toolkit, allows the use of multiple VR headsets with one setup.&#x20;
+  &#x20;一系列准备好的多人虚拟现实示例，使用Unity的XR工具包，允许在一个设置中使用多个VR头显。&#x20;
+
+请提供要翻译的 Markdown 内容。

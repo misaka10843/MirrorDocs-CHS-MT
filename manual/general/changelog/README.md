@@ -1,81 +1,82 @@
-# 更改日志
+# Change Log
 
-{% hint style="info"%}
-镜像将在每月初发布到[资产存储中](https://assetstore.unity.com/packages/tools/network/mirror-129321)，除非某些关键问题导致延迟。
-联系我们
+{% hint style="info" %}
+Mirror is published to the [Asset Store](https://assetstore.unity.com/packages/tools/network/mirror-129321) at the start of every month, unless some critical issue causes a delay.
+{% endhint %}
 
-{% hint style="info"%}
-镜像使用语义版本控制，此处显示的版本是发布到资产存储的版本，偶尔会在存储提交之间的月中发生重大版本冲突，因此此处不单独显示。
-联系我们
+{% hint style="info" %}
+Mirror uses semantic versioning, and the versions shown here are those that were published to the Asset Store, and occasionally major version bumps happen mid-month between store submissions and are therefore not individually shown here.
+{% endhint %}
 
-{% hint style="info"%}
-有关版本及其特定更改日志的详细信息，请参阅 github 发布页面：\
+{% hint style="info" %}
+For further details on versions and their specific change logs, see github release page:\
 [https://github.com/MirrorNetworking/Mirror/releases](https://github.com/MirrorNetworking/Mirror/releases)
-联系我们
+{% endhint %}
 
-## v90.x.x --进行中
+## v90.x.x -- In Progress
 
-### 添加
+### Added
 
-- 增加了：Transport：`IsEncrypted`和`EncryptionCypher`虚拟方法。
-- 增加：加密传输实现`IsEncrypted`和`EncryptionCypher`。
-- 新增：简单 Web 传输实现`IsEncrypted`和`EncryptionCypher`。
-- 添加：边缘间隙大堂运输和演示。
+* Added: Transport: `IsEncrypted` and `EncryptionCypher` virtual methods.
+* Added: Encryption Transport implements`IsEncrypted` & `EncryptionCypher` .
+* Added: Simple Web Transport implements`IsEncrypted` & `EncryptionCypher` .
+* Added: Edgegap Lobby Transport & Demo.
 
-### 固定
+### Fixed
 
-- 修正：Weaver 自定义读/写方法的序列化现在工作在整个程序集定义。
-- 修复：EdgegapKcp StopHost()空引用异常。
-- 修正：ILPostProcessorAssemblyResolver 现在更好地忽略 Bee.BeeDriver。
-- 固定：简单的 Web 传输现在本地范围`websocket`和`Runtime`。
+* Fixed: Weaver Custom Read / Write methods for Serialization now works across assembly definitions.
+* Fixed: EdgegapKcp StopHost() null reference exception.
+* Fixed: ILPostProcessorAssemblyResolver now ignores Bee.BeeDriver better.
+* Fixed: Simple Web Transport now locally scopes `websocket` and `Runtime`.
 
-### 改变
+### Changed
 
-- 更改：继续改进`Prediction`和`PredictedRigidbody`.还在试验阶段
+* Changed: Continued improvements to `Prediction` and `PredictedRigidbody`...still experimental.
 
 ## v89.0.0 -- 2024-Mar-05
 
-### 添加
+### Added
 
-- 添加：`GetFunctionMethodName`添加到`RemoteProcedureCalls`。
-- 新增：` NetworkClient``RegisterHandler `现在采用`ChannelId`参数。
-- 新增：`NetworkServer`和`NetworkClient`现在有带`ChannelID`参数`ReplaceHandler`。
-- 新增：SyncVar 现在支持数组。
-- 新增：`NetworkTime.SendPing`方法，用于`NetworkClient`从`OnTransportConnected`调用。
-- 新增：NetworkTransform-Unreliable 仅发送更改的数据以提高带宽使用率。
-- 添加：[滞后补偿器](../lag-compensation.md)作为方便的组件，包装所有滞后补偿逻辑。
-- 添加：[加密传输](../../transports/encryption-transport.md)作为链式传输。
+* Added: `GetFunctionMethodName` added to `RemoteProcedureCalls`.
+* Added: `NetworkClient` `RegisterHandler` now takes `ChannelId` parameter.
+* Added: `NetworkServer` and `NetworkClient` now have `ReplaceHandler` with `ChannelID` parameter.
+* Added: SyncVar now supports arrays.
+* Added: `NetworkTime.SendPing` method for `NetworkClient` to call from `OnTransportConnected`.
+* Added: NetworkTransform-Unreliable only send changed data for improved bandwidth usage.
+* Added: [Lag Compensator](../lag-compensation.md) as convenience component that wraps all the Lag Compensation logic.
+* Added: [Encryption Transport](../../transports/encryption-transport.md) as chained transport.
 
-### 固定
+### Fixed
 
-- 修正：`NetworkServer.RemovePlayerForConnection`现在使用`NetworkConnectionToClient`。
-- 修正：`NotReadyMessage`不再需要认证客户端。
-- 修正：当多次调用时` InterestManagementBase``OnEnable `
-- 修正：比赛和团队兴趣管理进行了大修，以获得更好的表现。
-- 修正：`NetworkAnimator`现在在`OnEnable`中关闭状态。
-- 修正：`NetworkAnimator`现在总是序列化和序列化的确切数量的数据。
-- 修正：` NetworkAnimator``ClientRpc `现在有`includeOwner = false`。
-- 修正：NetworkServer.SendToAll/Observers/ReadyObservers 现在验证包大小，而\<T>仍然是已知的。
-- 修复：NetworkTransform-不可靠的四元数压缩。
-- 修正：`NetworkManager.ServerChangeScene`现在阻止客户端调用。
-- 修正：`NetworkManager`不再强制`networkAddress`在服务器构建时为`localhost`。
-- 修正：多路复用器现在避免`KeyNotFoundException`。
-- 修正：NetworkServer 和 NetworkClient 尊重异常 Disconnect。
-- 修正：现在使用`FindAnyObjectByType`为以后的 Unity 版本。
-- 修正：`NetworkServer.Destroy`重构.
-- 固定：`NetworkServer.Spawn`现在激活不活动的游戏对象(在案件未产生)。
+* Fixed: `NetworkServer.RemovePlayerForConnection` now uses `NetworkConnectionToClient`.
+* Fixed: `NotReadyMessage` no longer requires authenticated client.
+* Fixed: `InterestManagementBase` `OnEnable` no longer shows error when called multiple times.
+* Fixed: Match and Team Interest Management overhauled for better performance.
+* Fixed: `NetworkAnimator` now initializes state in `OnEnable`.
+* Fixed: `NetworkAnimator` now always serializes and deserializes the exact amount of data.
+* Fixed: `NetworkAnimator` `ClientRpc` now has `includeOwner = false`.
+* Fixed: NetworkServer.SendToAll/Observers/ReadyObservers now validates packet size while \<T> is still known.
+* Fixed: NetworkTransform-Unreliable Quaternion compression.
+* Fixed: `NetworkManager.ServerChangeScene` now prevents client from calling.
+* Fixed: `NetworkManager` no longer forces `networkAddress` to `localhost` on server builds.
+* Fixed: Multiplexer now avoids `KeyNotFoundException`.
+* Fixed: NetworkServer and NetworkClient respect exceptionDisconnect.
+* Fixed: Now uses `FindAnyObjectByType` for later Unity versions.
+* Fixed: `NetworkServer.Destroy` refactored.
+* Fixed: `NetworkServer.Spawn` now activates inactive GameObjects (in case Unspawned).
 
-### 改变
+### Changed
 
-- 更改：KCP 传输更新到版本 1.40。
-- 更改：`InterestManagement`现在将`ResetState`与`Reset`分开。
-- 更改：`NetworkTransform`现在有单独`ResetStat`e 从`Reset`。
-- 更改：`NetworkTransform`同步方向现在默认为客户端到服务器。
-- 更改：`NetworkAnimator`同步方向现在默认为客户端到服务器。
-- 更改：`NetworkRigidbody`同步方向现在默认为客户端到服务器。
-- 已更改：`onlySyncOnChange`和`compressRotation`移动到`NetworkTransformBase`。
-- 更改：对`Prediction`和`PredictedRigidbody`大量改进...还在试验阶段
-- 已更改：示例已更新。
-- 更改：[脚本模板](../script-templates.md)更新。
-- 更改：Edgegap Hosting 更新。
-- **重大更改：**` NetworkIdentity``visible `命名为`visibility`。
+* Changed: KCP Transport updated to version 1.40.
+* Changed: `InterestManagement` now has separate `ResetState` from `Reset`.
+* Changed: `NetworkTransform` now has separate `ResetStat`e from `Reset`.
+* Changed: `NetworkTransform` Sync Direction now defaults to Client To Server.
+* Changed: `NetworkAnimator` Sync Direction now defaults to Client To Server.
+* Changed: `NetworkRigidbody` Sync Direction now defaults to Client To Server.
+* Changed: `onlySyncOnChange` and `compressRotation` moved to `NetworkTransformBase`.
+* Changed: Extensive improvements to `Prediction` and `PredictedRigidbody`...still experimental.
+* Changed: Examples Updated.
+* Changed: [Script Templates](../script-templates.md) Updated.
+* Changed: Edgegap Hosting Updated.
+* **Breaking Change:** `NetworkIdentity` `visible` renamed to `visibility`.
+

@@ -1,11 +1,11 @@
-# Basic Authenticator
+# 基本认证器（Basic Authenticator）
 
-Mirror includes a Basic Authenticator in the Mirror / Authenticators folder which just uses a simple username and password.
+Mirror 在 Mirror / Authenticators 文件夹中包含一个基本认证器，它只使用简单的用户名和密码。
 
-* Drag the Basic Authenticator script to the inspector of the object in your scene that has Network Manager
-* The Basic Authenticator component will automatically be assigned to the Authenticator field in Network Manager
+* 将基本认证器脚本拖放到具有 Network Manager 的场景中对象的检视器中
+* 基本认证器组件将自动分配到 Network Manager 中的 Authenticator 字段
 
-When you're done, it should look like this:
+完成后，应该如下所示：
 
 <div align="left">
 
@@ -19,9 +19,9 @@ When you're done, it should look like this:
 
 </div>
 
-* Server Credentials can be set at design time or runtime
-* Client Credentials would be set at runtime, e.g. from UI input fields, **before** calling `NetworkManager.singleton.StartClient();`
+* 服务器凭据可以在设计时或运行时设置
+* 客户端凭据应在运行时设置，例如，从 UI 输入字段中，在调用 `NetworkManager.singleton.StartClient();` **之前**
 
 {% hint style="info" %}
-You don't need to assign anything to the event lists unless you want to subscribe to the events in your own code for your own purposes. Mirror has internal listeners for both events.
+除非您想要订阅自己代码中的事件以供自己使用，否则不需要将任何内容分配给事件列表。Mirror 对这两个事件都有内部监听器。
 {% endhint %}

@@ -1,56 +1,56 @@
-# Network Room Manager
+# 网络房间管理器
 
-**Please see the Room example in the Examples folder in your Mirror folder.**
+**请查看 Mirror 文件夹中的 Examples 文件夹中的 Room 示例。**
 
-The Network Room Manager is a specialized type of [Network Manager](network-manager.md) that provides a multiplayer room before entering the main play scene of the game. It allows you to set up a network with:
+网络房间管理器是一种专门的[网络管理器(Network Manager)](network-manager.md)，在进入游戏的主要场景之前提供一个多人游戏房间。它允许您设置一个网络，包括：
 
-* A maximum player limit
-* Automatic start when all players are ready
-* Game is locked after start, preventing late joiners
-* Customizable ways for players to choose options while in room
+- 最大玩家限制
+- 当所有玩家准备就绪时自动开始
+- 游戏开始后锁定，防止晚加入者
+- 玩家在房间中选择选项的可定制方式
 
-There are two types of player objects with the Network Room Manager:
+网络房间管理器有两种类型的玩家对象：
 
-**Room Player Prefab**
+**房间玩家预制体(Room Player Prefab)**
 
-* One for each player
-* Created when client connects, or player is added
-* Persists until client disconnects
-* Holds ready flag and configuration data
-* Handles commands in the room
-* Must use the [Network Room Player](network-room-player.md) component
+- 每个玩家一个
+- 当客户端连接或玩家添加时创建
+- 持续存在直到客户端断开连接
+- 包含准备标志和配置数据
+- 处理房间中的命令
+- 必须使用[网络房间玩家(Network Room Player)](network-room-player.md)组件
 
-**Player Prefab**
+**玩家预制体(Player Prefab)**
 
-* One for each player
-* Created when game scene is started
-* Destroyed when leaving game scene
-* Handles commands in the game
+- 每个玩家一个
+- 当游戏场景启动时创建
+- 离开游戏场景时销毁
+- 处理游戏中的命令
 
 ![](<../../.gitbook/assets/image (99).png>)
 
-## Properties <a href="#properties" id="properties"></a>
+## 属性 <a href="#properties" id="properties"></a>
 
-* **Show Room GUI**\
-  Show the default OnGUI controls for the room.
-* **Min Players**\
-  Minimum number of players needed to start a game.
-* **Room Player Prefab**\
-  The prefab to create for players when they enter the room (requires Network Room Player component).
-* **Room Scene**\
-  The scene to use for the room.
-* **Gameplay Scene**\
-  The scene to use for main game play.
-* **pendingPlayers**\
-  List that holds players that are ready to start playing.
-* **roomSlots**\
-  List that manages the slots for connected clients in the room.
-* **allPlayersReady**\
-  Bool indicating if all players are ready to start playing. This value changes as players invoke `CmdChangeReadyState` indicating true or false, and will be set false when a new client connects.
+- **显示房间 GUI**\
+  显示房间的默认 OnGUI 控件。
+- **最小玩家数**\
+  启动游戏所需的最小玩家数量。
+- **房间玩家预制体**\
+  玩家进入房间时创建的预制体(需要网络房间玩家组件)。
+- **房间场景**\
+  用于房间的场景。
+- **游戏场景**\
+  用于主游戏玩法的场景。
+- **pendingPlayers**\
+  包含准备开始游戏的玩家的列表。
+- **roomSlots**\
+  管理房间中连接的客户端的插槽的列表。
+- **allPlayersReady**\
+  布尔值，指示所有玩家是否准备开始游戏。当玩家调用 `CmdChangeReadyState` 指示 true 或 false 时，此值会更改，并在新客户端连接时设置为 false。
 
-## Methods <a href="#methods" id="methods"></a>
+## 方法 <a href="#methods" id="methods"></a>
 
-### Server Virtual Methods <a href="#server-virtual-methods" id="server-virtual-methods"></a>
+### 服务器虚拟方法 <a href="#server-virtual-methods" id="server-virtual-methods"></a>
 
 ```csharp
 public virtual void OnRoomStartHost() { }
@@ -69,7 +69,7 @@ public virtual void OnRoomServerPlayersNotReady() { }
 public virtual void ReadyStatusChanged() { }
 ```
 
-### Client Virtual Methods <a href="#client-virtual-methods" id="client-virtual-methods"></a>
+### 客户端虚拟方法 <a href="#client-virtual-methods" id="client-virtual-methods"></a>
 
 ```csharp
 public virtual void OnRoomClientEnter() { }

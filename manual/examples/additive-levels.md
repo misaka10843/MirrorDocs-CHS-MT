@@ -1,35 +1,35 @@
-# Additive Levels
+# 添加式关卡
 
-The Additive Levels example demonstrates the following:
+添加式关卡示例演示了以下内容：
 
-* Using Additive Scenes with Scene Interest Management.
-* Teleporting between levels via portals and respawning.
-* Custom Scene Loading with Fade In / Out transition.
+- 使用带有场景兴趣管理的添加式场景。
+- 通过传送门和重生在关卡之间传送。
+- 使用淡入/淡出过渡进行自定义场景加载。
 
-## Setting Up
+## 设置
 
-For this example to work correctly, some setup is required.
+为了使此示例正常工作，需要进行一些设置。
 
-First, add all the scenes to Build Settings:
+首先，将所有场景添加到构建设置中：
 
 <div align="left">
 
-<img src="../../.gitbook/assets/image (128).png" alt="Build Settings">
+<img src="../../.gitbook/assets/image (128).png" alt="构建设置">
 
 </div>
 
-Next, add a Player and Portal Layer to Project Settings under Tags and Layers:
+接下来，在项目设置中的标签和层下添加一个玩家和传送门层：
 
 <img src="../../.gitbook/assets/image (74).png" alt="" data-size="original">
 
-... and in Physics settings set the matrix so that Portal only collides with Player:
+... 并在物理设置中设置矩阵，使传送门仅与玩家发生碰撞：
 
 <img src="../../.gitbook/assets/image (112).png" alt="" data-size="original">
 
-Finally, open the Offline scene, and click Play in the editor, and click Host in the HUD.
+最后，打开离线场景，在编辑器中点击播放，然后在 HUD 中点击主机。
 
-* Player controls are WASD+QE to move and turn.
-* Move into the Portal in the corner with a scene label over it.  Your player will be changed to the other level scene.
-* Move into the Portal in the corner of the 2nd scene, and your player will be changed back to the first scene
+- 玩家控制为WASD+QE以移动和转向。
+- 移动到带有场景标签的角落传送门。您的玩家将被转移到另一个关卡场景。
+- 移动到第二个场景角落的传送门，您的玩家将被改回第一个场景
 
-If you make a build and start two or more instances (one as Host or Server, the other(s) as clients, and move each one, you'll see that only players in the same level can see and collide with each other.
+如果构建并启动两个或更多实例（一个作为主机或服务器，其他作为客户端），并移动每个实例，您将看到只有在相同关卡中的玩家才能看到并发生碰撞。

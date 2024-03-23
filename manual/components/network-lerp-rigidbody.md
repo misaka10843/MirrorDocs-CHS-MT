@@ -1,15 +1,15 @@
-# Network Lerp Rigidbody
+# 网络插值刚体
 
-> The Network Lerp Rigidbody classed as "Experimental" for now so please share any problems or bugs you find with it and use at your own risk if production builds.
+> 网络插值刚体类目前被标记为“实验性”，如果发现任何问题或错误，请分享，并在生产版本中自行承担风险。
 
-The Network Lerp Rigidbody component synchronizes position and velocity of a rigidbody across the network. This component is useful when you have a non-kinematic rigidbody that have constant forces applied to them, like gravity, but also want to apply forces or change velocity to that rigidbody or server or client with authority. For example, objects that move and jump using rigidbody using gravity.
+网络插值刚体组件会在网络中同步刚体的位置和速度。当你有一个非运动学刚体，对其施加恒定力，比如重力，但同时也想在该刚体上施加力或改变速度，或者在服务器或客户端上具有权限时，这个组件就非常有用。例如，使用重力移动和跳跃的物体。
 
-A game object with a Network Rigidbody component must also have a Network Identity component. When you add a Network Rigidbody component to a game object, Mirror also adds a Network Identity component on that game object if it does not already have one.
+拥有网络刚体组件的游戏对象还必须拥有网络身份组件。当你向游戏对象添加网络刚体组件时，如果该游戏对象尚未拥有网络身份组件，Mirror 也会在该游戏对象上添加网络身份组件。
 
-When using the Network Lerp Rigidbody you should NOT have NetworkTransform on the same object as the Network Lerp Rigidbody will handle syncing the position
+在使用网络插值刚体时，不应该在同一对象上同时使用网络变换组件，因为网络插值刚体会处理位置的同步。
 
-By default, Network Lerp Rigidbody is server-authoritative unless you check the box for **Client Authority**. Client Authority applies to player objects as well as non-player objects that have been specifically assigned to a client, but only for this component. With this enabled, value changes are send from the client to the server.
+默认情况下，网络插值刚体是服务器权限的，除非你勾选**客户端权限**。客户端权限适用于玩家对象以及已经专门分配给客户端的非玩家对象，但仅适用于此组件。启用后，值的更改将从客户端发送到服务器。
 
-Normally, changes are sent to all observers of the object this component is on. Setting **Sync Mode** to Owner Only makes the changes private between the server and the client owner of the object.
+通常，更改会发送给该组件所在对象的所有观察者。将**同步模式**设置为仅所有者会使更改在服务器和对象的客户端所有者之间保持私有。
 
-You can use the **Sync Interval** to specify how often it syncs (in seconds). This applies both to Client Authority and Server Authority.
+你可以使用**同步间隔**来指定同步的频率（以秒为单位）。这适用于客户端权限和服务器权限。

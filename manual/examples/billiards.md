@@ -1,20 +1,20 @@
-# Billiards
+# 桌球
 
 <figure><img src="../../.gitbook/assets/2023-08-12 - Prediction demo.png" alt=""><figcaption></figcaption></figure>
 
-**Mirror** comes with simple multiplayer **Billiards** demo.&#x20;
+**Mirror** 自带简单的多人游戏 **桌球** (Billiards) 演示。&#x20;
 
-Mouse drag the white ball to apply force.
+鼠标拖动白球以施加力量。
 
-Billiards is surprisingly easy to implement, which makes this a great demo for beginners!
+桌球的实现出奇的简单，这使得这个演示对初学者来说非常棒！
 
-Additionally, this demo will allow us to test `Client Side Prediction` & Reconciliation:
+此外，这个演示将允许我们测试 `客户端预测` & 协调：
 
-* currently, CmdApplyForce is sent to server, and clients see the effect a bit later (latency)
-* in the future, prediction will show the effect immediately with (ideally) very little corrections
+- 目前，CmdApplyForce 被发送到服务器，客户端稍后看到效果（延迟）
+- 将来，预测将立即显示效果，（理想情况下）几乎不需要修正
 
 
 
-The demo is intentionally kept extremely simple without any rules or turns.
+这个演示被故意保持极其简单，没有任何规则或轮次。
 
-This way we can apply force and test physics without much wait time.
+这样我们可以施加力量并测试物理效果，而不需要等待太久。
