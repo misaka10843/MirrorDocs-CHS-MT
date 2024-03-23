@@ -28,7 +28,7 @@
 | 服务器：正在验证... | Server: ¯\\\_(ツ)\_/¯ |
 | 服务器：你的新生命值是 100！ | |
 
-实际上，您需要在`[命令]`中验证任何客户端输入。 这是一个[实际的视频](https://www.youtube.com/watch?v=C0txZCB9ZXc)，有人利用一个游戏与镜子，其中开发人员没有验证客户端输入。 game *probably*有一`CmdSellItem`函数，如下所示：
+实际上，您需要在`[命令]`中验证任何客户端输入。 这是一个[实际的视频](https://www.youtube.com/watch?v=C0txZCB9ZXc)，有人利用一个游戏与 Mirror，其中开发人员没有验证客户端输入。 game *probably*有一`CmdSellItem`函数，如下所示：
 
 ```csharp
 [Command]

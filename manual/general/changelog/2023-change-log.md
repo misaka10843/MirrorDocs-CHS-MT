@@ -71,7 +71,7 @@
 - kcp2k V1.37 - 2019 -07-31
 - Unity 2021.3.29 LTS 最新修复
 - 功能：历史边界 MVP(#3563)
-- 坦克合作社的例子，采取车辆通过镜子管理局控制.
+- 坦克合作社的例子，采取车辆通过 Mirror 管理局控制.
 - 修复：NetworkReader Readbits/Array/List 分配限制到前.
 - 删除未使用的导入
 - NetworkWriter：清理旧的 UIntDouble 注释

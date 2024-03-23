@@ -8,7 +8,7 @@
 
 对于传输，以 1200 字节的块发送消息是非常方便的(参见*[\_MTU*](https://en.wikipedia.org/wiki/Maximum\_transmission\_unit)_)。 大于**MTU**的消息作为单个批发送。 确切地说，Transport 通过`Transport.GetBatchThreshold()`决定 Mirror 所针对的批大小。
 
-镜子是双向的。 这意味着客户机和服务器都将它们的消息批处理，并在帧的末尾将它们刷新出来。
+Mirror 是双向的。 这意味着客户机和服务器都将它们的消息批处理，并在帧的末尾将它们刷新出来。
 
 {% hint style="success"%}
 简而言之，TCP/IP 显著降低了带宽并提高了性能。

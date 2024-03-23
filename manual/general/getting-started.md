@@ -4,7 +4,7 @@
 
 ## 视频教程<a href="#video-tutorials" id="video-tutorials"></a>
 
-看看这些[精彩的视频，](../../community-guides/video-tutorials.md)告诉你如何开始使用镜子。
+看看这些[精彩的视频](../../community-guides/video-tutorials.md),告诉你如何开始使用 Mirror。
 
 ## 脚本模板<a href="#script-templates" id="script-templates"></a>
 
@@ -78,13 +78,13 @@ public class Controls : NetworkBehaviour
 - 使用 NetworkManager 注册可生成的 Prefabs
 - 用游戏状态和动作更新脚本
 
-## 产卵鱼<a href="#spawners" id="spawners"></a>
+## 生成器(spawner)<a href="#spawners" id="spawners"></a>
 
 - 可能将 spawner 脚本更改为 NetworkBehaviours
 - 修改派生程序使其仅在服务器上运行(使用 isServer 属性或`OnStartServer()`函数)
 - 调用`NetworkServer.Spawn()`获取创建的游戏对象
 
-## 玩家的产卵位置<a href="#spawn-positions-for-players" id="spawn-positions-for-players"></a>
+## 玩家的生成位置<a href="#spawn-positions-for-players" id="spawn-positions-for-players"></a>
 
 - 添加一个新的游戏对象并将其放置在玩家的起始位置
 - 将 NetworkStartPosition 组件添加到新游戏对象
