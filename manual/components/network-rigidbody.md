@@ -4,7 +4,7 @@
 
 "网络刚体(Network Rigidbody)"组件会在网络中同步刚体的速度和其他属性。当您有一个非运动学刚体，对其施加恒定力（如重力），但又想在服务器或客户端上对该刚体施加力或改变速度时，这个组件就非常有用。例如，使用重力移动和跳跃的物体。
 
-拥有"网络刚体(Network Rigidbody)"组件的游戏对象还必须具有"网络标识(Network Identity)"组件。当您向游戏对象添加"网络刚体(Network Rigidbody)"组件时，如果游戏对象尚未具有"网络标识(Network Identity)"组件，Mirror也会在该游戏对象上添加一个"网络标识(Network Identity)"组件。
+拥有"网络刚体(Network Rigidbody)"组件的游戏对象还必须具有"网络标识(Network Identity)"组件。当您向游戏对象添加"网络刚体(Network Rigidbody)"组件时，如果游戏对象尚未具有"网络标识(Network Identity)"组件，Mirror 也会在该游戏对象上添加一个"网络标识(Network Identity)"组件。
 
 当对象还有一个"网络变换(NetworkTransform)"组件时，"网络刚体(Network Rigidbody)"的效果最佳，以保持位置和速度同步。
 
@@ -19,5 +19,3 @@
 通常，更改会发送给此组件所在对象的所有观察者。将**同步模式(Sync Mode)**设置为仅所有者(Owner Only)会使更改在服务器和对象的客户端所有者之间保持私有。
 
 您可以使用**同步间隔(Sync Interval)**指定同步的频率（以秒为单位）。这适用于客户端权限和服务器权限。
-
-请提供您要翻译的 Markdown 内容。

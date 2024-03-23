@@ -43,5 +43,3 @@ description: Mirror 秘密酱。
 如果您想要贡献测试或清理现有测试，请随时！
 
 查看 `MirrorEditModeTest` 和 `MirrorPlayModeTest` 基类。它们提供了一些我们用于大多数测试的便利函数和设置。例如，创建一个带有一些网络组件的网络对象。
-
-抱歉，我需要您提供要翻译的 Markdown 内容才能开始工作。请将您要翻译的内容粘贴在这里。

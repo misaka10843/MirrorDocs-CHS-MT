@@ -32,5 +32,3 @@ _在客户端授权的`NetworkTransform`情况下，这意味着您的本地移�
 - **ClientToServer（客户端到服务器）** 用于客户端授权组件。`OnSerialize`在所有者客户端每个`syncInterval`调用一次。然后发送到服务器，在那里调用`OnDeserialize`。然后服务器广播给除所有者之外的所有其他客户端。然后在这些其他客户端上调用`OnDeserialize`。
 
 请注意，`ClientToServer`数据仍然可以在服务器的`OnDeserialize`中进行验证。这就是为什么从技术上讲它不是'客户端权限'，因此称为`SyncDirection`。例如，虽然所有者客户端可能会将`NetworkTransform`数据同步到服务器，但您仍然可以在服务器的`OnDeserialize`中验证每次移动，然后应用并广播它。
-
-请提供需要翻译的 Markdown 内容。

@@ -18,6 +18,4 @@ description: '已弃用：请改用匹配兴趣管理（Match Interest Managemen
 
 创建匹配时，例如生成并存储一个新的匹配 ID（使用 `System.Guid.NewGuid();`），然后通过 `GetComponent<NetworkMatchChecker>().matchId` 将相同的匹配 ID 分配给网络匹配检查器。
 
-Mirror 内置的观察者系统将会将网络对象上的 SyncVar 和 ClientRpc 隔离，仅向具有相同匹配 ID 的客户端发送更新。 
-
-{/*examples*/}
+Mirror 内置的观察者系统将会将网络对象上的 SyncVar 和 ClientRpc 隔离，仅向具有相同匹配 ID 的客户端发送更新。
