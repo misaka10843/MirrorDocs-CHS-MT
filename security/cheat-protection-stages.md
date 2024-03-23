@@ -1,56 +1,53 @@
 ---
-description: >-
-  Another post about cheat protection, copied from the Unity forums for future
-  reference.
+产品描述：>-
+另一篇关于作弊保护的文章，从Unity论坛复制，供将来使用
+参考
 ---
 
-# Cheat Protection Stages
+# 作弊保护阶段
 
-**Source:** [https://forum.unity.com/threads/help-me-choose-networking-solution-for-formation-tactics-game.1340309/](https://forum.unity.com/threads/help-me-choose-networking-solution-for-formation-tactics-game.1340309/)
+**来源：**[https：//forum.unity.com/threads/help-me-adminse-networking-solution-for-formation-tactics-game.1340309/](https://forum.unity.com/threads/help-me-choose-networking-solution-for-formation-tactics-game.1340309/)
 
+[作弊保护]是一个广泛的话题，有不同的保护阶段，你应该知道。
 
-
-\[Cheat Protection] is a broad topic, with different stages of protections that you should be aware of.
-
-### **Server Authority**
+### **服务器授权**
 
 \
-It would be wise to implement almost all game logic with **server authority** first, before worrying about client sided anti cheat.\
+在担心客户端的反作弊之前，首先用**服务器权限**实现几乎所有的游戏逻辑是明智的。
 \
-For example, if a player's **health** is client authoritative then no amount of client sided anti cheat will protect you from hackers attaining god mode. Where as with server authority, you would not ever ask the client about the current health. Instead, the server would tell the client about its health and make all decisions related to health, and validate all of the client's requests related to health. For example, when requesting to use a potion, always ensure the player actually owns that potion, is not dead, etc.\
+例如，如果一个球员的**健康**是客户端的权威，那么再多的客户端反作弊将保护你免受黑客达到上帝模式。 与服务器权限一样，您永远不会询问客户端当前的健康状况。 相反，服务器将告诉客户端它的健康状况，并做出与健康状况相关的所有决策，并验证客户端与健康状况相关的所有请求。 例如，当请求使用药剂时，始终确保玩家实际拥有该药剂，没有死亡等。
 \
-This essential makes health unhackable, unless you are able to access the server machine.\
+这一基本要求使健康无法被黑客攻击，除非您能够访问服务器计算机。
 \
-However, certain aspects like **movement** can be quite hard to make both responsive and secure.\
-It's certainly possible to implement all of your game state with server authority. Even for movement, where you might move the client immediately, send the movement to the server, validate if the move was legal, and then accept / reject it.
+然而，某些方面，如**运动，**可能很难做到既响应又安全。
+当然可以用服务器权限来实现所有的游戏状态。 即使对于移动，您可能会立即移动客户端，将移动发送到服务器，验证移动是否合法，然后接受/拒绝它。
 
-### **Minimizing client information**
-
-\
-That being said, clients may still gain advantages by simply reading state from memory without manipulating it.\
-For example, if your tactics game accidentally keeps all of the enemy's positions in memory, then hackers may attempt to extract it for their advantage.\
-\
-In this case, it would help to only send **relevant information** to the client. For example, many netlibs provide customizable interest management. You could implement Raycasting with some tolerance in order to check if a player sees another player's units. Otherwise, don't even send it to the player at all (in which case it can't be extracted from memory).
-
-### &#x20;**Client sided anti-cheat**
+### **最小化客户端信息**
 
 \
-Lastly, even if your game is server authoritative and minimizes information sent to the client, there may still be cheats. For example, auto clicks, farm bots, aim bots and such.\
+话虽如此，客户端仍然可以通过简单地从内存中读取状态而不操纵它来获得优势。
+例如，如果你的战术游戏意外地将敌人的所有位置都保存在内存中，那么黑客可能会试图从中获取优势。
 \
-This is when you should start worrying about client sided anti cheat.\
-But keep in mind that this is a catch & mouse game that you will not win, only delay.\
-Reverse engineers have sophisticated tools to circumvent client sided anti cheats, and you will most likely not be able to compete with them all on your own.\
-\
-It gets so bad that some popular games need to move their anti cheat software out of userspace into the kernel, where it's harder for hackers to circumvent it. If your game is popular enough, it will be circumvented eventually.\
-\
-This is a very broad topic and there are lots of things you can do that I haven't mentioned, like obfuscation, virtualization, etc. But as mentioned, it would be wise to start with server authority & minimizing information sent to the client ![:)](https://forum.unity.com/styles/default/xenforo/clear.png)\
-\
-On a side note, imho attempting to protect client sided hacks isn't ideal.\
-Instead you should try to silently detect hacks, and then ban hackers after random amounts of time. This way a hacker would not know which particular action was detected.\
+在这种情况下，只向客户发送**相关信息**会有所帮助。 例如，许多 netlib 提供可定制的兴趣管理。 你可以在一定的容差下实现光线投射，以检查一个玩家是否看到另一个玩家的单位。 否则，根本不要将它发送给玩家（在这种情况下，它不能从内存中提取）。
 
-
-### &#x20;**Anti Cheat with Mirror**
+### &#x20;**客户端反作弊**
 
 \
-Note that Mirror is server authoritative by default.\
-Interest Management & SyncMode may be used to minimize information sent to clients.
+最后，即使你的游戏是服务器授权的，并且最大限度地减少了发送给客户端的信息，仍然可能存在作弊。 例如，自动点击，农场机器人，瞄准机器人等。
+\
+这是你应该开始担心客户端反作弊的时候了。
+但请记住，这是一个抓老鼠的游戏，你不会赢，只有拖延。
+逆向工程师有复杂的工具来规避客户端的反作弊，你很可能无法与他们竞争。
+\
+它变得如此糟糕，以至于一些流行的游戏需要将其反作弊软件从用户空间转移到内核中，黑客很难绕过它。如果你的游戏足够流行，它最终会被绕过。
+\
+这是一个非常广泛的主题，有很多事情你可以做，我还没有提到，像混淆，虚拟化等，但如前所述，这将是明智的开始与服务器的权威和最小化发送给客户端的信息![：）](https://forum.unity.com/styles/default/xenforo/clear.png)\
+\
+顺便说一句，IMHO 试图保护客户端黑客并不理想。
+相反，你应该尝试默默地检测黑客，然后在随机的时间后禁止黑客。 这样，黑客就不会知道检测到了哪个特定的操作。
+
+### &#x20;**反作弊与镜子**
+
+\
+请注意，默认情况下，Mirror 是服务器授权的。\
+兴趣管理和同步模式可用于最大限度地减少发送给客户的信息。

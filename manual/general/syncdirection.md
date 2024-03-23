@@ -1,34 +1,34 @@
-# SyncDirection
+# 同步方向
 
 ![](<../../.gitbook/assets/2022-10-18 - SyncDirection.png>)
 
-We have recently added the new **SyncDirection** feature, so here is a quick overview.
+我们最近添加了新的**SyncDirection**功能，因此这里是一个快速概述。
 
-#### Why SyncDirection
+#### 为什么选择 SyncDirection
 
-Usually, data is synced from server to client in OnSerialize.
+通常，数据在 OnSerialize 中从服务器同步到客户端。
 
-However, some components like NetworkTransform need to be able to sync from client to server, in case of client authority movement.
+但是，某些组件（如 NetworkTransform）需要能够在客户端权限移动时从客户端同步到服务器。
 
-Previously, we had to use \[Command]s in order to sync client authoritative NetworkTransform data to the server, since OnSerialize would only go from server to client. This has several downsides:
+以前，我们必须使用\[Command]s 来将客户端权威 NetworkTransform 数据同步到服务器，因为 OnSerialize 只会从服务器到客户端。 这有几个缺点：
 
-* It's a lot of extra code to have both OnSerialize and manual remote calls
-* It's extra Bandwidth: every Command includes a function hash, etc.
-* Intervals need to be implemented manually, since syncInterval is only for OnSerialize.
+- 同时进行 OnSerialize 和手动远程调用需要很多额外的代码
+- 这是额外的带宽：每个命令包括一个函数散列，等等.
+- Interval 需要手动实现，因为 syncInterval 仅适用于 OnSerialize。
 
-As you can see, it would be great if there was an option for OnSerialize to go from client to server as well.&#x20;
+正如您所看到的，如果 OnSerialize 也有一个从客户端到服务器的选项，那就太好了。&# x20;
 
-{% hint style="info" %}
-Note that ClientToServer is a bit of a simplification. Technically it goes from the owner client, to the server, where it's then broadcast to all the other observer clients which aren't owners.&#x20;
+{% hint style="info"%}
+请注意，ClientToServer 有点简化。 从技术上讲，它从所有者客户端到服务器，然后在服务器上广播到所有其他不是所有者的观察者客户端。x20;
 
-_In case of client authoritative NetworkTransform, it means your local movement is sent to the server, which then broadcasts it to the other players so they see you move as well._
-{% endhint %}
+_在客户端授权 NetworkTransform 的情况下，这意味着您的本地移动被发送到服务器，然后服务器将其广播给其他玩家，以便他们也看到您的移动。_
+联系我们
 
-Long story short, we have fully implemented SyncDirection for client authority components.
+长话短说，我们已经完全实现了客户端权限组件的 SyncDirection。
 
-To summarize:
+总结一下：
 
-* **ServerToClient** is the default. **OnSerialize** (and all SyncVars, SyncLists) are sent from server to client every syncInterval. **OnDeserialize** is called on the client.
-* **ClientToServer** is for client authoritative components. **OnSerialize** is called on the owner client every **syncInterval**. It's then send to the server, where **OnDeserialize** is called. Afterwards the server broadcasts to all other clients except the owner. **OnDeserialize** is then called on those other clients.
+- **ServerToClient**是默认值。 **OnSerialize**（以及所有 SyncVar、SyncLists）在每个 syncInterval 从服务器发送到客户端。 在客户端上调用**Oncurialize**。
+- **ClientToServer**用于客户端授权组件。 **OnSerialize 在**每个**syncInterval**在所有者客户端上被调用。 然后将其发送到服务器，在那里调用**Oncurialize**。 然后，服务器向除所有者之外的所有其他客户端广播。 然后在其他客户端上调用**Oncurialize**。
 
-Note that ClientToServer data could still be verified in OnDeserialize on the server. That's why it's technically not 'client authority', hence the name SyncDirection. For example, while the owner client may sync NetworkTransform data to the server, you could still validate every move in the server's OnDeserialize before applying & broadcasting it.
+请注意，ClientToServer 数据仍然可以在服务器上的 Onticalize 中进行验证。 这就是为什么它在技术上不是"客户端权限"，因此命名为 SyncDirection。 例如，虽然所有者客户端可以将 NetworkTransform 数据同步到服务器，但您仍然可以在应用和广播之前验证服务器的 Onticalize 中的每个移动。

@@ -1,34 +1,34 @@
 ---
-description: by mischa
+作者：Mischa
 ---
 
-# Cheats & Anticheats
+# 作弊和反作弊
 
-### Introduction
+### 介绍
 
-Back in 2009-2015 Before working on Mirror & uMMORPG, I tried to learn about MMOs by reverse engineering them and selling Bots to make a living. I will share some of the lessons learned based on questions in our Discord. This article is **incomplete**, intended to give a brief introduction into the most frequently asked topics in our discord. If you want to know more, let me know.
+早在 2009-2015 年，在从事 Mirror & uMMORPG 之前，我试图通过逆向工程和出售机器人来了解 MMO。 我将分享一些经验教训的基础上的问题，在我们的不和谐。 这篇文章是**不完整的**，旨在简要介绍我们不和谐中最常见的问题。 如果你想知道更多，让我知道。
 
-At first we will understand Server Authority & Client Authority, which is the first major attack vector. We will also talk about authority-independent attacks and how to protect against them.
+首先，我们将了解服务器权限和客户端权限，这是第一个主要的攻击向量。 我们还将讨论与权威无关的攻击以及如何防范它们。
 
-{% hint style="info" %}
-As rule of thumb, never trust the client!
-{% endhint %}
+{% hint style="info"%}
+作为经验法则，永远不要相信客户！
+联系我们
 
-### Server Authority vs. Client Authority
+### 服务器权限与客户端权限
 
-First things first. Mirror is server authoritative by default. In other words, the server makes the all decisions. Cheaters usually modify the client to exploit games where the client is trusted with some decisions (aka client authority).
+先说正事。 默认情况下，Mirror 是服务器授权的。 换句话说，服务器做出所有决定。 作弊者通常修改客户端以利用客户端被信任的游戏（又名客户端权限）。
 
-In other words, as long as you use full server authority you are fine until someone physically hacks your server machine. If you use client authority for parts of your game (like movement), then those are the parts you need to worry about.
+换句话说，只要你使用完全的服务器权限，你就可以，直到有人物理攻击你的服务器机器。 如果你在游戏的某些部分（比如移动）使用客户端权限，那么这些部分就是你需要担心的。
 
-Just to be clear, here is the difference between server & client authority explained by using a health potion
+为了清楚起见，这里是服务器和客户端之间的区别权威解释使用健康药水
 
-| Server Authority                | Client Authority                                 |
-| ------------------------------- | ------------------------------------------------ |
-| Client: may I use this potion?  | Client: I use this potion. My new health is 100! |
-| Server: verifying...            | Server: ¯\\\_(ツ)\_/¯                             |
-| Server: your new health is 100! |                                                  |
+| 服务器授权 |客户授权 |
+| ― ―| ― ―|
+| 顾客：我可以用这药水吗？ | Client: I use this potion. 我的健康值是 100！ |
+| 服务器：正在验证... | Server: ¯\\\_(ツ)\_/¯ |
+| 服务器：你的新生命值是 100！ | |
 
-In practice, you need to validate any client input in `[Commands]`. Here is an [actual video](https://www.youtube.com/watch?v=C0txZCB9ZXc) of someone exploiting a game made with Mirror where the devs didn't verify client input. The game _probably_ has a `CmdSellItem` function like this:
+实际上，您需要在`[命令]`中验证任何客户端输入。 这是一个[实际的视频](https://www.youtube.com/watch?v=C0txZCB9ZXc)，有人利用一个游戏与镜子，其中开发人员没有验证客户端输入。 game *probably*有一`CmdSellItem`函数，如下所示：
 
 ```csharp
 [Command]
@@ -36,14 +36,14 @@ void CmdSellItem(int slot, int amount)
 {
     // get player's item at inventory slot
     Item item = player.inventory[slot];
-    
+
     // sell to npc
     item.amount -= amount;
     player.gold += item.price * amount;
 }
 ```
 
-Notice how we blindly trust the client to send the correct amount. There is no check whatsoever. If the player only has one item, but an attacker sends 'amount = 100', we would still trust it and sell 100 items. Instead, we need to **validate any input**:
+请注意我们是如何盲目地相信客户端发送正确的金额的。 没有任何检查。 如果玩家只有一件物品，但攻击者发送了'amount = 100'，我们仍然会信任它并出售 100 件物品。 相反，我们需要**验证任何输入**：
 
 ```csharp
 [Command]
@@ -54,7 +54,7 @@ void CmdSellItem(int slot, int amount)
     {
         // get player's item at inventory slot
         Item item = player.inventory[slot];
-        
+
         // valid amount?
         if (0 < amount && amount <= item.amount)
         {
@@ -66,67 +66,67 @@ void CmdSellItem(int slot, int amount)
 }
 ```
 
-### Client Authority - the root of all Evil
+### 客户权威-所有邪恶的根源
 
-#### Trusting the Client for Movement
+#### 信任客户的移动
 
-If Mirror is fully server authoritative by default and client authority allows for cheating, then why would anyone use client authority?&#x20;
+如果 Mirror 默认情况下是完全服务器授权的，而客户端授权允许作弊，那么为什么会有人使用客户端授权？x20;
 
-Because it's easy. A lot of games use client authority for movement at first, or forever. In server authority, the client would have to ask the server before every move. This introduces a lot of latency between pressing the key and seeing the actual movement. It's not fun at all.
+因为这很简单。 很多游戏一开始就使用客户端权限进行移动，或者永远使用。 在服务器权限中，客户端必须在每次移动之前询问服务器。 这在按下键和看到实际移动之间引入了大量延迟。 一点都不好玩。
 
-In client authority mode, the player moves as soon as the key is pressed. **Instead of asking** the server to move, it tells the server that it moved. This feels great, but also introduces cheaters to **tell the server** whatever they like, e.g. "I moved here twice as fast".
+在客户端权限模式下，玩家只要按下该键就会移动。 它**不是要求**服务器移动，而是告诉服务器它移动了。 这感觉很棒，但也引入了作弊者**告诉服务器**他们喜欢的任何东西，例如"我以两倍的速度搬到这里"。
 
-Networked movement is difficult. It's possible to have fast movement that is also server authoritative (rubberbanding / prediction / etc.), but many opt not to do it at first in order to save months of development time.
+网络化的移动是困难的。 有可能快速移动，也是服务器权威（橡皮筋/预测/等）， 但许多人选择一开始不这样做，以节省数月的开发时间。
 
-#### Trusting the Client for Input
+#### 信任客户端的输入
 
-In some genres like First Person Shooters, trusting the client with some parts of the game is inevitable. In this case, aiming. Whenever we trust the client, that trust can be exploited by hackers. In FPS games, an **Aim Bot** can pretend to move the cursor onto another player more quickly. And since the server trusts the client with moving the cursor, it opens up for cheating with no easy solution.
+在某些类型中，如第一人称射击游戏，信任客户端与游戏的某些部分是不可避免的。 在这种情况下，瞄准。 每当我们信任客户端时，这种信任就可能被黑客利用。 在 FPS 游戏中，**Aim Bot**可以假装更快地将光标移动到另一个玩家身上。 由于服务器信任客户端移动光标，因此它为作弊打开了大门，没有简单的解决方案。
 
-{% hint style="info" %}
-To summarize, we may _want or need to_ trust the client with some parts of our game. Those are the parts we need to protect against cheating.
-{% endhint %}
+{% hint style="info"%}
+总而言之，我们可能想要或需要将游戏的某些部分信任客户端。 这些是我们需要防止作弊的部分。
+联系我们
 
-### Server Authority "Cheats"
+### 服务器权威"秘籍"
 
-Just to be clear, even for 100% server authoritative games like MMOs, there are still attack vectors. The point of this article is to worry about the most **obvious** attacks on client authority first. Even if the server does not trust the client, there is still room for Bots which technically don't cheat, except for automating tasks that the player is supposed to do manually.&#x20;
+需要说明的是，即使是像 MMO 这样的 100%服务器权威游戏，仍然存在攻击媒介。 本文的重点是首先关注对客户端权威的最**明显**的攻击。 即使服务器不信任客户端，机器人仍然有空间，技术上不会作弊，除了自动化玩家应该手动完成的任务。x20;
 
-**Bots** are tools that analyze the game state and generate input to **automatically** farm gold or kill monsters while the player isn't around. This can go to extremes where some players use hundreds of Bots to farm and then sell in-game gold for real money.&#x20;
+**机器人**是分析游戏状态并生成输入的工具，可以在玩家不在的时候**自动**收集金币或杀死怪物。 这可能会走向极端，一些玩家使用数百个机器人来农场，然后出售游戏中的黄金以换取真正的金钱。x20;
 
-{% hint style="info" %}
-Keep in mind that server authoritative cheats are a **luxury problem**. If your MMO becomes so successful that people develop Bots, then you pretty much made it.&#x20;
-{% endhint %}
+{% hint style="info"%}
+请记住，服务器权威作弊是一**个奢侈的问题**。 如果你的 MMO 变得如此成功，以至于人们开发了 Bots，那么你几乎做到了。x20;
+联系我们
 
-Protecting against server authoritative "cheats" goes beyond the scope of inital development. There will be plenty of time to deal with those after releasing. Someone running a Bot in his basement is not a serious threat until your game, unless it gets out of hand.
+防止服务器权威的"欺骗"超出了初始开发的范围。 释放后有足够的时间处理这些问题。 在你的游戏之前，有人在他的地下室运行机器人并不是一个严重的威胁，除非它失控。
 
-And just to be clear, it's possible to **detect Bots** both on the client side and on the server side. But worry about it 5 years from now when the problem arises, not today.
+需要说明的是，在客户端和服务器端都可以**检测到 Bot**。 但要担心的是 5 年后问题出现的时候，而不是今天。
 
-### How Cheats are Made
+### 如何作弊
 
-Let's do a quick dive into how cheats are actually made.&#x20;
+让我们快速了解一下作弊是如何产生的。&# x20;
 
-Your game stores a whole lot of relevant information in its memory. For example: the local player's location, other player's locations, monster locations, health, names, etc.
+你的游戏在内存中存储了大量的相关信息。 例如：本地玩家的位置，其他玩家的位置，怪物的位置，生命值，名字等等。
 
-#### Finding Memory Locations
+#### 查找内存位置
 
-The majority of cheats need to read some of that information out of your game's memory. Tools like **Cheat Engine** allow you to search the game's memory for specific values. For example, if you have 100 health then you search for "100" and may find 10,000 places in memory with the value "100". But if you take a potion and increase your health to 200, then you can likely narrow it down to a handful of values that previous were "100" and now changed to "200". If you do this a couple of times, then you can usually narrow it down to one place in memory. For example, the local player's health might be stored at the memory address `0xAABBCCDD`.
+大多数作弊需要从游戏内存中读取一些信息。 像**Cheat Engine**这样的工具可以让你搜索游戏的内存中的特定值。 例如，如果你有 100 个健康值，那么你搜索"100"，可能会在内存中找到 10，000 个值为"100"的位置。 但是如果你服用一种药剂并将你的生命值增加到 200，那么你可能会将它缩小到少数几个值，以前是"100"，现在改为"200"。 如果你这样做几次，那么你通常可以把它缩小到内存中的一个地方。 例如，本地玩家的健康状况可能存储在内存地址`0xAABBCCDD`。
 
-But there is one **problem**: next time we start the game, the game will set up the world again and your player's health is most certainly not at the same memory address anymore. Tools like Cheat Engine allow you to **"find what accesses..."** that memory location by setting breakpoints. Use a potion again, the breakpoint fires and now you know which part of your game accesses that memory location.
+但有一个**问题**：下次我们开始游戏时，游戏将再次设置世界，你的玩家的健康肯定不会在同一个内存地址了。 像 Cheat Engine 这样的工具可以让你"找到访问."通过设置断点来确定内存位置。 再次使用药水，断点触发，现在你知道游戏的哪个部分访问了那个内存位置。
 
-Instead of just `Health`, you now have `Player->Health` (this is a simplification, in practice you go from `0xAABBCCDD` to a pointer with an offset like `[0x00FF00FF+0x8]` where 0x00FF00FF is the location of your player object in memory, and `0x8` is the offset for `Player->Health`. It's likely that `Player->Mana` would be at `+0x12`, or at the next place in memory. This process can be repeated until you have `Game->Player->Health`where `Game` is finally an address relative to the program's entry point.
+`Health`现在你有`Player->Health`（这是一个简化，实际上你从`0xAABBCCDD`到一个偏移量为`[0x 00 FF 00 FF +0x 8的指针，]`其中 0x 00 FF 00 FF 是你的播放器对象在内存中的位置，`0x8`是`Player->Health`的偏移量。 `Player->Mana`很可能是`+0x12`，或者是内存中的下一个位置。 这个过程可以重复，直到你有`Game->Player->Health`，其中`Game`最终是相对于程序入口点的地址。
 
-In other words, we can now always read the Player's health even after restarting the game.
+换句话说，我们现在可以随时读取玩家的健康，即使重新启动游戏。
 
-This process can be repeated for inventory, skills, monsters, positions, etc. The more information we can find, the easier it is to write cheats.
+这个过程可以重复的库存，技能，怪物，位置等，我们可以找到的信息越多，就越容易写秘籍。
 
-If our game uses **client authority** then we can actually modify the Player's Health in memory! If we use server authority, then we can still modify it in memory but the change is only visible on this client. The server doesn't trust the client with health, and the next time it syncs the new health to the client, the value in memory will be overwritten again.
+如果我们的游戏使用**客户端权限**，那么我们实际上可以在内存中修改玩家的健康值！ 如果我们使用服务器权限，那么我们仍然可以在内存中修改它，但更改仅在此客户端上可见。 服务器不信任客户端的健康状况，下次它将新的健康状况同步到客户端时，内存中的值将再次被覆盖。
 
-{% hint style="success" %}
-This is how Mirror's **\[SyncVar]** works! You can modify them in Cheat Engine, but nobody cares because they are server authoritative.
-{% endhint %}
+{% hint style="success"%}
+这就是 Mirror 的**\[SyncVar]**的工作方式！ 您可以在 Cheat Engine 中修改它们，但没有人关心，因为它们是服务器授权的。
+联系我们
 
-#### Making it harder to find Memory Locations
+#### 更难找到内存位置
 
-The process of finding memory locations via pointers & offsets is cumbersome. Whenever the game changes, the offsets change too. For example, if previously we had
+通过指针和偏移量查找内存位置的过程很麻烦。 每当游戏改变时，补偿也会改变。 例如，如果我们以前有
 
 ```csharp
 class Player
@@ -137,7 +137,7 @@ class Player
 }
 ```
 
-And the game is changed to:
+游戏变成了：
 
 ```csharp
 class Player
@@ -149,15 +149,15 @@ class Player
 }
 ```
 
-Then the cheat developer would have to manually search for all offsets in memory again. This is somewhat painful to deal with.&#x20;
+然后，作弊开发人员将不得不再次手动搜索内存中的所有偏移量。 这是一个有点痛苦的处理。&# x20;
 
-{% hint style="success" %}
-Messing with the memory layout occasionally is a nice way to make reverse engineering more difficult. Protecting against reverse engineering is a function of **return vs. effort**. Nobody will spend 10 hours a day reverse engineering if the hack only ends up making $10/month. The harder we make it, the less it'll be worth it.
-{% endhint %}
+{% hint style="success"%}
+偶尔弄乱内存布局是一个很好的方法，使逆向工程更加困难。 防止逆向工程是**回报与努力**的函数。 没有人会每天花 10 个小时进行逆向工程，如果黑客最终只赚 10 美元/月。 我们做得越难，就越不值得。
+联系我们
 
-#### Projecting Memory Values
+#### 投影内存值
 
-Here is a fun little technique that can actually be done in any game, without much risk. Instead of storing Health directly, we could store a projected value like:
+这里有一个有趣的小技巧，实际上可以在任何游戏中完成，没有太大的风险。 我们不直接存储 Health，而是存储一个预计值，如：
 
 ```csharp
 struct AntiCheatInt
@@ -171,35 +171,35 @@ struct AntiCheatInt
 }
 ```
 
-This is a simplified example, but the idea is to not store our "100" health directly in memory. Instead we store the value modified by one, or by more complex projections. This already makes the whole **Cheat Engine** initial finding process really depressing while adding virtually no risk. Nothing can really go wrong if you do this in Unity.&#x20;
+这是一个简化的例子，但其思想是不要将我们的"100"健康直接存储在内存中。 相反，我们存储由一个或更复杂的投影修改的值。 这已经使得整个**作弊引擎**的初始查找过程非常令人沮丧，同时几乎没有增加任何风险。 如果你在 Unity 中这样做，没有什么会真的出错。x20;
 
-{% hint style="success" %}
-Projecting Memory values is an easy way to make cheat development more annoying. Note that there is a minor performance impact and note that this is only useful if you use IL2CPP in Unity.&#x20;
-{% endhint %}
+{% hint style="success"%}
+投射内存值是一种使作弊开发更烦人的简单方法。 请注意，这对性能有轻微的影响，并注意这仅在 Unity 中使用 IL2CPP 时有用。&# x20;
+联系我们
 
-{% hint style="info" %}
-When protecting against cheats, there is a **fine balance** between making cheater's life harder while not annoying honest players. Some techniques like UPX packing (see below) have a high probability of annoying everyone. Other techniques like Projecting Memory have a low probability of annoying anyone.
-{% endhint %}
+{% hint style="info"%}
+当防止作弊时，在让作弊者的生活更艰难同时不惹恼诚实的玩家之间有一**个很好的平衡**。 一些技术，如 UPX 打包（见下文），很可能会惹恼每个人。 其他技术，如投射记忆，惹恼任何人的可能性都很低。
+联系我们
 
-#### Making it harder to access Memory
+#### 使访问内存变得更加困难
 
-There are various techniques to make reverse engineering more painful to begin with. For example:
+有各种各样的技术使逆向工程更痛苦的开始。 举例来说：
 
-* **Fake entry points** that change dynamically, e.g. with exe packing like **UPX packer**. Those aren't too hard to unpack, but it adds difficulty.
-  * _Note that UPX packed executables are often flagged as viruses._
-* **Detecting Debuggers** like Cheat Engine/MHS via **IsDebuggerPresent**. Note that this is pretty easy to work around because everyone knows IsDebuggerPresent arleady. More advanced techniques might involve tricks like measuring time between instructions. For example, if we measure a simple integer multiplication with a **StopWatch at runtime** and it ends up taking several milliseconds, then someone is most likely stepping through this code with a debugger.
-* **Virtualization** with tools like **Themida** or **Enigma Packer** is the holy grail when it comes to protecting against reverse engineering. If finding memory locations in regular processes is hard, then finding them in processes inside of virtual machines is orders of magnitude harder. Back when we used to reverse engineer games, we would never touch virtualized processes simply because the effort vs. reward would not ever be worth it. Nobody is going to spend half a year analyzing your virtual machine instructions, unless your game is as huge as World of Warcraft.
-  * _Note that virtualized executables are often flagged as viruses. You would need a custom virtualization engine that is not flagged as a virus._
+- 动态变化的**假入口点**，例如使用 exe 打包，如**UPX 打包器**。 这些并不难打开，但它增加了难度。
+  - _请注意，UPX 打包的可执行文件通常被标记为病毒。_
+- 通过**IslogggerPresent**检测 Cheat Engine/MHS 等**程序**。 请注意，这很容易解决，因为每个人都知道 IsloggerPresent arleady。 更高级的技术可能涉及一些技巧，比如测量指令之间的时间。 例如，如果我们**在运行时使用 StopWatch**测量一个简单的整数乘法，结果花费了几毫秒，那么很可能有人正在使用调试器单步调试此代码。
+- 使用**Themida**或**Enigma Packer**等工具**进行虚拟化**是防止逆向工程的圣杯。 如果在常规进程中查找内存位置很难，那么在虚拟机内部的进程中查找内存位置就更难了。 在我们做游戏逆向工程的时候，我们从来不会去碰虚拟化的进程，因为付出的努力和回报是不值得的。没有人会花半年的时间去分析你的虚拟机指令，除非你的游戏像魔兽世界一样庞大。
+  - 请注意，虚拟化的可执行文件通常被标记为病毒。 您需要一个未标记为病毒的自定义虚拟化引擎。\_
 
-{% hint style="info" %}
-**Note** that many of those techniques can be risky in **Unity,** which already introduces several layers of complexity by going from **C#**->**IL**(->**IL2CPP**->**Assembly**). The probability of messed up entry points breaking something somewhere is high. As rule of thumb, use **IL2CPP** in any case, since it changes the game from IL to Assembly, which is way harder to reverse engineer already. If cheating becomes a serious problem, consider Virtualization.
-{% endhint %}
+{% hint style="info"%}
+**请注意**，其中许多技术在 Unity 中可能存在风险**，**Unity 已经通过从**C#**->**IL**（->**IL 2CPP**->**Assembly**）引入了几层复杂性。 混乱的入口点在某个地方破坏东西的概率很高。 根据经验，在任何情况下都使用**IL2CPP**，因为它将游戏从 IL 更改为 Assembly，这已经很难进行逆向工程。 如果作弊成为一个严重的问题，请考虑虚拟化。
+联系我们
 
-Now that we understand how cheats are developed, we can take a look at how some common cheats work and how to protect against them.
+现在我们了解了作弊是如何发展的，我们可以看看一些常见的作弊是如何工作的，以及如何防范它们。
 
 ### Ollydbg/IDA/Code Caves
 
-Let's say your game has a function like:
+假设你的游戏有这样一个功能：
 
 ```csharp
 void SetHealth(int health)
@@ -208,7 +208,7 @@ void SetHealth(int health)
 }
 ```
 
-Which might produce _(simplified)_ assembly code like:
+这可能会产生*（简化）*汇编代码，如：
 
 ```csharp
 ...
@@ -216,7 +216,7 @@ mov edi, eax // edi is this.health, eax is the new value
 ...
 ```
 
-Hackers can use advanced debugging tools to modify your game's assembly to:
+黑客可以使用高级调试工具修改游戏的程序集，以：
 
 ```csharp
 ...
@@ -224,9 +224,9 @@ mov edi, 100 // always sets health to 100
 ...
 ```
 
-Instead of searching and modifying memory values with Cheat Engine, it's possible to **modify the game's own assembly** code directly.&#x20;
+而不是搜索和修改内存值与作弊引擎，它可以直接**修改游戏自己的汇编**代码。&# x20;
 
-Modifying the game's assembly can be extremely powerful for developing hacks. **Code Caves** are often used to inject custom functions into the game, for example:
+修改游戏的程序集对于开发黑客来说是非常强大的。 **Code Caves**通常用于在游戏中注入自定义函数，例如：
 
 ```csharp
 ...
@@ -238,7 +238,7 @@ JMP 2 // jump back to the original function
 ...
 ```
 
-In C#, this would be equivalent to the user injecting his own code into our Health function like:
+在 C#中，这相当于用户将自己的代码注入到我们的 Health 函数中，如：
 
 ```csharp
 void SetHealth(int health)
@@ -256,77 +256,77 @@ void CodeCave(int health)
 }
 ```
 
-This is a simplified example, but a very common technique to know about. To protect against custom assembly, it might be smart to generate checksums of your exe files.
+这是一个简单的例子，但这是一个非常常见的技术。 为了防止自定义程序集，生成 exe 文件的校验和可能是明智的。
 
-### Wall Hacks / ESP
+### 墙黑客/ ESP
 
-In first person shooters, wall hacks are one of the most common cheats. People can modify your executable to show players behind walls. This is reasonably easy to do and pretty common.&#x20;
+在第一人称射击游戏中，墙黑客是最常见的作弊手段之一。 人们可以修改您的可执行文件，以显示墙后的玩家。 这是相当容易做到的，也是相当常见的。&# x20;
 
-To protect against it:
+为了防止它：
 
-* Make reverse engineering as difficult as possible (see above chapter)
-* Use Mirror's **Interest Management** to not display far away players. You could implement raycast based Interest Management where players are only sent to clients if they are actually seen.&#x20;
-  * _Note that you would want some kind of tolerance to send them early enough, e.g. send 1s before they are seen. This is not perfect, but it's better than allowing players to see all other players all the time. Interest Management is huge for this._
-* Detect Wall Hacks at runtime and ban cheaters using them.&#x20;
+- 使逆向工程尽可能困难（见上一章）
+- 使用 Mirror 的**兴趣管理**不显示远处的球员。 您可以实现基于光线投射的兴趣管理，其中玩家仅在实际看到他们时才被发送到客户端。x20;
+  - \_请注意，您可能需要某种容忍度来足够早地发送它们，例如在看到它们之前发送 1。 这并不完美，但总比让玩家一直看到其他玩家好。 利益管理是巨大的。
+- 在运行时检测墙黑客并禁止作弊者使用它们。&# x20;
 
-This is a hard problem, even popular games like Counter-Strike have a really hard time dealing with this. It's a constant battle.
+这是一个很难的问题，即使是像反恐精英这样的流行游戏也很难处理这个问题。 这是一场持久战。
 
-### **Speed Hacks**
+### **速度黑客**
 
-If you made the choice to use client authoritative movement becuase it's easier, then you will most likely encounter speed hacks in your game eventually. Speed hacks can be implemented in various ways, ranging from simply modifying `Player.Speed` in memory, to messing with the computer's clock speed which is pretty hard to work around from Unity.&#x20;
+如果你选择使用客户端权威移动，因为它更容易，那么你最终很可能会在游戏中遇到速度黑客。 速度黑客可以通过各种方式实现，从简单地修改`Player.Speed`在内存中，到扰乱计算机的时钟速度，这在 Unity 中很难解决。&# x20;
 
-To protect against it:
+为了防止它：
 
-* Check the movement speed on the server. Allow for some tolerance for network conditions. Many games allow 10-15% tolerance, but anything higher than that is most likely a speed hack.
+- 检查服务器上的移动速度。 允许对网络条件有一定的容忍度。 许多游戏允许 10-15%的容忍度，但任何高于此的都很可能是速度黑客。
 
-### Bots
+### 机器人
 
-As mentioned before, Bots are particularly evil since they don't requires any _real_ cheats or client authority. Additionally, they can mess up your game's economy and make it simply not fun to player if everyone around you is a Bot.
+如前所述，Bots 特别邪恶，因为它们不需要任何*real* cheats 或客户端权限。 此外，如果你周围的每个人都是机器人，它们会搞乱你的游戏经济，让玩家觉得不好玩。
 
-To protect against it:
+为了防止它：
 
-* Make finding memory locations hard. See chapters above.
-* Adjust your memory layout occasionally. Add unnecessary values between `Player.Health` and `Player.Mana` sometimes.
-* Adjust your network protocol occasionally. The most advanced Bots don't even need to read your memory. They use work with your game's send/recv functions directly. Modify your NetworkMessage opcodes and layout occasionally and you will make reverse engineering really painful.
-* Detect known Bot.exe processes by checksum, name, etc.&#x20;
-  * _Note that this too often flags your game as a virus. Games shouldn't look for running processes._
-* Detect Bot **Patterns** on the server. This is how I would do it if Bots become a serious problem.
-  * In the simplest form, if someone is playing 24/7 for a week on end then it's probably a Bot, or in rare cases some guy in an internet cafe.
-  * If the player always uses the same path or levels at the same spot all the time, it's probably a Bot.
-* Add a **Report button** in your game. Look into reported players. Try to talk to them and see if they respond, etc.
-* Spawn **Honeypot Monsters** in places of high activity. If a certain area has a whole lot of monster kills over a period of time, spawn a obviously different looking but extremely strong monster in that area. Regular players would notice and move elsewhere for a while. Bots would hit it and die.&#x20;
+- 使查找内存位置变得困难。 见以上章节。
+- 偶尔调整一下你的内存布局。 在`Player.Health`和`Player.Mana`值之间添加不必要的数值。
+- 偶尔调整您的网络协议。 最先进的机器人甚至不需要读取你的记忆。 他们直接使用游戏的发送/接收功能。 偶尔修改你的 NetworkMessage 操作码和布局，你会让逆向工程变得非常痛苦。
+- 通过校验和、名称等检测已知的 Bot.exe 进程。&# x20;
+  - 注意，这通常会将您的游戏标记为病毒。 游戏不应该寻找正在运行的进程。
+- 检测服务器上的 Bot**模式**。 这就是我会怎么做，如果机器人成为一个严重的问题。
+  - 在最简单的形式中，如果有人连续一周 24/7 玩游戏，那么它可能是一个机器人，或者在极少数情况下是网吧里的某个人。
+  - 如果玩家总是使用相同的路径或水平在同一地点所有的时间，它可能是一个机器人。
+- 在游戏中添加**报告按钮**。 查看玩家举报 试着和他们谈谈，看看他们是否有反应，等等。
+- 在活动频繁的地方产生**蜜罐怪物**。 如果某个区域在一段时间内有大量的怪物被杀，在该区域刷新一个外观明显不同但非常强大的怪物。 普通玩家会注意到并转移到其他地方一段时间。 机器人会撞上它然后死掉。x20;
 
-Again, those are simplified answers to a complex problem. If your game becomes successful, it will be a constant battle. Which is fine, as long as you know that you are even fighting a battle.
+同样，这些都是对复杂问题的简化答案。 如果你的游戏成功了，这将是一场持续的战斗。 这很好，只要你知道你甚至在战斗。
 
-### Silent, Delayed Detection
+### 静默、延迟检测
 
-One of the biggest mistakes games make is to let the user know when a cheat or reverse engineering tool was detected. All it does is let the reverse engineer know where to look in the code in order to disable the checks.&#x20;
+游戏最大的错误之一就是让用户知道何时检测到作弊或逆向工程工具。 它所做的一切就是让逆向工程师知道在代码中的何处查找以禁用检查。&# x20;
 
-If we go through all the work of detecting cheats and debuggers, we should keep quiet and use the information to our advantage. Instead of loudly announcing a cheat attempt, quietly send some info to the server. Flag the player in a database.&#x20;
+如果我们完成了检测作弊和调试器的所有工作，我们应该保持沉默，并利用这些信息对我们有利。 与其大声宣布作弊尝试，不如悄悄地向服务器发送一些信息。 在数据库中标记玩家。&# x20;
 
-Do **not** immediately ban or kick anyone. It's smarter to wait a random amount of time.
+**不要**立即禁止或踢任何人。 最好是随机等待一段时间。
 
-* Users might try multiple cheats with different versions over the month.
-* Reverse Engineers might use different tools and modify the game in different ways.
+- 用户可能会在一个月内尝试不同版本的多个作弊程序。
+- 逆向工程师可能会使用不同的工具，以不同的方式修改游戏。
 
-If we only ban people once a month, then it's not obvious at all what caused the ban. It will introduce **huge turnaround** times to test which cheats get detected and which don't.
+如果我们一个月只禁止一次，那么根本不清楚是什么导致了禁令。 它将引入**巨大的周转**时间来测试哪些作弊被检测到，哪些没有。
 
-{% hint style="success" %}
-Silent Detection is the most powerful tool we have to win the fight against cheaters. Use time and information to your advantage.
-{% endhint %}
+{% hint style="success"%}
+无声检测是我们赢得与作弊者斗争的最强大的工具。 充分利用时间和信息。
+联系我们
 
-### Free to Play vs. Paid Games
+### 免费游戏 VS 付费游戏
 
-Here is one final consideration which I'll most likely also do for my own game. While free 2 play games are great to attracts huge amounts of players, there might be value in paid games if you are just a small indie developer not ready to deal with hordes of fake accounts and hackers.
+这是最后一个考虑，我很可能也会为我自己的游戏。 虽然免费 2 玩游戏是伟大的吸引大量的玩家，有可能在付费游戏的价值，如果你只是一个小的独立开发者没有准备好处理成群的假帐户和黑客。
 
-People having to pay a one time price to play your multiplayer game introduces a huge hurdle where hackers and cheaters would have to buy your game again if they got banned. Additionally it adds some level of verification to make sure people can't just create accounts over and over again. You could ban credit cards etc. if needed.
+人们不得不支付一次性的价格来玩你的多人游戏引入了一个巨大的障碍，黑客和骗子将不得不再次购买你的游戏，如果他们被禁止。 此外，它增加了一定程度的验证，以确保人们不能只是创建帐户一遍又一遍。 如果需要的话，你可以禁止信用卡等。
 
-### Summary
+### 总结
 
-To summarize, cheating is a complex topic and there will never be a final solution. Imho make everything you can server authoritative. For movement, at least aim to make it server authoritative at some point, e.g. after releasing your game when you start seeing the first speed hacks or when you actually have some breathing room.&#x20;
+总而言之，作弊是一个复杂的话题，永远不会有最终的解决方案。 Imho 使一切你可以服务器权威。 对于移动，至少要在某个时候让它成为服务器的权威，例如，在发布游戏后，当你开始看到第一个速度黑客，或者当你实际上有一些喘息的空间。x20;
 
-Once your game becomes successful, probably someone to fight the battle. There's plenty you can do to make it harder.&#x20;
+一旦你的游戏变得成功，可能有人打的战斗。 你可以做很多事情来让它变得更难。x20;
 
-Ultimately, it's function of effort vs. reward. The more annoying you make it to cheat, the more likely it is that people won't bother or will just move to easier targets.
+最终，这是努力与回报的函数。 你越是让作弊变得烦人，人们就越有可能不去打扰你，或者只会转向更容易的目标。
 
-This topic could fill a whole book, but I hope you learned a few of the basics from this.
+这个主题可以写一整本书，但我希望你从中学到一些基础知识。

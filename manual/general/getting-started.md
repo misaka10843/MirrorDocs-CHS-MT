@@ -1,43 +1,43 @@
-# Getting Started
+# 入门
 
-This document describes steps to creating a multiplayer game with Mirror. The process described here is a simplified, higher level version of the actual process for a real game; it doesn’t always work exactly like this, but it provides a basic recipe for the process.
+本文档描述了使用 Mirror 创建多人游戏的步骤。 这里描述的过程是一个简化的，更高层次的版本的实际过程，为一个真正的游戏;它并不总是完全像这样工作，但它提供了一个基本的配方的过程。
 
-## Video Tutorials <a href="#video-tutorials" id="video-tutorials"></a>
+## 视频教程<a href="#video-tutorials" id="video-tutorials"></a>
 
-Check out these [awesome videos](../../community-guides/video-tutorials.md) showing you how to get started with mirror.
+看看这些[精彩的视频，](../../community-guides/video-tutorials.md)告诉你如何开始使用镜子。
 
-## Script Templates <a href="#script-templates" id="script-templates"></a>
+## 脚本模板<a href="#script-templates" id="script-templates"></a>
 
-* Create new Network Behaviours and other common scripts faster
+- 更快地创建新的网络行为和其他常见脚本
 
-See [Script Templates](script-templates.md).
+请参见[脚本模板](script-templates.md)。
 
-## Network Manager Setup <a href="#networkmanager-set-up" id="networkmanager-set-up"></a>
+## 网络管理器设置<a href="#networkmanager-set-up" id="networkmanager-set-up"></a>
 
-* Create a new Network Manager from the [Assets > Create > Mirror](script-templates.md) menu.
-* Add a new game object to the Scene and rename it “NetworkManager”.
-* Add the newly created Network Manager component to the “NetworkManager” game object.
-* Add the [NetworkManagerHUD](../components/network-manager-hud.md) component to the game object. This provides the default UI for managing the network game state.
+- 从[资源>创建>Mirror](script-templates.md)菜单创建一个新的网络管理器。
+- 添加一个新的游戏对象到场景中，并将其重命名为"NetworkManager"。
+- 将新创建的网络管理器组件添加到"NetworkManager"游戏对象。
+- 将[NetworkManagerHUD](../components/network-manager-hud.md)组件添加到游戏对象。 这提供了用于管理网络游戏状态的默认 UI。
 
-See [Using the NetworkManager](../components/network-manager.md).
+请参阅[使用 NetworkManager](../components/network-manager.md)。
 
-## Player Prefab <a href="#player-prefab" id="player-prefab"></a>
+## 播放器预置<a href="#player-prefab" id="player-prefab"></a>
 
-* Find the Prefab for the player game object in the game, or create a Prefab from the player game object
-* Add the NetworkIdentity component to the player Prefab
-* Set the `Player Prefab` in the NetworkManager’s Spawn Info section to the player Prefab
-* Remove the player game object instance from the Scene if it exists in the Scene
+- 在游戏中找到玩家游戏对象的预置，或从玩家游戏对象创建预置
+- 将 NetworkIdentity 组件添加到播放器预置
+- 将 NetworkManager 的 Spawn Info 部分中的`Player Prefab`设置为 Player 预置
+- 从场景中移除玩家游戏对象实例（如果它存在于场景中
 
-See [Player Objects](../guides/gameobjects/player-gameobjects.md) for more information.
+有关详细信息，请参见[播放器对象](../guides/gameobjects/player-gameobjects.md)。
 
-## Player Movement <a href="#player-movement" id="player-movement"></a>
+## 玩家移动<a href="#player-movement" id="player-movement"></a>
 
-* Add a NetworkTransform component to the player Prefab
-* Check the Client Authority checkbox on the component.
-* Update input and control scripts to respect `isLocalPlayer`
-* Override OnStartLocalPlayer to take control of the Main Camera in the scene for the player.
+- 将 NetworkTransform 组件添加到播放器预置
+- 选中组件上的客户端权限复选框。
+- 更新输入和控制脚本以支持`isLocalPlayer`
+- OnStartLocalPlayer 为玩家控制场景中的主摄像机。
 
-For example, this script only processes input for the local player:
+例如，此脚本仅处理本地播放器的输入：
 
 ```csharp
 using UnityEngine;
@@ -55,36 +55,36 @@ public class Controls : NetworkBehaviour
 }
 ```
 
-## Basic player game state <a href="#basic-player-game-state" id="basic-player-game-state"></a>
+## 基本玩家游戏状态<a href="#basic-player-game-state" id="basic-player-game-state"></a>
 
-* Make scripts that contain important data into Network Behaviours instead of MonoBehaviours
-* Make important member variables into SyncVars
+- 将包含重要数据的脚本放入 Network Behaviours 而不是 MonoBehaviours
+- 将重要的成员变量设置为 SyncVars
 
-See [State Synchronization](../guides/synchronization/).
+请参见[状态同步](../guides/synchronization/)。
 
-## Remote Actions <a href="#networked-actions" id="networked-actions"></a>
+## 远程动作<a href="#networked-actions" id="networked-actions"></a>
 
-* Make scripts that perform important actions into Network Behaviours instead of MonoBehaviours
-* Update functions that perform important player actions to be commands
+- 将执行重要操作的脚本设置为 Network Behaviours 而不是 MonoBehaviours
+- 将执行重要玩家操作的函数更新为命令
 
-See [Remote Actions](../guides/communications/remote-actions.md).
+请参见[远程操作](../guides/communications/remote-actions.md)。
 
-## Non-player GameObjects <a href="#non-player-game-objects" id="non-player-game-objects"></a>
+## 非玩家游戏对象<a href="#non-player-game-objects" id="non-player-game-objects"></a>
 
-Fix non-player prefabs such as enemies:
+修复非玩家的预设，如敌人：
 
-* Add the NetworkIdentity component
-* Add the NetworkTransform component
-* Register spawnable Prefabs with the NetworkManager
-* Update scripts with game state and actions
+- 添加 NetworkIdentity 组件
+- 添加 NetworkTransform 组件
+- 使用 NetworkManager 注册可生成的 Prefabs
+- 用游戏状态和动作更新脚本
 
-## Spawners <a href="#spawners" id="spawners"></a>
+## 产卵鱼<a href="#spawners" id="spawners"></a>
 
-* Potentially change spawner scripts to be NetworkBehaviours
-* Modify spawners to only run on the server (use isServer property or the `OnStartServer()` function)
-* Call `NetworkServer.Spawn()` for created game objects
+- 可能将 spawner 脚本更改为 NetworkBehaviours
+- 修改派生程序使其仅在服务器上运行（使用 isServer 属性或`OnStartServer()`函数）
+- 调用`NetworkServer.Spawn()`获取创建的游戏对象
 
-## Spawn positions for players <a href="#spawn-positions-for-players" id="spawn-positions-for-players"></a>
+## 玩家的产卵位置<a href="#spawn-positions-for-players" id="spawn-positions-for-players"></a>
 
-* Add a new game object and place it at player’s start location
-* Add the NetworkStartPosition component to the new game object
+- 添加一个新的游戏对象并将其放置在玩家的起始位置
+- 将 NetworkStartPosition 组件添加到新游戏对象

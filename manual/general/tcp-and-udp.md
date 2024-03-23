@@ -1,48 +1,48 @@
-# TCP and UDP
+# TCP 和 UDP
 
-TCP and UDP are both protocols used to send information over the internet - in fact, they are the two most commonly used internet protocols in the world: TCP was developed in the 1970s, while UDP was introduced in the 1980s. However, it is important to note two key differences between TCP and UDP communications:
+TCP 和 UDP 都是用于通过互联网发送信息的协议-事实上，它们是世界上最常用的两种互联网协议：TCP 是在 20 世纪 70 年代开发的，而 UDP 是在 20 世纪 80 年代引入的。 但是，重要的是要注意 TCP 和 UDP 通信之间的两个关键区别：
 
-* TCP has built-in reliability, ensuring data gets from A to B correctly with a higher latency trade-off.
-* UDP has lower latency with it's data transfer, but the raw protocol is unreliable by nature and makes no assurances data will be sent from A to B correctly.
+- TCP 具有内置的可靠性，确保数据正确地从 A 到达 B，同时具有更高的延迟。
+- UDP 的数据传输延迟较低，但原始协议本质上是不可靠的，不能保证数据将正确地从 A 发送到 B。
 
-## [TCP (Transmission Control Protocol)](https://en.wikipedia.org/wiki/Transmission\_Control\_Protocol) <a href="#tcp-transmission-control-protocol" id="tcp-transmission-control-protocol"></a>
+## [传输控制协议](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)<a href="#tcp-transmission-control-protocol" id="tcp-transmission-control-protocol"></a>
 
-As stated before, TCP is the most popular protocols on the internet. TCP is used for HTTP, SSH, FTP, and many more applications. TCP core features make it easy for programers to work with the protocol, since a programmer will be able to assure data will be sent from A to B correctly. However, while this sounds great, it can introduce higher latency when connections are malfunctioning or experiencing severe turbulence.
+如前所述，TCP 是互联网上最流行的协议。 TCP 用于 HTTP，SSH，FTP 和更多的应用程序。 TCP 的核心特性使程序员可以轻松地使用该协议，因为程序员可以确保数据从 A 正确地发送到 B。 然而，虽然这听起来很棒，但当连接出现故障或遇到严重动荡时，它可能会引入更高的延迟。
 
-In a game environment, TCP is better for slower paced games where latency isn't important but the game data is.
+在游戏环境中，TCP 更适合节奏较慢的游戏，其中延迟并不重要，但游戏数据很重要。
 
-### Key features include <a href="#key-features-include" id="key-features-include"></a>
+### 主要功能包括<a href="#key-features-include" id="key-features-include"></a>
 
-* **Reliable:** Applications don't have to worry about missing packets. If a packet gets lost, TCP will resend it. All data is either transmitted successfully or you get an error and the connection is closed.
-* **Sequenced:** TCP guarantees that every message will arrive in the same order it was sent. If you send "a" then "b" you will receive "a" then "b" on the other side as well.
-* **Connection oriented:** TCP has the concept of a connection. A connection will stay open until either the client or server decides to close it. Both the client and server get notified when the connection ends.
-* **Congestion control:** If a server is being overwhelmed, TCP will throttle the data to avoid congestion collapse.
+- **可靠：**应用程序不必担心丢失数据包。 如果数据包丢失，TCP 将重新发送它。所有数据要么成功传输，要么出现错误并关闭连接。
+- **Sequenced：**TCP 保证每一条消息都将按照发送的顺序到达。 如果你发送"a"，然后"b"，你会收到"a"，然后"b"在另一边。
+- **面向连接：**TCP 有连接的概念。 连接将保持打开状态，直到客户端或服务器决定关闭它。当连接结束时，客户端和服务器都会收到通知。
+- **拥塞控制：**如果服务器不堪重负，TCP 将限制数据以避免拥塞崩溃。
 
-### Transports using the TCP protocol <a href="#transports" id="transports"></a>
+### 使用 TCP 协议传输<a href="#transports" id="transports"></a>
 
-* [Telepathy](../transports/telepathy-transport.md)
-* [WebSockets](../transports/websockets-transport/)
+- [心灵感应](../transports/telepathy-transport.md)
+- [WebSockets](../transports/websockets-transport/)
 
-## [UDP (User Datagram Protocol)](https://en.wikipedia.org/wiki/User\_Datagram\_Protocol) <a href="#udp-user-datagram-protocol" id="udp-user-datagram-protocol"></a>
+## [UDP（用户数据报协议）](https://en.wikipedia.org/wiki/User_Datagram_Protocol)<a href="#udp-user-datagram-protocol" id="udp-user-datagram-protocol"></a>
 
-UDP is used for real time applications such as fast paced action games or Voice over IP (VoIP), where low latency is more important than reliability. Application examples include Skype, Discord, Zoom and many others.&#x20;
+UDP 用于实时应用，如快节奏的动作游戏或 IP 语音（VoIP），其中低延迟比可靠性更重要。 应用程序的例子包括 Skype，Discord，Zoom 和许多其他。x20;
 
-In a game environment, the raw power of UDP can be harnessed to allow for a greater control of how data is being sent, allowing non-critical data to be sent faster. This in turn makes UDP better for fast paced games where latency between server and client is important and if a few packets are lost, the game can recover.
+在游戏环境中，可以利用 UDP 的原始功能来更好地控制数据的发送方式，从而更快地发送非关键数据。 这反过来又使 UDP 更适合快节奏的游戏，其中服务器和客户端之间的延迟很重要，如果丢失了一些数据包，游戏可以恢复。
 
-### Key features include <a href="#key-features-include-1" id="key-features-include-1"></a>
+### 主要功能包括<a href="#key-features-include-1" id="key-features-include-1"></a>
 
-* **Low Latency:** UDP is faster because it doesn't need to wait for the remote side to acknowledge packets. Instead, it can send keep sending new data packets one after the other. It is also known as a "scattershot" protocol, since it'll just shoot data at clients with no assurances that they'll actually get the data.
-* **Channel support:** Channels allow for different delivery types. Depending on the implementation, one channel can be used for critical data that needs to get to the destination, while a different channel can be used for "send and forget" data transfer without any reliability.
-* **Different packet types:** Depending on the implementation on top of the UDP protocol, some transports offer different packet sending methods, such as Reliable Ordered, Reliable Unordered, Unreliable, and more depending on the implementation. Reliable UDP transfer depends on the implementation, but it is usually modelled after TCP's reliability system.
+- **低延迟：**UDP 更快，因为它不需要等待远程端确认数据包。 相反，它可以一个接一个地发送新的数据包。 它也被称为"散射"协议，因为它只会向客户端发送数据，而不能保证他们实际上会获得数据。
+- **通道支持：**通道允许不同的交付类型。 根据具体实现，一个通道可以用于需要到达目的地的关键数据，而另一个通道可以用于"发送并忘记"数据传输，没有任何可靠性。
+- **不同的数据包类型：**根据 UDP 协议的实现，某些传输提供不同的数据包发送方法，例如可靠有序，可靠无序，不可靠等。 可靠的 UDP 传输取决于实现，但它通常是在 TCP 的可靠性系统之后建模的。
 
-### Transports using the UDP Protocol <a href="#transports-1" id="transports-1"></a>
+### 使用 UDP 协议传输<a href="#transports-1" id="transports-1"></a>
 
-* [Ignorance](../transports/ignorance.md)
-* [KCP](../transports/kcp-transport.md)
-* [LiteNetLib](../transports/litenetlib-transport.md)
+- [无知](../transports/ignorance.md)
+- [KCP](../transports/kcp-transport.md)
+- [LiteNetLib](../transports/litenetlib-transport.md)
 
-## The choice is yours <a href="#the-choice-is-yours" id="the-choice-is-yours"></a>
+## 选择权在你<a href="#the-choice-is-yours" id="the-choice-is-yours"></a>
 
-Mirror is transport independent, they can simply by added to your NetworkManager GameObject. Mirror comes with a [KCP](../transports/kcp-transport.md) transport _(all platforms except WebGL)_ and a [Websocket](../transports/websockets-transport/) _(WebGL)_ transport by default. See the [Transports](../transports/) page for more about transports.
+Mirror 是独立于传输的，它们可以简单地添加到您的 NetworkManager GameObject 中。 默认情况下，Mirror 带有[KCP](../transports/kcp-transport.md)传输*（WebGL 以外的所有平台）*和[Websocket](../transports/websockets-transport/)*（WebGL）*传输。 有关运输的更多信息，请参阅[运输](../transports/)页面。
 
-Pick whatever transport works best for you and your game. We recommend you profile your game's networking and collect real world numbers before you make a final decision.
+选择最适合您和您的游戏的任何运输工具。 我们建议您在做出最终决定之前分析游戏的网络并收集真实世界的数字。

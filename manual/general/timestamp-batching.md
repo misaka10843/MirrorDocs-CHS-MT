@@ -1,26 +1,26 @@
-# Timestamp Batching
+# 时间戳批处理
 
-Let's learn how Mirror sends around messages.
+让我们来了解一下 Mirror 是如何发送消息的。
 
-## Batching
+## 配料
 
-Every message that you send will be batched until the end of the frame in order to minimize bandwidth and transport calls. For example, if you send a lot of 10 byte messages then we can usually fit \~120 of them into one **MTU** sized batch of around 1200 bytes.
+您发送的每条消息都将被批处理，直到帧结束，以最小化带宽和传输调用。 例如，如果您发送了大量 10 字节的消息，那么我们通常可以将其中的 120 个放入一个**MTU**大小的大约 1200 字节的批中。
 
-For the Transport, it's pretty convenient to send around messages in 1200 byte chunks _(see_ [_MTU_](https://en.wikipedia.org/wiki/Maximum\_transmission\_unit)_)_. Messages larger than **MTU** are sent as a single batch. To be exact, the Transport decides the batch siz that Mirror aims for via `Transport.GetBatchThreshold()`.
+对于传输，以 1200 字节的块发送消息是非常方便的（参见*[\_MTU*](https://en.wikipedia.org/wiki/Maximum\_transmission\_unit)_）。 大于**MTU**的消息作为单个批发送。 确切地说，Transport 通过`Transport.GetBatchThreshold()`决定 Mirror 所针对的批大小。
 
-Mirror batching is bidirectional. Which means that both the client and the server batch their messages and flush them out at the end of the frame.
+镜子是双向的。 这意味着客户机和服务器都将它们的消息批处理，并在帧的末尾将它们刷新出来。
 
-{% hint style="success" %}
-In short, batching significantly reduces bandwidth and improves performance.
-{% endhint %}
+{% hint style="success"%}
+简而言之，TCP/IP 显著降低了带宽并提高了性能。
+联系我们
 
-## Timestamps
+## 时间戳
 
-For some networking components, it's useful to know exactly when a message was _sent by the remote_.
+对于某些网络组件，准确地知道远程设备发送消息的时间是很有用的。
 
-For example, `NetworkTransform` receives the server's positions and then interpolates between them. For a smooth interpolation, we need to exactly reconstruct what happened on the server. For that, we need to know _when_ an object has been at a certain position on the server.
+例如，`NetworkTransform`接收服务器的位置，然后在它们之间进行插值。 为了平滑插值，我们需要准确地重建服务器上发生的事情。 为此，我们需要知道一个对象何时位于服务器上的某个位置。
 
-The obvious solution is to simply send both `timestamp` and `position` every time:
+显而易见的解决方案是每次发送`timestamp`和`position`：
 
 ```csharp
 [Rpc]
@@ -30,24 +30,25 @@ public void RpcPositionUpdate(float timestamp, Vector3 position)
 }
 ```
 
-In fact, that's what an early version of our new `NetworkTransform` component did.
+事实上，这正是我们新`NetworkTransform`组件的早期版本所做的。
 
-For the above code, we pay a significant bandwidth cost because for every position message, we also need to include a 4 byte `float` (or even better, an 8 byte `double` for higher precision). When synchronizing large worlds, the bandwidth would add up quickly.
+对于上面的代码，我们付出了很大的带宽成本，因为对于每个位置消息，我们还需要包括一个 4 字节`float`（或者更好的是，一个 8 字节`double`以获得更高的精度）。 在大世界同步的时候，带宽会迅速增加。
 
-`NetworkTransform` is only one of many components. Several others might need timestamps too, which would increase bandwidth even further.
+`NetworkTransform`只是众多组件之一。 其他几个可能也需要时间戳，这将进一步增加带宽。
 
-To make life easier, Mirror includes _an 8 byte_ `double` _precision_ `timestamp` in every Batch. Instead of including it in every message, we include it once per \~1200 byte batch which is barely noticeable when it comes to bandwidth.
+为了让生活更轻松，Mirror 在每个批处理中包含一个 8 字节的`double`精度`timestamp`。 而不是包括在每一个消息，我们包括它一次\~1200 字节的批次，这是几乎不明显的，当谈到带宽。
 
-For any message handler in Mirror, you can get the timestamp from the batch it arrived with via `NetworkConnection.remoteTimeStamp`.
+对于 Mirror 中的任何消息处理程序，您可以通过`NetworkConnection.remoteTimeStamp`从它到达的批处理中获取时间戳。
 
-* On the **client**, all object data arrives in messages/batches from the server. So at any given time, you can find out when an object's `Rpc`/`OnDeserialize`/`OnMessage` handler was sent by the server via  `NetworkClient.connection.remoteTimeStamp`.
-  * Note that on the client, we don't use an object's `connectionToServer` because only the player owned objects have connections to the server. Instead we use the client's `NetworkClient.connection` to server, which is always guaranteed to be there.
-* On the **server**, only player owned objects get messages from player connections. So at any given time, you can find otu when object's `Cmd`/`OnDeserialize`/`OnMessage` handler was sent by the client via `connectionToClient.remoteTimeStamp`.
+- 在**客户端**上，所有对象数据都以消息/批的形式从服务器到达。 因此，在任何给定的时间，您都可以通过`NetworkClient.connection.remoteTimeStamp`服务器何时发送对象的`Rpc`/`OnDeserialize`/`OnMessage`处理程序。
+  - 请注意，在客户端上，我们不使用对象的`connectionToServer`，因为只有玩家拥有的对象才有到服务器的连接。 相反，我们使用客户端到服务器的`NetworkClient.connection`，它总是保证在那里。
+- 在**服务器**上，只有玩家拥有的对象才能从玩家连接中获取消息。 因此，在任何给定的时间，您都可以在客户端通过`connectionToClient.remoteTimeStamp`发送对象的`Cmd`/`OnDeserialize`/`OnMessage`处理程序时找到 otu。
 
-{% hint style="info" %}
-**Timestamp Batching** is Mirror's unique approach to general purpose world synchronization. \
+{% hint style="info"%}
+**时间戳批处理**是 Mirror 的独特方法，以通用的世界同步。 \
 \
-For example, Quake's Delta Snapshots are ideal for FPS games where the whole world fits into one world state message, while not being ideal for larger MMO sized worlds with lots of entities. Or perhaps you are working on a multiplayer text adventure with barely any world state, but still lots of network messages.\
+例如，雷神之锤的三角洲快照是 FPS 游戏的理想选择，其中整个世界都适合一个世界状态消息，而不是具有大量实体的大型 MMO 大小的世界。 或者你正在进行一个几乎没有任何世界状态的多人文本冒险，但仍然有很多网络消息。
 \
-**Timestamp Batching** fits well into Mirror's architecture. It should help you to reduce bandwidth no matter what type of project you work on.
 {% endhint %}
+**时间戳批处理**非常适合 Mirror 的架构。 它应该可以帮助您减少带宽，无论您从事何种类型的项目。
+联系我们

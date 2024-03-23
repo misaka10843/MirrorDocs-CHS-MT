@@ -1,57 +1,57 @@
-# General
+# 一般
 
-Mirror is a system for building multiplayer capabilities for Unity games. It is built on top of the lower level transport real-time communication layer, and handles many of the common tasks that are required for multiplayer games. While the transport layer supports any kind of network topology, Mirror is a server authoritative system; although it allows one of the participants to be a client and the server at the same time, so no dedicated server process is required. Working in conjunction with the internet services, this allows multiplayer games to be played over the internet with little work from developers.
+Mirror 是一个为 Unity 游戏构建多人游戏功能的系统。 它建立在底层传输实时通信层之上，并处理多人游戏所需的许多常见任务。 虽然传输层支持任何类型的网络拓扑，但 Mirror 是一个服务器权威系统;虽然它允许其中一个参与者同时是客户端和服务器，因此不需要专用的服务器进程。 与互联网服务相结合，这使得多人游戏可以在互联网上玩，而开发人员的工作量很小。
 
-Mirror is focused on ease of use and iterative development and provides useful functionality for multiplayer games, such as:
+Mirror 专注于易用性和迭代开发，并为多人游戏提供有用的功能，例如：
 
-* Message handlers
-* General purpose high performance serialization
-* Distributed object management
-* State synchronization
-* Network classes: Server, Client, Connection, etc
+- 消息处理程序
+- 通用高性能系列化
+- 分布对象管理
+- 状态同步
+- 网络类：服务器、客户端、连接等
 
-Mirror is built from a series of layers that add functionality:
+Mirror 是由一系列添加功能的层构建的：
 
-![](<../../.gitbook/assets/image (111).png>)
+![](<../../.gitbook/assets/image (111).png>）
 
-## Server and Host <a href="#server-and-host" id="server-and-host"></a>
+## 服务器和主机<a href="#server-and-host" id="server-and-host"></a>
 
-Mirror multiplayer games include:
+Mirror 多人游戏包括：
 
-* **Server**\
-  &#x20;A server is an instance of the game which all other players connect to when they want to play together. A server often manages various aspects of the game, such as keeping score, and transmit that data back to the client.
-* **Clients**\
-  &#x20;Clients are instances of the game that usually connect from different computers to the server. Clients can connect over a local network, or online.
+- **服务器**\
+  &#x20;服务器是游戏的一个实例，当其他玩家想要一起玩游戏时，他们会连接到服务器。 服务器通常管理游戏的各个方面，例如保持分数，并将数据传输回客户端。
+- **客户**服务
+  &#x20;客户端是游戏的实例，通常从不同的计算机连接到服务器。 客户端可以通过本地网络或在线连接。
 
-A client is an instance of the game that connects to the server, so that the person playing it can play the game with other people, who connect on their own clients.
+客户端是连接到服务器的游戏的实例，这样玩游戏的人就可以和其他人一起玩游戏，这些人连接到他们自己的客户端。
 
-The server might be either a “dedicated server”, or a “host server”.
+服务器可以是"专用服务器"或"主机服务器"。
 
-* **Dedicated server**\
-  &#x20;This is an instance of the game that only runs to act as a server.
-* **Host server**\
-  &#x20;When there is no dedicated server, one of the clients also plays the role of the server. This client is the “host server”. The host server creates a single instance of the game (called the host), which acts as both server and client.
+- **专用服务器**\
+  &#x20;这是游戏的一个实例，只作为服务器运行。
+- **主机服务器**\
+  &#x20;当没有专用服务器时，其中一个客户端也扮演服务器的角色。 这个客户端就是"主机服务器"。 主机服务器创建游戏的单个实例（称为主机），它既充当服务器又充当客户端。
 
-The diagram below represents three players in a multiplayer game. In this game, one client is also acting as host, which means the client itself is the “local client”. The local client connects to the host server, and both run on the same computer. The other two players are remote clients - that is, they are on different computers, connected to the host server.
+下图表示多人游戏中的三个玩家。 在这个游戏中，一个客户端也充当主机，这意味着客户端本身就是"本地客户端"。 本地客户端连接到主机服务器，两者都在同一台计算机上运行。 另外两个玩家是远程客户端-也就是说，他们在不同的计算机上，连接到主机服务器。
 
-![](<../../.gitbook/assets/image (86).png>)
+![](<../../.gitbook/assets/image (86).png>）
 
-The host is a single instance of your game, acting as both server and client at the same time. The host uses a special kind of internal client for local client communication, while other clients are remote clients. The local client communicates with the server through direct function calls and message queues, because it is in the same process. It actually shares the Scene with the server. Remote clients communicate with the server over a regular network connection. When you use Mirror’s, this is all handled automatically for you.
+主机是游戏的单个实例，同时充当服务器和客户端。 主机使用一种特殊的内部客户端进行本地客户端通信，而其他客户端是远程客户端。 本地客户端通过直接函数调用和消息队列与服务器通信，因为它在同一进程中。 它实际上与服务器共享场景。 远程客户端通过常规网络连接与服务器通信。 当你使用镜子的时候，这一切都是自动为你处理的。
 
-One of the aims of the multiplayer system is for the code for local clients and remote clients to be the same, so that you only have to think about one type of client most of the time when developing your game. In most cases, Mirror handles this difference automatically, so you should rarely need to think about the difference between your code running on a local client or a remote client.
+多人游戏系统的目标之一是本地客户端和远程客户端的代码是相同的，这样在开发游戏时，你大部分时间只需要考虑一种类型的客户端。 在大多数情况下，Mirror 会自动处理这种差异，因此您应该很少需要考虑在本地客户端或远程客户端上运行的代码之间的差异。
 
-## Instantiate and Spawn <a href="#instantiate-and-spawn" id="instantiate-and-spawn"></a>
+## 实例化和生成<a href="#instantiate-and-spawn" id="instantiate-and-spawn"></a>
 
-When you make a single player game In Unity, you usually use the `GameObject.Instantiate` method to create new game objects at runtime. However, with a multiplayer system, the server itself must “spawn” game objects in order for them to be active within the networked game. When the server spawns game objects, it triggers the creation of game objects on connected clients. The spawning system manages the lifecycle of the game object, and synchronizes the state of the game object based on how you set the game object up.
+在 Unity 中制作单人游戏时，通常使用`GameObject.Instantiate`方法在运行时创建新的游戏对象。 然而，对于多人游戏系统，服务器本身必须"产生"游戏对象，以便它们在网络游戏中处于活动状态。 当服务器生成游戏对象时，它会触发在连接的客户端上创建游戏对象。 生成系统管理游戏对象的生命周期，并根据您如何设置游戏对象来确定游戏对象的状态。
 
-For more details about networked instantiating and spawning, see documentation on Spawning [GameObjects](../guides/gameobjects/).
+有关网络实例化和生成的详细信息，请参阅生成[游戏对象](../guides/gameobjects/)的文档。
 
-## Players and Local Players <a href="#players-and-local-players" id="players-and-local-players"></a>
+## 玩家和本地玩家<a href="#players-and-local-players" id="players-and-local-players"></a>
 
-Mirror handles player game objects differently to non-player game objects. When a new player joins the game (when a new client connects to the server), that player’s game object becomes a “local player” game object on the client of that player, and Mirror associates the player’s connection with the player’s game object. Mirror associates one player game object for each person playing the game, and routes networking commands to that individual game object. A player cannot invoke a command on another player’s game object, only their own.
+Mirror 处理玩家游戏对象与非玩家游戏对象不同。 当一个新的玩家加入游戏时（当一个新的客户端连接到服务器时），该玩家的游戏对象在该玩家的客户端上成为一个"本地玩家"游戏对象，并且 Mirror 将该玩家的连接与该玩家的游戏对象相关联。 Mirror 为玩游戏的每个人关联一个玩家游戏对象，并将联网命令路由到该单个游戏对象。 一个玩家不能调用另一个玩家的游戏对象上的命令，只能调用自己的。
 
-For more details, see documentation on Player [GameObjects](../guides/gameobjects/).
+有关详细信息，请参阅有关 Player[GameObjects 的](../guides/gameobjects/)文档。
 
-## Authority
+## 权威
 
-Servers and clients can both manage a game object’s behavior. The concept of “authority” refers to how and where a game object is managed. Mirror is based around “server authority” as the default state, where the Server has authority over all game objects. Player game objects are a special case and treated as having “local authority”. You may want to build your game using a different system of authority - for more details, see [Network Authority](../guides/authority.md).
+服务器和客户端都可以管理游戏对象的行为。 "权限"的概念是指如何以及在何处管理游戏对象。 Mirror 是基于"服务器权限"作为默认状态，其中服务器对所有游戏对象具有权限。 玩家游戏对象是一种特殊情况，被视为具有"本地权限"。 您可能希望使用不同的权限系统构建游戏-有关详细信息，请参阅[网络权限](../guides/authority.md)。

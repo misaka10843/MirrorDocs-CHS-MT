@@ -1,57 +1,54 @@
 ---
-description: Quick Overview on Mirror's RTT, and how to improve it in your game.
+描述：快速概述Mirror的RTT，以及如何在游戏中改进它。
 ---
 
-# Round Trip Time (RTT)
+# 往返时间（RTT）
 
 ###
 
-### Understanding RTT
+### 了解 RTT
 
-{% hint style="info" %}
-**Round Trip Time (rtt)** is the time it takes for a message to go to the other end and back.\
-RTT always depends on two factors:
+{% hint style="info"%}
+**往返时间（rtt）**是消息往返于另一端所花费的时间。
+RTT 始终取决于两个因素：
 
-1. **Latency:** Network Message take some time to travel over the internet.
-2. **Update Interval:** Messages need to be processed and sent back to the other end. If your server's update rate is slow, RTT will be large.
-{% endhint %}
+1. **延迟：**网络消息在 Internet 上传输需要一些时间。
+2. **更新间隔：**消息需要被处理并发送回另一端。 如果你的服务器更新速度很慢，RTT 就会很大。
+   联系我们
 
-Mirror calculates round trip time on the client, and on the server:
+Mirror 计算客户端和服务器上的往返时间：
 
-* Clients can find it in `NetworkTime.rtt`
-* Servers can find it in each `NetworkServer.connection.rtt` (different for each connection)
+- 客户端可以在`NetworkTime.rtt`中找到它
+- 服务器可以在每个`NetworkServer.connection.rtt`中找到它（每个连接不同）
 
-If you want to display **rtt** in your game, you can use our `NetworkPingDisplay` component.
+如果你想在游戏中显示**rtt**，你可以使用我们`NetworkPingDisplay`组件。
 
+### 本地机器 RTT
 
+如果您在同一台计算机上运行我们的 Tanks 演示，服务器和客户端，您将看到平均 rtt 约为 8 ms：
 
-### Local Machine RTT
+<figure><img src="../../.gitbook/assets/2023-07-18 - rtt 8ms.png" alt=""> <figcaption><p>60 Hz更新速率提供8 ms RTT</p></figcaption></figure>
 
-If you run our Tanks demo with a server and a client on the same computer, you'll see an average rtt of around 8 ms:
+这可能看起来很奇怪：虽然 8 毫秒并不多，但它仍然没有您在本地计算机上期望的那么低。 显然，数据包在你的记忆中不需要 8 毫秒。
 
-<figure><img src="../../.gitbook/assets/2023-07-18 - rtt 8ms.png" alt=""><figcaption><p>60 Hz update rate gives 8 ms RTT</p></figcaption></figure>
+原因很简单：默认情况下，Mirror 的 NetworkManager.sendInterval 设置为 60 Hz。
 
-This may seem strange at first: while 8 ms isn't much, it's still not as low as you would expect on your local computer. Clearly packets won't need 8 ms to travel through your memory.
+这意味着网络更新每 16 毫秒（1 秒/ 60）发生一次。
 
-The reason for this is simple: by default, Mirror's NetworkManager.sendInterval is set to 60 Hz.
+RTT 消息可能在更新期间到达，或者在等待下一次更新的 16 ms 时到达。
 
-This means that network updates happen every 16 milliseconds (1 second / 60).
+平均而言，这意味着每个 RTT 消息有 8 毫秒的等待时间。
 
-RTT messages may arrive during an update, or while waiting 16 ms for the next update.
+这就是为什么上面的图片显示在您的本地机器上的 RTT 约为 8 ms。
 
-On average, this means that there are 8 milliseconds of wait time for each RTT message.
+### 优化 RTT
 
-Which is why the above picture shows an RTT of about 8 ms on your local machine.
+60 Hz 的发送间隔是带宽（发送越频繁，带宽成本越大）和 RTT 之间的合理权衡。 如果您想以更高的带宽换取更低的 RTT：
 
-### Optimizing RTT
+- 将 sendInterval 增加到 120 Hz 或更高
+- 确保 VSYNC 已禁用（如果您的屏幕以 60 Hz 运行，则 VSYNC 将更新速率限制为 60 Hz）
+- 确保你的游戏运行速度足够快（如果你的 CPU 太慢，无法达到 120 Hz，那么你的发送速率显然不能是 120 Hz）
 
-A send interval of 60 Hz is a reasonable tradeoff between bandwidth (the more often you send, the larger your bandwidth costs) and RTT. If you want to trade more bandwidth for lower RTT:
+凭借极端的发送速率和帧速率，我们可以轻松地在本地机器上将 Tanks 演示的 RTT 降低到 1- 2 ms。 当然，这并不推荐在制作游戏中使用：
 
-* Increase sendInterval to 120 Hz or more
-* Make sure that VSYNC is disabled (if your screen is running at 60 Hz, Vsync will cap your update rate to 60 Hz)
-* Make sure your game runs fast enough (if your CPU is too slow to achieve 120 Hz, then your send rate obviously can't be 120 Hz)
-
-With an extreme send rate and frame rate, we can easily get the Tanks demo's RTT down to 1-2ms on our local machine. Of course, this isn't recommended in a production game:
-
-<figure><img src="../../.gitbook/assets/2023-07-18 - rtt 2ms.png" alt=""><figcaption></figcaption></figure>
-
+<figure><img src="../../.gitbook/assets/2023-07-18 - rtt 2ms.png" alt=""> <figcaption></figcaption></figure>

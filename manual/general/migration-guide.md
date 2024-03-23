@@ -1,28 +1,28 @@
-# Migration Guide
+# 迁移指南
 
-## Migrating a project from UNet (HLAPI) <a href="#migrating-a-project-from-unet-hlapi" id="migrating-a-project-from-unet-hlapi"></a>
+## 从 UNet 迁移项目（HLAPI）<a href="#migrating-a-project-from-unet-hlapi" id="migrating-a-project-from-unet-hlapi"></a>
 
-This guide gives you a step by step instruction for migrating your project from UNET to Mirror. Mirror is a fork of UNET. As such the migration is straight forward for most projects.
+本指南为您提供了将项目从 UNET 迁移到 Mirror 的分步说明。 Mirror 是 UNET 的一个分支。 因此，对于大多数项目来说，迁移是直接的。
 
-You should review the information on the [Deprecations](deprecations.md) page to see if your project will be impacted.
+您应该查看"[弃用"](deprecations.md)页面上的信息，以查看您的项目是否会受到影响。
 
-There's also a [Migration Tool](https://github.com/Lymdun/MirrorConverter/) you can try.
+还有一个[迁移工具，](https://github.com/Lymdun/MirrorConverter/)你可以试试。
 
-### 1. BACKUP <a href="#1-backup" id="1-backup"></a>
+### 1. 备份<a href="#1-backup" id="1-backup"></a>
 
-You have been warned.
+你已经被警告过了。
 
-### 2. Install Mirror and Restart Unity <a href="#2-install-mirror-and-restart-unity" id="2-install-mirror-and-restart-unity"></a>
+### 2. 安装 Mirror 并重新启动 Unity<a href="#2-install-mirror-and-restart-unity" id="2-install-mirror-and-restart-unity"></a>
 
-Get Mirror from the [Asset Store](https://assetstore.unity.com/packages/tools/network/mirror-129321) and import it in your project.
+从[资源存储中](https://assetstore.unity.com/packages/tools/network/mirror-129321)获取 Mirror 并将其导入到项目中。
 
-Alternatively you can grab the latest [release](https://github.com/vis2k/Mirror/releases) from GitHub if you're feeling adventurous, but be aware that bleeding edge dev releases are not necessarily stable.
+或者，如果你想冒险，你可以从 GitHub 上获取最新的[版本](https://github.com/vis2k/Mirror/releases)，但要知道，最前沿的开发版本不一定稳定。
 
-**NOTE:** You must restart Unity after adding Mirror to the project for the components menu to update correctly.
+**注意：**在将 Mirror 添加到项目后，您必须重新启动 Unity，以便组件菜单正确更新。
 
-### 3. Replace namespace <a href="#3-replace-namespace" id="3-replace-namespace"></a>
+### 3. 替换命名空间<a href="#3-replace-namespace" id="3-replace-namespace"></a>
 
-Replace `UnityEngine.Networking` for `Mirror` everywhere in your project. For example, if you have this:
+将`UnityEngine.Networking`替换为项目中的任何地方`Mirror`。 例如，如果你有这个：
 
 ```csharp
 using UnityEngine.Networking;
@@ -33,7 +33,7 @@ public class Player : NetworkBehaviour
 }
 ```
 
-replace it with:
+将其改为：
 
 ```csharp
 using Mirror;
@@ -44,17 +44,17 @@ public class Player : NetworkBehaviour
 }
 ```
 
-At this point, you might get some compilation errors. Don't panic, these are easy to fix. Keep going...
+在这一点上，你可能会得到一些编译错误。 不要惊慌，这些都很容易修复。 继续走...
 
-### 4. Replace playerController with identity <a href="#4-replace-playercontroller-with-identity" id="4-replace-playercontroller-with-identity"></a>
+### 4. 将 playerController 替换为 identity<a href="#4-replace-playercontroller-with-identity" id="4-replace-playercontroller-with-identity"></a>
 
-Replace references to `NetworkConnection.playerController` with `NetworkConnection.identity`.&#x20;
+将对`NetworkConnection.playerController`引用替换为`NetworkConnection.identity`.&# x20;
 
-### 5. Remove NetworkSettings <a href="#5-remove-networksettings" id="5-remove-networksettings"></a>
+### 5. 删除网络设置<a href="#5-remove-networksettings" id="5-remove-networksettings"></a>
 
-NetworkSettings in UNet have channels, but this is flat out broken. Rather than ignoring your settings we removed channels from NetworkSettings completely. `sendInterval` is now set in code and / or the inspector too.
+网络设置在 UNet 有渠道，但这是平面出打破。 而不是忽略您的设置，我们从 NetworkSettings 完全删除频道。 `sendInterval`现在也在代码和/或检查器中设置。
 
-For example, if you have this code:
+例如，如果你有这样的代码：
 
 ```csharp
 [NetworkSettings(channel=1,sendInterval=0.05f)]
@@ -64,7 +64,7 @@ public class NetStreamer : NetworkBehaviour
 }
 ```
 
-replace it with:
+将其改为：
 
 ```csharp
 public class NetStreamer : NetworkBehaviour
@@ -76,29 +76,29 @@ public class NetStreamer : NetworkBehaviour
 }
 ```
 
-Please note that the default transport [Telepathy](https://mirror-networking.com/docs/Articles/Transports/Telepathy.html), completely ignores channels, all messages are reliable, sequenced and fragmented. They just work with no fuss. If you want to take advantage of unreliable channels try a UDP or Steam [transport](../transports/) instead.
+请注意，默认传输[心灵感应](https://mirror-networking.com/docs/Articles/Transports/Telepathy.html)，完全忽略渠道，所有的消息都是可靠的，有序和碎片. 他们只是工作没有大惊小怪。 如果你想利用不可靠的通道，请尝试 UDP 或 Steam[传输](../transports/)。
 
-### 6. Change SyncListStruct to SyncList <a href="#6-change-syncliststruct-to-synclist" id="6-change-syncliststruct-to-synclist"></a>
+### 6. 将 SyncListStruct 更改为 SyncList<a href="#6-change-syncliststruct-to-synclist" id="6-change-syncliststruct-to-synclist"></a>
 
-There is a bug in the original UNet Weaver that makes it mess with our `Mirror.SyncListStruct` without checking the namespace. In Mirror, we fixed SyncLists so that they work with structs by default.
+在最初的 UNet Weaver 中有一个错误，它会在不检查名称空间的情况下扰乱我们`Mirror.SyncListStruct`。 在 Mirror 中，我们修复了 SyncLists，使其默认使用结构。
 
-For example, if you have definitions like:
+例如，如果你有这样的定义：
 
 ```csharp
 public class SyncListQuest : SyncListStruct {}
 ```
 
-replace them with:
+改为：
 
 ```csharp
 public class SyncListQuest : SyncList {}
 ```
 
-### 7. Replace NetworkHash128 and NetworkInstanceId <a href="#7-replace-networkhash128-and-networkinstanceid" id="7-replace-networkhash128-and-networkinstanceid"></a>
+### 7. 替换 NetworkHash128 和 NetworkInstanceId<a href="#7-replace-networkhash128-and-networkinstanceid" id="7-replace-networkhash128-and-networkinstanceid"></a>
 
-These have been changed to System.Guid and uint, respectively.
+它们已分别更改为 System.Guid 和 uint。
 
-For example, if you have something like this:
+例如，如果你有这样的东西：
 
 ```csharp
 public sealed class SpawnItemMessage : MessageBase
@@ -110,7 +110,7 @@ public sealed class SpawnItemMessage : MessageBase
 }
 ```
 
-replace with:
+替换为：
 
 ```csharp
 public sealed struct SpawnItemMessage : NetworkMessage
@@ -122,11 +122,11 @@ public sealed struct SpawnItemMessage : NetworkMessage
 }
 ```
 
-### 8. Update your SyncList callbacks <a href="#8-update-your-synclist-callbacks" id="8-update-your-synclist-callbacks"></a>
+### 8. 更新 SyncList 回调<a href="#8-update-your-synclist-callbacks" id="8-update-your-synclist-callbacks"></a>
 
-In UNet, SyncLists have a callback delegate that gets called in the client whenever the list is updated. We have changed the callback to be a C# event instead and we also pass the item that was updated/removed.
+在 UNet 中，SyncLists 有一个回调委托，每当列表更新时，客户端都会调用它。 我们已经将回调改为 C#事件，并且我们还传递了更新/删除的项目。
 
-For example, if you have this code:
+例如，如果你有这样的代码：
 
 ```csharp
 using UnityEngine;
@@ -148,7 +148,7 @@ public  class MyBehaviour : NetworkBehaviour
 }
 ```
 
-replace it with:
+将其改为：
 
 ```csharp
 using UnityEngine;
@@ -170,17 +170,17 @@ public  class MyBehaviour : NetworkBehaviour
 }
 ```
 
-Notice the callback will also work in the server in Mirror.
+请注意，回调也将在 Mirror 中的服务器中工作。
 
-### 9. Replace Components <a href="#9-replace-components" id="9-replace-components"></a>
+### 9. 更换组件<a href="#9-replace-components" id="9-replace-components"></a>
 
-Every networked prefab and scene object needs to be adjusted. They will be using `NetworkIdentity` from Unet, and you need to replace that component with `NetworkIdentity` from Mirror. You may be using other network components, such as `NetworkAnimator` or `NetworkTransform`. All components from Unet should be replaced with their corresponding component from Mirror.
+每个网络预制件和场景对象都需要调整。 他们将使用来自 Unet`NetworkIdentity`，您需要将该组件替换为来自 Mirror`NetworkIdentity`。 您可能正在使用其他网络组件，如`NetworkAnimator`或`NetworkTransform`。 Unet 中的所有组件都应替换为 Mirror 中相应的组件。
 
-Note that if you remove and add a NetworkIdentity, you will need to reassign it in any component that was referencing it.
+请注意，如果删除并添加 NetworkIdentity，则需要在引用它的任何组件中重新分配它。
 
-### 10. Update Extended Components <a href="#10-update-extended-components" id="10-update-extended-components"></a>
+### 10. 更新扩展组件<a href="#10-update-extended-components" id="10-update-extended-components"></a>
 
-Some commonly extended components, such as NetworkManager, have changed method parameters in Mirror. A commonly used override is OnServerAddPlayer. Using the original HLAPI, your override may have looked like this:
+一些常用的扩展组件（如 NetworkManager）已更改了 Mirror 中的方法参数。 一个常用的覆盖是 OnServerAddPlayer。 使用原始的 HLAPI，您的覆盖可能看起来像这样：
 
 ```csharp
 public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId, NetworkReader extraMessageReader)
@@ -190,7 +190,7 @@ public override void OnServerAddPlayer(NetworkConnection conn, short playerContr
 }
 ```
 
-In your newly Mirror-capable NetworkManager, if you are using the `OnServerAddPlayer` override, remove the "playerControllerId" and "extraMessageReader" parameters from your override and the base call:
+在最新支持的 NetworkManager 中，如果您使用的是`OnServerAddPlayer`覆盖，请从覆盖和基本调用中删除"playerControllerId"和"extraMessageReader"参数：
 
 ```csharp
 public override void OnServerAddPlayer(NetworkConnection conn)
@@ -200,36 +200,36 @@ public override void OnServerAddPlayer(NetworkConnection conn)
 }
 ```
 
-See Custom [Player Spawn Guide](../guides/gameobjects/custom-character-spawning.md) for details on how to submit custom characters now.
+有关如何立即提交自定义角色的详细信息，请参阅自定义[玩家生成指南](../guides/gameobjects/custom-character-spawning.md)。
 
-### 11. Pick your transport <a href="#11-pick-your-transport" id="11-pick-your-transport"></a>
+### 11. 选择您的交通工具<a href="#11-pick-your-transport" id="11-pick-your-transport"></a>
 
-You can choose one of several transports in Mirror. Open your NetworkManager gameobject, in the inspector you will see a `TelepathyTransport` component by default. Drag in one of the available transports and remove `TelepathyTransport` if you wish to use a UDP based transport instead.
+您可以在 Mirror 中选择几种传输方式之一。 打开你的 NetworkManager 游戏对象，在检查器中你会看到一个默认`TelepathyTransport`组件。 如果您希望使用基于 UDP 的传输，请拖动其中一个可用的传输并删除`TelepathyTransport`。
 
-### 12. Configure address and port <a href="#12-configure-address-and-port" id="12-configure-address-and-port"></a>
+### 12. 配置地址和端口<a href="#12-configure-address-and-port" id="12-configure-address-and-port"></a>
 
-In HLAPI, you configure the port and local address in the NetworkManager. One of our goals is to make Mirror transport independent. Not all transports need address and port. Some transports might even use more than one port at the same time, so these settings were inadequate. We removed the port and address and all other Network Info properties from NetworkManager, and we moved them to the transport components instead.
+在 HLAPI 中，您可以在 NetworkManager 中配置端口和本地地址。 我们的目标之一是使 Mirror 传输独立。 并非所有的传输都需要地址和端口。 有些传输甚至可能同时使用多个端口，因此这些设置是不够的。 我们从 NetworkManager 中删除了端口和地址以及所有其他网络信息属性，并将它们移至传输组件。
 
-### 13. Update your firewall and router <a href="#13-update-your-firewall-and-router" id="13-update-your-firewall-and-router"></a>
+### 13. 更新防火墙和路由器<a href="#13-update-your-firewall-and-router" id="13-update-your-firewall-and-router"></a>
 
-LLAPI uses UDP. Mirror uses TCP by default. This means you may need to change your router port forwarding and firewall rules in your machine to expose the TCP port instead of UDP. This highly depends on your router and operating system.
+LLAPI 使用 UDP。 默认情况下，Mirror 使用 TCP。 这意味着您可能需要更改机器中的路由器端口转发和防火墙规则，以暴露 TCP 端口而不是 UDP。 这在很大程度上取决于您的路由器和操作系统。
 
-## Video version <a href="#video-version" id="video-version"></a>
+## 视频版本<a href="#video-version" id="video-version"></a>
 
-See for yourself how uMMORPG was migrated to Mirror:
+看看 uMMORPG 是如何迁移到 Mirror 的：
 
-[http://www.youtube.com/watch?v=LF9rTSS3rlI](http://www.youtube.com/watch?v=LF9rTSS3rlI)
+[http：//www.youtube.com/watch？v = LF9rTSS3rlI]（http：//www.youtube.com/watch？v = LF9rTSS3rlI）
 
-## Possible Error Messages <a href="#possible-error-messages" id="possible-error-messages"></a>
+## 可能的错误消息<a href="#possible-error-messages" id="possible-error-messages"></a>
 
-* TypeLoadException: A type load exception has occurred. - happens if you still have SyncListStruct instead of SyncListSTRUCT in your project.
-* NullPointerException: The most likely cause is that you replaced NetworkIdentities or other components but you had them assigned somewhere. Reassign those references.
-*   `error CS0246: The type or namespace name 'UnityWebRequest' could not be found. Are you missing 'UnityEngine.Networking' using directive?`
+- TypeLoadException：发生类型加载异常。 - 如果您的项目中仍然有 SyncListStruct 而不是 SyncListStruct CT，则会发生这种情况。
+- NullPointerException：最可能的原因是您替换了 NetworkIdentities 或其他组件，但您将它们分配到了某个位置。 重新分配这些引用。
+- `error CS0246: The type or namespace name 'UnityWebRequest' could not be found. Are you missing 'UnityEngine.Networking' using directive?`
 
-    Add this to the top of your script:
+  Add this to the top of your script:
 
-    ```
-    using UnityWebRequest = UnityEngine.Networking.UnityWebRequest;
-    ```
+  ```
+  using UnityWebRequest = UnityEngine.Networking.UnityWebRequest;
+  ```
 
-    `UnityWebRequest` is not part of UNet or Mirror, but it is in the same namespace as UNet. Changing the namespace to Mirror caused your script not to find UnityWebRequest. The same applies for `WWW` and all `UnityWebRequest` related classes.
+  `UnityWebRequest` is not part of UNet or Mirror, but it is in the same namespace as UNet. 将命名空间更改为 Mirror 导致脚本找不到 UnityWebRequest。 这同样适用于`WWW`和所有`UnityWebRequest`相关类。

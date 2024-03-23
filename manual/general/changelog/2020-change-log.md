@@ -1,262 +1,262 @@
-# 2020 Change Log
+# 2020 变更日志
 
-{% hint style="info" %}
-Mirror uses semantic versioning, and the versions shown here are those that were published to the Asset Store, and occasionally major version bumps happen mid-month between store submissions and are therefore not individually shown here.
-{% endhint %}
+{% hint style="info"%}
+镜像使用语义版本控制，此处显示的版本是发布到资产存储的版本，偶尔会在存储提交之间的月中发生重大版本冲突，因此此处不单独显示。
+联系我们
 
-## v30.2.2 -- 2020-Dec-17 <a href="#version-3022----2020-dec-17" id="version-3022----2020-dec-17"></a>
+## v30.2.2 -- 2020 年 12 月 17 日<a href="#version-3022----2020-dec-17" id="version-3022----2020-dec-17"></a>
 
-* Added: Network Reader/Writer now does `ReadBlittable` / `WriteBlittable` for better performance.
-* Added: KCP Transport updated to version 1.4.
-* Added: Network Authenticator now has `OnStopServer` and `OnStopClient` overrides.
-* Added: Network Transform now applies compression to rotations.
-* Added: `SyncVars` now support using types that inherit from `NetworkBehaviour`.
-* Added: `SimpleWebTransport` now has option for TLS outside the transport.
-* Added: `MultipleMatches` example featuring Network Match Checker with Lobby and Match functionality.
-* Fixed: Better presentation of Network Ping Display..
-* Fixed: Middleware Transport now listens for inner events correctly..
-* Fixed: Calling `StartServer` / `StartClient` more than once is now prevented..
-* Fixed: NRE when no host player in `PlayerScore` in `MultipleAdditiveScenes` example.
-* Fixed: player collisions in `MultipleAdditiveScenes` example.
-* Fixed: Weaver now properly generates readers and writers for structs in other assemblies, e.g. `Mathematics`.
-* Fixed: `NetworkServer.maxConnections` is now public.
-* Fixed: Skip reset of object that's being destroyed.
-* Fixed: `ReadyStatusChanged` in `NetworkRoomManager` is now public.
-* Fixed: `NetworkTransform` now correctly uses `ArraySegment` in Commands.
-* Fixed: Added `OnStopServer` to `NetworkSceneChecker` and `NetworkMatchChecker`.
-* Fixed: Weaver method lookup conflict with Unity 2020.2.
-* Fixed: Memory allocation vulnerability in `NetworkReader`.
-* Changed: Play mode now blocked for invalid scene id's, with error messages.
-* Changed: Experimental Network Transform now uses `Channels.DefaultUnreliable` and applies compression to rotations.
-* Changed: Server Only scene objects in examples replaced with normal objects instantiated on server or just eliminated.
-* **Breaking:** Force `NetworkMessage` to use structs in all cases - classes no longer supported.
-* **Breaking:** Removed `ReadPacked` / `WritePacked` functions - Use Read and Write variants instead.
-* **Breaking:** LLAPI has been removed.
+- 增加：网络阅读器/作家现在做`ReadBlittable`/`WriteBlittable`更好的性能。
+- 添加：KCP 传输更新到版本 1.4。
+- 添加：网络身份验证器现在有`OnStopServer`和`OnStopClient`覆盖。
+- 新增：网络变换现在适用于压缩旋转。
+- 添加：`SyncVars`现在支持使用从`NetworkBehaviour`继承的类型。
+- 添加：`SimpleWebTransport`现在可以在传输之外选择 TLS。
+- 添加：`MultipleMatches`示例，具有大堂和匹配功能的网络匹配功能。
+- 修正：网络 Ping 显示的更好的呈现。
+- 修正：中间件传输现在正确侦听内部事件。
+- 修正：现在禁止多次调用`StartServer`/`StartClient`。
+- 修正：NRE 在`MultipleAdditiveScenes`示例中`PlayerScore`中没有主机玩家时。
+- 修正：在`MultipleAdditiveScenes`例子中的玩家碰撞。
+- 修正：Weaver 现在可以正确地为其他程序集中的结构生成读取器和写入器，例如`Mathematics`。
+- 修正：`NetworkServer.maxConnections`现在是公开的。
+- 修正：跳过重置被销毁的对象。
+- 修正：`NetworkRoomManager`中`ReadyStatusChanged`现在是公开的。
+- 修正：`NetworkTransform`现在正确使用`ArraySegment`命令。
+- 修正：增加`OnStopServer`到`NetworkSceneChecker`和`NetworkMatchChecker`。
+- 修正：Weaver 方法查找与 Unity 2020.2 冲突。
+- 修正：`NetworkReader`中的内存分配漏洞。
+- 更改：播放模式现在阻止无效的场景 ID 的，与错误消息。
+- 更改：实验网络变换现在使用`Channels.DefaultUnreliable`并对旋转应用压缩。
+- 更改：示例中的仅服务器场景对象替换为服务器上实例化的普通对象或删除。
+- **中断：**强制`NetworkMessage`在所有情况下使用结构-不再支持类。
+- **中断：**删除`ReadPacked`/`WritePacked`函数-使用 Read 和 Write 变量代替。
+- **上一篇：**LLAPI 已被删除
 
-## v26.2.2 -- 2020-Nov-20 <a href="#version-2622----2020-nov-20" id="version-2622----2020-nov-20"></a>
+## v26.2.2 -- 2020 年 11 月 20 日<a href="#version-2622----2020-nov-20" id="version-2622----2020-nov-20"></a>
 
-* Added: [KCP Transport](https://mirror-networking.com/docs/Articles/Transports/KCPTransport.html).
-* Added: [Libuv2k Transport](https://mirror-networking.com/docs/Articles/Transports/Libuv2k.html).
-* Added: Quaternion and float compression.
-* Added: Option to configure handshakeMaxSize in SimpleWebTransport.
-* Added: ServerTeleport to Experimental NetworkTransform.
-* Added: Accept and Reject methods to Authenticator base class for ease of use.
-* Fixed: Weaver failure on Authenticators and assemblies with only messages and no behaviors.
-* Fixed: Examples no longer rely on sequential connectionId.
-* Fixed: Eliminated errors when first importing due to preprocessor defines in transports.
-* Fixed: Scene ID logging is now consistently in hex format.
-* Fixed: sceneId when using BuildPipeline.BuildPlayer with incorrect case in path.
-* Fixed: Trigger not applied correctly for host in NetworkAnimator.
-* Fixed: Ensure ReadHelper.Read reads exactly number of bytes in SimpleWebTransport.
-* Changed: Minimum Unity version is now 2018.4.28 LTS.
-* Changed: Script Templates are now available as a separate package [here](https://mirror-networking.com/docs/Articles/General/ScriptTemplates.html).
-* Changed: Telepathy Transport is now obsolete - Use [KCP Transport](https://mirror-networking.com/docs/Articles/Transports/KCPTransport.html) instead.
-* **Breaking:** NetworkIdentity.clientAuthorityCallback is an event now.
-* **Breaking:** Removed older obsolete methods and tests.
-* **Breaking:** Transports no longer support sending to a List of connectionIds.
+- 上一篇：[KCP](https://mirror-networking.com/docs/Articles/Transports/KCPTransport.html)Transport
+- [Libuv2k Transport](https://mirror-networking.com/docs/Articles/Transports/Libuv2k.html)。
+- 添加：四元数和浮点压缩。
+- 新增：在 SimpleWebTransport 中配置 handshakeMaxSize 的选项。
+- 添加：服务器传送到实验网络转换。
+- 新增：Accept 和 Authenticator 基类的方法，以方便使用。
+- 修正：Weaver 在验证器和程序集上的失败，只有消息而没有行为。
+- 修正：示例不再依赖于顺序 connectionId。
+- 修正：消除了由于传输中的预处理器定义而导致的首次导入错误。
+- 修正：场景 ID 记录现在是一致的十六进制格式。
+- 修正：使用 BuildPipeline.BuildPlayer 时 sceneId 在路径中大小写不正确的问题。
+- 修正：触发器未正确应用于 NetworkAnimator 中的主机。
+- 修正：确保 ReadHelper。Read 读取 SimpleWebTransport 中的字节数。
+- 更改：最低 Unity 版本现在是 2018.4.28 LTS。
+- 更改：脚本模板现在可以作为一个单独的包[在这里](https://mirror-networking.com/docs/Articles/General/ScriptTemplates.html)。
+- 改变：心灵感应传送现在被废弃-使用[KCP 传送](https://mirror-networking.com/docs/Articles/Transports/KCPTransport.html)代替。
+- **Breaking：**NetworkIdentity.clientAuthorityCallback 现在是一个事件。
+- **突破：**删除旧的过时的方法和测试。
+- **中断：**传输不再支持发送到 connectionIds 的列表。
 
-## v23.0.3 -- 2020-Oct-24 <a href="#version-2303----2020-oct-24" id="version-2303----2020-oct-24"></a>
+## v23.0.3 -- 2020 年 10 月 24 日<a href="#version-2303----2020-oct-24" id="version-2303----2020-oct-24"></a>
 
-* Added: Support null when serializing classes.
-* Added: Support recursive data types.
-* Added: Support jagged arrays.
-* Added: New generic Read and Write methods for types used by mirror and user callbacks.
-* Added: NetworkAnimator now syncs animator.speed.
-* Added: NetworkTransform Server Teleport function.
-* Added: New websockets transport: [SimpleWebTransport](https://github.com/MirrorNetworking/SimpleWebTransport).
-* Fixed: ClientScene.localplayer is now set to null when it is destroyed.
-* Fixed: Fixing IndexChanged hook not being called for NetworkRoomPlayer.
-* Fixed: Fixing NullReferenceException when loading scene.
-* Fixed: Fixing NetworkConnectionToClient for IL2CPP.
-* Fixed: NullReferenceException in tanks example when running in headless server only.
-* Changed: Use SyncLists/SyncSet/SyncDictionary directly, e.g. `SyncList`, see [Pull Request 2307](https://github.com/vis2k/Mirror/pull/2307).
-* Changed: OnSerialize now includes the component index as byte before serializing each component. Better CPU performance at the cost of bandwidth.
-* Changed: Can now have 256 NetworkBehaviours per NetworkIdentity.
-* **Breaking**: Renamed `IMessageBase` to `NetworkMessage`, see [Pull Request 2317](https://github.com/vis2k/Mirror/pull/2317).
-* **Removed**: SyncEvents, see [Pull Request 2178](https://github.com/vis2k/Mirror/pull/2178).
-* **Removed**: Removing manual invoke for Cmd and RPC, see [Pull Request 2223](https://github.com/vis2k/Mirror/pull/2223).
-* **Removed**: Removed Serialize/Deserialize in messages, see [Pull Request 2317](https://github.com/vis2k/Mirror/pull/2317).
-* **Removed**: Removing auto initialize for SyncLists/SyncSet/SyncDictionary, see [Pull Request 2330](https://github.com/vis2k/Mirror/pull/2330).
-* **Removed**: Replacing [Ninja.WebSockets](https://github.com/MirrorNetworking/NinjaWebSocketsTransport) with [SimpleWebTransport](https://github.com/MirrorNetworking/SimpleWebTransport).
+- 新增：序列化类时支持 null。
+- 新增：支持递归数据类型.
+- 新增：支持锯齿数组.
+- 新增：镜像和用户回调所使用类型的新通用读写方法。
+- 新增：NetworkAnimator 现在同步 animator.speed。
+- 新增：NetworkTransform Server Teleport 功能。
+- 新增 Websockets 传输：[SimpleWebTransport](https://github.com/MirrorNetworking/SimpleWebTransport)。
+- 修正：ClientScene.localplayer 在销毁时被设置为 null。
+- 修正：修正 NetworkRoomPlayer 未调用 IndexChanged 钩子的问题。
+- 修复：修复加载场景时的 NullReferenceException。
+- 修复：修复 IL2CPP 的 NetworkConnectionToClient。
+- 修正：仅在无头服务器中运行时，坦克示例中出现 NullReferenceException。
+- 更改：直接使用 SyncLists/SyncSet/SyncDictionary，例如`SyncList`，参见[Pull Request 2307](https://github.com/vis2k/Mirror/pull/2307)。
+- 更改：OnSerialize 现在在序列化每个组件之前包含组件索引作为字节。 以带宽为代价获得更好的 CPU 性能。
+- 更改：现在每个 NetworkIdentity 可以有 256 个 NetworkBehaviours。
+- **中断**：将`IMessageBase`重命名为`NetworkMessage`，请参阅[Pull Request 2317](https://github.com/vis2k/Mirror/pull/2317)。
+- **删除**：SyncEvents，请参阅[合并请求 2178](https://github.com/vis2k/Mirror/pull/2178)。
+- **移除**：移除 Cmd 和 RPC 的手动调用，请参阅[Pull Request 2223](https://github.com/vis2k/Mirror/pull/2223)。
+- **删除**：删除消息中的序列化/重新序列化，请参阅[合并请求 2317](https://github.com/vis2k/Mirror/pull/2317)。
+- **删除**：删除 SyncLists/SyncSet/SyncDictionary 的自动初始化，请参阅[Pull Request 2330](https://github.com/vis2k/Mirror/pull/2330)。
+- **删除**：用[SimpleWebTransport](https://github.com/MirrorNetworking/SimpleWebTransport)替换[Ninja.WebSockets](https://github.com/MirrorNetworking/NinjaWebSocketsTransport)。
 
-## v17.3.0 -- 2020-Sep-04 <a href="#version-1730----2020-sep-04" id="version-1730----2020-sep-04"></a>
+## v17.3.0 -- 2020-Sep-04<a href="#version-1730----2020-sep-04" id="version-1730----2020-sep-04"></a>
 
-* Added: NetworkAnimator now syncs Layer Weight.
-* Added: Lists can now be sent in Command/Rpc/Message/etc.
-* Added: `[Server]`/`[Client]` can now be used outside of NetworkBehaviour.
-* Added: Experimental [NetworkLerpRigidbody](https://mirror-networking.com/docs/Articles/Components/NetworkLerpRigidbody.html) component that syncs position and velocity and applies them using Lerp.
-* Fixed: NetworkAnimator now fires triggers immediately on owner.
-* Fixed: `isServer` will now keep its value after calling `NetworkServer.Destroy`.
-* Fixed: `[Client]` error message now correctly logs the name of the method.
-* Fixed: Messages can now be nested within other Message types.
-* Fixed: `[Server]`/`[Client]` now correctly give error when used on abstract method.
-* Fixed: Abstract classes can now implement IMessageBase.
-* Fixed: Weaver now correctly gives error when generating a reader methods for abstract classes.
-* Changed: NetworkServer no longer runs update if there are no connections.
-* Changed: NetworkBehaviour.IsDirty is now a public.
-* Changed: SyncEvent are now obsolete and will be removed in the next version.
-* **Removed**: isHeadless is now obsolete, Use preprocessor directive `#if UNITY_SERVER` instead.
+- 新增：NetworkAnimator 现在同步层权重。
+- 添加：列表现在可以在命令/RPC/消息/等中发送。
+- 新增：`[服务器]`/`[客户端]`现在可以在 NetworkBehaviour 之外使用。
+- 添加：实验[NetworkLerp 刚体](https://mirror-networking.com/docs/Articles/Components/NetworkLerpRigidbody.html)组件，同步位置和速度，并使用 Lerp 应用它们。
+- 修正：NetworkAnimator 现在立即触发所有者。
+- 修正：`isServer`在调用`NetworkServer.Destroy`后将保持其值不变。
+- 修正：`[客户端]`错误信息现在正确记录方法的名称。
+- 修正：消息现在可以嵌套在其他消息类型中。
+- 修正：`[服务器]`/`[客户端]`现在正确地给出错误时，对抽象方法使用。
+- 修正：抽象类现在可以实现 IMessageBase。
+- 修正：Weaver 现在正确地为抽象类生成读取器方法时给出错误。
+- 更改：如果没有连接，NetworkServer 不再运行更新。
+- 更改：NetworkBehaviour.IsDirty 现在是公共的。
+- 已更改：SyncEvent 现已过时，将在下一版本中删除。
+- **删除**：isHeadless 现在已过时，使用预处理器指令`#if UNITY_SERVER`代替。
 
-## v16.9.0 -- 2020-Aug-01 <a href="#version-1690----2020-aug-01" id="version-1690----2020-aug-01"></a>
+## v16.9.0 -- 2020 年 8 月 1 日<a href="#version-1690----2020-aug-01" id="version-1690----2020-aug-01"></a>
 
-* Added: [NetworkHeadlessLogger](https://mirror-networking.com/docs/Articles/Components/NetworkHeadlessLogger.html) log handler that sets console color.
-* Added: New Mirror List Server, see [Cloud folder](https://github.com/vis2k/Mirror/tree/master/Assets/Mirror/Cloud).
-* Added: Experimental [NetworkRigidbody](https://mirror-networking.com/docs/Articles/Components/NetworkRigidbody.html) component that syncs velocity and other rigidbody settings.
-* Fixed: base method called inside Command/RPC now work if the first base class does not have an override.
-* Fixed: NetworkRoomPlayer now cleans up roomSlots on disable.
-* Fixed: Fallback and Multiplex now disable their transports when they are disabled.
-* Fixed: Websockets transport SocketState now returns false if socket is `undefined`.
-* Fixed: SyncEvents can now have the same name if they are in different classes.
-* Fixed: You can now have multiple SyncEvents per class.
-* Fixed: Message base classes are now processed even if they are declared later in the file.
-* Fixed: Registering a prefab with and same GUID no longer gives an error.
-* Fixed: Weaver now generates Serialize methods for classes that implement IMessageBase.
-* Changed: NetworkProximityChecker now has slightly better performance.
-* Changed: ClientRpc no longer need Rpc prefix.
-* Changed: Commands no longer need Cmd prefix.
-* Changed: TargetRpc no longer need Target prefix.
-* Changed: NetworkManager.networkSceneName is now protected set as it should not be set directly.
+- 新增：[NetworkHeadlessLogger](https://mirror-networking.com/docs/Articles/Components/NetworkHeadlessLogger.html)日志处理程序，设置控制台颜色。
+- 新增：新镜像列表服务器，请参阅[云文件夹](https://github.com/vis2k/Mirror/tree/master/Assets/Mirror/Cloud).
+- 新增：实验[网络刚体](https://mirror-networking.com/docs/Articles/Components/NetworkRigidbody.html)组件，同步速度和其他刚体设置。
+- 修正：如果第一个基类没有覆盖，Command/RPC 内部调用的基类方法现在可以工作。
+- 修正：NetworkRoomPlayer 现在清理 roomSlots 禁用。
+- 修正：回退和多路复用现在禁用他们的传输时，他们被禁用。
+- 修正：Websockets 传输 SocketState 现在返回 false，如果套接字是`undefined`的。
+- 修正：如果 SyncEvent 在不同的类中，它们现在可以具有相同的名称。
+- 修正：现在每个类可以有多个 SyncEvent。
+- 修正：消息基类现在被处理，即使它们是在文件的后面声明的。
+- 修正：注册一个预制件和相同的插件不再给出一个错误。
+- 修正：Weaver 现在为实现 IMessageBase 的类生成 Serialize 方法。
+- 更改：NetworkProximityNetwork 现在的性能稍好。
+- 更改：ClientRpc 不再需要 Rpc 前缀。
+- 更改：命令不再需要 Cmd 前缀。
+- 更改：TargetRpc 不再需要 Target 前缀。
+- 更改：NetworkManager.networkSceneName 现在是受保护的设置，因为它不应该被直接设置。
 
-## v16.1.1 -- 2020-Jun-13 <a href="#version-1611----2020-jun-13" id="version-1611----2020-jun-13"></a>
+## v16.1.1 -- 2020 年 6 月 13 日<a href="#version-1611----2020-jun-13" id="version-1611----2020-jun-13"></a>
 
-* Added: \[Command] now has an `ignoreAuthority` option for invoking Commands on objects the client doesn't have authority over, and Command methods can have an optional `NetworkConnectionToClient sender` parameter.
-* Added: \[ClientRpc] now has an `excludeOwner` option to prevent messages from going to the client that owns the object.
-* Added: Commands and Rpc's can now be declared as virtual and overridden in derived classes.
-* Added: NetworkLogSettings component and Log Settings Window.
-* Added: SyncLists now support `AddRange`, `InsertRange`, and `RemoveAll`.
-* Added: Network Room Manager now has a virtual `OnRoomServerPlayersNotReady` that fires on server from `CheckReadyToBegin`.
-* Added: Network Room Player template now includes base Network Behaviour overrides.
-* Added: Network Room Player now has a virtual hook for the index SyncVar, and the override is in the template.
-* Added: Experimental Network Transform with more control settings and features.
-* Added: [Network Ping Display](https://mirror-networking.com/docs/Articles/Components/NetworkPingDisplay.html) component
-* Fixed: Network Room Manager.minPlayers is now protected so it's available for derived classes.
-* Fixed: Network Room Manager no longer does redundant player prefab registration in `OnStartClient`.
-* Fixed: Network Room Player `OnClientEnterRoom` now correctly only fires on clients.
-* Fixed: `RegisterClientMessages` was being incorrectly invoked for every scene change.
-* Fixed: Network Behaviour `SyncMode` and `SyncInterval` was not showing in the inspector in some cases (regression).
-* Fixed: Network Manager now cleans up network objects better when server stops.
-* Fixed: Network Manager no longer tries to change to offline scene redundantly in `StopClient`.
-* Fixed: Network Connection's `lastMessageTime` wasn't being properly initialized, causing incorrect idle timeout disconnects.
-* Fixed: Websockets transport now correctly pauses and queues messages during scene changes and should otherwise be more stable with SSL
-* Changed: Improvements were made to the Tanks example.
-* Changed: Network Room Player now uses virtual SyncVar hook for ReadyStateChanged.
-* Changed: Network Proximity Checker now uses direct distance check against player objects instead of Physics.SphereCastNonAlloc for better performance.
-* **Breaking:** Websockets Transport now requires full path to PFX Certificate file.
-* **Removed**: Discord Transport
+- 新增：\[Command]现在有一个用于在客户端没有权限的对象上调用 Commands`ignoreAuthority`选项，并且 Command 方法可以有一个可选`NetworkConnectionToClient sender`参数。
+- 新增：\[ClientRpc]现在有一个`excludeOwner`选项，可以防止消息发送到拥有该对象的客户端。
+- 新增：命令和 RPC 现在可以在派生类中声明为虚拟和重写。
+- 新增：NetworkLogSettings 组件和日志设置窗口。
+- 新增：同步列表现在支持`AddRange`、`InsertRange`和`RemoveAll`。
+- 添加：网络室管理器现在有一个虚拟`OnRoomServerPlayersNotReady`，从`CheckReadyToBegin`在服务器上触发。
+- 新增：网络房间播放器模板现在包括基本网络行为覆盖。
+- 添加：网络房间播放器现在有一个虚拟挂钩的索引 SyncVar，覆盖是在模板中。
+- 增加：实验网络变换与更多的控制设置和功能.
+- 添加：[网络 Ping 显示](https://mirror-networking.com/docs/Articles/Components/NetworkPingDisplay.html)组件
+- 修正：网络房间管理器.minPlayers 现在受到保护，因此它可用于派生类。
+- 固定：网络室经理不再做多余的球员预置注册`OnStartClient`。
+- 修正：网络室播放器`OnClientEnterRoom`现在正确地只在客户端上发射。
+- 修正：`RegisterClientMessages`在每次场景更改时都被错误调用。
+- 修正：网络行为`SyncMode`和`SyncInterval`在某些情况下未显示在检查器中（回归）。
+- 修正：网络管理器现在在服务器停止时更好地清理网络对象。
+- 修正：网络管理器不再尝试在`StopClient`中冗余地更改为离线场景。
+- 修正：网络连接的`lastMessageTime`没有被正确初始化，导致不正确的空闲超时断开连接。
+- 修正：Websockets 传输现在可以在场景更改期间正确暂停和排队消息，否则应该使用 SSL 更稳定
+- 改变：坦克的例子得到了改进。
+- 更改：网络房间播放器现在使用虚拟 SyncVar 挂钩 ReadyStateChanged。
+- 改变：网络距离侦测器现在使用直接距离侦测来检测玩家物体，而不是物理距离。
+- **中断：**Websockets 传输现在需要完整的路径到 PFX 证书文件。
+- **标签**：Discord Transport
 
-## v13.0.1 -- 2020-May-06 <a href="#version-1301----2020-may-06" id="version-1301----2020-may-06"></a>
+## v13.0.1 -- 2020 年 5 月 6 日<a href="#version-1301----2020-may-06" id="version-1301----2020-may-06"></a>
 
-* Added: [Multiple Concurrent Additive Scenes Example](https://mirror-networking.com/docs/Articles/Examples/MultipleAdditiveScenes/index.html).
-* Added: [Network Match Checker](https://mirror-networking.com/docs/Articles/Components/NetworkMatchChecker.html) component. Use this component to create many concurrent isolated matches within a single game server.
-* Added: [SyncLists](https://mirror-networking.com/docs/Articles/Guides/Sync/SyncLists.html) now have Find and FindAll functions.
-* Added: Network Behaviour now has `OnStopServer` and `OnStopClient` virtual methods.
-* Added: Weaver now supports custom Reader & Writer for types in other assemblies.
-* Added: Network Manager now has an optional setting to check for and disconnect remote connections that have gone silent for a specified interval.
-* Added: Network Server and Network Client now have `ReplaceHandler` methods to avoid warnings when attempting to double register message handlers.
-* Added: `NetworkServer.SendToAll` now has an optional bool to only send to ready clients, and a `SendToReady` method that doesn't require a Network Identity.
-* Fixed: Network Animator no longer double-fires SetTrigger / ResetTrigger on the host client.
-* Fixed: Network Animator is no longer limited to one component per object.
-* Fixed: Destroy is no longer invoked twice on the server for the player object.
-* Fixed: `RegisterClientMessages` is no longer invoked twice on the client.
-* Fixed: Network Behaviour `SyncMode` and `SyncInterval` was not showing in the inspector in some cases.
-* Fixed: Telepathy Transport - `LateUpdate` now processes a limited amount of messages per tick to avoid deadlocks.
-* Changed: Network Behaviour: `OnNetworkDestroy` was renamed to `OnStopClient`.
-* **Breaking:** RemovePlayerMessage has been removed as a potential security risk. Use `NetworkServer.RemovePlayerForConnection` instead.
-* **Breaking:** Network Behaviour: `OnRebuildObservers`, `OnCheckObserver`, and `OnSetHostVisibility` were moved to a separate class called `NetworkVisibility`.
+- 添加：[多个并发添加场景示例](https://mirror-networking.com/docs/Articles/Examples/MultipleAdditiveScenes/index.html)。
+- 添加：[网络匹配](https://mirror-networking.com/docs/Articles/Components/NetworkMatchChecker.html)组件。 使用此组件可以在单个游戏服务器中创建多个并发的孤立比赛。
+- 新增：[同步列表](https://mirror-networking.com/docs/Articles/Guides/Sync/SyncLists.html)现在有查找和查找所有功能。
+- 添加：网络行为现在有`OnStopServer`和`OnStopClient`虚拟方法。
+- 新增：Weaver 现在支持其他程序集中类型的自定义 Reader & Writer。
+- 新增：网络管理器现在有一个可选的设置，以检查和断开远程连接，已经沉默了指定的时间间隔。
+- 增加：网络服务器和网络客户端现在有`ReplaceHandler`方法，以避免在尝试双重注册消息处理程序时出现警告。
+- 新增：`NetworkServer.SendToAll`现在有一个可选的 bool，只发送到准备好的客户端，和一个`SendToReady`方法，不需要网络身份。
+- 固定：网络动画不再双火灾 SetTrigger / ResetTrigger 主机客户端。
+- 修正：Network Animator 不再限于每个对象一个组件。
+- 修正：不再在服务器上为玩家对象调用两次摧毁。
+- 修正：`RegisterClientMessages`不再在客户端被调用两次。
+- 修正：网络行为`SyncMode`和`SyncInterval`在某些情况下没有显示在检查器中。
+- 修正：心灵感应传输-`LateUpdate`现在处理的消息数量有限，每滴答，以避免死锁。
+- 更改：网络行为：`OnNetworkDestroy`重命名为`OnStopClient`。
+- \*\*\*\*RemovePlayerMessage 作为潜在的安全风险已被删除。 请改用`NetworkServer.RemovePlayerForConnection`。
+- **网络**行为：`OnRebuildObservers`、`OnCheckObserver`和`OnSetHostVisibility`被移到一个名为`NetworkVisibility`单独类中。
 
-## v11.4.2 - 2020-Apr-03 <a href="#version-1142---2020-apr-03" id="version-1142---2020-apr-03"></a>
+## v11.4.2 - 2020-Apr-03<a href="#version-1142---2020-apr-03" id="version-1142---2020-apr-03"></a>
 
-* Added: SyncVar hooks can be virtual now, and overridden in a derived class.
-* Added: Virtual `OnRoomStopServer` added to Network Room Manager and Script Template.
-* Added: 10K Networked Objects Benchmark Example.
-* Fixed: Setting breakpoints in an IDE for Command's and Rpc's work correctly now.
-* Fixed: `NetworkServer.SendToObservers` now reports correct channel to Mirror Profiler.
-* Fixed: Network Room Manager's `roomPlayerPrefab` is now `protected` so it can be accessed in derived classes.
-* Fixed: Network Room Player inspector and documentation updated to be less confusing.
-* Fixed: Network Identity no longer double calls `NetworkServer.Destroy`.
-* Fixed: Network Animator now correctly excludes parameters controlled by curves.
-* Fixed: Network Behaviour now uses a property drawer for the SyncVar label so it displays better.
-* Fixed: `NetworkServer.SendToReady` overloads are no longer ambiguous.
-* Fixed: Network Room Manager no longer incorrectly destroys the game player object. It's left in the game scene to be cleaned up by Unity when the scene changes.
-* Fixed: `StopHost` correctly raises `OnServerDisconnect` in Network Manager, and correctly unwinds before shutting down the server.
-* Fixed: `isServer` is no longer incorrectly false on server in Network Identity's `OnDestroy`.
-* Changed: Network Manager `offlineScene` and `onlineScene` store full paths now, so use SceneManager.GetActiveScene().path instead.
-* Changed: Network Manager HUD now calls `StopHost` / `StopServer` / `StopClient` more appropriately.
-* Changed: Network Manager HUD labels no longer say LAN. Associated docs also cleaned up to eliminate the misconception of Mirror being LAN only solution.
-* Changed: Network Transform compression removed and message handling is much simpler now.
-* Changed: Network Scene Checker initializes in Awake again because `OnEnable` proved to be unreliable in some cases.
-* Changed: Network Manager will no longer lose references to scenes if they aren't in the Build Settings scene list, however moving or renaming scenes may cause references to be lost.
-* **Removed:** Many obsolete methods and properties. Use [version 10](https://github.com/vis2k/Mirror/releases/tag/v10.4.7) first if upgrading from UNet or older Mirror. See [Deprecations](https://mirror-networking.com/docs/Articles/General/Deprecations.html) for complete list.
+- 增加：SyncVar 钩子现在可以是虚拟的，并在派生类中被重写。
+- 添加：虚拟`OnRoomStopServer`添加到网络室管理器和脚本模板。
+- 添加：10K 网络对象基准测试示例。
+- 修正：在 IDE 中设置断点命令和 RPC 的工作现在正确。
+- 修正：`NetworkServer.SendToObservers`现在向镜像分析器报告正确的通道。
+- 修正：网络房间管理器的`roomPlayerPrefab`现在被`protected`，所以它可以在派生类中访问。
+- 修正：网络房间播放器检查器和文档更新，以减少混乱。
+- 修正：网络身份不再双重调用`NetworkServer.Destroy`。
+- 修正：网络动画现在正确排除参数控制的曲线。
+- 修正：网络行为现在为 SyncVar 标签使用属性抽屉，以便更好地显示。
+- 修正：`NetworkServer.SendToReady`重载不再模糊。
+- 修正：网络房间管理器不再错误地破坏游戏玩家对象。 它留在游戏场景中，当场景改变时由 Unity 清理。
+- 修复：`StopHost`在网络管理器中正确引发`OnServerDisconnect`，并在关闭服务器之前正确解绕。
+- 修正：在网络身份的`OnDestroy`中，`isServer`在服务器上不再是错误的 false。
+- 更改：网络管理器`offlineScene`和`onlineScene`现在存储完整路径，因此使用 SceneManager.GetActiveScene（）.path 代替。
+- 更改：网络管理器 HUD 现在更恰当地调用`StopHost`/`StopServer`/`StopClient`。
+- 更改：网络管理器 HUD 标签不再显示 LAN。 相关文档也进行了清理，以消除镜像是唯一的 LAN 解决方案的误解。
+- 更改：删除网络转换压缩，消息处理现在更简单。
+- 更改：网络场景再次关闭 Awake，因为`OnEnable`在某些情况下不可靠。
+- 变更日期：如果场景不在"构建设置"场景列表中，网络管理器将不再丢失对场景的引用，但移动或重命名场景可能会导致引用丢失。
+- **删除：**许多过时的方法和属性。 如果从 UNet 或旧版 Mirror 升级，请先使用[版本 10](https://github.com/vis2k/Mirror/releases/tag/v10.4.7)。 见[弃](https://mirror-networking.com/docs/Articles/General/Deprecations.html)用完整列表。
 
-## v10.4.7 - 2020-Mar-03 <a href="#version-1047---2020-mar-03" id="version-1047---2020-mar-03"></a>
+## v10.4.7 - 2020-Mar-03<a href="#version-1047---2020-mar-03" id="version-1047---2020-mar-03"></a>
 
-* Added: Weaver will now block play mode and builds if there are weaver errors and show them in the console again.
-* Added: `PooledNetworkReader` and `PooledNetworkWriter`, both Disposable.
-* Added: `NetworkReader.ReadMessage`.
-* Added: Network Discovery now handles headless server mode.
-* Added: SyncVar, Cmd's and Rpc's now support Scriptable Objects via CreateInstance on the receiving side.
-* Added: Discord Transport _Removed in v16.1.1_
-* Fixed: `isClient` now returns true on clients in OnDestroy for networked objects.
-* Fixed: Host Player race condition for Ready message.
-* Fixed: Network Animator and Network Transform now correctly check for client authority in their respective Command methods.
-* Fixed: Network Room Manager Script Template had a virtual method instead of an override.
-* Fixed: Network Server's calls to NetworkConnectionToClient.Send now includes the channelId parameter that was missing.
-* Fixed: Network Server's calls to SendToAll, SendToReady, and SendToObservers send to the exact connection if it is detected as local connection, instead of falling back to the .localConnection.
-* Fixed: Network Server.SpawnObjects returns false if server isn't running.
-* Fixed: Network Transform rotation detection improved.
-* Fixed: Weaver generated code now builds properly for IL2CPP (again).
-* Changed: StartHost in Network Manager is no longer a virtual method (and shouldn't have been). Override OnStartHost instead.
-* Changed: Network Room Manager's OnRoomServerSceneLoadedForPlayer now includes NetworkConnection parameter.
-* Changed: Network Scene Checker now works from OnEnable instead of Awake, and uses Scene instead of scene name.
-* Changed: Renamed NeworkWriter.Write to WriteMessage for consistency.
+- 新增：韦弗现在将阻止播放模式和建设，如果有韦弗错误，并显示在控制台再次。
+- 添加：`PooledNetworkReader`和`PooledNetworkWriter`，都是一次性的。
+- 添加：`NetworkReader.ReadMessage`.
+- 新增：网络发现现在处理无头服务器模式。
+- 增加：SyncVar，Cmd 和 RPC 现在支持通过接收端的实例化脚本对象。
+- 添加：Discord Transport _在 v16.1.1 中删除_
+- 修正：`isClient`现在在 OnDestroy 中为网络对象的客户端返回 true。
+- 修正：主机玩家比赛条件准备消息。
+- 修正：网络动画和网络变换现在正确地检查客户端的权力，在各自的命令方法。
+- 修正：网络室管理器脚本模板有一个虚拟方法，而不是一个覆盖。
+- 修正：网络服务器对 NetworkConnectionToClient 的调用。发送现在包括了丢失的 channelId 参数。
+- 已修正：Network Server 对 SendToAll、SendToReady 和 SendToObservers 的调用会发送到被检测为本地连接的确切连接，而不是回退到. localConnection。
+- 修正：网络服务器。如果服务器没有运行，SpawnObjects 返回 false。
+- 修正：改进了网络变换旋转检测。
+- 修正：Weaver 生成的代码现在可以为 IL2CPP 正确构建（再次）。
+- 更改：网络管理器中的 StartHost 不再是虚拟方法（也不应该是）。 而不是 OnStartHost。
+- 更改：网络室管理器的 OnRoomServerSceneLoadedForPlayer 现在包括 NetworkConnection 参数。
+- 更改：网络场景切换现在从 OnEnable 而不是 Awake 工作，并使用场景而不是场景名称。
+- 更改：重命名为 NetworkWriter。写入 WriteMessage 以保持一致性。
 
-## v9.0.2 - 2020-Feb-04 <a href="#version-902---2020-feb-04" id="version-902---2020-feb-04"></a>
+## v9.0.2 - 2020- 2 月-04<a href="#version-902---2020-feb-04" id="version-902---2020-feb-04"></a>
 
-* Added: Network Animator now has a ResetTrigger function and server / client authority warnings.
-* Added: Network Transform now has 3 new floats for Sensitivity to quiet down message traffic from micro changes.
-* Added: Network Observer added to [Script Templates](https://mirror-networking.com/docs/Articles/General/ScriptTemplates.html) -- See the new Mirror section in the Assets > Create menu.
-* Added: [Network Discovery](https://mirror-networking.com/docs/Articles/Components/NetworkDiscovery.html) has been reimplemented including an example and script template -- thanks to all those who contributed!
-* Added: [Network Scene Checker Component](https://mirror-networking.com/docs/Articles/Components/NetworkSceneChecker.html).
-* Added: Mirror Icon for all components.
-* Added: Inspector Headers to Network Behaviour, Network Transform, and Network Animator.
-* Added: URI added to supported data types.
-* Added: `NetworkReaderPool` has been implemented in place of `new NetworkReader` everywhere, significantly reducing garbage allocation.
-* Fixed: Network Transform and Network Animator now uses NetworkWriterPool.
-* Fixed: Network Transform and Network Animator now respect `hasAuthority` for client owned objects.
-* Fixed: Network Transform will now correctly teleport if time / distance are too large.
-* Fixed: Network Animator now correctly syncs when clientAuthority is false.
-* Fixed: Client owned objects are now destroyed when client disconnects (regression).
-* Fixed: Client authority is now preserved for networked objects carried through scene change in DontDestroyOnLoad (DDOL).
-* Fixed: Starting server immediately after canceling client connection attempt no longer throws a NRE.
-* Fixed: IL2CPP builds no longer trigger an assert when stopping server.
-* Fixed: SyncVars are now set for Host player before hook is invoked.
-* Fixed: SyncDictionary now correctly updates the value before invoking callbacks.
-* Fixed: StopHost no longer tries to change to the Offline scene twice.
-* Fixed: Network Room Manager roomSlots are now correctly managed on both server and clients.
-* Fixed: Network Room Manager now correctly supports multiple GamePlay scenes and adds a virtual `OnRoomServerAddPlayer`.
-* Fixed: Additive scene operations no longer incorrectly lead to extraneous AddPlayer messages from clients.
-* Fixed: `NetworkWriterPool` is now used everywhere instead of `new NetworkWriter` (we missed a couple when the pool was implemented).
-* Fixed: Patch for Unity 2019.3.x `RequestScriptReload` was moved to EditorUtility from UnityEditorInternal.InternalEditorUtility.
-* Fixed: Arrays of custom types are now correctly supported.
-* Changed: Shutdown logic has been streamlined.
-* Changed: `NetworkIdentity.GetSceneIdenity` method renamed to `GetSceneIdentity` (name typo).
-* Changed: OnApplicationQuit virtual method added to Transport class and `Transport.activeTransport.Shutdown()` is no longer called from Network Manager.
-* **Breaking:** SyncVar Hooks now require **two** parameters, one each for the old and new value, and the property value is now set **before** the hook is called.
+- 新增：Network Animator 现在有一个 ResetTrigger 功能和服务器/客户端权限警告。
+- 增加：网络转换现在有 3 个新的浮动敏感性，以安静下来的消息流量从微观变化。
+- 添加：网络观察者添加到[脚本模板](https://mirror-networking.com/docs/Articles/General/ScriptTemplates.html)--请参阅资源>创建菜单中的新镜像部分。
+- 添加：[网络发现](https://mirror-networking.com/docs/Articles/Components/NetworkDiscovery.html)已经重新实现，包括一个例子和脚本模板-感谢所有那些谁作出了贡献！
+- 添加：[网络场景插件](https://mirror-networking.com/docs/Articles/Components/NetworkSceneChecker.html)。
+- 新增：所有组件的镜像图标.
+- 新增：网络行为、网络转换和网络动画的检查头。
+- 添加：URI 添加到支持的数据类型。
+- 新增：`NetworkReaderPool`已在任何地方取代`new NetworkReader`，显著减少垃圾分配。
+- 修正：网络变换和网络动画现在使用 NetworkWriterPool。
+- 修正：网络转换和网络动画现在尊重客户端拥有的对象`hasAuthority`。
+- 修正：如果时间/距离太大，网络转换将正确传送。
+- 修正：当 clientAuthority 为 false 时，Network Animator 现在可以正确同步。
+- 修正：客户端拥有的对象现在在客户端断开连接时被销毁（回归）。
+- 修正：在 DontDestroyOnLoad（DDOL）中，客户端权限现在为通过场景更改携带的网络对象保留。
+- 修正：取消客户端连接后立即启动服务器不再抛出 NRE。
+- 修复：IL2CPP 构建在停止服务器时不再触发断言。
+- 修正：在钩子被调用之前，同步变量现在被设置为主机播放器。
+- 修正：SyncDictionary 现在在调用回调之前正确更新值。
+- 固定：停止主机不再尝试改变到离线场景两次。
+- 修正：网络室管理器 roomSlots 现在正确管理服务器和客户端.
+- 修正：网络室管理器现在正确地支持多个游戏场景，并增加了一个虚拟`OnRoomServerAddPlayer`。
+- 修正：添加场景操作不再错误地导致来自客户端的无关 AddPlayer 消息。
+- 修正：`NetworkWriterPool`现在在任何地方都使用，而不是`new NetworkWriter`（我们在实现池时错过了一对夫妇）。
+- 修复：Unity 2019.3.x`RequestScriptReload`修补程序已从 UnityEditorInternal.InternalEditorUtility 移动到 EditorUtility。
+- 修正：自定义类型的数组现在被正确支持。
+- 更改：精简了逻辑。
+- 更改：`NetworkIdentity.GetSceneIdenity`方法重命名为`GetSceneIdentity`（名称拼写错误）。
+- 更改：OnApplicationQuit 虚拟方法添加到 Transport 类，并且不再从 Network Manager 调用`Transport.activeTransport.Shutdown()`。
+- **中断：**SyncVar 钩子现在需要**两个**参数，一个用于旧值，一个用于新值，并且现在**在**调用钩子之前设置属性值。
 
-## v6.7.7 - 2020-Jan-01 <a href="#version-677---2020-jan-01" id="version-677---2020-jan-01"></a>
+## v6.7.7 - 2020-Jan-01<a href="#version-677---2020-jan-01" id="version-677---2020-jan-01"></a>
 
-* Added: [Script Templates](https://mirror-networking.com/docs/Articles/General/ScriptTemplates.html) -- See the new Mirror section in the Assets > Create menu.
-* Added: Full Text Search added to docs.
-* Added: Basic Chat example.
-* Added: Some YouTube videos have been created and linked from various doc pages where appropriate.
-* Added: Transports can now support using a URI for connection including port.
-* Added: version.txt file is now included with the release version in it.
-* Added: Structs that inherit from IMessageBase now generate serializers.
-* Fixed: Components now appear in docs under API Reference.
-* Fixed: Delayed disconnect in Basic Authenticator.
-* Fixed: Multiplexer now handles OnClientConnect and GetMaxMessageSize correctly.
-* Fixed: Network Room Manager OnRoomServerCreateGamePlayer now includes the Room Player Object as parameter.
-* Changed: Room example now has Network Room Manager in the Offline scene and correctly switches to the Room scene when server / client is started.
-* Changed: Network Manager startPositionIndex and loadingSceneAsync are now public.
-* Changed: SceneMessage now has an optional customHandling flag so devs can handle their own custom scene loading, e.g. using Addressables.
-* **Breaking:** Network Transform now defaults to server authority and has a Client Authority checkbox.
+- 新增：[脚本模板](https://mirror-networking.com/docs/Articles/General/ScriptTemplates.html)--查看资源>创建菜单中新的镜像部分。
+- 添加：全文搜索添加到文档。
+- 添加：基本聊天示例.
+- 添加：一些 YouTube 视频已经创建，并在适当的情况下从各种文档页面链接。
+- 新增：传输现在可以支持使用 URI 连接，包括端口。
+- 添加：版本. txt 文件现在包含在其中的发布版本。
+- 新增：继承自 IMessageBase 的结构现在可以生成序列化器。
+- 修正：组件现在出现在 API 参考下的文档中。
+- 修正：延迟断开基本身份验证器。
+- 修正：多路复用器现在正确处理 OnClientConnect 和 GetMaxMessageSize。
+- 修正：网络房间管理器 OnRoomServerGamePlayer 现在包括房间播放器对象作为参数。
+- 更改：房间示例现在在离线场景中有网络房间管理器，并在服务器/客户端启动时正确切换到房间场景。
+- 更改：网络管理器 startPositionIndex 和 loadingSceneAsync 现在是公共的。
+- 更改：SceneMessage 现在有一个可选的 customHandling 标志，这样开发人员就可以处理自己的自定义场景加载，例如使用 Addressables。
+- **突破：**网络转换现在默认为服务器权限，并有一个客户端权限复选框。

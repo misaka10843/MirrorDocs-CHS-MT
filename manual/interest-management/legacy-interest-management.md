@@ -14,16 +14,16 @@ If a particular player, at a certain point in time during game play, cannot see 
 
 This can benefit your game in two ways:
 
-* It reduces the amount of data sent across the network between players. This can help improve the responsiveness of your game, and reduce bandwidth use. The bigger and more complex your multiplayer game, the more important this issue is.
-* It also helps prevent some cheating. Since a player client does not have information about things that can’t be seen, a hack on that player’s computer cannot reveal the information.
+- It reduces the amount of data sent across the network between players. This can help improve the responsiveness of your game, and reduce bandwidth use. The bigger and more complex your multiplayer game, the more important this issue is.
+- It also helps prevent some cheating. Since a player client does not have information about things that can’t be seen, a hack on that player’s computer cannot reveal the information.
 
-The idea of “visibility” in the context of networking doesn’t necessarily relate to whether game objects are directly visible on-screen. Instead, it relates to whether data should or shouldn’t be sent about the game object in question to a particular client. Put simply, if a client can’t ‘see’ an game object, it does not need to be sent information about that game object across the network. Ideally you want to limit the amount of data you are sending across the network to only what is necessary, because sending large amounts of unnecessary data across the network can cause network performance problems.
+The idea of "visibility" in the context of networking doesn’t necessarily relate to whether game objects are directly visible on-screen. Instead, it relates to whether data should or shouldn’t be sent about the game object in question to a particular client. Put simply, if a client can’t ‘see’ an game object, it does not need to be sent information about that game object across the network. Ideally you want to limit the amount of data you are sending across the network to only what is necessary, because sending large amounts of unnecessary data across the network can cause network performance problems.
 
 However, it can be also be resource intensive or complex to determine accurately whether a game object truly visible to a given player, so it’s often a good idea to use a more simple calculation for the purposes of determining whether a player should be sent networked data about it - i.e. whether it is ‘Network Visible’. The balance you want to achieve when considering this is between the cost of the complexity of the calculation for determining the visibility, and the cost of sending more information than necessary over the network. A very simple way to calculate this is a distance (proximity) check, and Mirror provides a built-in component for this purpose.
 
 ## Network Proximity Checker Component <a href="#network-proximity-checker-component" id="network-proximity-checker-component"></a>
 
-Mirror’s [Network Proximity Checker](../components/deprecated/network-proximity-checker.md) component is simplest way to implement network visibility for players. It works in conjunction with the physics system to determine whether game objects are close enough (that is, “visible” for the purposes of sending network messages in your multiplayer game).
+Mirror’s [Network Proximity Checker](../components/deprecated/network-proximity-checker.md) component is simplest way to implement network visibility for players. It works in conjunction with the physics system to determine whether game objects are close enough (that is, "visible" for the purposes of sending network messages in your multiplayer game).
 
 ## Network Scene Checker Component <a href="#network-scene-checker-component" id="network-scene-checker-component"></a>
 
@@ -51,17 +51,17 @@ To do this, you can create your own custom Network Observer from a [Script Templ
 
 It may be helpful to understand how the Network Proximity Checker works.
 
-The Network Proximity Checker is implemented using the public visibility interface of Mirror. Using this same interface, you can implement any kind of visibility rules you desire. Each `NetworkIdentity` keeps track of the set of players that it is visible to. The players that a NetworkIdentity game object is visible to are called the “observers” of the NetworkIdentity.
+The Network Proximity Checker is implemented using the public visibility interface of Mirror. Using this same interface, you can implement any kind of visibility rules you desire. Each `NetworkIdentity` keeps track of the set of players that it is visible to. The players that a NetworkIdentity game object is visible to are called the "observers" of the NetworkIdentity.
 
-The Network Proximity Checker calls the `RebuildObservers` method on the Network Identity component at a fixed interval (set using the “Vis Update Interval” value in the inspector), so that the set of network-visible game objects for each player is updated as they move around.
+The Network Proximity Checker calls the `RebuildObservers` method on the Network Identity component at a fixed interval (set using the "Vis Update Interval" value in the inspector), so that the set of network-visible game objects for each player is updated as they move around.
 
 In the `NetworkVisibility` class (which your custom observer scripts inherit from), there are some virtual functions for determining visibility. These are:
 
-* **OnCheckObserver**\
+- **OnCheckObserver**\
   &#x20;This method is called on the server, on each networked game object when a new player enters the game. If it returns true, that player is added to the object’s observers. The Network Proximity Checker does a simple distance check in its implementation of this function, and uses `Physics.OverlapSphereNonAlloc` to find the players that are within the visibility distance for this object.
-* **OnRebuildObservers**\
+- **OnRebuildObservers**\
   &#x20;This method is called on the server when `RebuildObservers` is invoked. This method expects the set of observers to be populated with the players that can see the object. The NetworkServer then handles sending `ObjectHide` and `ObjectSpawn` messages based on the differences between the old and new visibility sets.
-* **OnSetHostVisibility**\
+- **OnSetHostVisibility**\
   &#x20;This method is called on the server by the visibility system for objects on a host. Objects on a host (with a local client) cannot be disabled or destroyed when they are not visibile to the local client. So this function is called to allow custom code to hide these objects. A typical implementation will disable renderer components on the object. This is only called on local clients on a host.
 
 You can check whether any given networked game object is a player by checking if its `NetworkIdentity` has a valid connectionToClient. For example:

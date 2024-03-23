@@ -1,7 +1,7 @@
-# Security Overview
+# 安全性概述
 
-Cheats, Hacks, Exploits, Bots - multiplayer game security is a complex topic, mostly a catch & mouse game between devs and hackers. This section provides some basic overview on what to expect and how to mitigate issues before & after they arrive.
+作弊、黑客攻击、漏洞利用、僵尸程序-多人游戏安全是一个复杂的话题，主要是开发人员和黑客之间的捉迷藏游戏。 本节提供了一些基本的概述，介绍了在问题出现之前和之后的预期以及如何缓解问题。
 
-{% hint style="info" %}
-We add content as questions come up. Feel free to ask us in Discord if you have concerns about your game's security measures.
-{% endhint %}
+{% hint style="info"%}
+我们会在出现问题时添加内容。 如果您对游戏的安全措施有任何疑问，请随时在 Discord 中询问我们。
+联系我们

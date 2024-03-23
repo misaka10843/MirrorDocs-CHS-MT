@@ -1,20 +1,20 @@
-# Connection Quality
+# 连接质量
 
-Mirror does a lot of work to smooth out poor network connections.
+Mirror 做了很多工作来平滑糟糕的网络连接。
 
-However, there's only so much we can do on.
+然而，我们能做的只有这么多。
 
-{% hint style="warning" %}
-For poor connections, it's best practice to display a '**Poor Connection**' warning.
-{% endhint %}
+{% hint style="warning"%}
+对于连接不良，最好显示"**连接不良**"警告。
+联系我们
 
-Mirror's ConnectionQuality consists of three parts to make this very easy for your game.
+镜子的连接质量由三个部分组成，使这非常容易为您的游戏。
 
 ### **ConnectionQuality.cs**
 
-Standalone connection quality enum & heuristics, which can be used outside of Unity if needed.
+独立的连接质量枚举和索引，如果需要，可以在 Unity 之外使用。
 
-Mirror provides the following connection quality levels:
+Mirror 提供以下连接质量级别：
 
 ```csharp
 public enum ConnectionQuality : byte
@@ -27,39 +27,36 @@ public enum ConnectionQuality : byte
 }
 ```
 
-Currently it offers two heuristics:&#x20;
+目前，它提供两种解决方案：&#x20;
 
-* **Simple** (based on Ping & Jitter)&#x20;
-* **Pragmatic** (based on Snapshot Interpolation).
+- **简单**（基于 Ping 和 Jitter）&#x20;
+- **实用**（基于快照插值）。
 
-### NetworkPingDisplay
+### 网站地图
 
-This component can be added to the NetworkManager to display a Ping & Connection Quality indicator on the bottom right of the screen. Feel free to modify this to your needs, or create your own.
+此组件可以添加到 NetworkManager 中，以在屏幕右下方显示 Ping & Connection Quality 指示器。 您可以根据自己的需要随意修改，或者创建自己的。
 
-<figure><img src="../../.gitbook/assets/2023-06-25 - connection quality, gui, callback.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/2023-06-25 - connection quality, gui, callback.png" alt=""> <figcaption></figcaption></figure>
 
-### **NetworkManager Callbacks**
+### **NetworkManager 回调**
 
-*   **CalculateConnectionQuality()** can be overwritten to inject your own heuristic. By default, it uses the **Simple** heuristic from above. This is called every **connectionQualityInterval** seconds, which can also be configured in the NetworkManager.
+- **CalculateConnectionQuality（）**可以被覆盖以注入您自己的启发式算法。 默认情况下，它使用上面的**简单**启发式。 这被称为 every**connectionQualityInterval** seconds，也可以在 NetworkManager 中配置。
 
+  ```csharp
+  protected virtual void CalculateConnectionQuality()
+  {
+      NetworkClient.connectionQuality = ConnectionQualityHeuristics.Simple(
+          NetworkTime.rtt,
+          NetworkTime.rttVar
+      );
+  }
+  ```
 
+- **OnConnectionQualityChanged**（）可用于向用户显示警告。 默认情况下，这会发出一条日志消息--这对于调试用户日志等很有用。
 
-    ```csharp
-    protected virtual void CalculateConnectionQuality()
-    {
-        NetworkClient.connectionQuality = ConnectionQualityHeuristics.Simple(
-            NetworkTime.rtt, 
-            NetworkTime.rttVar
-        );
-    }
-    ```
-*   **OnConnectionQualityChanged**() can be used to show warnings to the user. By default, this emits a log message - useful for debugging user logs, etc.
-
-
-
-    ```csharp
-    protected virtual void OnConnectionQualityChanged(ConnectionQuality previous, ConnectionQuality current)
-    {
-        Debug.Log($"[Mirror] Connection Quality changed from {previous} to {current}");
-    }
-    ```
+  ```csharp
+  protected virtual void OnConnectionQualityChanged(ConnectionQuality previous, ConnectionQuality current)
+  {
+      Debug.Log($"[Mirror] Connection Quality changed from {previous} to {current}");
+  }
+  ```
