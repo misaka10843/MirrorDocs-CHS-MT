@@ -31,7 +31,10 @@ Mirror 使用语义化版本控制，并且这里显示的版本是发布到 Ass
 
 ### 更改（Changed）
 
-- 更改：持续改进 `Prediction` 和 `PredictedRigidbody`...仍处于实验阶段。
+- 变更：持续改进`Prediction`和`PredictedRigidbody`。这仍被视为实验性功能。
+- 变更：现在，SyncDictionary、SyncList 和 SyncSet 在调用回调之后都会调用它们的清除操作，因此用户可以在回调处理程序中迭代集合。
+- 变更：现在，SyncDictionary、SyncList 和 SyncSet 都有用户可以直接订阅的各自动作。
+  - **注意：**某些动作在适当的情况下传递**旧**值，因此请谨慎处理您的实现。还请注意，这些新动作取代了现在已过时且将在年底之前移除的通用回调动作。
 
 ## v89.0.0 -- 2024 年 3 月 5 日
 
