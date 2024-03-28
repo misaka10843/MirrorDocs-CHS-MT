@@ -1,68 +1,68 @@
-# NetworkBehaviour Callbacks
+# NetworkBehaviour 回调
 
-## NetworkBehaviour Callbacks <a href="#networkbehaviour-callbacks" id="networkbehaviour-callbacks"></a>
+## NetworkBehaviour 回调 <a href="#networkbehaviour-callbacks" id="networkbehaviour-callbacks"></a>
 
 {% hint style="info" %}
-See also [NetworkBehaviour](https://storage.googleapis.com/mirror-api-docs/html/db/d21/class\_mirror\_1\_1\_network\_behaviour.html) in the API Reference.
+另请参阅 [NetworkBehaviour](https://storage.googleapis.com/mirror-api-docs/html/db/d21/class\_mirror\_1\_1\_network\_behaviour.html) 在 API 参考中的内容。
 {% endhint %}
 
-There are a number of events relating to network behaviours that can occur over the course of a normal multiplayer game. These include events such as the host starting up, a player joining, or a player leaving. Each of these possible events has an associated callback that you can implement in your own code to take action when the event occurs.
+在正常的多人游戏过程中，与网络行为相关的许多事件可能会发生。这些事件包括主机启动、玩家加入或玩家离开等。每个可能发生的事件都有一个关联的回调函数，您可以在自己的代码中实现以在事件发生时采取行动。
 
-When you create a script which inherits from `NetworkBehaviour`, you can write your own implementation of what should happen when these events occur. To do this, you override the virtual methods on the `NetworkBehaviour` class with your own implementation of what should happen when the given event occurs.
+当您创建一个从 `NetworkBehaviour` 继承的脚本时，您可以编写自己的实现，以处理这些事件发生时应该发生的情况。为此，您需要重写 `NetworkBehaviour` 类上的虚拟方法，使用您自己的实现来处理给定事件发生时应该发生的情况。
 
-This is a full list of virtual methods (callbacks) that you can implement on `NetworkBehaviour`, and where they are called
+这是您可以在 `NetworkBehaviour` 上实现的所有虚拟方法（回调）的完整列表，以及它们被调用的位置
 
-### Server Only <a href="#server-only" id="server-only"></a>
+### 仅服务器端 <a href="#server-only" id="server-only"></a>
 
 * OnStartServer
-  * called when behaviour is spawned on server
+  * 当行为在服务器上生成时调用
 * OnStopServer
-  * called when behaviour is destroyed or unspawned on server
+  * 当行为在服务器上被销毁或取消生成时调用
 * OnSerialize
-  * called when behaviour is serialize before it is sent to client, when overriding make sure to call `base.OnSerialize`
+  * 在将行为发送到客户端之前对其进行序列化时调用，当重写时，请确保调用 `base.OnSerialize`
 
-### Client only <a href="#client-only" id="client-only"></a>
+### 仅客户端 <a href="#client-only" id="client-only"></a>
 
 * OnStartClient
-  * called when behaviour is spawned on client
+  * 当行为在客户端生成时调用
 * OnStartAuthority
-  * called when behaviour has authority when it is spawned (eg local player)
-  * called when behaviour is given authority by the sever
+  * 当行为在生成时具有权限时调用（例如本地玩家）
+  * 当服务器授予行为权限时调用
 * OnStartLocalPlayer
-  * called when the behaviour is on the local player object
+  * 当行为在本地玩家对象上时调用
 * OnStopAuthority
-  * called when authority is taken from the object (eg local player is replaced but not destroyed)
+  * 当对象被剥夺权限时调用（例如本地玩家被替换但未被销毁）
 * OnStopClient
-  * called when object is destroyed on client by the `ObjectDestroyMessage` or `ObjectHideMessage` messages
+  * 当对象在客户端上被 `ObjectDestroyMessage` 或 `ObjectHideMessage` 消息销毁时调用
 
-## Example flows <a href="#example-flows" id="example-flows"></a>
+## 示例流程 <a href="#example-flows" id="example-flows"></a>
 
-Below is some example call order for different modes
+以下是不同模式的示例调用顺序
 
-> NOTE: `Start` is called by unity before the first frame, while normally this happens after Mirror's callbacks. But if you dont call `NetworkServer.Spawn` the same frame as `instantiate` then start may be called first
+> 注意: `Start`在第一帧之前由Unity调用，通常在Mirror的回调之后调用。但是，如果您在`instantiate`的同一帧中没有调用`NetworkServer.Spawn`，则`Start`可能会首先被调用
 
-> Note: `OnRebuildObservers` and `OnSetHostVisibility` is now on `NetworkVisibility` instead of `NetworkBehaviour`
+> 注意: `OnRebuildObservers`和`OnSetHostVisibility`现在在`NetworkVisibility`(网络可见性)中，而不是在`NetworkBehaviour`(网络行为)中
 
-### Server mode <a href="#server-mode" id="server-mode"></a>
+### 服务器模式(Server mode) <a href="#server-mode" id="server-mode"></a>
 
-When a NetworkServer.Spawn is called (eg when new client connections and a player is created)
+当调用NetworkServer.Spawn时(例如，当新客户端连接并创建玩家时)
 
 * `OnStartServer`
 * `OnRebuildObservers`
 * `Start`
 
-### Client mode <a href="#client-mode" id="client-mode"></a>
+### 客户端模式(Client mode) <a href="#client-mode" id="client-mode"></a>
 
-When local player is spawned for client
+当为客户端生成本地玩家时
 
 * `OnStartAuthority`
 * `OnStartClient`
 * `OnStartLocalPlayer`
 * `Start`
 
-### Host mode <a href="#host-mode" id="host-mode"></a>
+### 主机模式(Host mode) <a href="#host-mode" id="host-mode"></a>
 
-These are only called on the **Player Game Objects** when a client connects:
+这些仅在**玩家游戏对象**(Player Game Objects)上在客户端连接时调用:
 
 * `OnStartServer`
 * `OnRebuildObservers`

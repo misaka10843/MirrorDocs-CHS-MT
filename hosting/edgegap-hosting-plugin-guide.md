@@ -1,133 +1,134 @@
 ---
-description: Mirror's inofficial Edgegap Hosting Plugin documentation.
+description: Mirror的非官方Edgegap Hosting插件文档。
 ---
 
-# Edgegap Hosting Plugin Guide
+# Edgegap Hosting插件指南（Guide）
 
-Thanks to **Edgegap**'s hosting plugin for Unity, Mirror users get 0.5 vCPU cloud hosting for free!
+感谢**Edgegap**为Unity提供的Hosting插件，Mirror用户可以免费获得0.5 vCPU的云托管！
 
-You can build & launch a game server into the cloud directly from your Unity Editor, without any Linux or Cloud usage whatsoever.
+您可以直接从Unity编辑器构建并启动游戏服务器到云端，完全不需要使用Linux或云端。
 
 <figure><img src="../.gitbook/assets/image (144).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="warning" %}
-This is an **early version.**
+这是一个**早期版本**。
 
-If you encounter issues, please report them in our Discord's **#edgegap** channel.
+如果遇到问题，请在我们的Discord的**#edgegap**频道中报告。
 {% endhint %}
 
-## Overview
+## 概述（Overview）
 
-Setup will take only a few minutes, with 4 basic steps:
+设置仅需几分钟，包括4个基本步骤：
 
-1. Creating an **Edgegap.com** Account
-2. Installing Unity **Linux** Build Support & **Docker** Desktop
-3. Configuring the Unity **Plugin**
-4. **Building & Pushing** our server to Edgegap
+1. 创建一个**Edgegap.com**账户
+2. 安装Unity **Linux**构建支持和**Docker**桌面
+3. 配置Unity **插件**
+4. **构建并推送**我们的服务器到Edgegap
 
-## Open the Plugin in Unity / Mirror
+## 在Unity / Mirror中打开插件
 
-Edgegap's Hosting plugin (version 2) is now always included in the latest Mirror version.
+Edgegap的Hosting插件（版本2）现在始终包含在最新的Mirror版本中。
 
-It requires at least Unity 2023 LTS, it won't work with older versions due to using UIToolkit.
+它至少需要Unity 2023 LTS，由于使用UIToolkit，它不适用于旧版本。
 
-The original source is on Github, but we applied a few fixes to the version in Mirror.
+原始源代码在Github上，但我们对Mirror中的版本应用了一些修复。
 
 {% embed url="https://github.com/edgegap/edgegap-unity-plugin" %}
 
-If you are on an older Mirror version, you can also download the Assets/Mirror/Hosting folder from our Github repository manually. If you see errors about missing 'Newtonsoft Json', add this package to your Package Manager:
+如果您使用的是较旧的Mirror版本，您也可以从我们的Github存储库手动下载Assets/Mirror/Hosting文件夹。如果出现有关缺少'Newtonsoft Json'的错误，请将此包添加到您的包管理器：
 
 <figure><img src="../.gitbook/assets/2023-11-05 - 13-14-02@2x.png" alt=""><figcaption></figcaption></figure>
 
-You can also open the `Packages/manifest.json` file and add this line manually:
+您还可以打开`Packages/manifest.json`文件并手动添加此行：
 
 ```json
 "com.unity.nuget.newtonsoft-json": "3.2.1"
 ```
 
-By default, this should work out of the box though.
+默认情况下，这应该可以直接使用。
 
-Once you have it, check for "**Edgegap** -> **Edgegap** Hosting" in Unity's top menu:
+一旦安装完成，请在Unity的顶部菜单中检查“**Edgegap** -> **Edgegap** Hosting”：
 
-<figure><img src="../.gitbook/assets/2023-12-07 - 13-18-23@2x.png" alt=""><figcaption><p>Edgegap Hosting Plugin V3</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/2023-12-07 - 13-18-23@2x.png" alt=""><figcaption><p>Edgegap Hosting插件V3</p></figcaption></figure>
 
-## Get a Token
+## 获取令牌（Get a Token）
 
-The next step is to **Get a Token** from the Edgegap website.
+下一步是从Edgegap网站获取一个**令牌**。
 
-Simply press the **Get a Token** button and either login to your existing Edgegap.com account, or press the **Get Started** link on the page to create a new account.
+只需点击**获取令牌**按钮，然后要么登录到您现有的 Edgegap.com 账户，要么点击页面上的**开始**链接创建一个新账户。
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 13-21-42@2x.png" alt=""><figcaption></figcaption></figure>
 
-
-
-After confirming your email address, you'll be asked about naming **Your Organization**. You can enter anything, in this case we use "**Your-Organization"**.
+确认您的电子邮件地址后，您将被要求命名**您的组织**。您可以输入任何内容，在这种情况下我们使用“**Your-Organization**”。
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 13-55-40@2x.png" alt=""><figcaption></figcaption></figure>
 
-Afterwards you'll be asked to **Begin the Application Tour**. Skip it for now.
+之后，您将被要求**开始应用程序导览**。现在跳过它。
 
-Next you'll automatically see the **Token Created Successfully** screen, because we initially clicked the **Get Token** button in the Unity plugin:
+接下来，您将自动看到**令牌创建成功**屏幕，因为我们最初点击了 Unity 插件中的**获取令牌**按钮：
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 13-58-35@2x.png" alt=""><figcaption></figcaption></figure>
 
-Press the **Clipboard** icon to copy the token, then paste it back into the Unity plugin and press **Verify.**\
-_Note that the token looks like "token 123456-abcdef-00000-..."._\
-_The "token ..." part needs to remain in there._
+点击**剪贴板**图标复制令牌，然后将其粘贴回 Unity 插件中并点击**验证**。\
+_请注意，令牌看起来像“token 123456-abcdef-00000-...”。_\
+_“token ...”部分需要保留在那里。_
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 13-59-44@2x.png" alt=""><figcaption></figcaption></figure>
 
-After verifying successfully, enter an **Application Name** into the field and press **Create Application:**
+验证成功后，在字段中输入一个**应用程序名称**，然后点击**创建应用程序**：
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 14-02-43@2x.png" alt=""><figcaption></figcaption></figure>
 
-It'll say **Success** and then show you the application details.
+它会显示**成功**，然后向您展示应用程序详细信息。
 
-Next time you can enter your already created application name and press **Load Existing App** instead.
+下次您可以输入您已创建的应用程序名称，然后点击**加载现有应用程序**。
 
-The final configuration step: we need to enter the **Port** and **Protocol Type**.
+最后的配置步骤：我们需要输入**端口**和**协议类型**。
 
-Open your scene in Unity (for example our Tanks demo), find the NetworkManager, find the Transport component, copy the Port into the plugin.\
-\=> If you are using `Kcp` then the **Protocol Type** is `UDP`.\
-\=> If you are using `Telepathy`, then it's `TCP`.
+在 Unity 中打开您的场景（例如我们的坦克演示），找到 NetworkManager，找到 Transport 组件，将端口复制到插件中。\
+\=> 如果您正在使用`Kcp`，则**协议类型**是`UDP`。\
+\=> 如果您正在使用`Telepathy`，则是`TCP`。
 
-<figure><img src="../.gitbook/assets/2023-12-07 - 14-05-19@2x.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/2023-12-07 - 14-05-19@2x.png" alt=""><figcaption></figcaption></figure> 
 
-**Almost done!**\
-Before we can Build and push, we need to install the Linux build support for Unity, and Docker!
+# 标题
 
-## Install Unity Linux Build Support
 
-In your **Unity Hub**, select **Installs**, press the Configuration icon next to your Unity version and click **Add Modules**:
+**快要完成了！**\
+在我们构建和推送之前，我们需要为 Unity 安装 Linux 构建支持和 Docker！
+
+## 安装 Unity Linux 构建支持
+
+在你的 **Unity Hub** 中，选择 **Installs**，点击你的 Unity 版本旁边的配置图标，然后点击 **Add Modules**：
 
 <figure><img src="../.gitbook/assets/2023-11-03 - 18-52-53@2x.png" alt=""><figcaption></figcaption></figure>
 
-Find and install **Linux Dedicated Server Build**. You may add the others too just to be safe:
+找到并安装 **Linux 专用服务器构建**。为了安全起见，你也可以添加其他模块：
 
 <figure><img src="../.gitbook/assets/2023-11-03 - 18-54-28@2x.png" alt=""><figcaption></figcaption></figure>
 
-Press Continue, wait, restart Unity once, done.
+点击继续，等待，重新启动 Unity 一次，完成。
 
-## Install Docker Desktop
+## 安装 Docker Desktop
 
-**Edgegap** works with containers, which means we need to install Docker. We don't need to worry about it ever, we just need to install it once.
+**Edgegap** 使用容器，这意味着我们需要安装 Docker。我们不需要担心它，只需要安装一次即可。
 
-The easiest way is to simply install **Docker Desktop**:
+最简单的方法就是安装 **Docker Desktop**：
 
 {% embed url="https://www.docker.com/products/docker-desktop/" %}
 
-Download it, install it, open it and leave it running. You can pretty much auto start it with your operating system each time.
+下载安装，打开并保持运行。你可以设置让它随操作系统自动启动。
 
 {% hint style="warning" %}
-Some users reported that they had to restart their computer once before they could use Docker. To be safe, consider restarting once!
+一些用户报告称他们在使用 Docker 前需要重新启动计算机一次。为了安全起见，考虑重新启动一次！
 {% endhint %}
 
 {% hint style="info" %}
-Quick explanation about Docker if you care. You don't need to know this, so feel free to skip.
+如果你在意的话，这里有关于 Docker 的简要解释。你不需要了解这些，随意跳过。
 
-Basically Docker is a super easy way to configure a virtual machine for your game server build. Previously you would manually create a VM in say Google Cloud, configure a hard disk, open ports, install a Linux version, run apt-update, install dependencies, ...
+基本上 Docker 是一种非常简单的方式来配置一个虚拟机用于你的游戏服务器构建。以前你需要在比如 Google Cloud 手动创建一个虚拟机，配置硬盘，打开端口，安装 Linux 版本，运行 apt-update，安装依赖项，...
 
-With docker, we just have a text file. It says 'install ubuntu, copy our build into the VM, navigate to the folder, run unity. Again, you DO NOT need to worry about this. The plugin creates this automatically, something like this (again, don't worry about it):
+使用 Docker，我们只需要一个文本文件。它说‘安装 ubuntu，将我们的构建复制到虚拟机中，导航到文件夹，运行 unity。再次强调，你不需要担心这些。插件会自动创建这些，类似于这样（再次强调，不需要担心）：
 
 ```
 FROM ubuntu:bionic
@@ -140,145 +141,143 @@ ENTRYPOINT [ "/root/build/ServerBuild", "-batchmode", "-nographics"]
 ```
 {% endhint %}
 
-Next, we need to log into Edgegap's docker registry.
+接下来，我们需要登录到 Edgegap 的 Docker 注册表。
 
-We are working with Edgegap to automate this. For now you need to open a Terminal / Console:
+我们正在与 Edgegap 合作自动化这一过程。目前，你需要打开一个终端 / 控制台：
 
-* On Windows, hit CTRL+R, enter CMD, hit enter to open it.
-* On Mac, open Finder, go to Applications -> Utilities -> Terminal.
-* On Linux, you probably know how to do it.
+* 在 Windows 上，按下 CTRL+R，输入 CMD，按回车键打开它。
+* 在 Mac 上，打开 Finder，转到 应用程序 -> 实用工具 -> 终端。
+* 在 Linux 上，你可能知道如何操作。
 
 {% hint style="info" %}
-Don't be scared of the Terminal. It's just black background and white text where we'll enter exactly one command. This will be automated soon.
+不要害怕终端。它只是一个黑色背景和白色文字的地方，我们将在其中输入一条命令。这很快就会自动化。
 {% endhint %}
 
-Grab your Username + Token from the **Container Registry** page on Edgegap.com:
+从 Edgegap.com 的**容器注册表**页面获取您的用户名 + 令牌：
 
 [https://app.edgegap.com/registry-management/repositories/list](https://app.edgegap.com/registry-management/repositories/list)
 
-You can find them under **Credentials:**
+您可以在**凭据:**下找到它们：
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 14-19-45@2x.png" alt=""><figcaption></figcaption></figure>
 
 \
-Now enter this simple terminal command. There won't be any others, promised!
+现在输入这个简单的终端命令。不会有其他命令，承诺！
 
 ```
 docker login registry.edgegap.com
 ```
 
-Then enter your Username and Token (as password) that you see on the Edgegap.com -> **Container Registry** page.
+然后输入您在 Edgegap.com -> **容器注册表**页面看到的用户名和令牌（作为密码）。
 
-If you can't seem to login, you can also try this command instead:
+如果您似乎无法登录，也可以尝试使用以下命令：
 
 ```
 docker login -u "YOUR_USERNAME" registry.edgegap.com
 ```
 
-Docker Desktop remembers your login, so you won't have to do this again next time.
+Docker Desktop 会记住您的登录信息，所以下次不必再次执行此操作。
 
-Alright, that's it for Docker.
+好了，Docker 就介绍到这里。
 
+## 构建和推送
 
-
-## Build and Push
-
-Before we build the game server, select your `NetworkManager` and make sure that **Auto Start Server** in **Headless Mode** is enabled. Otherwise the server application may launch but not call NetworkManager.StartServer(), so no one would be able to connect.
+在构建游戏服务器之前，请选择您的 `NetworkManager` 并确保 **自动启动服务器** 在 **无头模式** 中已启用。否则，服务器应用程序可能会启动，但不会调用 NetworkManager.StartServer()，因此没有人能够连接。
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 14-13-06@2x.png" alt=""><figcaption></figcaption></figure>
 
-Next, press **Build and Push** in the Unity plugin:
+接下来，在 Unity 插件中按下 **构建和推送**：
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 14-16-59@2x.png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
-Note that **Edgegap** does not see your game's source code. \
-They only see a finished Docker container.
+请注意 **Edgegap** 看不到您游戏的源代码。 \
+他们只能看到一个完成的 Docker 容器。
 {% endhint %}
 
-You'll see a progress bar for a while:
+您会看到一段时间的进度条：
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 14-23-56@2x.png" alt=""><figcaption></figcaption></figure>
 
-Unity will create a Linux build, then create a Docker build, then upload the whole thing to Edgegap. Note that uploading will take a while depending on your internet connection. The progress bar halts while uploading, but you can check your operating system's bandwidth usage to see if it's still uploading:
+Unity 将创建一个 Linux 构建，然后创建一个 Docker 构建，然后将整个内容上传到 Edgegap。请注意，上传时间会根据您的互联网连接而有所不同。上传时进度条会停止，但您可以检查操作系统的带宽使用情况，以查看是否仍在上传中：
 
 <figure><img src="../.gitbook/assets/2023-11-03 - 19-17-10@2x.png" alt=""><figcaption></figcaption></figure>
 
-If this all worked, then you'll see a log message:
+如果一切正常，你将看到一个日志消息：
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 14-25-05@2x.png" alt=""><figcaption></figcaption></figure>
 
-If this failed, it'll show you errors. Here are a few common issues and workarounds:
+如果失败，将显示错误。以下是一些常见问题和解决方法：
 
-* **Missing Linux Build Support**: install it in your Unity hub. Make sure you do it for the Unity version that you are using in your project. This generally works once you have the Linux Build Support installed.
-* **Incremental Build Failed**: delete your previous Unity Linux build in the /Builds folder next to the /Assets folder, restart Unity try again. Delete your Library/ folder if you need to. This is a Unity bug that happens sometimes.
-* **Docker authorization Failed**: make sure Docker Desktop is running and make sure that you are logged in with the above Terminal command. Also make sure that image registry consists of the **Container Registry**'s 'Project' + "/" + "your-game".
+- **缺少 Linux 构建支持**：在 Unity Hub 中安装它。确保为您在项目中使用的 Unity 版本安装。一般在安装了 Linux 构建支持后会正常工作。
+- **增量构建失败**：删除位于 /Assets 文件夹旁边的 /Builds 文件夹中的先前 Unity Linux 构建，重新启动 Unity 再试一次。如果需要，删除 Library/ 文件夹。这是 Unity 有时会出现的 bug。
+- **Docker 授权失败**：确保 Docker Desktop 正在运行，并确保您使用上述终端命令登录。还要确保镜像注册表包含 **容器注册表** 的 'Project' + "/" + "your-game"。
 
-If you encounter other issues, talk in our **#edgegap** Discord channel. We want to find solutions for any possible issue and explain this here!
+如果遇到其他问题，请在我们的 **#edgegap** Discord 频道中讨论。我们希望为任何可能的问题找到解决方案，并在这里解释！
 
-## Deploying the Server
+## 部署服务器
 
-Now that we uploaded our server build to Edgegap, we need to **Deploy** (aka launch) it.
+现在我们已经将服务器构建上传到 Edgegap，我们需要 **部署**（即启动）它。
 
-In the plugin, press **Create New Deployment:**
+在插件中，点击 **创建新部署**：
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 14-27-46@2x.png" alt=""><figcaption></figcaption></figure>
 
-After a few seconds you'll see your running server in the list:
+几秒钟后，您将在列表中看到正在运行的服务器：
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 14-29-04@2x.png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
-Note that our original port was **7777,** but in the Deployment it says **30358**.\
-That's because one cloud server may launch multiple game servers.\
-But there's only **one** port **7777**, so it's using **Port Mapping** to find a free port for you.
+请注意，我们原始的端口是 **7777**，但在部署中显示为 **30358**。\
+这是因为一个云服务器可能启动多个游戏服务器。\
+但只有 **一个** 端口 **7777**，所以它使用 **端口映射** 为您找到一个空闲端口。
 {% endhint %}
 
-## Connect your Game Client
+## 连接您的游戏客户端
 
-Finally, press **Play** in the Unity Editor (or launch your client build).
+最后，在 Unity 编辑器中按 **播放**（或启动您的客户端构建）。
 
-Enter the deployment's **hostname** and **port** in the NetworkManager HUD:
+在 NetworkManager HUD 中输入部署的 **主机名** 和 **端口**：
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 14-30-36@2x.png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="warning" %}
-Enter the hostname(fa\[...].edgegap.net) and the port (30358) separately!
+输入主机名(fa\[...].edgegap.net)和端口号(30358)！
 {% endhint %}
 
-Press the **Client** button to connect to it, and now you are online! [🚀](https://emojipedia.org/rocket)
+按下**Client**按钮以连接，现在您已经在线了！ [🚀](https://emojipedia.org/rocket)
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 14-34-37@2x.png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
-It's important to understand the magic that is happening here.\
-Not only can you launch a game server with **Two Clicks** now.\
-You can even launch **thousands of servers** with another click on **Edgegap**'s website! 🤩
+重要的是要理解这里发生的魔法。\
+现在不仅可以用**两次点击**启动游戏服务器。\
+您甚至可以在**Edgegap**的网站上再次点击来启动**成千上万个服务器**！ 🤩
 {% endhint %}
 
-
-
-To reduce costs (if you are paying), you can press **Stop Server** in the plugin once you are done.
+为了降低成本(如果您在支付)，您可以在插件中完成后按下**Stop Server**。
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 14-43-38@2x.png" alt=""><figcaption></figcaption></figure>
 
-## Optional: Grab the Server Status at Runtime
+## Optional: 在运行时获取服务器状态
 
-If you need to grab the server status from the above screenshot from your Game, you can use:
+如果您需要从上述截图中获取服务器状态，您可以使用：
 
 ```csharp
 Edgegap.Status status = Edgegap.EdgegapServerDataManager.GetServerStatus();
 ```
 
-## Troubleshooting Connection Issues
+## 解决连接问题
 
-If your Server Status says **Ready** but you can't seem to connect, try this:
+如果您的服务器状态显示为**Ready**但似乎无法连接，请尝试以下操作：
 
-* On the Edgegap website, go to Deployments -> select your Deployment -> select **Container Logs**, check the log files to see if your game server actually launched or if there are issues.
-  * If it says "exec user process caused: no such file or directory": this can happen if you pushed an ARM build to Edgegap's x86 infrastructure. We already updated the plugin to properly cross compile from ARM so this generally should not happen anymore.
-* If everything seems fine but you still can't connect, please talk to an Edgegap employee in the Mirror Discord's **#edgegap** channel.&#x20;
+* 在Edgegap网站上，转到Deployments -> 选择您的Deployment -> 选择**Container Logs**，检查日志文件，查看您的游戏服务器是否实际启动或是否存在问题。
+  * 如果显示"exec user process caused: no such file or directory"：这可能是因为您将ARM构建推送到Edgegap的x86基础设施。我们已经更新了插件，以便从ARM正确交叉编译，因此通常不应再发生这种情况。
+* 如果一切看起来正常但仍无法连接，请在Mirror Discord的**#edgegap**频道与Edgegap员工交谈。&#x20;
 
 {% hint style="info" %}
-Big thanks to our Canadian 🇨🇦 friends at **Edgegap** for giving Mirror users 0.5 vCPU for free!\
-While we hope for a larger free tier in the future, please keep in mind that they are the ones who are paying for the infrastructure. If you have the means, please pay them for more vCPUs!
+非常感谢我们加拿大🇨🇦的**Edgegap**朋友为Mirror用户提供免费的0.5 vCPU！\
+虽然我们希望未来有更大的免费层，但请记住，他们是为基础设施付费的人。如果有能力，请为更多vCPUs支付给他们！
 {% endhint %}
+
+请粘贴您要翻译的 Markdown 内容。

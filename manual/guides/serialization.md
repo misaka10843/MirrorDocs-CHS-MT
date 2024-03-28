@@ -1,75 +1,75 @@
-# Serialization
+# 序列化(Serialization)
 
-This page goes into depth about Serialization, for the basics see [DataTypes](data-types.md).
+这个页面深入探讨了序列化(Serialization)，有关基础知识请参见[数据类型(DataTypes)](data-types.md)。
 
-Mirror creates Serialize and Deserialize functions for types using Weaver. Weaver edits dll after unity compiles them using Mono.Cecil. This allows mirror to have a lot of complex features like SyncVar, ClientRpc and Message Serialization without the user needed to manually set everything up.
+Mirror使用Weaver为类型创建序列化(Serialize)和反序列化(Deserialize)函数。Weaver在Unity编译后使用Mono.Cecil编辑dll。这使得Mirror能够拥有许多复杂功能，如SyncVar(同步变量)、ClientRpc(客户端RPC)和消息序列化，而无需用户手动设置所有内容。
 
-## Rules and tips <a href="#rules-and-tips" id="rules-and-tips"></a>
+## 规则和提示 <a href="#rules-and-tips" id="rules-and-tips">(Rules and tips)</a>
 
-There are some rules and limits for what Weaver can do. Some features add complexity and are hard to maintain so have not been implemented. These features are not impossible to implement and could be added if there is a high demand for them.
+Weaver能够执行的操作有一些规则和限制。一些功能会增加复杂性并且难以维护，因此尚未实现。这些功能并非不可能实现，如果有很高的需求，它们可以被添加进来。
 
-* You should be able to write Custom Read/Write functions for any type, and Weaver will use.
-  * This means if there is a unsupported type like `int[][]` creating a custom Read/Write function will allow you to sync `int[][]` in SyncVar/ClientRpc/etc
-* If you have a type that has a field that is not able to be Serialize, you can mark that field with `[System.NonSerialized]` and weaver will ignore it
+* 您应该能够为任何类型编写自定义读取/写入函数，并且Weaver将使用它们。
+  * 这意味着如果有一个不受支持的类型，比如`int[][]`，创建一个自定义读取/写入函数将允许您在SyncVar(同步变量)、ClientRpc(客户端RPC)等中同步`int[][]`。
+* 如果您有一个类型，其中包含无法序列化的字段，您可以使用`[System.NonSerialized]`标记该字段，Weaver将忽略它。
 
-### Unsupported Types <a href="#unsupported-types" id="unsupported-types"></a>
+### 不支持的类型 <a href="#unsupported-types" id="unsupported-types">(Unsupported Types)</a>
 
-Some of these types are unsupported due to the complexity they would add, as mentioned above.
+由于它们可能增加的复杂性，以下类型是不受支持的，如上所述。
 
-> NOTE: Types in this list can have custom writers.
+> 注意：此列表中的类型可以有自定义的写入函数。
 
-* Jagged and Multidimensional array
-* Types that Inherit from `UnityEngine.Component`
+* 锯齿数组和多维数组
+* 继承自`UnityEngine.Component`的类型
 * `UnityEngine.Object`
 * `UnityEngine.ScriptableObject`
-* Generic Types, eg `MyData`
-  * Custom Read/Write must declare T, eg `MyData`
-* Interfaces
-* Types that references themselves
+* 泛型类型，例如`MyData`
+  * 自定义读取/写入必须声明T，例如`MyData`
+* 接口
+* 引用自身的类型
 
-### Built-in Read Write Functions <a href="#built-in-read-write-functions" id="built-in-read-write-functions"></a>
+### 内置读写函数 <a href="#built-in-read-write-functions" id="built-in-read-write-functions">(Built-in Read Write Functions)</a>
 
-Mirror provides some built-in Read/Write Functions. They can be found in `NetworkReaderExtensions` and `NetworkWriterExtensions`.
+Mirror提供了一些内置的读写函数。它们可以在`NetworkReaderExtensions`和`NetworkWriterExtensions`中找到。
 
-This is a Non-compete list of types that have built-in functions, check the classes above to see the full list.
+这是一个非竞争性列表，列出了具有内置函数的类型，查看上述类以查看完整列表。
 
-* Most [C# primitive types](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/built-in-types)
-* Common Unity structs
+* 大多数[C#基本类型](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/built-in-types)
+* 常见的Unity结构体
   * Vector3
   * Quaternion
   * Rect
   * Ray
   * Guid
-* NetworkIdentity, GameObject, Transform
+* NetworkIdentity、GameObject、Transform
 
-### NetworkIdentity, GameObject, Transform
+### NetworkIdentity(网络标识), GameObject(游戏对象), Transform(变换)
 
-The `netId` of the Object is sent over the network, and the Object with the same `netId` is returned on the other side. If the `netId` is zero or an object is not found then `null` will be returned.
+对象的 `netId` 会通过网络发送，另一端会返回具有相同 `netId` 的对象。如果 `netId` 为零或未找到对象，则会返回 `null`。
 
-### Generated Read Write Functions <a href="#generated-read-write-functions" id="generated-read-write-functions"></a>
+### 生成的读写函数 <a href="#generated-read-write-functions" id="generated-read-write-functions"></a>
 
-Weaver will Generate Read Write functions for
+Weaver 会为以下内容生成读写函数：
 
-* Classes or Structs
-* Enums
-* Arrays
-  * eg `int[]`
-* ArraySegments
-  * eg `ArraySegment`
-* Lists
-  * eg `List`
+* 类或结构体
+* 枚举
+* 数组
+  * 例如 `int[]`
+* ArraySegments(数组段)
+  * 例如 `ArraySegment`
+* 列表
+  * 例如 `List`
 
-#### Classes and Structs <a href="#classes-and-structs" id="classes-and-structs"></a>
+#### 类和结构体 <a href="#classes-and-structs" id="classes-and-structs"></a>
 
-Weaver will Read/Write every public field in the type, unless the field is marked with `[System.NonSerialized]`. If there is an unsupported type in the class or struct Weaver will fail to make Read/Write functions for it.
+Weaver 会读取/写入类型中的每个公共字段，除非该字段标记为 `[System.NonSerialized]`。如果类或结构体中存在不受支持的类型，则 Weaver 将无法为其生成读写函数。
 
-> NOTE: Weaver does not check properties
+> 注意：Weaver 不会检查属性
 
-#### Enums <a href="#enums" id="enums"></a>
+#### 枚举 <a href="#enums" id="enums"></a>
 
-Weaver will use the underlying Type of an enum to Read and Write them. By default this is `int`.
+Weaver 将使用枚举的基础类型来读取和写入它们。默认情况下，这是 `int`。
 
-For example `Switch` will use the `byte` Read/Write functions to be Serialized
+例如 `Switch` 将使用 `byte` 读写函数进行序列化
 
 ```csharp
 public enum Switch : byte
@@ -80,14 +80,14 @@ public enum Switch : byte
 }
 ```
 
-#### Collections <a href="#collections" id="collections"></a>
+#### 集合 <a href="#collections" id="collections"></a>
 
-Weaver will Generate writes for the collections listed above. Weaver will use the elements Read/Write function. The element must have a Read/Write function so must be a supported type, or have a custom Read/Write function.
+Weaver 将为上述列出的集合生成写入函数。Weaver 将使用元素的读写函数。元素必须具有读写函数，因此必须是受支持的类型，或具有自定义读写函数。
 
-For example:
+例如：
 
-* `float[]` is a supported type because Mirror has a built-in Read/Write function for `float`.
-* `MyData[]` is a supported type as Weaver is able to generate a Read/Write function for `MyData`
+* `float[]` 是受支持的类型，因为 Mirror 为 `float` 内置了读写函数。
+* `MyData[]` 是受支持的类型，因为 Weaver 能够为 `MyData` 生成读写函数
 
 ```csharp
 public struct MyData
@@ -97,9 +97,9 @@ public struct MyData
 }
 ```
 
-## Adding Custom Read Write functions <a href="#adding-custom-read-write-functions" id="adding-custom-read-write-functions"></a>
+## 添加自定义读写函数 <a href="#adding-custom-read-write-functions" id="adding-custom-read-write-functions"></a>
 
-Read Write functions are static methods in the form of:
+读写函数是以下形式的静态方法：
 
 ```csharp
 public static void WriteMyType(this NetworkWriter writer, MyType value)
@@ -113,15 +113,15 @@ public static MyType ReadMyType(this NetworkReader reader)
 }
 ```
 
-It is best practice to make Read/Write functions [extension methods](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods) so they can be called like `writer.WriteMyType(value)`.
+最佳实践是将读写函数制作为[扩展方法](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods)，这样它们可以像 `writer.WriteMyType(value)` 这样调用。
 
-It is a good idea to call them `ReadMyType` and `WriteMyType` so it is obvious what type they are for. However the name of the function doesn't matter, weaver should be able to find it no matter what it is called.
+这是一个好主意，将它们称为`ReadMyType`(读取我的类型)和`WriteMyType`(写入我的类型)，这样很明显知道它们是用于什么类型的。然而函数的名称并不重要，编织器应该能够找到它，无论它被称为什么。
 
-#### Properties Example <a href="#properties-example" id="properties-example"></a>
+#### 属性示例 <a href="#properties-example" id="properties-example"></a>
 
-Weaver wont write properties, but a custom writer can be used to send them over the network.
+编织器不会写入属性，但可以使用自定义编写器将它们发送到网络上。
 
-This can be useful if you want to have private set for your properties
+如果您希望为属性设置私有设置，这可能很有用
 
 ```csharp
 public struct MyData
@@ -151,9 +151,9 @@ public static class CustomReadWriteFunctions
 }
 ```
 
-#### Unsupported type Example <a href="#unsupported-type-example" id="unsupported-type-example"></a>
+#### 不支持的类型示例 <a href="#unsupported-type-example" id="unsupported-type-example"></a>
 
-Rigidbody is an unsupported type because it inherits from `Component`. But a custom writer can be added so that it is synced using a NetworkIdentity if one is attached.
+Rigidbody(刚体)是一个不支持的类型，因为它继承自`Component`(组件)。但是可以添加自定义编写器，以便在附加了NetworkIdentity(网络标识)的情况下进行同步。
 
 ```csharp
 public struct MyCollision
@@ -190,7 +190,7 @@ public static class CustomReadWriteFunctions
 }
 ```
 
-Above are functions for `MyCollision`, but instead you could add functions for `Rigidbody` and let weaver would generate a writer for `MyCollision`.
+上面是用于`MyCollision`(我的碰撞)的函数，但您也可以为`Rigidbody`(刚体)添加函数，让编织器为`MyCollision`(我的碰撞)生成一个编写器。
 
 ```csharp
 public static class CustomReadWriteFunctions
@@ -213,6 +213,6 @@ public static class CustomReadWriteFunctions
 }
 ```
 
-## Debugging <a href="#debugging" id="debugging"></a>
+## 调试 <a href="#debugging" id="debugging"></a>
 
-You can use tools like [ILSpy](https://github.com/icsharpcode/ILSpy) and [dnSpy](https://github.com/0xd4d/dnSpy) to view the complied code after Weaver has altered it. This can help to understand and debug what Mirror and Weaver does.
+您可以使用类似 [ILSpy](https://github.com/icsharpcode/ILSpy) 和 [dnSpy](https://github.com/0xd4d/dnSpy) 的工具，在编织器修改代码后查看编译后的代码。这有助于理解和调试 Mirror 和 Weaver 的操作。

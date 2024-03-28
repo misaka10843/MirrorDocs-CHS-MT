@@ -1,8 +1,8 @@
 ---
-description: High resolution Mirror logos for use in Videos, Blog posts, etc.
+description: 用于视频、博客文章等的高分辨率 Mirror 徽标。
 ---
 
-# Mirror Branding
+# Mirror 品牌标识（Branding）
 
 <figure><img src="../.gitbook/assets/mirror_icon_1950x1300_M_reviews.png" alt=""><figcaption><p>1950 x 1300</p></figcaption></figure>
 

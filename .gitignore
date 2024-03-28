@@ -1,10 +1,7 @@
-﻿.idea
+﻿markdown
+.idea
 *.iml
 .DS_Store
-
-################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
 
 /.vs
 .history/

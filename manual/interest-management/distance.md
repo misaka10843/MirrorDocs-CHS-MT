@@ -1,12 +1,12 @@
 ---
-description: Distance Interest Management
+description: 距离兴趣管理
 ---
 
-# Distance
+# 距离(Distance)
 
-## Distance Interest Management
+## 距离兴趣管理(Distance Interest Management)
 
-The straight forward, brute force solution for Interest Management is to simply send all entities to all connections within range.  This is what **Network Proximity Checker** did:
+对于兴趣管理的直接、蛮力解决方案是简单地将所有实体发送到范围内的所有连接。这就是**网络接近性检查器(Network Proximity Checker)**所做的事情：
 
 ```csharp
 foreach spawned entity:
@@ -15,20 +15,20 @@ foreach spawned entity:
             connection.Send(spawned);
 ```
 
-The only downside is that it's relatively expensive to check every entity against every connection. So if you need loads of entities or connections, it would be smart to use a faster algorithm like [**Spatial Hashing**](spatial-hashing.md).
+唯一的缺点是检查每个实体与每个连接相对昂贵。因此，如果您需要大量实体或连接，最好使用像[**空间哈希(Spatial Hashing)**](spatial-hashing.md)这样更快的算法。
 
-### Setting Up
+### 设置
 
-Add the **Distance Interest Management** component  to the same object as your **Network Manager**:
+将**距离兴趣管理(Distance Interest Management)**组件添加到与您的**网络管理器(Network Manager)**相同的对象中：
 
 ![](<../../.gitbook/assets/image (122).png>)
 
-The **Vis Range** defines the radius around a player from which it receives world updates.
+**可见范围(Vis Range)**定义了玩家周围的半径，从中接收世界更新。
 
-The **Rebuild Interval** is in seconds, and determines how often Mirror recalculates visibility of objects to clients.
+**重建间隔(Rebuild Interval)**以秒为单位，确定Mirror重新计算对象对客户端的可见性的频率。
 
-### Custom Visible Range
+### 自定义可见范围
 
-The Vis Range setting above applies to all networked objects as the "default" range. You can override this value on objects that need a different range, e.g. exception cases for things that are very large or very small, relative to most other things in the scene. To do this, just add a **Distance Interest Management Custom Range** component to those objects and set the Vis Range values for those objects according to your needs.
+上面的可见范围设置适用于所有网络化对象作为“默认”范围。您可以在需要不同范围的对象上覆盖此值，例如，对于相对于场景中大多数其他物体而言非常大或非常小的异常情况。要做到这一点，只需将**距离兴趣管理自定义范围(Distance Interest Management Custom Range)**组件添加到这些对象上，并根据需要设置这些对象的可见范围值。
 
 ![](<../../.gitbook/assets/image (20).png>)

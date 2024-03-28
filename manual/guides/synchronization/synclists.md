@@ -1,25 +1,25 @@
-# SyncLists
+# SyncLists(同步列表)
 
-SyncLists are array based lists similar to C# [List](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=netframework-4.7.2) that synchronize their contents from the server to the clients.
+SyncLists是基于数组的列表，类似于C# [List](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=netframework-4.7.2)，它们会将内容从服务器同步到客户端。
 
-A SyncList can contain any [supported mirror type](../data-types.md).
+一个SyncList可以包含任何[支持的Mirror类型](../data-types.md)。
 
-## Differences with UNET <a href="#differences-with-hlapi" id="differences-with-hlapi"></a>
+## 与UNET的不同 <a href="#differences-with-hlapi" id="differences-with-hlapi"></a>
 
-UNET also supports SyncLists, but we have redesigned them to make them more efficient and easier to use. Some of the key differences include:
+UNET也支持SyncLists，但我们对它们进行了重新设计，使其更高效且更易于使用。一些关键的区别包括：
 
-* In UNET, SyncLists were synchronized immediately when they changed. If you add 10 elements, that means 10 separate messages. Mirror synchronizes SyncLists with the SyncVars. The 10 elements and other SyncVars are batched together into a single message. Mirror also respects the sync interval when synchronizing lists.
-* In UNET if you want a list of structs, you have to use `SyncListStruct`, we changed it to just `SyncList`
-* In UNET the Callback is a delegate. In Mirror we changed it to an event, so that you can add many subscribers.
-* In UNET the Callback tells you the operation and index. In Mirror, the callback also receives an item. We made this change so that we could tell what item was removed.
-* In UNET you must create a class that inherits from SyncList. In Mirror you can just use SyncList directly (starting with version 20.0.0)
+* 在UNET中，当SyncLists更改时会立即同步。如果您添加了10个元素，那意味着10个单独的消息。Mirror使用SyncVars来同步SyncLists。这10个元素和其他SyncVars被批量打包到单个消息中。Mirror在同步列表时还会尊重同步间隔。
+* 在UNET中，如果您想要一个结构体列表，您必须使用`SyncListStruct`，我们将其更改为`SyncList`
+* 在UNET中，回调是一个委托。在Mirror中，我们将其更改为事件，这样您可以添加多个订阅者。
+* 在UNET中，回调告诉您操作和索引。在Mirror中，回调还接收一个项目。我们进行了这个更改，以便我们可以知道哪个项目被移除。
+* 在UNET中，您必须创建一个从SyncList继承的类。在Mirror中，您可以直接使用SyncList（从版本20.0.0开始）
 
-## Usage <a href="#usage" id="usage"></a>
+## 用法 <a href="#usage" id="usage"></a>
 
-Add a SyncList field to your NetworkBehaviour class.
+在您的NetworkBehaviour类中添加一个SyncList字段。
 
 {% hint style="info" %}
-SyncList must be declared **readonly** and initialized in the constructor.
+SyncList必须声明为**只读**并在构造函数中初始化。
 {% endhint %}
 
 ```csharp
@@ -56,10 +56,10 @@ public class Player : NetworkBehaviour
 }
 ```
 
-You can also detect when a SyncList changes in the client or server. This is useful for refreshing your character when you add equipment or determining when you need to update your database. Subscribe to the Callback event typically during `Start`, `OnClientStart`, or `OnServerStart` for that.
+您还可以在客户端或服务器端检测SyncList何时更改。这对于在添加装备时刷新您的角色或确定何时需要更新数据库非常有用。通常在`Start`、`OnClientStart`或`OnServerStart`期间订阅Callback事件。
 
 {% hint style="warning" %}
-Note that by the time you subscribe, the list will already be populated, so you will not get a call for the initial data, only updates.
+请注意，当您订阅时，列表已经被填充，因此您不会收到初始数据的调用，只会收到更新。
 {% endhint %}
 
 ```csharp
@@ -102,4 +102,3 @@ class Player : NetworkBehaviour {
     }
 }
 ```
-

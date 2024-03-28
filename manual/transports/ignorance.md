@@ -2,47 +2,47 @@
 description: https://github.com/SoftwareGuy/Ignorance
 ---
 
-# Ignorance
+# Ignorance (Ignorance)
 
-## What is Ignorance? <a href="#what-is-ignorance" id="what-is-ignorance"></a>
+## 什么是 Ignorance? <a href="#what-is-ignorance" id="what-is-ignorance"></a>
 
-Ignorance is a reliable UDP transport layer that utilizes the native ENET C Networking library via a [custom fork of ENet-CSharp](https://github.com/SoftwareGuy/ENet-CSharp) providing an reliable and unreliable sequenced UDP transport for both 64Bit desktop operating systems (Windows, Mac OS and Linux) and Mobile OSes (Apple iOS and Android). It also supports up to 255 channels and 4096 clients connected at one time.
+Ignorance 是一个可靠的 UDP 传输层，利用原生的 ENET C 网络库，通过一个[ENet-CSharp 的自定义分支](https://github.com/SoftwareGuy/ENet-CSharp)提供了一个可靠和不可靠的序列化 UDP 传输，适用于 64 位桌面操作系统（Windows、Mac OS 和 Linux）和移动操作系统（Apple iOS 和 Android）。它还支持最多 255 个通道和同时连接 4096 个客户端。
 
-ENET is a solid reliable UDP C++ network library that is mature and stable. Unity's LLAPI needs a replacement. Ignorance was designed with that goal in mind - fill the gap and provide a solid, performant RUDP transport for Mirror.
+ENET 是一个稳定可靠的 UDP C++ 网络库，已经非常成熟和稳定。Unity 的 LLAPI 需要一个替代方案。Ignorance 的设计目标是填补这个空白，为 Mirror 提供一个稳定、高性能的 RUDP 传输。
 
-## Why Ignorance over the Unity LLAPI? <a href="#why-ignorance-over-the-unity-llapi" id="why-ignorance-over-the-unity-llapi"></a>
+## 为什么选择 Ignorance 而不是 Unity LLAPI? <a href="#why-ignorance-over-the-unity-llapi" id="why-ignorance-over-the-unity-llapi"></a>
 
-Unity's old LLAPI was horridly inefficient, and lots of testing has shown that you will get reduced performance using Unity LLAPI in your project. This is due to the design of the old networking code - Unity Tech made "by design" decisions and poor bug fixes that were seen to other developers as band-aids over a gaping wound. They did not care about performance or bug fixes.
+Unity 的旧 LLAPI 效率非常低下，大量测试表明在项目中使用 Unity LLAPI 会导致性能下降。这是由于旧网络代码的设计 - Unity Tech 做出了“有意为之”的决定和糟糕的错误修复，被其他开发人员视为对一个严重问题的临时解决方案。他们并不关心性能或错误修复。
 
-Unity LLAPI was also closed source, meaning the Mirror developers could not take a knife to it and make it better. This is where the concept of Ignorance took shape.
+Unity LLAPI 也是闭源的，这意味着 Mirror 的开发人员无法对其进行改进。这就是 Ignorance 概念的由来。
 
-## Who develops Ignorance? <a href="#who-develops-ignorance" id="who-develops-ignorance"></a>
+## 谁开发了 Ignorance? <a href="#who-develops-ignorance" id="who-develops-ignorance"></a>
 
-[Coburn](http://github.com/softwareguy) is the lead developer of the transport. Oiran Studio actively uses this transport for networked game projects. It is currently also being utilized by some game projects, where you can find on the Mirror Discord server.
+[Coburn](http://github.com/softwareguy) 是这个传输层的首席开发人员。Oiran Studio 积极使用这个传输层进行网络游戏项目。目前一些游戏项目也在使用它，你可以在 Mirror Discord 服务器上找到。
 
-## Why would I want to use reliable UDP over TCP? <a href="#why-would-i-want-to-use-reliable-udp-over-tcp" id="why-would-i-want-to-use-reliable-udp-over-tcp"></a>
+## 为什么我会选择可靠的 UDP 而不是 TCP? <a href="#why-would-i-want-to-use-reliable-udp-over-tcp" id="why-would-i-want-to-use-reliable-udp-over-tcp"></a>
 
-* if you have realtime communications that you need speed over reliability (VoIP...)
-* if you need channels
-* if you need custom channel send types
-* if you need a data hose for your game (a first person shooter, racing game, etc)
+* 如果你需要实时通信，需要速度而不是可靠性（VoIP...）
+* 如果你需要通道
+* 如果你需要自定义通道发送类型
+* 如果你的游戏需要一个数据管道（第一人称射击游戏、赛车游戏等）
 
-## Why wouldn't I want to use reliable UDP over TCP? <a href="#why-wouldnt-i-want-to-use-reliable-udp-over-tcp" id="why-wouldnt-i-want-to-use-reliable-udp-over-tcp"></a>
+## 为什么我不想使用可靠的 UDP 而选择 TCP？(Why wouldn't I want to use reliable UDP over TCP) <a href="#why-wouldnt-i-want-to-use-reliable-udp-over-tcp" id="why-wouldnt-i-want-to-use-reliable-udp-over-tcp"></a>
 
-* if you have **mission critical** things (as in, data **NEEDS** to go from A and B, no exceptions)
-* if you need fully reliable network protocol
-* if you're paranoid
-* if you're making a Minecraft-like game and need to keep everyone in sync
+* 如果你有**至关重要**的事情（比如，数据**必须**从 A 到 B，没有例外）
+* 如果你需要完全可靠的网络协议
+* 如果你是个偏执狂
+* 如果你正在制作类似 Minecraft 的游戏并且需要保持所有人同步
 
-## I want to know more about reliable UDP... <a href="#i-want-to-know-more-about-reliable-udp" id="i-want-to-know-more-about-reliable-udp"></a>
+## 我想了解更多关于可靠的 UDP... (I want to know more about reliable UDP) <a href="#i-want-to-know-more-about-reliable-udp" id="i-want-to-know-more-about-reliable-udp"></a>
 
-A little explanation is required. UDP is best described as a "shattershot" data transmission protocol, which means you just spray and pray that packets at a destination and hope for the best. The remote destination may or may not receive those packets, nor are they going to be in order. For example, if you have a packet stream that is:
+需要一点解释。UDP 最好被描述为“散弹”数据传输协议，这意味着你只是将数据包喷射出去，然后祈祷它们能到达目的地并且一切顺利。远程目的地可能会收到这些数据包，也可能不会，而且它们也不会按顺序到达。例如，如果你有一个数据包流：
 
 ```
 1 2 3 4 5 6 7
 ```
 
-...then it may end up like any of the following on the other end due to packets arriving out of order. A dot in the following example means that packet went missing.
+...那么由于数据包乱序到达，它可能在另一端变成以下任何一种情况。以下示例中的点表示该数据包丢失。
 
 ```
 7 6 1 3 2 4 5
@@ -51,30 +51,30 @@ A little explanation is required. UDP is best described as a "shattershot" data 
 1 2 3 5 4 6 7
 ```
 
-For example, say you lost a packet and that contained a player's health update. Everyone else might know they took 69 damage, but that client will still have the old value of say, 72 health. Without reliable UDP, you can become out of sync very quickly. When you're out of sync, the game is over - everything will start operating very strangely.
+例如，假设你丢失了一个包含玩家生命值更新的数据包。其他人可能知道他们受到了 69 点伤害，但该客户端仍然保留旧值，比如说，72 点生命值。没有可靠的 UDP，你很快就会失去同步。当你失去同步时，游戏就结束了 - 一切都会开始运行得非常奇怪。
 
-## Sequencing and Reliable Delivery <a href="#sequencing-and-reliable-delivery" id="sequencing-and-reliable-delivery"></a>
+## 排序和可靠交付 (Sequencing and Reliable Delivery) <a href="#sequencing-and-reliable-delivery" id="sequencing-and-reliable-delivery"></a>
 
-### Sequencing <a href="#sequencing" id="sequencing"></a>
+### 排序 (Sequencing) <a href="#sequencing" id="sequencing"></a>
 
-**Sequencing** basically tags packets so they know what number they are when being dispatched. So if you send packets `100, 101, 102` to the remote destination, the other end will reconstruct the packet in that order rather than in a different order (like `101, 100, 102`). If a packet is missing, it'll be skipped but the network library will take note that it's missing and compensate.
+**排序** 基本上是给数据包打上标记，以便在发送时知道它们的编号。因此，如果你发送数据包 `100, 101, 102` 到远程目的地，另一端将按照这个顺序重建数据包，而不是按照不同的顺序（比如 `101, 100, 102`）。如果一个数据包丢失，它将被跳过，但网络库会记录下它的丢失并进行补偿。
 
-**Reliable** mode just tells ENET to send this while waiting for the remote to acknowledge packet reception, before claiming it was 'lost'. ENET will still classify said packets as lost if it doesn't hear back from the remote, but it will retransmit them to compensate for lossy connections or high latency situations. Reliable mode tries to emulate some of TCP's resending if not acknowledged in time, but as UDP does not have all the overhead TCP protocol has, it adds some packet overhead.
+**可靠** 模式告诉 ENET 在等待远程确认数据包接收之前发送数据包。如果没有从远程收到回应，ENET 仍然会将这些数据包标记为丢失，但会重新发送它们以补偿丢失连接或高延迟情况。可靠模式试图模拟 TCP 在未及时确认时的重发，但由于 UDP 没有 TCP 协议的所有开销，它会增加一些数据包开销。
 
-Ignorance comes with two channels in both Reliable and Unreliable mode by default. There are other channel modes that developers can test as different ones might suit different loads, but the average person does not need to worry about this. Ignorance comes with sane defaults out of the box.
+Ignorance 默认情况下在 Reliable（可靠）和 Unreliable（不可靠） 模式下都有两个通道。开发人员可以测试其他通道模式，因为不同的模式可能适用于不同的负载，但普通用户不需要担心这一点。Ignorance 在开箱即用时具有合理的默认设置。
 
-## Does Ignorance support Websockets? <a href="#does-ignorance-support-websockets" id="does-ignorance-support-websockets"></a>
+## Does Ignorance support Websockets?（Ignorance 是否支持 Websockets？） <a href="#does-ignorance-support-websockets" id="does-ignorance-support-websockets"></a>
 
-No, it does not. Mirror comes with built-in websockets support.
+不支持。Mirror 自带内置的 Websockets 支持。
 
-## Where can I get Ignorance? <a href="#where-can-i-get-ignorance" id="where-can-i-get-ignorance"></a>
+## Where can I get Ignorance?（我从哪里获取 Ignorance？） <a href="#where-can-i-get-ignorance" id="where-can-i-get-ignorance"></a>
 
-[Grab the latest build from the releases page on the Ignorance repository](https://github.com/SoftwareGuy/Ignorance). Simply import the Unity Package from the release you downloaded.
+[从 Ignorance 仓库的发布页面获取最新版本](https://github.com/SoftwareGuy/Ignorance)。只需导入您下载的发布版本的 Unity Package。
 
-## Where can I get support? <a href="#where-can-i-get-support" id="where-can-i-get-support"></a>
+## Where can I get support?（我从哪里获取支持？） <a href="#where-can-i-get-support" id="where-can-i-get-support"></a>
 
-You can get support by opening a issue ticket on the [Ignorance repository issue tracker](https://github.com/SoftwareGuy/Ignorance/issues) or the #ignorance channel in the Mirror Discord server.
+您可以通过在 [Ignorance 仓库问题跟踪器](https://github.com/SoftwareGuy/Ignorance/issues) 上开启问题工单或在 Mirror Discord 服务器的 #ignorance 频道获取支持。
 
-## I still don't understand what this transport is, my head is spinning, help! <a href="#i-still-dont-understand-what-this-transport-is-my-head-is-spinning-help" id="i-still-dont-understand-what-this-transport-is-my-head-is-spinning-help"></a>
+## I still don't understand what this transport is, my head is spinning, help!（我仍然不明白这个传输是什么，我的头晕了，帮帮我！） <a href="#i-still-dont-understand-what-this-transport-is-my-head-is-spinning-help" id="i-still-dont-understand-what-this-transport-is-my-head-is-spinning-help"></a>
 
-Come by the Discord and we'll do our best to explain it in plain English.
+加入 Discord，我们将尽力用简单的英语解释。

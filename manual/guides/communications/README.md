@@ -1,20 +1,22 @@
-# Communications
+# 通讯 (Communications)
 
-When you are making a multiplayer game, In addition to synchronizing the properties of networked game objects, you are likely to need to send, receive, and react to other pieces of information - such as when the match starts, when a player joins or leaves the match, or other information specific to your type of game, for example a notification to all players that a flag has been captured in a “capture-the-flag” style game.
+当您制作多人游戏时，除了同步网络游戏对象的属性之外，您可能还需要发送、接收和响应其他信息片段 - 比如比赛开始时、玩家加入或离开比赛时，或者特定于您的游戏类型的其他信息，例如向所有玩家发送通知，表示在“夺旗”风格游戏中已捕获旗帜。
 
-Within the Mirror networking High-Level API there are three main ways to communicate this type of information.
+在 Mirror 网络高级 API 中，有三种主要方式来传递这种类型的信息。
 
-## Remote Actions <a href="#remote-actions" id="remote-actions"></a>
+## 远程操作 (Remote Actions) <a href="#remote-actions" id="remote-actions"></a>
 
-Remote actions allow you to call a method in your script across the network. You can make the server call methods on all clients or individual clients specifically. You can also make clients call methods on the server. Using remote actions, you can pass data as parameters to your methods in a very similar way to how you call methods in local (non-multiplayer) projects.
+远程操作允许您在网络中调用脚本中的方法。您可以让服务器调用所有客户端或特定客户端上的方法。您还可以让客户端调用服务器上的方法。使用远程操作，您可以将数据作为参数传递给您的方法，方式非常类似于在本地 (非多人游戏) 项目中调用方法。
 
-## Networking Callbacks <a href="#networking-callbacks" id="networking-callbacks"></a>
+## 网络回调 (Networking Callbacks) <a href="#networking-callbacks" id="networking-callbacks"></a>
 
-Networking callbacks allow you to hook into built-in Mirror events which occur during the course of the game, such as when players join or leave, when game objects are created or destroyed, or when a new Scene is loaded. There are two types of networking callbacks that you can implement:
+网络回调允许您连接到游戏过程中发生的内置 Mirror 事件，例如玩家加入或离开时，游戏对象创建或销毁时，或加载新场景时。您可以实现两种类型的网络回调：
 
-* Network manager callbacks, for callbacks relating to the network manager itself (such as when clients connect or disconnect)
-* Network behaviour callbacks, for callbacks relating to individual networked game objects (such as when its Start function is called, or what this particular game object should do if a new player joins the game)
+* 网络管理器回调，用于与网络管理器本身相关的回调 (例如客户端连接或断开连接时)
+* 网络行为回调，用于与单个网络游戏对象相关的回调 (例如调用其 Start 函数时，或者如果新玩家加入游戏时此特定游戏对象应执行的操作)
 
-## Network Messages <a href="#network-messages" id="network-messages"></a>
+## 网络消息 (Network Messages) <a href="#network-messages" id="network-messages"></a>
 
-Network messages are a “lower level” approach to sending messages (although they are still classed as part of the networking “High level API”). They allow you to send data directly between clients and the server using scripting. You can send basic types of data (int, string, etc) as well as most common Unity types (such as Vector3). Since you implement this yourself, these messages are not associated directly with any particular game objects or Unity events - it is up to you do decide their purpose and implement them!
+网络消息是一种“较低级别”的发送消息方法（尽管它们仍被归类为网络“高级 API”的一部分）。它们允许您使用脚本直接在客户端和服务器之间发送数据。您可以发送基本类型的数据 (int、string 等)，以及大多数常见的 Unity 类型 (例如 Vector3)。由于您自己实现这一点，这些消息不直接与任何特定游戏对象或 Unity 事件相关联 - 它取决于您决定它们的目的并实现它们！
+
+请粘贴您要翻译的 Markdown 内容。

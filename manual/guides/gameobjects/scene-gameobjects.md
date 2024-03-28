@@ -1,24 +1,26 @@
-# Scene GameObjects
+# 场景游戏对象 (Scene GameObjects)
 
-There are two types of networked game objects in Mirror’s multiplayer system:
+在 Mirror 的多人游戏系统中，有两种类型的网络游戏对象：
 
-* Those that are created dynamically at runtime
-* Those that are saved as part of a Scene
+* 动态在运行时创建的对象
+* 作为场景的一部分保存的对象
 
-Game objects that are created dynamically at runtime use the multiplayer Spawning system, and the prefabs they are instantiated from must be registered in the Network Manager’s list of networked game object prefabs.
+在运行时动态创建的网络游戏对象使用多人生成系统，并且它们实例化的预制体必须在网络管理器的网络游戏对象预制体列表中注册。
 
-However, networked game objects that you save as part of a Scene (and therefore already exist in the Scene when it is loaded) are handled differently. These game objects are loaded as part of the Scene on both the client and server, and exist at runtime before any spawn messages are sent by the multiplayer system.
+然而，将网络游戏对象保存为场景的一部分（因此在加载场景时已经存在于场景中）会有所不同。这些游戏对象在客户端和服务器上作为场景的一部分加载，并且在多人系统发送任何生成消息之前就已经存在于运行时。
 
-When the Scene is loaded, all networked game objects in the Scene are disabled on both the client and the server. Then, when the Scene is fully loaded, the Network Manager automatically processes the Scene’s networked game objects, registering them all (and therefore causing them to be synchronized across clients), and enabling them, as if they were spawned at runtime. Networked game objects will not be enabled until a client has requested a Player object.
+当场景加载时，场景中的所有网络游戏对象在客户端和服务器上都会被禁用。然后，当场景完全加载时，网络管理器会自动处理场景的网络游戏对象，注册它们所有（从而导致它们在客户端之间同步），并启用它们，就好像它们是在运行时生成的一样。直到客户端请求玩家对象，网络游戏对象才会被启用。
 
-Saving networked game objects in your Scene (rather than dynamically spawning them after the scene has loaded) has some benefits:
+在场景中保存网络游戏对象（而不是在场景加载后动态生成它们）有一些好处：
 
-* They are loaded with the level, so there will be no pause at runtime.
-* They can have specific modifications that differ from prefabs
-* Other game object instances in the Scene can reference them, which can avoid you having to use code to finding the game objects and make references to them up at runtime.
+* 它们随着关卡一起加载，因此在运行时不会有暂停。
+* 它们可以具有与预制体不同的特定修改
+* 场景中的其他游戏对象实例可以引用它们，这可以避免您在运行时使用代码查找游戏对象并引用它们。
 
-When the Network Manager spawns the networked Scene game objects, those game objects behave like dynamically spawned game objects. Mirror sends them updates and ClientRPC calls.
+当网络管理器生成网络场景游戏对象时，这些游戏对象的行为就像动态生成的游戏对象一样。Mirror 会发送更新和 ClientRPC 调用。
 
-If a Scene game object is destroyed on the server before a client joins the game, then it is never enabled on new clients that join.
+如果在客户端加入游戏之前服务器上销毁了一个场景游戏对象，则新加入的客户端永远不会启用它。
 
-When a client connects, the client is sent an ObjectSpawnScene spawn message for each of the Scene game objects that exist on the server, that are visible to that client. This message causes the game object on the client to be enabled, and has the latest state of that game object from the server in it. This means that only game objects that are visible to the client, and not destroyed on the server, are activated on the client. Like regular non-Scene game objects, these Scene game objects are started with the latest state when the client joins the game.
+当客户端连接时，客户端会为服务器上存在且对该客户端可见的每个场景游戏对象发送一个 ObjectSpawnScene 生成消息。这个消息会导致客户端上的游戏对象被启用，并且其中包含了来自服务器的该游戏对象的最新状态。这意味着只有对客户端可见且在服务器上没有被销毁的游戏对象会在客户端上激活。与常规非场景游戏对象一样，这些场景游戏对象在客户端加入游戏时以最新状态启动。
+
+请粘贴您要翻译的 Markdown 内容。

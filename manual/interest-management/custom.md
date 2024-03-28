@@ -1,31 +1,31 @@
 ---
-description: Custom Interest Management
+description: 自定义兴趣管理
 ---
 
-# Custom
+# Custom(自定义)
 
-## Custom Interest Management
+## Custom Interest Management(自定义兴趣管理)
 
-**Mirror** allows you to implement custom Interest Management solutions. For example:
+**Mirror** 允许您实现自定义兴趣管理解决方案。例如：
 
-* **Raycast** based so DotA players don't see other players behind a wall or in the bushes
-* **Predictive Raycasting** for Counter-Strike like games. Wallhacks show players behind walls. You could create a custom interest management system to only send enemies to the player shortly before they would pop out behind a wall. In first person shooters, players move fast so you would still have to send them a couple of milliseconds before they become visible.&#x20;
+* 基于**射线投射**，这样 DotA 玩家就看不到墙后或灌木丛中的其他玩家
+* **预测性射线投射**，适用于类似 Counter-Strike 的游戏。透视作弊可以显示墙后的玩家。您可以创建一个自定义兴趣管理系统，仅在玩家即将从墙后冒出时向玩家发送敌人。在第一人称射击游戏中，玩家移动速度很快，因此您仍然需要在他们变得可见前几毫秒发送他们。&#x20;
 
-All of the above custom solutions are possible in Mirror. To understand how interest management can be implemented, let's walk through it step by step.
+所有上述自定义解决方案在 Mirror 中都是可能的。要了解如何实现兴趣管理，请让我们逐步进行。
 
-### Script Template
+### 脚本模板
 
-Mirror includes a [**Script Template**](../general/script-templates.md) for custom interest management.  It is fully commented with all the virtual method overrides already stubbed out for you. If you used our legacy Interest Management system before, then these should look familiar.
+Mirror 包含一个用于自定义兴趣管理的[**脚本模板**](../general/script-templates.md)。它已经为您完全注释，并且所有虚拟方法重写已经为您存根。如果您之前使用过我们的传统兴趣管理系统，那么这些应该看起来很熟悉。
 
-* **OnCheckObserver** is called when someone spawns. Returns true if 'identity' can be seen by 'newObserver'
-* **OnRebuildObservers** rebuilds observers for the given **Network Identity**. The result is stored in **newObservers**.&#x20;
-  * Mirror will automatically put **newObservers** into **identity.observers** internally. We don't do this directly because it's a bit more complicated than adding/removing. Mirror takes care of it. Nothing to worry about :)
-* **RebuildAll** is a helper function to rebuild every **spawned** Network Identity's observers.
-  * Implementations probably want to call this every interval.
+* **OnCheckObserver** 在某人生成时调用。如果 'identity' 可以被 'newObserver' 看到，则返回 true
+* **OnRebuildObservers** 为给定的**网络标识**重建观察者。结果存储在**newObservers**中。&#x20;
+  * Mirror 将自动将**newObservers**内部放入**identity.observers**。我们不直接执行此操作，因为这比添加/删除要复杂一些。Mirror 会处理它。无需担心 :)
+* **RebuildAll** 是一个辅助函数，用于重建每个**生成的**网络标识的观察者。
+  * 实现可能希望每隔一段时间调用此函数。
 
-### **Distance** Example
+### **距离** 示例
 
-Distance Interest Management is the easiest, straight forward implementation. Let's walk through it to see how to inherit from the abstract `InterestManagement` class.
+距离兴趣管理是最简单、直接的实现方式。让我们逐步进行，看看如何从抽象的`InterestManagement`类继承。
 
 ```csharp
 public class DistanceInterestManagement : InterestManagement
@@ -69,32 +69,32 @@ public class DistanceInterestManagement : InterestManagement
 }
 ```
 
-This isn't too complicated, is it?
+这并不太复杂，对吧？
 
-* **OnCheckObserver** simply compares the distance between the newly spawned identity and a connection. A connection has a main player, which is what we use for the distance check here.
-  * _Note that you could also check against every object that the connection owns. For example, if Bob spawns and Alice isn't close enough, Alice's pet might be close enough and so Alice and Bob should still see each other, despite being a bit out of normal range._
-* **OnRebuildObservers**'s job is to return that HashSet of **Network Connection**s that can see our **Network Identity**. So obviously, we just iterate all **NetworkServer.connections** and check their main player's distances to our Network Identity.
-  * _Note that we only check the ones that are authenticated and have a player in the world. Connections that are still logging in or choosing characters shouldn't observe anything._
-* **Update**'s job is to actually call **RebuildAll()** every now and then. If we don't call **RebuildAll()**, then Mirror would never rebuild observers.&#x20;
+* **OnCheckObserver** 简单地比较新生成标识与连接之间的距离。连接有一个主玩家，这是我们在这里用于距离检查的内容。
+  * _请注意，您还可以针对连接拥有的每个对象进行检查。例如，如果 Bob 生成并且 Alice 不够接近，Alice 的宠物可能足够接近，因此 Alice 和 Bob 仍然应该看到彼此，尽管有点超出正常范围。_
+* **OnRebuildObservers** 的工作是返回那些可以看到我们的**网络标识**的**网络连接**的 HashSet。因此，我们只需迭代所有**NetworkServer.connections**并检查它们的主玩家与我们的网络标识的距离。
+  * _请注意，我们仅检查已经认证并在世界中拥有玩家的连接。仍在登录或选择角色的连接不应观察任何内容。_
+* **Update** 的工作是定期调用**RebuildAll()**。如果我们不调用**RebuildAll()**，那么 Mirror 将永远不会重建观察者。&#x20;
 
-### Host Mode Visibility
+### 主机模式可见性 (Host Mode Visibility)
 
-In host mode, someone runs the server while also playing on it themselves, so you might think:
+在主机模式下，有人在运行服务器的同时也在服务器上玩游戏，因此你可能会认为：
 
-* **I am the server**. The **server sees everyone**. Therefore, **I should see everyone**.
+* **我就是服务器**。**服务器可以看到所有人**。因此，**我应该看到所有人**。
 
-This is _technically true_, but if you were fortunate enough to ever be on a **LAN** party then you'll remember it differently:
+这在技术上是 _正确的_，但如果你曾经有幸参加过**局域网**聚会，你会记得这种情况：
 
-![The best of days.](<../../.gitbook/assets/image (42).png>)
+![最美好的时光。](<../../.gitbook/assets/image (42).png>)
 
-&#x20;For example, someone on a LAN hosts a Counter-Strike or DotA game. Let's think about that case for a moment:
+&#x20;例如，有人在局域网上主持了一个 Counter-Strike 或 DotA 游戏。让我们思考一下这种情况：
 
-* The **host** runs the **server**. The **server** holds the **whole world** state in memory, yet the **host player** only sees the world around him.
+* **主机**运行**服务器**。**服务器**在内存中保存了**整个世界**的状态，但**主机玩家**只能看到他周围的世界。
 
-The idea is for the **host player** to be a regular player in the game. LAN parties wouldn't be much fun if you play DotA / Counter Strike and the host always sees everyone else's position, right?
+这个想法是让**主机玩家**成为游戏中的普通玩家。如果你在 DotA / Counter Strike 中玩游戏时，主机总是能看到其他人的位置，那局域网聚会就不会太有趣，对吧？
 
 {% hint style="info" %}
-**Obviously, the host can cheat.** If you cheat on LAN then you need professional help.
+**显然，主机可以作弊。**如果你在局域网上作弊，那你需要专业帮助。
 {% endhint %}
 
-Mirror has a virtual method `SetHostVisibility(NetworkIdentity, bool)` that enables / disables renderers in host mode. In other words, the world state is still there - the host player just doesn't see it.  You can override this in your custom system to suit your needs.
+Mirror 有一个虚拟方法 `SetHostVisibility(NetworkIdentity, bool)`，用于在主机模式下启用 / 禁用渲染器。换句话说，世界状态仍然存在 - 主机玩家只是看不到它。你可以在自定义系统中覆盖此方法以满足你的需求。

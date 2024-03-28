@@ -1,129 +1,131 @@
 ---
-description: Confused by all the hosting options? Welcome to our pragmatic hosting guide.
+description: 如果对所有的托管选项感到困惑？欢迎来到我们的实用托管指南。
 ---
 
-# The Pragmatic Hosting Guide
+# 实用托管指南（The Pragmatic Hosting Guide）
 
-Mirror takes care of your multiplayer game code. \
-However, we still need to talk about hosting!
+Mirror 负责您的多人游戏代码。\
+然而，我们仍然需要讨论托管！
 
 {% hint style="success" %}
-This guide is for those who want to focus on **making games**.\
-Hacking commands into ssh terminals may be fun, but life is short.\
-The **#1 priority** for this guide is **ease of use**, for we must ship our projects!
+本指南适用于那些想要专注于**制作游戏**的人。\
+将命令输入到 ssh 终端可能很有趣，但生命是短暂的。\
+本指南的**首要任务**是**易用性**，因为我们必须发布我们的项目！
 {% endhint %}
 
-With a near infinite amount of providers & hosting technologies, Linux distributions and locations, it's easy to get confused about what's best for you game.
+由于提供商和托管技术、Linux 发行版和位置几乎无限，很容易对适合您游戏的最佳选择感到困惑。
 
-This guide will give you a basic overview. The next chapters serve as in-depth guides for the different hosting methods, depending on which you choose.
+本指南将为您提供基本概述。接下来的章节将根据您选择的不同托管方法提供深入指南。
 
-## The Pragmatic Hosting Guide
+## 实用托管指南
 
-Here is a brief overview of different hosting technologies, which games they are for, and which providers you could choose from.
+以下是不同托管技术的简要概述，适用于哪些游戏，以及您可以选择哪些提供商。
 
-### **1.) Hosting on your own Computer**
+### **1.) 在您自己的计算机上托管**
 
-After building your game, you could technically host it on your own machine, or let players host it on their machines. However, this comes with several major issues:
+构建游戏后，您可以在自己的计算机上托管游戏，或者让玩家在他们的计算机上托管游戏。然而，这会带来几个主要问题：
 
-1. **Uptime**: your computer would have to run 24/7.
-2. **Security**: what if someone finds an exploit, and gets access to your private data?
-3. **Performance**: your Computer / Bandwidth / latency may not be good enough.
-4. **Latency**: unlike with professionally hosted servers in data centers, Player to Player connections usually come with quite some latency.
-5. **Connectivity**: other players usually won't find your game behind your router, firewall, etc. player to player connections are always difficult.
+1. **运行时间**：您的计算机必须全天候运行。
+2. **安全性**：如果有人发现漏洞并访问您的私人数据怎么办？
+3. **性能**：您的计算机/带宽/延迟可能不够好。
+4. **延迟**：与数据中心中专业托管的服务器不同，玩家之间的连接通常会带来相当大的延迟。
+5. **连接性**：其他玩家通常无法在您的路由器、防火墙等后面找到您的游戏，玩家之间的连接总是困难的。
 
 {% hint style="warning" %}
-This method is not recommended.\
-_... except for LAN parties, if you still remember those._&#x20;
+不建议使用此方法。\
+_... 除非是局域网聚会，如果您还记得的话。_&#x20;
 {% endhint %}
 
-### **2.) Player Hosted + Relay / NAT Punchthrough**
+### **2.) 玩家托管 + 中继 / NAT 穿透**
 
 <img src="../.gitbook/assets/image (62).png" alt="" data-size="original">
 
-Still, letting players host their own games can be useful. You will save money on server hosting costs and players will create their servers on demand. We just need to solve the connectivity issue. For that, we can combine two tools:
+尽管让玩家托管他们自己的游戏可能很有用。您将节省服务器托管成本，并且玩家将根据需要创建他们的服务器。我们只需要解决连接性问题。为此，我们可以结合两种工具：
 
-* **NAT Punchthrough**: a hacky technique to 'punch a whole' through your router / firewall so that others can connect to your game. This requires one central server for players to connect to **once**. After the initial connect to the central server, your router / firewall will most likely allow outside packets from other players directly. This works about **70% of the time**.&#x20;
-* **Relay**: to avoid headaches, you can offer your own (or rent) a Relay server, which basically forwards traffic between players. Instead of talking to each other, your players all talk through a central Relay. This solves our router + firewall issues 100% of the time. However, you'll usually have to pay for bandwidth.
+- **NAT Punchthrough**：一种巧妙的技术，通过您的路由器/防火墙“打通一个洞”，以便其他人可以连接到您的游戏。这需要一个中央服务器供玩家**一次**连接。连接到中央服务器后，您的路由器/防火墙很可能会直接允许其他玩家的外部数据包。这种方法大约**70%**的时间有效。&#x20;
 
-Note that **Uptime, Security and Latency** are still not solved here. However, a decent Relay may reduce your latency to be good enough.
+- **中继**：为了避免麻烦，您可以提供自己的（或租用）中继服务器，基本上是在玩家之间转发流量。您的玩家不再直接通信，而是通过一个中央中继进行通信。这种方法可以100%解决路由器和防火墙问题。但是，通常您需要支付带宽费用。
+
+请注意，**运行时间、安全性和延迟**在这里仍未解决。但是，一个体面的中继可能会降低您的延迟到足够好的程度。
 
 {% hint style="success" %}
-**Edgegap**'s [Distributed Relay](https://edgegap.com/en/platform/distributed-relay) will give you the best latency (paid).\
-[**Epic Relay**](https://github.com/FakeByte/EpicOnlineTransport) is free, but with higher latency and a pretty bad C# API.
+**Edgegap**的[分布式中继](https://edgegap.com/en/platform/distributed-relay)将为您提供最佳的延迟（付费）。\
+[**Epic Relay**](https://github.com/FakeByte/EpicOnlineTransport)是免费的，但延迟较高，而且 C# API 不太好。
 {% endhint %}
 
-### **3.) Dedicated Servers**
+### **3.) 专用服务器（Dedicated Servers）**
 
 ![](../.gitbook/assets/hetzner.png)
 
-This is the old school way of hosting, and probably what most people consider at first.
+这是托管的老派方式，可能是大多数人首先考虑的。
 
-You sign a contract for a physical dedicated server in some datacenter, install your favorite Linux distribution, SSH into it via Terminal, configure it, then launch your server binary and maintain it over time.
+您签订合同租用某个数据中心的物理专用服务器，在其中安装您喜欢的 Linux 发行版，通过终端 SSH 进入服务器，进行配置，然后启动服务器二进制文件并随时间维护它。
 
-Dedicated servers **work for all games**. However, they aren't ideal for all games.
+专用服务器**适用于所有游戏**。但并非所有游戏都适合使用专用服务器。
 
-It's cumbersome to sign & cancel contracts for every extra server. And you still need to pay while you don't use it.
+为每个额外的服务器签订和取消合同很麻烦。而且即使不使用，您仍需要支付费用。
 
-**This is best for persistent worlds**: Minecraft, MMORPGs like World of Warcraft and so on.
+**这最适合于持久世界**：《Minecraft》，《魔兽世界》等大型多人在线角色扮演游戏。
 
 {% hint style="success" %}
-**Hetzner** is most often recommended. They have great prices and great hardware.\
-**Namecheap** is good too.
+**Hetzner**是最常推荐的。他们的价格和硬件都很棒。\
+**Namecheap**也不错。
 {% endhint %}
 
-### **4.) Cloud Hosting**
+### **4.) 云托管（Cloud Hosting）**
 
 ![](../.gitbook/assets/google.png)
 
-You may have heard about Amazon AWS, Google Cloud, Microsoft Azure, etc. They offer virtual servers, which you can spin up and remove with just a few clicks without manually signing contracts & canceling them every time.
+您可能已经听说过亚马逊 AWS、谷歌云、微软 Azure 等。它们提供虚拟服务器，您可以通过几次点击即可启动和删除，而无需手动签订合同和每次取消合同。
 
-Usage is generally similar to dedicated servers: you configure your machine, pick your Linux distro, upload your server executable and maintain it yourself.
+## # 用法
 
-However, Cloud Hosting is **significantly more convenient**. You can rent new servers and remove old servers from a UI with just a few clicks. At the end of the month, you are billed for the resources which you have used.&#x20;
+使用方式通常类似于专用服务器：您配置您的机器，选择您的Linux发行版，上传您的服务器可执行文件并自行维护。
 
-You could even configure your server once, and then spin up additional servers based on the same image with just a few clicks.
+然而，云托管**显著更加便捷**。您可以通过几次点击在 UI 中租用新服务器并移除旧服务器。在月底，您将收到您所使用资源的账单。
 
-Cloud hosting **works for all games** as well. However, keep in mind that:
+您甚至可以配置您的服务器一次，然后通过几次点击基于相同镜像启动额外的服务器。
 
-* Virtual CPUs are \~20% slower than dedicated CPUs.
-* Pricing is noticeably higher than for dedicated servers.
+云托管同样适用于所有游戏。但是，请记住：
 
-You essentially pay more for extra **convenience**. New servers can be set up with just a few clicks, and once you don't need them anymore you can simply remove them. There's no need to sign contracts & wait for support all the time.
+- 虚拟 CPU 比专用 CPU **慢约20%**。
+- 定价明显高于专用服务器。
 
-If you value convenience, then Cloud Hosting is a good choice over dedicated servers.
+您基本上为额外的**便利性**付费。新服务器可以通过几次点击设置，并且一旦您不再需要它们，您可以简单地移除它们。无需一直签订合同并等待支持。
+
+如果您重视便利性，那么云托管比专用服务器是一个不错的选择。
 
 {% hint style="success" %}
-**Google Cloud**, **Amazon AWS** and **Microsoft Azure** are the most popular choices.\
-You will find hosting guides for each one in our documentation.\
-At Mirror we use Google Cloud for our CCU tests & Discord Bots.
+**Google Cloud**、**Amazon AWS** 和 **Microsoft Azure** 是最受欢迎的选择。\
+您将在我们的文档中找到每个选择的托管指南。\
+在 Mirror 中，我们使用 Google Cloud 进行我们的 CCU 测试和 Discord 机器人。
 {% endhint %}
 
-## **5.) Orchestration**
+## **5.) 编排**
 
 ![](<../.gitbook/assets/edgegap (1).png>)
 
-Orchestration aims to automate hosting for session based games, on demand.
+编排旨在自动化基于会话的游戏托管，按需提供。
 
-If your game suddenly becomes popular, you may need hundreds or thousands of servers at a time. Setting this up manually with dedicated servers is basically impossible, and even with Cloud Hosting it would still require quite a lot of headaches & time, which is probably better spent on your game itself.
+如果您的游戏突然变得受欢迎，您可能需要同时拥有数百甚至数千台服务器。手动使用专用服务器设置这一点基本上是不可能的，即使使用云托管也仍然需要相当多的麻烦和时间，这些时间可能更好地花在您的游戏本身上。
 
-Well, good news: orchestration is the future of multiplayer game hosting. In simple terms:
+好消息是：编排是多人游戏托管的未来。简单来说：
 
-1. You **create a lightweight Docker** image: configure a text file (".Dockerfile") with your Linux distribution, packages, open ports, etc. and then compile your whole project into a "Docker Image". If you aren't familiar with Docker, fear not. It makes your life a **lot** easier. Just learn it once, you'll wind up using it for all your hosting afterwards. No more manually setting up Linux servers, no more apt-get, no more maintenance etc.
-2. **Upload your image** to the Orchestration Service.
-3. **Configure** your orchestration in a web UI. They will ask you how many servers you want to spawn, when to spawn more, when to remove old servers, etc.
+1. 您**创建一个轻量级的 Docker** 镜像：配置一个文本文件（".Dockerfile"）与您的Linux发行版、软件包、开放端口等，然后将整个项目编译成一个 "Docker 镜像"。如果您不熟悉 Docker，不用担心。它会让您的生活**轻松得多**。只需学习一次，您将在之后的所有托管中使用它。不再需要手动设置 Linux 服务器，不再需要 apt-get，不再需要维护等。
+2. **上传您的镜像** 到编排服务。
+3. 在 Web UI 中**配置**您的编排。他们会询问您要生成多少服务器，何时生成更多，何时移除旧服务器等。
 
-This is the new, modern way to host game servers. Docker & Orchestration may sound complicated at first, but we wouldn't mention it here if it wouldn't make our life easier.&#x20;
+这是托管游戏服务器的新、现代方式。Docker（容器化）和Orchestration（编排）听起来一开始可能有点复杂，但如果不会让我们的生活更轻松，我们就不会在这里提到它们。
 
-Again, I don't want to worry about hosting. I want to upload my server image, and let the orchestration service worry about all the scaling, maintenance, etc. **Convenience is key.**
+再次强调，我不想担心托管问题。我只想上传我的服务器镜像，让编排服务负责所有的扩展、维护等工作。**便利性至关重要。**
 
 {% hint style="success" %}
-**Multiplay**, **Edgegap** and **AWS Gamelift** are popular choices.\
-We use EdgeGap because it's the [easiest to use](https://docs.edgegap.com/docs/sample-projects/mirror-on-edgegap) with the most [advanced network](https://en.wikipedia.org/wiki/Edge\_computing).
+**Multiplay**（多人游戏）、**Edgegap**（边缘缝隙）和**AWS Gamelift**（亚马逊游戏提供）是受欢迎的选择。\
+我们选择EdgeGap，因为它是最易于使用的，具有最先进的网络。
 {% endhint %}
 
-## Update: Edgegap Unity Plugin 🇨🇦
+## 更新：Edgegap Unity 插件 🇨🇦（Canada）
 
-Great news, Mirror now has Edgegap's Hosting / Orchestration plugin built in!
+好消息，Mirror 现在内置了Edgegap的托管/编排插件！
 
-Check out our step by step guide to get started: [edgegap-hosting-plugin-guide.md](edgegap-hosting-plugin-guide.md "mention")
-
+查看我们的逐步指南以开始使用：[edgegap-hosting-plugin-guide.md](edgegap-hosting-plugin-guide.md "提及")

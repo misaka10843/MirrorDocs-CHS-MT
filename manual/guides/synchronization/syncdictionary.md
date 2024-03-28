@@ -1,22 +1,22 @@
-# SyncDictionary
+# SyncDictionary(同步字典)
 
-A SyncDictionary is an associative array containing an unordered list of key, value pairs. Keys and values can be any [supported mirror type](../data-types.md). By default we use .Net [Dictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=netcore-3.1) which may impose additional constraints on the keys and values.
+SyncDictionary(同步字典)是一个包含无序键值对列表的关联数组。键和值可以是任何[支持的 Mirror 类型](../data-types.md)。默认情况下，我们使用 .Net [Dictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=netcore-3.1)，这可能会对键和值施加额外的约束。
 
-SyncDictionary works much like [SyncLists](synclists.md): when you make a change on the server the change is propagated to all clients and the Callback is called. Only deltas are transmitted.
+SyncDictionary(同步字典)的工作方式类似于[SyncLists(同步列表)](synclists.md)：当您在服务器上进行更改时，更改会传播到所有客户端，并调用回调函数。只传输增量数据。
 
-## Usage <a href="#usage" id="usage"></a>
+## 用法<a href="#usage" id="usage"></a>
 
-Add a field to your NetworkBehaviour class of type `SyncDictionary`.
+在您的 NetworkBehaviour 类中添加一个类型为 `SyncDictionary` 的字段。
 
 {% hint style="info" %}
-`SyncDictionary must` be declared **readonly** and initialized in the constructor.
+`SyncDictionary必须`声明为**只读**并在构造函数中初始化。
 {% endhint %}
 
 {% hint style="warning" %}
-Note that by the time you subscribe to the callback, the dictionary will already be initialized, so you will not get a call for the initial data, only updates.
+请注意，当您订阅回调时，字典已经初始化，因此您不会收到关于初始数据的调用，只会收到更新。
 {% endhint %}
 
-## Simple Example <a href="#simple-example" id="simple-example"></a>
+## 简单示例<a href="#simple-example" id="simple-example"></a>
 
 ```csharp
 using UnityEngine;
@@ -73,7 +73,7 @@ public class ExamplePlayer : NetworkBehaviour
 }
 ```
 
-By default, SyncDictionary uses a [Dictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=netcore-3.1) to store it's data. If you want to use a different `IDictionary` implementation such as [SortedList](https://docs.microsoft.com/en-us/dotnet/api/system.collections.sortedlist?view=netcore-3.1) or [SortedDictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.sorteddictionary-2?view=netcore-3.1), then use `SyncIDictionary` and pass the dictionary instance you want it to use. For example:
+默认情况下，SyncDictionary使用[Dictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=netcore-3.1)来存储数据。如果您想使用不同的 `IDictionary` 实现，比如[SortedList](https://docs.microsoft.com/en-us/dotnet/api/system.collections.sortedlist?view=netcore-3.1)或[SortedDictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.sorteddictionary-2?view=netcore-3.1)，那么请使用 `SyncIDictionary` 并传递您想要使用的字典实例。例如：
 
 ```csharp
 public class ExamplePlayer : NetworkBehaviour

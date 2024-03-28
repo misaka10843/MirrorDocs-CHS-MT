@@ -1,15 +1,15 @@
-# SyncVar Hooks
+# SyncVar Hooks (同步变量钩子)
 
-The hook attribute can be used to specify a function to be called when the SyncVar changes value on the client.
+`Hook`属性可用于指定在客户端上`SyncVar`更改值时要调用的函数。
 
-* The Hook method must have two parameters of the same type as the SyncVar property. One for the old value, one for the new value.
-* The Hook is always called after the property value is set. You don't need to set it yourself.
-* The Hook only fires for changed values, and changing a value in the inspector will not trigger an update.
-* As of version 11.1.4 (March 2020) and later, hooks can be virtual methods and overriden in a derived class.
+* `Hook`方法必须有两个与`SyncVar`属性相同类型的参数。一个用于旧值，一个用于新值。
+* `Hook`总是在设置属性值后调用。您不需要自己设置它。
+* `Hook`仅对更改的值触发，并且在检视器中更改值不会触发更新。
+* 从版本11.1.4（2020年3月）开始，钩子可以是虚方法，并且可以在派生类中重写。
 
-Below is a simple example of assigning a random color to each player when they're spawned on the server. All clients will see all players in the correct colors, even if they join later.
+以下是一个简单的示例，当玩家在服务器上生成时，为每个玩家分配随机颜色。所有客户端将以正确的颜色看到所有玩家，即使他们稍后加入也是如此。
 
-> Note: The signature for hook methods was changed in version 9.0 (Feb 2020) to having 2 parameters (old and new values). If you're on an older version, hook methods just have one parameter (new value).
+> 注意：`Hook`方法的签名在版本9.0（2020年2月）中更改为具有2个参数（旧值和新值）。如果您使用的是旧版本，则`Hook`方法只有一个参数（新值）。
 
 ```csharp
 using UnityEngine;
@@ -45,9 +45,9 @@ public class PlayerController : NetworkBehaviour
 }
 ```
 
-## Hook call order <a href="#hook-call-order" id="hook-call-order"></a>
+## Hook 调用顺序 <a href="#hook-call-order" id="hook-call-order"></a>
 
-Hooks are invoked in the order the syncvars are defined in the file.
+`Hook`按照文件中定义的`SyncVar`的顺序调用。
 
 ```csharp
 public class MyBehaviour : NetworkBehaviour 
@@ -63,10 +63,10 @@ public class MyBehaviour : NetworkBehaviour
 }
 ```
 
-if X, Y, and Z are all set on the server at the same time then the call order will be:
+如果在服务器上同时设置X、Y和Z，则调用顺序将是：
 
-1. X value is set
-2. Y value is set
-3. Hook1 is called
-4. Z value is set
-5. Hook2 is called
+1. 设置X值
+2. 设置Y值
+3. 调用`Hook1`
+4. 设置Z值
+5. 调用`Hook2`

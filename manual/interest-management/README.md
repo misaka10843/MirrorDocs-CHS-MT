@@ -1,43 +1,42 @@
 ---
-description: Documentation for our new global Interest Management system.
----
+description: 我们新的全局兴趣管理系统的文档。
 
-# Interest Management
+# 兴趣管理(Interest Management)
 
-## Interest Management
+## 兴趣管理(Interest Management)
 
-When making multiplayer games, the first obvious approach is to simply broadcast the world state to every player. By default, that's what **Mirror** does when you don't use any Interest Management components.
+在制作多人游戏时，最明显的方法是简单地向每个玩家广播世界状态。默认情况下，当您不使用任何兴趣管理组件时，**Mirror**就是这样做的。
 
-![Source: https://www.dynetisgames.com/2017/04/05/interest-management-mog/](<../../.gitbook/assets/image (125).png>)
+![来源: https://www.dynetisgames.com/2017/04/05/interest-management-mog/](<../../.gitbook/assets/image (125).png>)
 
-Instead of sending the full world state to every player, it's worth considering sending only what's around a player to the player. There are a few major reasons for interest management:
+与其向每个玩家发送完整的世界状态，不如考虑只向玩家发送周围的内容。兴趣管理有几个主要原因：
 
-* **Scale**: imagine World of Warcraft. Sending the whole world to every single player would be insane. In order to scale to thousands of connections, we need to only send what's relevant to any given player.
-* **Visibility**: in a MOBA game like DotA/League of Legends, not everyone should see everyone else all the time. A player should only see his own team and monsters around him. Not only that, but players shouldn't see behind walls etc.
-* **Cheating**: in games like Counter-Strike, players naturally don't see enemies behind walls because the camera wouldn't render them. But if the whole world state is known in memory, then hackers could exploit that by showing players behind a wall anyway.
+- **规模**：想象一下《魔兽世界》。向每个玩家发送整个世界将是疯狂的。为了扩展到成千上万的连接，我们需要只发送与任何给定玩家相关的内容。
+- **可见性**：在类似《DotA/英雄联盟》的MOBA游戏中，并非每个人都应该始终看到其他人。玩家应该只看到自己的团队和周围的怪物。此外，玩家不应该看到墙后面等等。
+- **作弊**：在《反恐精英》等游戏中，玩家自然不会看到墙后面的敌人，因为摄像机不会渲染它们。但是，如果整个世界状态在内存中已知，那么黑客可能会利用这一点，无论如何都会显示墙后面的玩家。
 
-In other words, interest management is almost always a good idea.
+换句话说，兴趣管理几乎总是一个好主意。
 
-### Built-in Systems
+### 内置系统
 
-Select the **Network Manager** and add one of the built in Interest Management components.
+选择**Network Manager**并添加一个内置的兴趣管理组件。
 
-* [**Spatial Hashing**](spatial-hashing.md) is the reason why we moved from the legacy **per-Network Identity** system to a **global** system and uses one global **Vis Range** setting that is the same for everything in the scene.&#x20;
-* [**Distance**](distance.md) is a parity replacement for Network Proximity Checker.
-* [**Scene**](scene.md) allows for visual and physics isolation across additive scenes.
-* [**Match**](match.md) isolates players for non-physics card, board, arcade games.
-* [**Team**](team.md) provides for restricting visibility of networked objects to members of a team. This can also be used for owner-only items, replacing **Network Owner Checker**.
-* [**Custom**](custom.md) Interest Management provides a template that you can use to create your own system.
-* [**Legacy**](legacy-interest-management.md) Interest Management - Deprecated.
+- [**Spatial Hashing**](spatial-hashing.md)是我们从传统的**每个网络标识**系统转移到**全局**系统的原因，并使用一个全局的**可见范围(Vis Range)**设置，该设置对场景中的所有内容都是相同的。
+- [**Distance**](distance.md)是对Network Proximity Checker的平等替代品。
+- [**Scene**](scene.md)允许在附加场景之间进行视觉和物理隔离。
+- [**Match**](match.md)为非物理卡牌、棋盘、街机游戏中的玩家进行隔离。
+- [**Team**](team.md)提供将网络对象的可见性限制为团队成员的功能。这也可用于仅所有者可见的物品，替代**Network Owner Checker**。
+- [**Custom**](custom.md)兴趣管理提供了一个模板，您可以使用它来创建自己的系统。
+- [**Legacy**](legacy-interest-management.md)兴趣管理 - 已弃用。
 
-### Final Remarks
+### 结语 (Final Remarks)
 
-The new Interest Management API is fairly simple and allows for heavy customization. We walked through it with the distance based example, which is easy to understand.&#x20;
+新的兴趣管理 API 相当简单，并且允许进行大量的自定义。我们通过基于距离的示例进行了演示，这很容易理解。
 
-You may have noticed that this is a **global** component, yet all the functions seem to work **locally** around one **Network Identity** at a time. There are two reasons for that:
+你可能已经注意到这是一个**全局**组件，但所有功能似乎都是围绕一个**网络标识(Network Identity)**在**本地**工作的。这有两个原因：
 
-* Our **legacy** Interest Management system worked on a **per-Network Identity** basis (or **locally** if you will). For the global system, we simply moved those functions into one **global** component.&#x20;
-  * This allows for global solution like **Spatial hashing**, while also guaranteeing feature pararity and easy upgrades from the old systems.
-  * It's really just the old system moved to a different place. Don't fear it :)
-* Interest Management can be quite complicated with all the spawning and despawning at the right time. Mirror has a whole lot of interest management code in **`NetworkServer`**, which simply calls the three functions above.&#x20;
-  * The idea is to shield you from all the complexity. All you need to do is worry about **one Network Identity at a time**. That's fairly easy to think about.
+- 我们的**传统**兴趣管理系统是基于**每个网络标识**的基础（或者可以说是**本地**的）。对于全局系统，我们只是将这些功能移动到一个**全局**组件中。
+  - 这样可以实现全局解决方案，比如**空间哈希(Spatial hashing)**，同时也保证了功能的一致性和从旧系统轻松升级。
+  - 实际上只是将旧系统移动到了不同的位置。不要害怕它 :)
+- 兴趣管理可能会变得相当复杂，涉及到在正确时间进行生成和销毁。Mirror 在**`NetworkServer`**中有大量的兴趣管理代码，它只是简单地调用上述三个函数。
+  - 这个想法是为你屏蔽所有复杂性。你只需要关注**一个网络标识(Network Identity)**。这很容易理解。

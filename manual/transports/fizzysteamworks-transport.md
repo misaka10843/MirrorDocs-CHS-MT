@@ -2,24 +2,24 @@
 description: https://github.com/Chykary/FizzySteamworks/
 ---
 
-# FizzySteamworks Transport
+# FizzySteamworks 传输 (Transport)
 
-FizzySteamworks is a Steam P2P transport for Mirror, it utilizes Steam's P2P service to directly connect or relay your connection to another player. FizzySteamworks is based on the [Steamworks.Net](https://github.com/rlabrecque/Steamworks.NET) wrapper.
+FizzySteamworks 是 Mirror 的 Steam P2P 传输，它利用 Steam 的 P2P 服务直接连接或中继您与另一玩家的连接。FizzySteamworks 基于 [Steamworks.Net](https://github.com/rlabrecque/Steamworks.NET) 封装器。
 
-You can get the release [**Here**](https://github.com/Chykary/FizzySteamworks/releases) with the latest version of Steamworks.Net included or you can clone the repo [**Here**](https://github.com/Chykary/FizzySteamworks).
+您可以在[**这里**](https://github.com/Chykary/FizzySteamworks/releases)获取包含最新版本 Steamworks.Net 的发布版，或者您可以克隆仓库[**这里**](https://github.com/Chykary/FizzySteamworks)。
 
-## Features <a href="#features" id="features"></a>
+## 特性 (Features) <a href="#features" id="features"></a>
 
-* Multiple Customizable Channels : You can customize the channels in the transport, whether you want just 1 or 5 channels that are unreliable or reliable (best to leave channel 0 as reliable).
-* Steam Nat Punching & Relay : The transport will use Steam to do Nat Punching to your destination, and if that doesn't work, steam's relay Server will be used to ensure you can always connect (latency may vary).
-* No Code Changes Needed : If you Already use Mirror, you just need to slap this transport in (maybe add your steam App ID in your build), and everything should work the same like any other Mirror Transport. "It Just Works" -Todd Howard
+* 多个可定制通道 (Channels)：您可以在传输中自定义通道，无论您想要 1 个还是 5 个不可靠或可靠的通道 (最好将通道 0 设置为可靠)。
+* Steam Nat Punching & Relay：传输将使用 Steam 对目标进行 Nat Punching，如果这不起作用，Steam 的中继服务器将被用来确保您始终可以连接 (延迟可能会有所不同)。
+* 无需更改代码：如果您已经在使用 Mirror，您只需将此传输添加进去 (也许在构建中添加您的 Steam 应用 ID)，一切应该像任何其他 Mirror 传输一样工作。"它只是起作用" -Todd Howard
 
 ![](<../../.gitbook/assets/image (106).png>)
 
-## Credits <a href="#credits" id="credits"></a>
+## 鸣谢 (Credits) <a href="#credits" id="credits"></a>
 
-* [Fizz Cube](https://github.com/FizzCube) : Original author for this Transport.
-* [Chykary](https://github.com/Chykary/FizzySteamworks) : The current maintainer for this Transport.
-* [rlabrecque](https://github.com/rlabrecque) : Creator of Steamworks.Net.
-* [vis2k](https://github.com/vis2k) : Creator of Mirror.
-* Valve : Steam
+* [Fizz Cube](https://github.com/FizzCube)：此传输的原始作者。
+* [Chykary](https://github.com/Chykary/FizzySteamworks)：此传输的当前维护者。
+* [rlabrecque](https://github.com/rlabrecque)：Steamworks.Net 的创建者。
+* [vis2k](https://github.com/vis2k)：Mirror 的创建者。
+* Valve：Steam

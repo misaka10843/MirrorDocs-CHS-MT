@@ -1,17 +1,17 @@
-# GameObjects
+# 游戏对象(GameObject)
 
-Networked **GameObjects** are game objects which are controlled and synchronized by Mirror’s networking system. Using synchronized networked game objects, you can create a shared experience for all the players who are playing an instance of your game. They see and hear the same events and actions - even though that may be from their own unique viewpoints within your game.
+网络化的**游戏对象**(GameObjects)是由Mirror的网络系统控制和同步的游戏对象。使用同步的网络化游戏对象，您可以为所有玩家创造一个共享的体验，这些玩家正在玩您游戏的一个实例。他们看到和听到相同的事件和动作 - 即使这可能来自他们在游戏中独特的视角。
 
-Multiplayer games in Mirror are typically built using Scenes that contain a mix of networked game objects and regular (non-networked) game objects. The networked game objects are those which move or change during gameplay in a way that needs to be synchronized across all users who are playing the game together. Non-networked game objects are those which either don’t move or change at all during gameplay (for example, static obstacles like rocks or fences), or game objects which have movement or changes that don’t need to be synchronized across players (for example, a gently swaying tree or clouds passing by in the background of your game).
+在Mirror中，多人游戏通常是使用包含一些网络化游戏对象和常规(非网络化)游戏对象的场景构建的。网络化游戏对象是那些在游戏过程中移动或改变的对象，需要在所有一起玩游戏的用户之间进行同步。非网络化游戏对象是那些在游戏过程中要么根本不移动或改变(例如，静态障碍物如岩石或篱笆)，要么是那些移动或改变不需要在玩家之间同步的游戏对象(例如，游戏背景中轻轻摇曳的树木或飘过的云)。
 
-A networked game object is one which has a Network Identity component attached. However, a Network Identity component alone is not enough for your game object to be functional and active in your multiplayer game. The Network Identity component is the starting point for synchronization, and it allows the Network Manager to synchronize the creation and destruction of the game object, but other than that, it does not specify _which properties_ of your game object should be synchronized.
+一个网络化游戏对象是附加了Network Identity(网络标识)组件的对象。然而，仅有Network Identity组件并不足以使您的游戏对象在多人游戏中起作用并活跃。Network Identity组件是同步的起点，它允许Network Manager同步游戏对象的创建和销毁，但除此之外，它并不指定您的游戏对象应该同步哪些属性。
 
-What exactly should be synchronized on each networked game object depends on the type of game you are making, and what each game object’s purpose is. Some examples of what you might want to synchronize are:
+每个网络化游戏对象到底应该同步哪些内容取决于您正在制作的游戏类型，以及每个游戏对象的目的是什么。一些您可能想要同步的示例包括：
 
-* The position and rotation of moving game objects such as the players and non-player characters.
-* The animation state of an animated game object
-* The value of a variable, for example how much time is left in the current round of a game, or how much energy a player has.
+* 移动游戏对象的位置和旋转，例如玩家和非玩家角色。
+* 动画游戏对象的动画状态
+* 变量的值，例如游戏当前回合剩余多少时间，或玩家有多少能量。
 
-Some of these things can be automatically synchronized by Mirror. The synchronized creation and destruction of networked game objects is managed by the NetworkManager, and is known as Spawning. You can use the Network Transform component to synchronize the position and rotation of a game object, and you can use the Network Animator component to synchronize the animation of a game object.
+Mirror可以自动同步其中一些内容。网络化游戏对象的同步创建和销毁由NetworkManager管理，并称为生成(Spawning)。您可以使用Network Transform组件来同步游戏对象的位置和旋转，也可以使用Network Animator组件来同步游戏对象的动画。
 
-To synchronize other properties of a networked game object, you need to use scripting. See State Synchronization for more information about this.
+要同步网络游戏对象的其他属性，您需要使用脚本。有关此内容的更多信息，请参阅状态同步（State Synchronization）。

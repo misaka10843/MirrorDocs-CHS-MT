@@ -1,11 +1,10 @@
-# Edgegap Transports
+# Edgegap 传输
 
-[Edgegap's Distributed Relay](https://edgegap.com/en/platform/distributed-relay) Service offers relays in their many locations all over the world, allowing for player hosted games without having to worry about NAT or latency issues.
+[Edgegap的分布式中继](https://edgegap.com/en/platform/distributed-relay)服务在全球各地提供中继，允许玩家托管游戏而无需担心NAT或延迟问题。
 
-In order to use the relay service, you will need to either [set up your own backend to start relay sessions on-demand](https://docs.edgegap.com/docs/relay-edgegap-api) or you can use Edgegap's [Lobby](https://docs.edgegap.com/docs/lobby/service) or [Matchmaker ](https://docs.edgegap.com/docs/matchmaker)service to do this for you (and as an added bonus you get lobbies or matchmaking on-top).
+要使用中继服务，您需要要么[设置自己的后端以按需启动中继会话](https://docs.edgegap.com/docs/relay-edgegap-api)，要么您可以使用Edgegap的[Lobby](https://docs.edgegap.com/docs/lobby/service)或[Matchmaker](https://docs.edgegap.com/docs/matchmaker)服务来为您执行此操作（作为额外奖励，您还可以获得大厅或匹配功能）。
 
-Mirror offers the following transports to interact with the relay service:
+Mirror提供以下传输方式与中继服务进行交互：
 
-* [Edgegap Relay](edgegap-relay.md): Barebones relay transport using KCP
-* [Edgegap Lobby](edgegap-lobby.md): Simple to use relay transport using Edgegap's Lobby Service
-
+* [Edgegap Relay](edgegap-relay.md): 使用KCP的基本中继传输
+* [Edgegap Lobby](edgegap-lobby.md): 使用Edgegap的Lobby服务的易于使用的中继传输

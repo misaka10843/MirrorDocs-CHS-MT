@@ -1,87 +1,79 @@
 ---
-description: Written by JesusLuvsYooh / StephenAllenGames.co.uk, edited by James Frowen
+description: 由 JesusLuvsYooh / StephenAllenGames.co.uk 撰写，由 James Frowen 编辑
 ---
 
-# Mirror Quick Start Project
+# Mirror 快速入门项目 (Quick Start Project)
 
-This guide currently shows you:
+本指南目前向您展示：
 
-* [Basic scene setup](quick-start-guide.md#part-1)
-* [Player movement](quick-start-guide.md#part-4)
-* [Names and colours](quick-start-guide.md#part-8)
-* [Scene script with canvas buttons](quick-start-guide.md#part-11)
-* [Weapon switching](quick-start-guide.md#part-12)
-* [Networked scene objects tweak](quick-start-guide.md#part-15)
-* [Menu and scene switching](quick-start-guide.md#part-16)
-* [Weapon firing](quick-start-guide.md#part-20)
+* [基本场景设置](quick-start-guide.md#part-1) (Basic scene setup)
+* [玩家移动](quick-start-guide.md#part-4) (Player movement)
+* [名称和颜色](quick-start-guide.md#part-8) (Names and colours)
+* [带有画布按钮的场景脚本](quick-start-guide.md#part-11) (Scene script with canvas buttons)
+* [武器切换](quick-start-guide.md#part-12) (Weapon switching)
+* [网络场景对象调整](quick-start-guide.md#part-15) (Networked scene objects tweak)
+* [菜单和场景切换](quick-start-guide.md#part-16) (Menu and scene switching)
+* [武器射击](quick-start-guide.md#part-20) (Weapon firing)
 
-It is best to first make a mini practice game before converting your single player game, or creating your ideal brand new multiplayer.
+最好先制作一个迷你练习游戏，然后再转换您的单人游戏，或创建您理想的全新多人游戏。
 
-The Pre-made Mirror examples are great for using as reference, it is recommend to use them regarding connection setup, with ports and firewalls. This can be a huge topic that changes from person to person, and is not covered in this guide, here we will use localHost (multiple games on same PC).\
+预制的 Mirror 示例非常适合用作参考，建议在连接设置方面使用它们，包括端口和防火墙。这可能是一个涉及个人之间巨大变化的主题，在本指南中未涵盖，这里我们将使用本地主机 (同一台 PC 上的多个游戏)。\
 \
-**End Result:**
+**最终结果:**
 
 ![](../.gitbook/assets/QS-image--036.jpg)
 
 ### Part 1 <a href="#part-1" id="part-1"></a>
 
-Blank Project, import Mirror from [Asset Store](https://assetstore.unity.com/packages/tools/network/mirror-129321).
+空白项目，从 [Asset Store](https://assetstore.unity.com/packages/tools/network/mirror-129321) 导入 Mirror。
 
 ### Part 2 <a href="#part-2" id="part-2"></a>
 
-* Create new scene, save it, and add it to build settings
-* Create a new GameObject, name it NetworkManager in the scene, and add these 3 components
+* 创建新场景，保存并将其添加到构建设置中
+* 在场景中创建一个新的 GameObject，命名为 NetworkManager，并添加以下 3 个组件
   * NetworkManager
-  * KCPTransport (TelepathyTransport is older, you do not need KCP and Telepathy)
+  * KCPTransport (TelepathyTransport 已过时，您不需要 KCP 和 Telepathy)
   * NetworkManagerHUD
-* On the NetworkManager component, drag your Offline and Online scene into the slots, we have only one scene for now, so put your scene in both
-  * The scene must be in the build settings before dragging it to the field
+* 在 NetworkManager 组件上，将您的离线和在线场景拖放到插槽中，目前我们只有一个场景，所以将您的场景放在两个插槽中
+  * 在将场景拖放到字段之前，该场景必须在构建设置中
 
-![Note: KCP Transport has replaced Telepathy in newer versions](../.gitbook/assets/QS-image--000.jpg)
+![注意: KCP Transport 已在较新版本中取代了 Telepathy](../.gitbook/assets/QS-image--000.jpg)
 
 ![](../.gitbook/assets/QS-image--001.jpg)
 
 ### Part 3 <a href="#part-3" id="part-3"></a>
 
-Setup the scene
+设置场景
 
-* Add a simple Plane floor with:
-  * positions (0, -1, 0)
-  * scale (2, 2, 2)
-* (optional) add a material to this, I added one called dirt that is used one of mirrors examples
-* Next we add a GameObject, name does not matter
-* Add `NetworkStartPosition` component to this GameObject
-* Duplicate the GameObject a few times, and scatter around your scene floor so that you have multiple spawn points. I did 4, one near each corner
+* 添加一个简单的平面地板，具有:
+  * 位置 (0, -1, 0)
+  * 缩放 (2, 2, 2)
+* (可选) 为此添加一个材质，我添加了一个名为 dirt 的材质，这是 Mirror 示例中使用的一个
+* 接下来我们添加一个 GameObject，名称无关紧要
+* 为此 GameObject 添加 `NetworkStartPosition` 组件
+* 复制 GameObject 几次，并在场景地板周围散布，以便您有多个生成点。我做了 4 个，一个靠近每个角落
 
-![](../.gitbook/assets/QS-image--002.jpg)
+### Part 4 <a href="#part-4" id="part-4"></a> (Part 4)
 
-### Part 4 <a href="#part-4" id="part-4"></a>
+创建玩家
 
-Creating the player
+* 使用菜单创建一个胶囊体，如图所示
+* 附加一个 NetworkTransform 组件，这将自动添加一个 Network Identity
+* 在 NetworkTransform 上勾选 Client Authority（客户端权限）
 
-* Create a capsule using the menus as shown in the image
-* Attached a NetworkTransform component, this will auto add a Network Identity
-* Tick Client Authority on the NetworkTransform
+（注意：更新的 Mirror 版本使用 "Sync Direction"，将其设置为 "Client To Server"。）
 
-(Note: Newer Mirror versions use "Sync Direction" set this to "Client To Server".)
+* 将该对象重命名为 Player
+* 添加一个空的 PlayerScript（玩家脚本）
+* 将其拖入项目中以创建一个预制体
+* 然后从场景中删除 Player
 
-![](../.gitbook/assets/QS-image--003.jpg)
+* 将玩家预制体拖入 Network Manager 中，
+* 将生成方法设置为 Round Robin（轮询方式）。
 
-* Rename that object Player
-* Add an empty PlayerScript
-* Drag into Project to create a prefab
-* Then delete Player from scene
+### Part 5 <a href="#part-5" id="part-5"></a> (Part 5)
 
-![](../.gitbook/assets/QS-image--004.jpg)
-
-* Drag your player prefab into Network manager,
-* Set spawn method to Round Robin.
-
-![](../.gitbook/assets/image--005.jpg)
-
-### Part 5 <a href="#part-5" id="part-5"></a>
-
-Add the following to your PlayerScript.
+将以下内容添加到你的 PlayerScript 中。
 
 ```csharp
 using Mirror;
@@ -111,34 +103,28 @@ namespace QuickStart
 }
 ```
 
-### Part 6 <a href="#part-6" id="part-6"></a>
+### Part 6 <a href="#part-6" id="part-6"></a> (Part 6)
 
-Press play in Unity editor, and then Host (server + client) button in the game window. You should be able to move around with a first person view capsule.
+在 Unity 编辑器中按下播放按钮，然后在游戏窗口中点击 Host（服务器 + 客户端）按钮。你应该能够使用第一人称视角的胶囊体四处移动。
 
-![](../.gitbook/assets/QS-image--006.jpg)
+### Part 7 <a href="#part-7" id="part-7"></a> (Part 7)
 
-### Part 7 <a href="#part-7" id="part-7"></a>
+构建并运行你的场景，打开它，在一个上托管，然后在另一个上点击客户端按钮。恭喜你，你制作了一个迷你多人游戏！
 
-Build and run your scene, open it, host on one, and press the Client button on the other. Congrats you made a mini multiplayer game!
+### Part 8 <a href="#part-8" id="part-8"></a> (Part 8)
 
-![](../.gitbook/assets/QS-image--007.jpg)
+在头顶显示玩家名称
 
-### Part 8 <a href="#part-8" id="part-8"></a>
+* 在你的玩家预制体中，创建一个空的 GameObject
+* 将其命名为类似 `FloatingInfo` 的内容
+  * 将 Y 位置设置为 1.5
+  * 将 X 缩放设置为 -1
+* 在 `FloatingInfo` 中，使用 Unity 菜单创建一个 3D 文本（GameObject - 3D Object - 3D Text），
+* 根据下面的图片设置它
 
-Player name above heads
+### Part 9 <a href="#part-9" id="part-9"></a> (Part 9)
 
-* Inside your player Prefab, create an empty GameObject
-* name it something like `FloatingInfo`
-  * position Y to 1.5
-  * scale X to -1
-* Inside that `FloatingInfo`, create a 3D text using Unity menu (GameObject - 3D Object - 3D Text),
-* Set it up as shown in the picture below
-
-![](../.gitbook/assets/QS-image--008.jpg)
-
-### Part 9 <a href="#part-9" id="part-9"></a>
-
-Update your PlayerScript.cs with this:
+使用以下内容更新你的 PlayerScript.cs：
 
 ```csharp
 using Mirror;
@@ -212,29 +198,23 @@ namespace QuickStart
 }
 ```
 
-### Part 10 <a href="#part-10" id="part-10"></a>
+### Part 10 <a href="#part-10" id="part-10"></a> (Part 10)
 
-Add the `PlayerNameText` and `FloatingInfo` objects into the script on the player prefab, as shown below.
+将 `PlayerNameText` 和 `FloatingInfo` 对象添加到玩家预制体上的脚本中，如下所示。
 
-![](../.gitbook/assets/QS-image--009.jpg)
+现在，如果你构建并运行，在一个上托管，在另一个上加入，你将看到玩家名称和颜色在网络中同步！
 
-Now if you build and run, host on one, join on the other, you will see player names and colors synced across the network!
+### Part 11 <a href="#part-11" id="part-11">(Part 11)</a>
 
-Well done, 5 stars to you!
+一个场景网络对象，所有人都可以访问和调整。
 
-![](../.gitbook/assets/QS-image--010.jpg)
+在场景中创建一个 SceneScript.cs，将其添加到名为 SceneScript 的空 GameObject 上。
 
-### Part 11 <a href="#part-11" id="part-11"></a>
-
-A scene networked object all can access and adjust.
-
-Create a SceneScript.cs, add it onto an empty GameObject in the scene called SceneScript.
-
-Then create a Canvas with text and button, similar to below.
+然后创建一个 Canvas，包含文本和按钮，类似于下面的示例。
 
 ![](../.gitbook/assets/QS-image--011.jpg)
 
-Add the sceneScript variable, Awake function, and CmdSendPlayerMessage to PlayerScript.cs Also add the new playerName joined line to CmdSetupPlayer();
+将 sceneScript 变量、Awake 函数和 CmdSendPlayerMessage 添加到 PlayerScript.cs 中，还要将新的 playerName joined 行添加到 CmdSetupPlayer() 中；
 
 ```csharp
 private SceneScript sceneScript;
@@ -267,7 +247,7 @@ public override void OnStartLocalPlayer()
     //. . . . ^ new line to add here
 ```
 
-Add this code to SceneScript.cs
+将以下代码添加到 SceneScript.cs 中：
 
 ```csharp
 using Mirror;
@@ -299,28 +279,28 @@ namespace QuickStart
 }
 ```
 
-* Attach the ButtonSendMessage function to your Canvas Button.
-* Attach Canvas Scene Text to SceneScript variable.
-  * ignore SceneScript’s, playerScript variable, it automatically sets this!
-* Attach a NetworkIdentity component to the SceneScript gameobject, if it has not automatically done so.
+* 将 ButtonSendMessage 函数附加到 Canvas 按钮上。
+* 将 Canvas Scene Text 附加到 SceneScript 变量上。
+  * 忽略 SceneScript 的 playerScript 变量，它会自动设置！
+* 如果尚未自动执行，请将 NetworkIdentity 组件附加到 SceneScript GameObject 上。
 
 ![](https://mirror-networking.com/docs/Articles/CommunityGuides/MirrorQuickStartGuide/image--012.jpg) ![](../.gitbook/assets/QS-image--012.jpg) ![](../.gitbook/assets/image--013.jpg)
 
-Now if you build and run, host and join, you can send messages, and have a text log for actions!
+现在，如果构建并运行，主机和加入，您可以发送消息，并且有一个用于操作的文本日志！
 
-Wahooo!
+哇哦！
 
 ![](../.gitbook/assets/image--014.jpg) ![](../.gitbook/assets/image--015.jpg)
 
-Experiment and adjust, have fun!
+尝试并调整，玩得开心！
 
 ![](../.gitbook/assets/QS-image--016.jpg)
 
-### Part 12 <a href="#part-12" id="part-12"></a>
+### Part 12 <a href="#part-12" id="part-12">(Part 12)</a>
 
-Weapon switching! The code bits.
+武器切换！代码片段。
 
-Add the following to your PlayerScript.cs
+将以下内容添加到 PlayerScript.cs 中：
 
 ```csharp
 private int selectedWeaponLocal = 1;
@@ -357,7 +337,7 @@ void Awake()
 }
 ```
 
-Add the weapon switch button in update. Only local player switches its own weapon, so it goes below the `!isLocalPlayer` check.
+在更新中添加武器切换按钮。只有本地玩家才能切换自己的武器，因此它应该放在 `!isLocalPlayer` 检查之下。
 
 ```csharp
 void Update()
@@ -387,47 +367,45 @@ void Update()
 }
 ```
 
-### Part 13 <a href="#part-13" id="part-13"></a>
+### Part 13 <a href="#part-13" id="part-13">(Part 13)</a>
 
-Weapon models
+武器模型
 
-Add the basic cube weapons first, change these later.
+首先添加基本的立方体武器，稍后再更改这些。
 
-* Double click your player prefab to enter it
-* Add a "WeaponsHolder" empty GameObject, with position and rotation at 0,0,0.
-* Inside that GameObject, create a cube from unity menu, (GameObject, 3D object, cube)- Remove the box colliders.
-* Rename this `Weapon1`, change position and scale to match the below pictures.
+* 双击您的玩家预制件以进入其中
+* 添加一个名为 "WeaponsHolder" 的空 GameObject，位置和旋转均为 0,0,0。
+* 在该 GameObject 内部，从 Unity 菜单创建一个立方体（GameObject, 3D object, cube）- 移除盒碰撞器。
+* 将其重命名为 `Weapon1`，更改位置和比例以匹配下面的图片。
 
 ![](../.gitbook/assets/QS-image--017.jpg)
 
-Duplicate weapon 1 for a Weapon 2, and change its scale and position, now you should have 2 different looking ‘weapons’!
+复制武器1以创建武器2，并更改其比例和位置，现在你应该有两种外观不同的“武器”！
 
 ![](../.gitbook/assets/QS-image--018.jpg)
 
-### Part 14 <a href="#part-14" id="part-14"></a>
+### Part 14 <a href="#part-14" id="part-14"></a> (Part 14)
 
-Weapon switch finale.
+武器切换的最后部分。
 
-* Add these 2 GameObjects to your PlayerScript.cs weapons array.
-* Disable weapon 2, so only weapon 1 shows when spawning.
+* 将这两个 GameObject 添加到你的PlayerScript.cs（玩家脚本）武器数组中。
+* 禁用武器2，这样只有武器1在生成时显示。
 
 ![](../.gitbook/assets/QS-image--019.jpg)
 
-Build and run!
+构建并运行！
 
-You should see each player switching weapons, and whatever your player has equipped, will auto show on new joining players (sync var and hook magic!)
+你应该看到每个玩家都在切换武器，无论你的玩家装备了什么，都会自动显示在新加入的玩家身上（同步变量和钩子魔法！）
 
 ![](../.gitbook/assets/QS-image--020.jpg)
 
-### Part 15 <a href="#part-15" id="part-15"></a>
+### Part 15 <a href="#part-15" id="part-15"></a> (Part 15)
 
-Here we will make a small adjustment, as using a GameObject.Find() may not guarantee Network Identity scene objects are found. In the image below you can see our NetworkIdentity scene object gets disabled, as they are disabled until a player is in ‘ready’ status (ready status is usually set when player spawns).
+在这里，我们将进行一些小调整，因为使用 GameObject.Find() 可能无法保证找到网络标识场景对象。在下面的图片中，你可以看到我们的 NetworkIdentity 场景对象被禁用，因为它们在玩家处于“准备就绪”状态之前是被禁用的（通常在玩家生成时设置准备就绪状态）。
 
-![](../.gitbook/assets/QS-image--021.jpg)
+所以我们选择的解决方法是让我们的 GameObject.Find() 获取非网络化的场景对象，这些场景对象将具有那些 Network Identity 场景对象作为预设变量。
 
-So our chosen workaround is to have our GameObject.Find() get the non-networked scene object, which will have those Network Identity scene object as pre-set variables.
-
-Create a new script called SceneReference.cs, and add this one variable.
+创建一个名为 SceneReference.cs 的新脚本，并添加这个变量。
 
 ```csharp
 using UnityEngine;
@@ -441,17 +419,17 @@ namespace QuickStart
 }
 ```
 
-Open up SceneScript.cs and add the following variable.
+打开 SceneScript.cs 并添加以下变量。
 
 ```csharp
 public SceneReference sceneReference;
 ```
 
-Now in your Unity scene create a gameobject, name it SceneReference, and add the new script. On both Scene gameobjects, set the reference to each other. So SceneReference can speak to SceneScript, and SceneScript to SceneReference.
+现在在你的 Unity 场景中创建一个游戏对象，命名为 SceneReference，并添加新脚本。在两个 Scene 游戏对象上，将引用设置为彼此。这样 SceneReference 就可以与 SceneScript 交流，SceneScript 也可以与 SceneReference 交流。
 
 ![](../.gitbook/assets/QS-image--022.jpg)
 
-Open up PlayerScript.cs and overwrite the Awake function to this:
+打开 PlayerScript.cs 并将 Awake 函数覆盖为以下内容：
 
 ```csharp
 void Awake()
@@ -461,11 +439,11 @@ void Awake()
 }
 ```
 
-### Part 16 <a href="#part-16" id="part-16"></a>
+### Part 16 <a href="#part-16" id="part-16"></a> (Part 16)
 
-Menu and Scene switching, here we will go from an offline Menu, with a play button, to a Games List with a back button and the Host/Join HUD, to your online map, and then a second map for host to switch to.
+菜单和场景切换，这里我们将从一个离线菜单，带有一个播放按钮，切换到一个游戏列表，带有一个返回按钮和主机/加入 HUD，再到你的在线地图，然后是主机切换到的第二个地图。
 
-Open up SceneScript.cs and add the following function.
+打开 SceneScript.cs 并添加以下函数。
 
 ```csharp
 public void ButtonChangeScene()
@@ -485,25 +463,25 @@ public void ButtonChangeScene()
 
 ![](../.gitbook/assets/QS-image--023.jpg)
 
-Duplicate your previous Canvas button, rename it and reposition it, then setup the OnClick() to point to SceneScript.ButtonChangeScene, like in the image.
+复制之前的 Canvas 按钮，重命名并重新定位，然后设置 OnClick() 指向 SceneScript.ButtonChangeScene，就像图片中一样。
 
-Then drag your NetworkManager into your Project, to make it a Prefab, this way any changes we make later will apply to them all. If you haven’t already, you can sort out your project into folders, one for scripts, prefabs, scenes, textures etc. :)
+然后将你的 NetworkManager 拖放到项目中，将其制作成 Prefab，这样稍后我们所做的任何更改都会应用到它们所有。如果还没有的话，你可以将项目整理到文件夹中，一个用于脚本、预制体、场景、纹理等等。 :)
 
 ![](../.gitbook/assets/QS-image--024.jpg)
 
-### Part 17 <a href="#part-17" id="part-17"></a>
+### 标题17 (# Part 17)
 
-Save, and then Duplicate your MyScene, rename to make a Menu, GamesList and MyOtherScene, then add them to the build settings, with Menu being first.
+保存，然后复制你的 MyScene，重命名为 Menu、GamesList 和 MyOtherScene，然后将它们添加到构建设置中，其中 Menu 放在第一位。
 
 ![](../.gitbook/assets/QS-image--025.jpg)
 
-Open up the Menu scene, remove the spawn points, SceneScript, SceneReference, Network Manager and Plane, so it looks like the below. Adjust the canvas button to say Play, centre it. Here is where you could add the Scores scene, Contact section, News, etc
+打开 Menu 场景，移除生成点、SceneScript、SceneReference、Network Manager 和 Plane，使其看起来像下面这样。调整画布按钮以显示 Play，并将其居中。在这里你可以添加得分场景、联系部分、新闻等等。
 
-Create a Menu.cs script, add it onto a Menu gameObject.
+创建一个 Menu.cs 脚本，将其添加到 Menu gameObject 上。
 
 ![](../.gitbook/assets/QS-image--026.jpg)
 
-Add the code to Menu.cs, then in the Button, drag the Menu gameobject into the On Click () and set it to Menu.LoadScene, like in the picture.
+将代码添加到 Menu.cs 中，然后在按钮中，将 Menu gameObject 拖放到 On Click() 中，并设置为 Menu.LoadScene，就像图片中一样。
 
 ```csharp
 using UnityEngine;
@@ -523,13 +501,13 @@ namespace QuickStart
 
 ![](../.gitbook/assets/QS-image--027.jpg)
 
-### Part 18 <a href="#part-18" id="part-18"></a>
+### 标题18 (# Part 18)
 
-Open up GamesList scene, do similar to Menu but KEEP NetworkManager prefab.
+打开 GamesList 场景，类似于 Menu，但保留 NetworkManager 预制体。
 
-Create a GamesList.cs, add the code, and add it onto a GamesList gameobject in the scene. Adjust a canvas button to say Menu (this is our back button). It should look like the image below.
+创建一个 GamesList.cs，添加代码，并将其添加到场景中的 GamesList gameObject 上。调整画布按钮以显示 Menu（这是我们的返回按钮）。它应该看起来像下面的图片。
 
-* The games list is where you can add List server contents, or matchmaker, or just the host and join buttons, similar to the default NetworkManagerHud, for now leave this. :)
+* 游戏列表是你可以添加服务器内容列表、匹配器，或者只是主机和加入按钮，类似于默认的 NetworkManagerHud，暂时保留这些。 :)
 
 ```csharp
 using UnityEngine;
@@ -549,29 +527,23 @@ namespace QuickStart
 
 ![](../.gitbook/assets/QS-image--028.jpg)
 
-### Part 19 <a href="#part-19" id="part-19"></a>
+### 标题19 (# Part 19)
 
-Open MyOtherScene, this is our second map. Change the camera background colour and floor material (or anything, just so you can see both scenes are different. To summarise, MyScene is map 1 and MyOtherScene is map 2.
+打开 MyOtherScene，这是我们的第二个地图。更改相机背景颜色和地板材质（或任何内容，只要你能看到这两个场景是不同的即可。总结一下，MyScene 是地图 1，MyOtherScene 是地图 2。
 
-![](../.gitbook/assets/QS-image--029.jpg)
+在你的 NetworkManager 预制体中的项目中（而不是场景中的那个），添加 Menu 到 Offline（离线），并将 MyScene 添加到 Online（在线）变量。这将更改所有 NetworkManager 预制体的这些设置。
 
-In your NetworkManager prefab in PROJECT (not the one in scenes), add Menu to offline, and MyScene to Online variables. This should change all the NetworkManager prefabs to have these settings.
+构建并运行，点击 Menu 进入 GamesList，然后点击 Host（玩家1）。对于玩家2，点击 Menu 进入，然后在 GamesList 上进行客户端连接。
 
-![](../.gitbook/assets/QS-image--030.jpg)
+现在主机可以在地图1和地图2之间切换场景，如果有人断开连接或停止游戏，Menu 场景将加载以重新开始。整个过程可以整理一下，但应该为你的 Mirror 游戏提供一个良好的场景切换模板 :)
 
-Build and Run, press Play on the Menu to go to GamesList, then click Host (for player 1). For player 2, press Play on Menu, then client connect on GamesList.
+### Part 20 <a href="#part-20" id="part-20">第20部分（Part 20）</a>
 
-Now the host can change scenes between map 1 and map 2, and if anyone disconnects or stops the game, Menu scene is load to start again. This whole process can be tidied up, but should provide a good scene switch template to your Mirror game :)
+在这里，我们将添加基本的武器射击，使用刚体预制体。通常最好使用射线投射来表示发射的对象，并将物理对象保留给像手榴弹和炮弹之类的东西。为了保持指南简单，本节也将缺乏许多安全性和防作弊技术，但无论如何，让我们开始吧！
 
-### Part 20 <a href="#part-20" id="part-20"></a>
+双击 Player Prefab 打开它，创建空的游戏对象并将它们与武器的末端对齐，将它们添加为每个武器的子对象。一些武器可能是短手枪，其他的可能是长步枪，因此对象生成的位置将不同。
 
-Here we will add basic weapon firing, using rigidbody prefabs. Raycasts with a representation of the fired object is usually better to do this, and keep phycisal objects for things like Grenades and Cannon balls. This section will also lack a lot of security and anti-cheat techniques in order to keep the guide simple, but anyway, here we go!
-
-Double click the Player Prefab to open it, create empty gameobjects and line them up with the end of your weapon, add them as child to each weapon. Some weapons may be short pistols, others long rifles, so the place where objects spawn will be different.
-
-![](../.gitbook/assets/QS-image--031.jpg)
-
-Create a Weapon.cs script, add it to the Weapon1 and Weapon 2 gameObjects inside the player prefab.
+创建一个 Weapon.cs 脚本，将其添加到 Player Prefab 中的 Weapon1 和 Weapon 2 游戏对象中。
 
 ```csharp
 using UnityEngine;
@@ -591,19 +563,15 @@ namespace QuickStart
 }
 ```
 
-### Part 21 <a href="#part-21" id="part-21"></a>
+### Part 21 <a href="#part-21" id="part-21">第21部分（Part 21）</a>
 
-Now back in your scene we shall make 2 bullets, in Unitys menu, go to GameObject, 3D Object, Sphere. Add rigidbody to this sphere, make the scale 0.2, 0.2, 0.2, then save it as a Prefab in the Project. Do the same with a cube, so you have two different looking bullets.
+现在回到你的场景，我们将制作两种子弹，在 Unity 菜单中，转到 GameObject，3D Object，Sphere。给这个球体添加刚体，将比例设置为 0.2, 0.2, 0.2，然后将其保存为项目中的 Prefab。 用一个立方体做同样的操作，这样你就有两种外观不同的子弹。
 
-![](../.gitbook/assets/QS-image--032.jpg)
+再次选择玩家预制体，在武器上设置武器脚本的变量。
 
-Inside your player prefab again, select a weapon, and set the variables on weapon script.
+### 第22部分 (#part-22)
 
-![](../.gitbook/assets/QS-image--033.jpg) ![](../.gitbook/assets/QS-image--034.jpg)
-
-### Part 22 <a href="#part-22" id="part-22"></a>
-
-In SceneScript.cs, add this variable and function.
+在SceneScript.cs中，添加以下变量和函数。
 
 ```csharp
 public Text canvasAmmoText;
@@ -614,18 +582,18 @@ public void UIAmmo(int _value)
 }
 ```
 
-Enter MyScene (map 1). Duplicate the Canvas StatusText, rename to Ammo, then drag that Ammo text UI into SceneScript gameobject, canvasAmmoText variable. Do this on BOTH MyScene (map 1) and MyOtherScene (map 2), as we have not yet linked or prefabbed our canvas and scene scripts to auto update changes on each map.
+进入MyScene（地图1）。复制Canvas StatusText，重命名为Ammo，然后将该Ammo文本UI拖动到SceneScript游戏对象中，canvasAmmoText变量。在MyScene（地图1）和MyOtherScene（地图2）上都执行此操作，因为我们尚未将我们的画布和场景脚本链接或预制，以便在每个地图上自动更新更改。
 
 ![](../.gitbook/assets/QS-image--035.jpg)
 
-Open up PlayerScript.cs, add these two variables:
+打开PlayerScript.cs，添加以下两个变量：
 
 ```csharp
 private Weapon activeWeapon;
 private float weaponCooldownTime;  
 ```
 
-In the ‘OnWeaponChanged’ function, update it with the new line, so it should look like this. 
+在‘OnWeaponChanged’函数中，使用新行更新它，应该如下所示。
 
 ```csharp
 void OnWeaponChanged(int _Old, int _New)
@@ -647,7 +615,7 @@ void OnWeaponChanged(int _Old, int _New)
 }
 ```
 
-In Awake(), add this at the end:
+在Awake()中，在最后添加以下内容：
 
 ```csharp
 if (selectedWeaponLocal < weaponArray.Length && weaponArray[selectedWeaponLocal] != null)
@@ -657,7 +625,7 @@ if (selectedWeaponLocal < weaponArray.Length && weaponArray[selectedWeaponLocal]
 }
 ```
 
-In Update(), add this at the end:
+在Update()中，在最后添加以下内容：
 
 ```csharp
 if (Input.GetButtonDown("Fire1") ) //Fire1 is mouse 1st click
@@ -672,7 +640,7 @@ if (Input.GetButtonDown("Fire1") ) //Fire1 is mouse 1st click
 }
 ```
 
-Add these two functions after the Update() {} function finishes.
+在Update() {}函数结束后添加以下两个函数。
 
 ```csharp
 [Command]
@@ -691,6 +659,6 @@ void RpcFireWeapon()
 }
 ```
 
-Build and Run, you should have firing, with different speeds and cooldowns on all players :)
+构建并运行，您应该可以在所有玩家上以不同的速度和冷却时间进行射击 :)
 
 ![](../.gitbook/assets/QS-image--036.jpg)

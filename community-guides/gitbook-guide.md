@@ -1,72 +1,73 @@
 ---
-description: A couple of examples of what's possible now...
+description: 现在可能的一些示例...
 ---
 
-# Gitbook Guide
+# Gitbook 指南 (Guide)
 
-## Regular Text
+## 普通文本 (Regular Text)
 
-Regular text can also have [links](https://github.com/vis2k/Mirror).
+普通文本也可以包含[链接](https://github.com/vis2k/Mirror)。
 
-### Gitbook Important How To's
+### Gitbook 重要操作指南 (How To's)
 
-* Save & Merge: [https://gyazo.com/cc284fcb5ba5087dbdead8579433a591](https://gyazo.com/cc284fcb5ba5087dbdead8579433a591)
-* Links to chapters: [https://gyazo.com/37bbe0b8d604594afda60a38d57e23dc](https://gyazo.com/37bbe0b8d604594afda60a38d57e23dc)
+* 保存 & 合并: [https://gyazo.com/cc284fcb5ba5087dbdead8579433a591](https://gyazo.com/cc284fcb5ba5087dbdead8579433a591)
+* 章节链接: [https://gyazo.com/37bbe0b8d604594afda60a38d57e23dc](https://gyazo.com/37bbe0b8d604594afda60a38d57e23dc)
 
-### Hints
+### 提示 (Hints)
 
 {% hint style="info" %}
-&#x20;Super-powers are granted randomly so please submit an issue if you're not happy with yours.
+&#x20;超能力是随机授予的，如果您对自己的超能力不满意，请提交问题。
 {% endhint %}
 
 {% hint style="danger" %}
-Critical messages can be shown too.
+也可以显示关键消息。
 {% endhint %}
 
-### Code
+### 代码 (Code)
 
 {% code title="hello.sh" %}
 ```bash
-# Ain't no code for that yet, sorry
-echo 'You got to trust me on this, I saved the world'
+# 对不起，暂时没有相关代码
+echo '相信我，我拯救了世界'
 ```
 {% endcode %}
 
-### Formulas
+### 公式 (Formulas)
 
 $$
 E = mc^2
 $$
 
-### Quotes
+### 引用 (Quotes)
 
-> _“In the information age, the barriers just aren't there. The barriers are self imposed. If you want to set off and go develop some grand new thing, you don't need millions of dollars of capitalization. You need enough pizza and Diet Coke to stick in your refrigerator, a cheap PC to work on, and the dedication to go through with it. We slept on floors. We waded across rivers.”_ ― **John D. Carmack, Masters of Doom**
+> _“在信息时代，障碍已经不存在了。障碍是自我设定的。如果你想启动并开发一些伟大的新事物，你不需要数百万美元的资本。你只需要足够的披萨和 Diet Coke 放在冰箱里，一台便宜的 PC 来工作，并且有足够的决心去完成它。我们睡在地板上。我们涉过河流。”_ ― **John D. Carmack, Masters of Doom**
 
-### Images
+### 图片 (Images)
 
-![Image Description (optional)](<../.gitbook/assets/image (55).png>)
+![图片描述 (可选)](<../.gitbook/assets/image (55).png>)
 
-### Tables
+### 表格 (Tables)
 
 | UDP                 | TCP                 |
 | ------------------- | ------------------- |
-| Makes people happy. | Makes people angry. |
+| 使人们快乐。       | 使人们愤怒。       |
 
-### Tabs
+### 选项卡 (Tabs)
 
 {% tabs %}
-{% tab title="First Tab" %}
-This is the first tab.
+{% tab title="第一个选项卡" %}
+这是第一个选项卡。
 {% endtab %}
 
-{% tab title="Second Tab" %}
-This is the second tab.
+{% tab title="第二个选项卡" %}
+这是第二个选项卡。
 {% endtab %}
 {% endtabs %}
 
-### Task Lists
+### 任务列表 (Task Lists)
 
-* [x] Task lists
-* [x] Can now
-* [x] Be done
-* [ ] As well
+* [x] 任务列表
+* [x] 现在可以
+* [x] 完成
+* [ ] 也可以
+

@@ -1,27 +1,26 @@
 ---
-description: Match Interest Management
----
+描述: 匹配兴趣管理
 
-# Match
+# Match (Match)
 
-## Match Interest Management
+## 匹配兴趣管理
 
 {% hint style="danger" %}
-Do not use this for physics-based games...use [**Scene Interest Management**](scene.md) instead.
+不要用于基于物理的游戏...而是使用[**场景兴趣管理**](scene.md)。
 {% endhint %}
 
-Match Interest Management is intended for non-physics games like card, board, arcade games.
+匹配兴趣管理适用于非物理游戏，如卡牌、棋盘、街机游戏。
 
-### Setting Up
+### 设置
 
-Add the **Match Interest Management** component to the same object as your **Network Manager**:
+将**Match Interest Management**组件添加到与您的**Network Manager(网络管理器)**相同的对象上：
 
 ![](<../../.gitbook/assets/image (45).png>)
 
-And add a **Network Match** component to all networked objects, including the player prefab, that will be involved in match play.
+并将**Network Match(网络匹配)**组件添加到所有网络对象上，包括将参与匹配游戏的玩家预制件。
 
 ![](<../../.gitbook/assets/image (22).png>)
 
-At runtime, assign the same `matchId` to players and objects that belong to the same match.
+在运行时，将相同的`matchId`分配给属于同一匹配的玩家和对象。
 
-See the **Multiple Matches** example included with Mirror for reference and inspiration.
+查看Mirror附带的**多个匹配**示例，以供参考和灵感。

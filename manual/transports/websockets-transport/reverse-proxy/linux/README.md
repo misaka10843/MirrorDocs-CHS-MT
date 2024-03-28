@@ -1,22 +1,22 @@
-# Linux
+# Linux (Linux)
 
-On Linux, you have a wide variety of choices in what software you can use as the reverse proxy. Common options may include [Nginx](nginx.md), [Caddy](caddy.md), [Apache](apache.md), [HAProxy](ha-proxy.md) and more.
+在 Linux 上，您有多种选择可以作为反向代理的软件。常见选项可能包括 [Nginx（nginx）](nginx.md), [Caddy（caddy）](caddy.md), [Apache（apache）](apache.md), [HAProxy（HAProxy）](ha-proxy.md) 等。
 
-We'll go into detail for a few of the common choices here, generally you likely just want to stick with whatever software you're familiar with or already using.
+我们将在这里详细介绍一些常见的选择，通常您可能只想坚持使用您熟悉或已经在使用的软件。
 
-The following guides (aside from caddy) will assume you have already set up certbot and gotten certs issued. They're also written for Debian but should be very similar (if not identical) on other distros.
+以下指南（除了 caddy）将假定您已经设置了 certbot 并获得了证书。它们也是针对 Debian 编写的，但在其他发行版上应该非常相似（如果不是完全相同）。
 
-Make sure Simple Web Transport is set up like this:
+确保 Simple Web Transport 设置如下：
 
-* Ssl Enabled: **not checked**
-* Ssl Protocols: **Tls 12**
-* Server Port: **27777**
-* Client Use Wss: **checked**
-* Client Port Option: **Specify Port**
-* Custom Client Port: **7777**
+- Ssl Enabled: **未选中**
+- Ssl Protocols: **Tls 12**
+- Server Port: **27777**
+- Client Use Wss: **选中**
+- Client Port Option: **指定端口**
+- Custom Client Port: **7777**
 
 <div align="left">
 
-<figure><img src="../../../../../.gitbook/assets/image (153).png" alt=""><figcaption><p>Simple Web Transport with Reverse Proxy Settings</p></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (153).png" alt=""><figcaption><p>带有反向代理设置的 Simple Web Transport</p></figcaption></figure>
 
 </div>

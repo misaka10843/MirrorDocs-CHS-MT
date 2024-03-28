@@ -1,175 +1,175 @@
-# AWS
+# AWS(Amazon Web Services)
 
-During this section we will focus on using a Windows instance and connecting from a Windows computer.
+在这一节中，我们将专注于使用 Windows 实例并从 Windows 计算机进行连接。
 
-> **NOTE**: AWS requires a payment method/credit card added before being able to use a Windows server.
+> **注意**: 在能够使用 Windows 服务器之前，AWS 需要添加付款方式/信用卡。
 
-Don't forget to read up on the [free tier limitations](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-free-tier.html). During this example we will be using the free tier of the EC2 option, which gives us the possibility to use a Windows instance (if you have already added a payment method). For more information about which services offer a Free Tier, see [AWS Free Tier](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank\&all-free-tier.sort-order=asc\&awsf.Free%20Tier%20Types=tier%2312monthsfree\&awsf.Free%20Tier%20Categories=categories%23compute).
+不要忘记阅读有关[免费套餐限制](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-free-tier.html)。在这个示例中，我们将使用 EC2 选项的免费套餐，这使我们有可能使用 Windows 实例（如果您已经添加了付款方式）。有关哪些服务提供免费套餐的更多信息，请参见[AWS 免费套餐](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank\&all-free-tier.sort-order=asc\&awsf.Free%20Tier%20Types=tier%2312monthsfree\&awsf.Free%20Tier%20Categories=categories%23compute)。
 
-These are the steps we will go through from start to finish:
+以下是我们将从头到尾执行的步骤：
 
-1. Account creation
-2. Setting up an instance with the EC2 Management Console
-3. Configuring the server via RDP (Remote Desktop)
-4. Setting up the firewall to allow connections through
-5. Testing the connection
+1. 创建账户
+2. 使用 EC2 管理控制台设置实例
+3. 通过 RDP（远程桌面）配置服务器
+4. 设置防火墙以允许连接
+5. 测试连接
 
-## 1. Account Creation <a href="#1-account-creation" id="1-account-creation"></a>
+## 1. 创建账户（Account Creation）<a href="#1-account-creation" id="1-account-creation"></a>
 
-Go to the [Account creation page](https://portal.aws.amazon.com/billing/signup?nc2=h\_ct\&src=default\&redirect\_url=https%3A%2F%2Faws.amazon.com%2Fregistration-confirmation#/start) and sign up with your details and payment method (e.g. credit card). Adding the payment method is necessary to run a windows instance on AWS.
+转到[创建账户页面](https://portal.aws.amazon.com/billing/signup?nc2=h\_ct\&src=default\&redirect\_url=https%3A%2F%2Faws.amazon.com%2Fregistration-confirmation#/start)，使用您的详细信息和付款方式（例如信用卡）注册。添加付款方式是在 AWS 上运行 Windows 实例所必需的。
 
-## 2. Setting up an instance with the EC2 Management Console <a href="#2-setting-up-an-instance-with-the-ec2-management-console" id="2-setting-up-an-instance-with-the-ec2-management-console"></a>
+## 2. 使用 EC2 管理控制台设置实例（Setting up an instance with the EC2 Management Console）<a href="#2-setting-up-an-instance-with-the-ec2-management-console" id="2-setting-up-an-instance-with-the-ec2-management-console"></a>
 
-After setting up your account you should be logged in. Always make sure you're in your correct region so it's a good habit to check in the top right corner. Change it to the closest location to you now. After this click on Services in the top left corner and click on EC2. This will bring you to the EC2 instance dashboard and ready to Launch your instance!
+设置完您的账户后，您应该已经登录。始终确保您在正确的区域，因此检查右上角是一个好习惯。现在将其更改为距离您最近的位置。之后，点击左上角的“Services”，然后点击“EC2”。这将带您到 EC2 实例仪表板，并准备启动您的实例！
 
-Click on **"Launch Instance"**.&#x20;
+### 请点击 **"启动实例"**。(Launch Instance)
 
 ![](<../../.gitbook/assets/image (37).png>)
 
-There are 7 steps to creating your AWS Instance:
+创建 AWS 实例的 7 个步骤：
 
-1. Choose an Amazon Machine Image (AMI)
-2. Choose Instance Type
-3. Configure Instance
-4. Add Storage
-5. Add Tags
-6. Configure Security Group
-7. Review
+1. 选择 Amazon Machine Image (AMI)（Amazon 机器映像）
+2. 选择实例类型（Instance Type）
+3. 配置实例（Configure Instance）
+4. 添加存储（Add Storage）
+5. 添加标签（Add Tags）
+6. 配置安全组（Configure Security Group）
+7. 审查（Review）
 
-### Step 1: Choose an Amazon Machine Image <a href="#step-1-choose-an-amazon-machine-image" id="step-1-choose-an-amazon-machine-image"></a>
+### 步骤 1: 选择 Amazon Machine Image <a href="#step-1-choose-an-amazon-machine-image" id="step-1-choose-an-amazon-machine-image"></a>
 
-Scroll down until you see the Microsoft Windows Server 2019 Base (take the newest one if this is outdated). Make sure that the option you select has the "Free Tier Eligible" under the icon and click on "Select".&#x20;
+向下滚动直到看到 Microsoft Windows Server 2019 Base（如果已过时，请选择最新的）。确保您选择的选项在图标下方有 "Free Tier Eligible"，然后点击 "选择"。
 
 ![](<../../.gitbook/assets/image (11).png>)
 
-### Step 2: Choose Instance Type <a href="#step-2-choose-instance-type" id="step-2-choose-instance-type"></a>
+### 步骤 2: 选择实例类型 <a href="#step-2-choose-instance-type" id="step-2-choose-instance-type"></a>
 
-Make sure you choose the instance type with the "free tier eligible", at the time of writing this is the t2.micro instance. Click on **"Next: Configure Instance Details"**. **Do not** click on Review and Launch.
+确保选择具有 "free tier eligible" 的实例类型，在撰写本文时，这是 t2.micro 实例。点击 **"下一步: 配置实例详细信息"**。**不要**点击审查并启动。
 
 ![](<../../.gitbook/assets/image (118).png>)
 
-### Step 3: Configure Instance <a href="#step-3-configure-instance" id="step-3-configure-instance"></a>
+### 步骤 3: 配置实例 <a href="#step-3-configure-instance" id="step-3-configure-instance"></a>
 
-Nothing has to be changed at this step. Keep it default. Click on **"Next: Add Storage"**.
+在此步骤中无需更改任何内容。保持默认设置。点击 **"下一步: 添加存储"**。
 
-### Step 4: Add Storage <a href="#step-4-add-storage" id="step-4-add-storage"></a>
+### 步骤 4: 添加存储 <a href="#step-4-add-storage" id="step-4-add-storage"></a>
 
-Nothing has to be changed. Keep it default. The 30GB is more than you need but there will be an error if you choose a lower amount. Keep in mind that you can always click "Previous" if you need to return, you do not need to repeat the entire process if you make a mistake (unless you click Launch at the end).
+无需更改任何内容。保持默认设置。30GB 的存储空间超出您的需求，但如果选择较低的数量会出现错误。请记住，如果需要返回，您可以随时点击 "上一步"，如果在最后点击启动，您不需要重复整个过程。
 
-Click on **"Next: Add Tags"** to continue.
+点击 **"下一步: 添加标签"** 继续。
 
-### Step 5: Add Tags <a href="#step-5-add-tags" id="step-5-add-tags"></a>
+### 步骤 5: 添加标签 <a href="#step-5-add-tags" id="step-5-add-tags"></a>
 
-Nothing has to be changed. Keep it default. Click on **"Next: Configure Security Groups"**
+无需更改任何内容。保持默认设置。点击 **"下一步: 配置安全组"**。
 
-### Step 6: Configure Security Groups <a href="#step-6-configure-security-groups" id="step-6-configure-security-groups"></a>
+### 步骤 6: 配置安全组 <a href="#step-6-configure-security-groups" id="step-6-configure-security-groups"></a>
 
-> **IMPORTANT STEP** This makes it possible to connect to your instance from outside for:
+> **重要步骤** 这使得可以从外部连接到您的实例：
 
-* RDP (needed for this example)
-* For clients connecting through port 7777 for your Mirror Project.
-* SSH (if needed)
+- RDP (needed for this example)
+- 对于通过端口7777连接到您的Mirror项目的客户端。
+- SSH (如果需要)
 
-Create a new security group and you can give it your own name and description. Add the following rules:
+创建一个新的安全组，您可以为其命名并添加描述。添加以下规则：
 
-* RDP with source "Anywhere", Description can be whatever but put it as Remote Desktop Program.
-* Custom TCP Rule with port 7777 and source "Anywhere", Description can be whatever but put it as Mirror.  (If KCP is on your NetworkManager, unblock UDP, not TCP)
-* SSH with source "Anywhere", Description can be whatever but put it as SSH.
+- RDP，源为“Anywhere”，描述可以随意，但请将其设置为远程桌面程序。
+- 自定义TCP规则，端口7777，源为“Anywhere”，描述可以随意，但请将其设置为Mirror（如果KCP在您的NetworkManager上，请解锁UDP，而不是TCP）。
+- SSH，源为“Anywhere”，描述可以随意，但请将其设置为SSH。
 
-SSH is not strictly necessary but can be used to remote connect to it through other means than the RDP.
+SSH并非绝对必要，但可以用于通过除RDP之外的其他方式远程连接。
 
-You can ignore the warning about the source as this is just a testing environment. In the future you might wish to restrict this but you will almost never know the clients' connection IP's beforehand.
+您可以忽略关于源的警告，因为这只是一个测试环境。将来，您可能希望限制此内容，但您几乎永远不会预先知道客户端的连接IP。
 
-Click on **"Next: Review and Launch"**
+点击**“下一步：审查并启动”**
 
 ![](<../../.gitbook/assets/image (44).png>)
 
-### Step 7: Review <a href="#step-7-review" id="step-7-review"></a>
+### Step 7: Review（审查） <a href="#step-7-review" id="step-7-review">（原文："Step 7: Review"）</a>
 
-Almost there! Make sure everything is correct and you are using the free tier, then click on **"Launch"**.
+就快完成了！确保一切正确，并且您正在使用免费层级，然后点击**“启动”**。
 
 ![](<../../.gitbook/assets/image (77).png>)
 
-One more thing: A window will pop up asking for your key pair. Just create a new one by selecting the dropdown: **"Create a new key pair"** and give it a name, click on **"Download Key Pair"**.
+还有一件事：会弹出一个窗口要求您的密钥对。只需通过选择下拉菜单创建一个新的密钥对：**“创建新的密钥对”**，为其命名，然后点击**“下载密钥对”**。
 
-Keep the key file (.PEM File) somewhere secure (To be 100% certain, back it up somewhere).
+将密钥文件（.PEM文件）保存在安全的地方（为了百分之百的确定性，请将其备份到其他地方）。
 
-> **YOU CANNOT ACCESS THE CREATED INSTANCE WITHOUT THIS KEY**
+> **没有此密钥，您将无法访问已创建的实例**
 
 ![](<../../.gitbook/assets/image (98).png>)
 
-Now you can (finally) click on **"Launch Instances"**!
+现在您可以（终于）点击**“启动实例”**！
 
-Go back to your EC2 dashboard by clicking on "Services" at the top left and clicking on EC2. Now you see you have "Running Instances: 1". **Click on "Running Instances" to continue**.
+通过点击左上角的“服务”然后点击EC2返回到您的EC2仪表板。现在您会看到“运行中的实例：1”。**点击“运行中的实例”以继续**。
 
 ![](<../../.gitbook/assets/image (52).png>)
 
-> A new instance might take around 5-10 minutes to set up. Refresh the page after 10 minutes if nothing changes.
+> 新实例可能需要大约5-10分钟来设置。如果没有任何变化，请在10分钟后刷新页面。
 
-Now you did all this but you want to get ON the dedicated server right? Perfect! The next step will get you up and running!
+现在您已经完成了所有这些步骤，但是您想要进入专用服务器对吧？太好了！下一步将让您启动并运行！
 
-## 3. Configuring the server via RDP (Remote Desktop) <a href="#3-configuring-the-server-via-rdp-remote-desktop" id="3-configuring-the-server-via-rdp-remote-desktop"></a>
+## 3. 配置通过RDP（远程桌面）连接的服务器 <a href="#3-configuring-the-server-via-rdp-remote-desktop" id="3-configuring-the-server-via-rdp-remote-desktop"></a> (Configuring the server via RDP (Remote Desktop))
 
-Time to get the RDP file so you can start connecting. There are a few things we'll need:
+是时候获取RDP文件，这样您就可以开始连接了。我们需要一些东西：
 
-1. RDP file with the key pair added to it
-2. Configure RDP file once downloaded to allow getting files from our C: drive or other drives (so you can easily get your zip project)
-3. Enter the windows Admin password once you start the RDP file
+1. 带有密钥对的RDP文件
+2. 下载后配置RDP文件以允许从我们的C:驱动器或其他驱动器获取文件（这样您就可以轻松获取您的zip项目）
+3. 在启动RDP文件后输入Windows管理员密码
 
-Once you've done this, you should be able to continue using the same RDP file.
+完成这些步骤后，您应该能够继续使用相同的RDP文件。
 
-### RDP file with the key pair added to it <a href="#rdp-file-with-the-key-pair-added-to-it" id="rdp-file-with-the-key-pair-added-to-it"></a>
+### 带有密钥对的RDP文件 <a href="#rdp-file-with-the-key-pair-added-to-it" id="rdp-file-with-the-key-pair-added-to-it"></a> (RDP file with the key pair added to it)
 
 ![](<../../.gitbook/assets/image (79).png>)
 
-> Get the password **before** clicking Download
+> 在单击下载之前获取密码
 
-> **Copy the Password for later**
+> **复制密码以备后用**
 
 ![](<../../.gitbook/assets/image (102).png>)
 
-Now click on **"Download Remote Desktop File"**. The RDP file will be downloaded.
+现在单击**"下载远程桌面文件"**。将下载RDP文件。
 
 ![](<../../.gitbook/assets/image (46).png>)
 
-### Configure RDP file for easy file access <a href="#configure-rdp-file-for-easy-file-access" id="configure-rdp-file-for-easy-file-access"></a>
+### 配置RDP文件以便轻松访问文件 <a href="#configure-rdp-file-for-easy-file-access" id="configure-rdp-file-for-easy-file-access"></a> (Configure RDP file for easy file access)
 
-Go to your freshly downloaded RDP file and rightclick it and then click "Edit".
+转到您刚下载的RDP文件，右键单击它，然后单击"编辑"。
 
-Go to the third tab "Local sources", at the bottom click "more" under local devices and sources. On the new window select your C: drive or any other drive. This is your own computer your connecting from. For easy file exchange.
+转到第三个选项卡"本地资源"，在底部单击"本地设备和资源"下的"更多"。在新窗口中选择您的C:驱动器或任何其他驱动器。这是您从中连接的自己的计算机。以便轻松交换文件。
 
 ![](<../../.gitbook/assets/image (43).png>)
 
-Perfect! Now you can run the RDP file! The RDP file will ask a password. If you forgot your password you can get it back by rightclicking the instance and clicking on "Get Windows Password". You will be asked to re-enter your key pair (.PEM) file and decrypt the message. Once done you will be able to copy the password.
+太棒了！现在您可以运行RDP文件了！RDP文件将要求输入密码。如果您忘记了密码，可以右键单击实例，然后单击"获取Windows密码"来找回密码。您将被要求重新输入您的密钥对（.PEM）文件并解密消息。完成后，您将能够复制密码。
 
 ![](<../../.gitbook/assets/image (130).png>)
 
 ![](<../../.gitbook/assets/image (41).png>)
 
-There you have it! Now you have your password and Remote Desktop should show you logging into your dedicated server!
+就是这样！现在您有了密码，远程桌面应该显示您登录到专用服务器！
 
-### Setting up the firewall to allow connections through <a href="#setting-up-the-firewall-to-allow-connections-through" id="setting-up-the-firewall-to-allow-connections-through"></a>
+### 设置防火墙以允许连接通过<a href="#setting-up-the-firewall-to-allow-connections-through" id="setting-up-the-firewall-to-allow-connections-through"></a>
 
-Go to the windows firewall settings, go to the advanced firewall settings and go to inbound rules. **Add a new rule** and choose the port type. Select TCP and enter the 7777 port (or any other if you use another port in Mirror) (If KCP is on your NetworkManager, unblock UDP, not TCP). Continue clicking next and keep things default. Close all the windows when done.
+进入 Windows 防火墙设置，进入高级防火墙设置，然后进入入站规则。**添加新规则**并选择端口类型。选择 TCP 并输入 7777 端口（如果在 Mirror 中使用其他端口，请使用其他端口）（如果在 NetworkManager 中启用了 KCP，请解锁 UDP，而不是 TCP）。继续点击下一步并保持默认设置。完成后关闭所有窗口。
 
 ![](<../../.gitbook/assets/image (123).png>)
 
-AWESOME! You now have everything set up to accept incoming requests on **port 7777**.
+太棒了！现在您已经设置好接受 **7777 端口**上的传入请求。
 
-## 4. Testing the connection <a href="#4-testing-the-connection" id="4-testing-the-connection"></a>
+## 4. 测试连接<a href="#4-testing-the-connection" id="4-testing-the-connection"></a>
 
-Before you can (finally) test out your server build of your project you need to get it on the dedicated server!
+在您最终测试项目的服务器构建之前，您需要将其放在专用服务器上！
 
-Place your (zipped) server build at the root of your added drive (C: or another) to make it easier to find it fast.
+将您的（压缩的）服务器构建放在您添加的驱动器的根目录（C: 或其他位置），以便更快地找到它。
 
-Go to **"My Computer"** and because of our previous changes to the RDP we should now see your local drive under "Devices and Drives". Double click it and because you placed your zipped server build on that drive, you should see it immediatly when it's done loading.
+进入**“我的电脑”**，由于我们之前对 RDP 的更改，现在应该在“设备和驱动器”下看到您的本地驱动器。双击它，因为您将压缩的服务器构建放在该驱动器上，当加载完成时，您应该立即看到它。
 
 ![](<../../.gitbook/assets/image (76).png>)
 
-Now unzip the project in a new folder on the dedicated server's desktop and run it.
+现在在专用服务器的桌面上的一个新文件夹中解压项目并运行它。
 
-Want to test if it sees the 7777 port is open after you started your Mirror server? Get your IPv4 public IP from the EC2 Management Console from your instance and use it on your client to connect to that IP.
+想要测试一下在启动 Mirror 服务器后是否看到 7777 端口已打开吗？从 EC2 管理控制台获取您的实例的 IPv4 公共 IP，并在客户端上使用它连接到该 IP。
 
-Go to [PortChecker](https://www.portcheckers.com/) and enter the Dedicated Server IP address and enter port 7777.
+前往 [PortChecker](https://www.portcheckers.com/)，输入专用服务器 IP 地址并输入端口 7777。
 
-> NOTE: If you are not running your game / project then the port will be closed. It's only open when the server is running.
+> 注意：如果未运行游戏/项目，则端口将关闭。只有在服务器运行时才会打开端口。

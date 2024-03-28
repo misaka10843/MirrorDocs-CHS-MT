@@ -1,19 +1,21 @@
-# Player Game Objects
+# 玩家游戏对象(Player Game Objects)
 
-Mirror handles player game objects differently to non-player game objects. When a new player joins the game (when a new client connects to the server), that player’s game object becomes a “local player” game object on the client of that player, and Unity associates the player’s connection with the player’s game object. Unity associates one player game object for each person playing the game, and routes networking commands to that individual game object. A player cannot invoke a command on another player’s game object, only their own.
+Mirror 处理玩家游戏对象与非玩家游戏对象的方式不同。当新玩家加入游戏(即新客户端连接到服务器时)，该玩家的游戏对象在该玩家的客户端上变为“本地玩家”游戏对象，并且 Unity 将玩家的连接与玩家的游戏对象关联起来。Unity 为每个玩家玩游戏的人关联一个玩家游戏对象，并将网络命令路由到该个别游戏对象。玩家无法在其他玩家的游戏对象上调用命令，只能在自己的游戏对象上调用。
 
-The NetworkBehaviour class (which you derive from to [create your network scripts](../../general/script-templates.md)) has a property called isLocalPlayer. On each client’s player game object, Mirror sets that property to true on the NetworkBehaviour script, and invokes the OnStartLocalPlayer() callback. This means each client has a different game object set up like this, because on each client a different game object is the one that represents the local player. The diagram below shows two clients and their local players.
+NetworkBehaviour 类(您从中派生以[创建您的网络脚本](../../general/script-templates.md))具有一个名为 isLocalPlayer 的属性。在每个客户端的玩家游戏对象上，Mirror 在 NetworkBehaviour 脚本上将该属性设置为 true，并调用 OnStartLocalPlayer() 回调。这意味着每个客户端都有一个不同的游戏对象设置为这样，因为在每个客户端上，不同的游戏对象代表本地玩家。下面的图表显示了两个客户端及其本地玩家。
 
-Only the player game object that is “yours” (from your point of view as the player) has the `isLocalPlayer` flag set. Usually, you should set this flag in script to determine whether to process input, whether to make the camera track the game object, or do any other client-side things that should only occur for the player belonging to that client.
+只有作为“您”的角度(作为玩家)的玩家游戏对象具有 `isLocalPlayer` 标志。通常，您应该在脚本中设置此标志以确定是否处理输入，是否使摄像机跟踪游戏对象，或执行任何其他应仅对属于该客户端的玩家发生的客户端事情。
 
-Player game objects represent the player (that is, the person playing the game) on the server, and have the ability to run commands from the player’s client. These commands are secure client-to-server remote procedure calls. In this server-authoritative system, other non-player server-side game objects cannot receive commands directly from client-side game objects. This is both for security, and to reduce the complexity of building your game. By routing all incoming commands from users through the player game object, you can ensure that these messages come from the right place, the right client, and can be handled in a central location.
+玩家游戏对象代表服务器上的玩家(即玩游戏的人)，并且具有从玩家客户端运行命令的能力。这些命令是安全的客户端到服务器的远程过程调用。在这种服务器授权系统中，其他非玩家服务器端游戏对象无法直接接收来自客户端游戏对象的命令。这既是为了安全性，也是为了减少构建游戏的复杂性。通过将所有用户的传入命令通过玩家游戏对象路由，您可以确保这些消息来自正确的位置、正确的客户端，并且可以在一个中心位置处理。
 
-The Network Manager adds a player every time a client connects to the server. In some situations, though, you might not want to add players until an input event happens - such as a user pressing a “start” button on the controller. To disable automatic player creation, navigate to the Network Manager component’s Inspector and untick the Auto Create Player checkbox.
+# 网络管理器(Network Manager) (Network Manager)
 
-The diagram below shows two clients and their local players:
+当客户端连接到服务器时，网络管理器会为每个玩家添加一个。然而，在某些情况下，您可能希望直到发生输入事件时才添加玩家 - 比如用户在控制器上按下“开始”按钮。要禁用自动玩家创建，请导航到网络管理器组件的检视面板(Inspector)，取消选中“Auto Create Player”复选框。
+
+下面的图示展示了两个客户端和它们的本地玩家：
 
 <div align="left" data-full-width="false">
 
-<figure><img src="../../../.gitbook/assets/NetworkLocalPlayers.png" alt=""><figcaption><p>Network Players and Clients</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/NetworkLocalPlayers.png" alt=""><figcaption><p>网络玩家和客户端</p></figcaption></figure>
 
 </div>

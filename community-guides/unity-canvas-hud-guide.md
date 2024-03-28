@@ -1,45 +1,45 @@
 ---
-description: Written by JesusLuvsYooh / StephenAllenGames.co.uk
+description: 由 JesusLuvsYooh / StephenAllenGames.co.uk 撰写
 ---
 
-# Unity Canvas HUD
+# Unity 画布 HUD（Head-Up Display）
 
 {% hint style="info" %}
-Note: A pre-made UI Canvas prefab is now available in Mirror/Examples/Common/CanvasNetworkManagerHUD.
+注意：现在在 Mirror/Examples/Common/CanvasNetworkManagerHUD 中提供了一个预制的 UI 画布 prefab。
 {% endhint %}
 
-## End Result:
+## 结果展示：
 
-![A Unity Canvas that covers the majority of the OnGUI NetworkManagerHUDD component features.](../.gitbook/assets/Canvas0.jpg)
+![一个 Unity 画布，覆盖了大部分 OnGUI NetworkManagerHUD 组件的功能。](../.gitbook/assets/Canvas0.jpg)
 
-## Part 1
+## 第一部分
 
-Blank Project, import Mirror from Asset Store/ Discord Releases unity package.&#x20;
+空项目，从 Asset Store/ Discord Releases unity package 导入 Mirror。&#x20;
 
-Open up your scene, for this guide we will use Mirror/Examples/Tanks
+打开你的场景，本指南中我们将使用 Mirror/Examples/Tanks。
 
-You should be familiar with the examples, and default NetworkManager HUD, they look something like this:
+你应该熟悉这些示例和默认的 NetworkManager HUD，它们看起来像这样：
 
-![OnGUI NetworkManagerHUD.](../.gitbook/assets/Canvas1.jpg)
+![OnGUI NetworkManagerHUD。](../.gitbook/assets/Canvas1.jpg)
 
 ![Mirror/Examples/Tank/Scenes/Scene](../.gitbook/assets/Canvas2.jpg)
 
-## Part 2
+## 第二部分
 
-Create a Canvas in the scene, by either right clicking, UI canvas, or the menu at top, GameObject, UI, Canvas.\
-&#x20;Set the canvas scaler to “Scale with Screen Size”, this will help with keeping everything same size, on both low and high resolution screens, and is best to set before adding Canvas contents.
+在场景中创建一个 Canvas，可以通过右键点击，UI Canvas，或者顶部菜单，GameObject，UI，Canvas 来创建。\
+&#x20;将画布缩放器设置为“随屏幕大小缩放”，这将有助于保持所有内容在低分辨率和高分辨率屏幕上大小相同，并且最好在添加画布内容之前设置。
 
-Then create and attach a new script to the canvas, I have named it CanvasHUD.
+然后创建并将一个新脚本附加到画布上，我将其命名为 CanvasHUD。
 
-![Scaling.](../.gitbook/assets/Canvas4.jpg)
+![缩放。](../.gitbook/assets/Canvas4.jpg)
 
-![Script.](../.gitbook/assets/Canvas3.jpg)
+![脚本。](../.gitbook/assets/Canvas3.jpg)
 
-## Part 3
+## 第三部分
 
-Open up this new script, and open up Mirrors NetworkManagerHUD (for reference).
+打开这个新脚本，并打开 Mirror 的 NetworkManagerHUD（供参考）。
 
-Add the following code as the starting template to CanvasHUD.
+将以下代码添加为 CanvasHUD 的起始模板。
 
 {% code title="CanvasHUD.cs" %}
 ```csharp
@@ -64,35 +64,36 @@ public class CanvasHUD : MonoBehaviour
 ```
 {% endcode %}
 
-Create a button inside the main Canvas, and drag it into the Canvas “ButtonHost” variable. We will not focus too much on layout and looks of the canvas for this guide, but go wild and position the contents where you please :)
+在主 Canvas 中创建一个按钮，并将其拖放到 Canvas 的“ButtonHost”变量中。对于本指南，我们不会过多关注画布的布局和外观，但可以随意调整并将内容放置在你喜欢的位置 :)
 
-![Simple button.](../.gitbook/assets/Canvas5.jpg)
+![简单按钮。](../.gitbook/assets/Canvas5.jpg)
 
-## Part 4
+## 第四部分
 
-Test!  Start the game, and press your own “Host Button”, the game should start.
+测试！启动游戏，按下你自己的“Host Button”，游戏应该开始。
 
-Congratulations, this is the first step to using Unity Canvas with Mirror, and upgrading from the NetworkManagerHUD OnGUI.
+恭喜，这是使用 Unity 画布与 Mirror 结合的第一步，并从 NetworkManagerHUD OnGUI 进行升级。
 
-![New canvas button and old OnGUI](../.gitbook/assets/Canvas6.jpg)
+![新画布按钮和旧的 OnGUI](../.gitbook/assets/Canvas6.jpg)
 
-## Part 5
 
-If you check the old HUD, it can be summarised into 2 parts. The ‘Start’ (before connecting) and ‘Stop’ (after connecting).
+## Part 5 (第5部分)
 
-Create 2 UI panels inside the canvas, rename them Panel Start and Panel Stop, remove the image component from Panel Stop, this way we can tell them apart.
+如果你检查旧的HUD，可以总结为2部分。在连接之前的“开始”和在连接之后的“停止”。
 
-Drag your “Button Host” into Panel Start.
+在画布内创建2个UI面板，将它们重命名为Panel Start和Panel Stop，从Panel Stop中移除图像组件，这样我们可以区分它们。
 
-![Before connecting.](../.gitbook/assets/Canvas7.jpg)
+将你的“Button Host”拖放到Panel Start中。
 
-![After connecting.](../.gitbook/assets/Canvas8.jpg)
+![连接之前。](../.gitbook/assets/Canvas7.jpg)
 
-![Summarised sections. ](../.gitbook/assets/Canvas9.jpg)
+![连接之后。](../.gitbook/assets/Canvas8.jpg)
 
-## Part 6
+![总结部分。](../.gitbook/assets/Canvas9.jpg)
 
-Add the following variables to your CanvasHUD script, these variables cover most of what is needed.
+## Part 6 (第6部分)
+
+将以下变量添加到你的CanvasHUD脚本中，这些变量涵盖了大部分所需内容。
 
 {% code title="CanvasHUD.cs" %}
 ```csharp
@@ -108,21 +109,21 @@ public Text clientText;
 ```
 {% endcode %}
 
-Next, add more UI !  Exciting right!  :D
+接下来，添加更多UI！很激动人心吧！:D
 
-Don’t worry about the code yet, check the image below to see what is needed.
+暂时不用担心代码，查看下面的图像以了解所需内容。
 
-Inside “Panel Start” there should be 3 buttons, inputField and optional title text.\
-&#x20;Panel Stop should contain one button, and 2 texts, you can remove, add, and adjust things after, but for now follow this guide so everything matches up.
+在“Panel Start”内应该有3个按钮，inputField和可选的标题文本。\
+Panel Stop应包含一个按钮和2个文本，您可以在之后添加、移除和调整内容，但现在请按照此指南进行操作，以确保一切匹配。
 
-Drag all the new UI into the CanvasHUD script variables, if you have labelled them all nicely when going along, it will be an easier task.
+将所有新的UI拖放到CanvasHUD脚本变量中，如果你在操作时都很好地标记了它们，那么这将是一个更容易的任务。
 
-![Scene view, Hierarchy layout and script variables.](../.gitbook/assets/Canvas10.jpg)
+![场景视图，层次结构布局和脚本变量。](../.gitbook/assets/Canvas10.jpg)
 
-## Part 7
+## Part 7 (第7部分)
 
-Now for the code to make it all work, various parts will have comments to explain.\
-And this is it, you have now made your own Unity Canvas HUD UI, or upgraded the OnGUI NetworkManagerHUD!  :D
+现在是让所有内容运作的代码部分，各部分将有注释来解释。\
+这就是全部，你现在已经制作了自己的Unity Canvas HUD UI，或者升级了OnGUI NetworkManagerHUD！:D
 
 {% code title="CanvasHUD.cs" %}
 ```csharp
@@ -227,6 +228,3 @@ And this is it, you have now made your own Unity Canvas HUD UI, or upgraded the 
     }
 ```
 {% endcode %}
-
-
-

@@ -1,44 +1,44 @@
-# Data types
+# 数据类型(Data types)
 
-The client and server can pass data to each other via [Remote Actions](communications/remote-actions.md), [State Synchronization](synchronization/) or via [Network Messages](communications/network-messages.md)
+客户端和服务器可以通过[远程操作](communications/remote-actions.md)(Remote Actions)、[状态同步](synchronization/)(State Synchronization)或通过[网络消息](communications/network-messages.md)(Network Messages)相互传递数据。
 
-Mirror supports a number of data types you can use with these, including:
+Mirror支持多种数据类型，您可以在这些情况下使用，包括：
 
-* Basic C# types (byte, short, int, long, uint, ushort, ulong, float, double, char, string, etc.)
-* Built-in Unity math types (Vector3, Quaternion, Rect, Plane, etc.)
-* Built-in Unity types that are structs under the hood (Color, Sprite, Texture2D, Ray, etc.)
-* URI
-* `NetworkIdentity`, `NetworkBehaviour`
-  * **These should not be used in SyncVars or Sync\* Collections or Rpc's because they'll be null on the client if the corresponding object hasn't already been spawned.**
-* Game object with a `NetworkIdentity` component that have been network spawned
-  * **Not** prefabs!
-  * See important details in [GameObjects](gameobjects/) section below.
-* Structures with any of the above
-  * You must replace the whole struct value, not just change its properties
-  * It's recommended to implement IEquatable to avoid boxing, and to have the struct readonly because modifying one of properties does **not** cause a resync
-* Classes as long as each field has a supported data type
-  * You must replace the whole class value, not just change its properties
-  * **These will allocate garbage** and will be instantiated new on the receiver every time they're sent.
-* ScriptableObject as long as each field has a supported data type
-  * **These will allocate garbage** and will be instantiated new on the receiver every time they're sent.
-  * See details in the [ScriptableObjects](data-types.md#scriptable-objects) section below.
-* Arrays of any of the above
-  * Not supported with [Sync\* collections](synchronization/)
-* ArraySegments of any of the above
-  * Not supported with [Sync\* collections](synchronization/)
+- 基本的C#类型(byte, short, int, long, uint, ushort, ulong, float, double, char, string等)
+- 内置的Unity数学类型(Vector3, Quaternion, Rect, Plane等)
+- 内置的Unity类型，它们在底层是结构体(Color, Sprite, Texture2D, Ray等)
+- URI
+- `NetworkIdentity`(网络标识), `NetworkBehaviour`(网络行为)
+  - **这些不应该在SyncVars或Sync\*集合或Rpc中使用，因为如果对应的对象尚未生成，它们在客户端上将为null。**
+- 具有已经网络生成的`NetworkIdentity`组件的游戏对象
+  - **不是**预制体!
+  - 请查看下面[游戏对象](gameobjects/)(GameObjects)部分中的重要细节。
+- 具有上述任何类型的结构体
+  - 您必须替换整个结构体值，而不仅仅是更改其属性
+  - 建议实现IEquatable以避免装箱(boxing)，并且将结构体设置为只读，因为修改其中一个属性**不会**导致重新同步
+- 类，只要每个字段都具有支持的数据类型
+  - 您必须替换整个类值，而不仅仅是更改其属性
+  - **这些将分配垃圾(garbage)**，并且每次发送时都会在接收端实例化新的对象。
+- ScriptableObject，只要每个字段都具有支持的数据类型
+  - **这些将分配垃圾(garbage)**，并且每次发送时都会在接收端实例化新的对象。
+  - 请查看下面[ScriptableObjects](data-types.md#scriptable-objects)部分中的详细信息。
+- 上述任何类型的数组
+  - 与[Sync\*集合](synchronization/)(Sync\* collections)不兼容
+- 上述任何类型的ArraySegments
+  - 与[Sync\*集合](synchronization/)(Sync\* collections)不兼容
 
-## Game Objects <a href="#game-objects" id="game-objects"></a>
+## 游戏对象(Game Objects) <a href="#game-objects" id="game-objects"></a>
 
-Game Objects in SyncVars, SyncLists, and SyncDictionaries are fragile in some cases, and should be used with caution.
+在SyncVars、SyncLists和SyncDictionaries中的游戏对象在某些情况下是脆弱的，应谨慎使用。
 
-* As long as the game object _already exists_ on both the server and the client, the reference should be fine.
+* 只要游戏对象在服务器和客户端上都_已存在_，引用就应该正常。
 
-When the sync data arrives at the client, the referenced game object may not yet exist on that client, resulting in null values in the sync data. This is because internally Mirror passes the `netId` from the `NetworkIdentity` and tries to look it up on the client's `NetworClient.spawned` dictionary.
+当同步数据到达客户端时，引用的游戏对象可能在该客户端上尚不存在，导致同步数据中出现空值。这是因为在内部，Mirror 会传递 `NetworkIdentity` 的 `netId`，并尝试在客户端的 `NetworkClient.spawned` 字典中查找它。
 
-If the object hasn't been spawned on the client yet, no match will be found. It could be in the same payload, especially for joining clients, but after the sync data from another object.\
-&#x20;It could also be null because the game object is excluded from a client due to network visibility, e.g. [`Interest Management`](../interest-management/).
+如果对象尚未在客户端上生成，就不会找到匹配项。它可能在同一负载中，尤其是对于加入的客户端，但在另一个对象的同步数据之后。\
+&#x20;它也可能为空，因为游戏对象由于网络可见性而被从客户端排除，例如[`兴趣管理`](../interest-management/)。
 
-You may find that it's more robust to sync the `NetworkIdentity.netID` (uint) instead and do your own lookup in `NetworkClient.spawned` to get the object, perhaps in a coroutine:
+您可能会发现，将 `NetworkIdentity.netID` (uint) 进行同步，然后在 `NetworkClient.spawned` 中自行查找对象更加健壮，也许可以在协程中进行：
 
 ```csharp
     public GameObject target;
@@ -67,13 +67,13 @@ You may find that it's more robust to sync the `NetworkIdentity.netID` (uint) in
     }
 ```
 
-## Custom Data Types <a href="#custom-data-types" id="custom-data-types"></a>
+## 自定义数据类型 <a href="#custom-data-types" id="custom-data-types"></a>
 
-Sometimes you don't want mirror to generate serialization for your own types. For example, instead of serializing quest data, you may want to serialize just the quest id, and the receiver can look up the quest details by the id in a predefined list or database.
+有时您可能不希望 Mirror 为您自定义的类型生成序列化。例如，您可能希望仅序列化任务数据的任务 id，接收方可以通过预定义列表或数据库中的 id 查找任务详细信息。
 
-Sometimes you may want to serialize data which uses a different type not supported by Mirror, such as DateTime.
+有时您可能希望序列化使用 Mirror 不支持的不同类型的数据，例如 DateTime。
 
-You can add support for any type by adding extension methods to `NetworkWriter` and `NetworkReader`. For example, to add support for `DateTime`, add this somewhere in your project:
+您可以通过向 `NetworkWriter` 和 `NetworkReader` 添加扩展方法来为任何类型添加支持。例如，要为 `DateTime` 添加支持，请在项目的某个位置添加以下内容：
 
 ```csharp
 public static class DateTimeReaderWriter
@@ -90,13 +90,13 @@ public static class DateTimeReaderWriter
 }
 ```
 
-...then you can use `DateTime` in your `[Command]` or `SyncList`
+...然后您可以在您的 `[Command]` 或 `SyncList` 中使用 `DateTime`
 
-## Inheritance and Polymorphism <a href="#inheritance-and-polymorphism" id="inheritance-and-polymorphism"></a>
+## 继承和多态 <a href="#inheritance-and-polymorphism" id="inheritance-and-polymorphism"></a>
 
-Sometimes you might want to send a polymorphic data type to your commands. Mirror does not serialize the type name to keep messages small and for security reasons, therefore Mirror cannot figure out the type of object it received by looking at the message.
+有时您可能希望将多态数据类型发送到您的命令中。Mirror 不会序列化类型名称以保持消息的小巧和出于安全原因，因此 Mirror 无法通过查看消息来确定接收到的对象的类型。
 
-> **This code does not work out of the box.**
+> **This code does not work out of the box.** (此代码不能直接使用)
 
 ```csharp
 class Item 
@@ -142,9 +142,7 @@ class Player : NetworkBehaviour
 }
 ```
 
-CmdEquip will work if you provide a custom serializer for the `Item` type. For example:
-
-```csharp
+如果为`Item`类型提供自定义序列化器，CmdEquip将起作用。例如：
 
 public static class ItemSerializer 
 {
@@ -203,26 +201,26 @@ Instead of passing the scriptable object data, you can pass the name and the oth
 
 ```csharp
 [CreateAssetMenu(fileName = "New Armor", menuName = "Armor Data")]
-class Armor : ScriptableObject
+class Armor (护甲) : ScriptableObject
 {
-    public int Hitpoints;
-    public int Weight;
-    public string Description;
-    public Texture2D Icon;
+    public int Hitpoints; // 生命值
+    public int Weight; // 重量
+    public string Description; // 描述
+    public Texture2D Icon; // 图标
     // ...
 }
 
-public static class ArmorSerializer 
+public static class ArmorSerializer (护甲序列化器)
 {
     public static void WriteArmor(this NetworkWriter writer, Armor armor)
     {
-       // no need to serialize the data, just the name of the armor
+       // 无需序列化数据，只需护甲的名称
        writer.WriteString(armor.name);
     }
 
     public static Armor ReadArmor(this NetworkReader reader)
     {
-        // load the same armor by name.  The data will come from the asset in Resources folder
+        // 通过名称加载相同的护甲。数据将来自Resources文件夹中的资源
         return Resources.Load(reader.ReadString());
     }
 }

@@ -1,27 +1,29 @@
-# Multiplex Transport
+# 多路传输(Multiplex Transport)
 
-The Multiplex Transport is not a transport itself, but it allows you to combine other transports so that your clients can connect to your servers via either one of them.
+多路传输并不是一种传输方式，而是允许您将其他传输方式组合在一起，以便您的客户端可以通过其中任何一种连接到服务器。
 
-A common use case for the Multiplex Transport is a server listening for both WebGL and mobile  / desktop clients. Your WebGL clients can connect to the server using a [Websocket Transport](websockets-transport/) and your mobile or desktop clients can connect to the same server via TCP or UDP transports. You can configure any number of transports in the Multiplex Transport.
+多路传输的常见用例是服务器同时监听 WebGL 和移动端/桌面端客户端。您的 WebGL 客户端可以使用 [Websocket 传输(Websocket Transport)](websockets-transport/) 连接到服务器，而移动端或桌面端客户端可以通过 TCP 或 UDP 传输连接到同一服务器。您可以在多路传输中配置任意数量的传输方式。
 
-To use the Multiplex Transport follow these steps:
+要使用多路传输，请按照以下步骤进行操作：
 
-1. Add a game object with a Network Manager to your scene if you have not done so
-2. By default, Mirror will add KCP Transport to your Network Manager game object
-3. Add a Multiplex Transport component to the game object
-4. Assign the Multiplex Transport component in your Network Manager's transport field
-5. Add a Websocket Transport component to the game object
-6. Add the KCP Transport component to the Multiplex Transport as the first transport
-7. Add the Websocket Transport component to the Multiplex Transport as the second transport
+1. 如果尚未这样做，请向场景中添加一个带有 Network Manager 的游戏对象
+2. 默认情况下，Mirror 将向您的 Network Manager 游戏对象添加 KCP 传输(KCP Transport)
+3. 向游戏对象添加一个多路传输(Multiplex Transport)组件
+4. 在 Network Manager 的传输字段中分配多路传输组件
+5. 向游戏对象添加一个 Websocket 传输(Websocket Transport)组件
+6. 将 KCP 传输组件添加到多路传输中作为第一个传输方式
+7. 将 Websocket 传输组件添加到多路传输中作为第二个传输方式
 
-Please note that KCP and Websocket Transport cannot listen to the same port. By default KCP listens to 7777 (UDP) and the websocket transport listens to 7778 (TCP).
+请注意，KCP 和 Websocket 传输无法监听相同的端口。默认情况下，KCP 监听 7777 (UDP)，而 Websocket 传输监听 7778 (TCP)。
 
-If you build your game as a WebGL game, the KCP Transport will be skipped and your client will use the websocket transport. If you build your game as a mobile or desktop app, it will choose KCP Transport. The server will happily accept connections from both.
+如果将游戏构建为 WebGL 游戏，则将跳过 KCP 传输，客户端将使用 Websocket 传输。如果将游戏构建为移动端或桌面应用程序，则将选择 KCP 传输。服务器将高兴地接受来自两者的连接。
 
-Here is what the configuration should look like:
+以下是配置的样式：
 
 <div align="left">
 
 <img src="../../.gitbook/assets/image (103).png" alt="">
 
 </div>
+
+(Original: Multiplex Transport)

@@ -1,23 +1,23 @@
-# Edgegap Lobby
+# Edgegap 大厅 (Edgegap Lobby)
 
-The `EdgegapLobbyKcpTransport` uses Edgegap's [Lobby Service](https://docs.edgegap.com/docs/lobby/functions) to start relay sessions and manage lobbies for you. It uses [KCP](../kcp-transport.md) for the actual connection.
+`EdgegapLobbyKcpTransport` 使用 Edgegap 的 [大厅服务 (Lobby Service)](https://docs.edgegap.com/docs/lobby/functions) 来启动中继会话并为您管理大厅。它使用 [KCP](../kcp-transport.md) 来进行实际连接。
 
-It is by far the easiest way to use relays and requires basically no setup, if all you need is peer-to-peer/player hosted lobbies with no matchmaking.
+这绝对是使用中继的最简单方式，基本上不需要任何设置，如果您只需要点对点/玩家托管大厅而无需进行匹配。
 
-The lobby transport allows you to create/join lobbies and list available lobbies for players to select.
+大厅传输允许您创建/加入大厅并列出玩家可以选择的可用大厅。
 
-We provide a [simple lobby UI example to let you hit the ground running](../../examples/edgegap-lobby.md)
+我们提供了一个 [简单的大厅 UI 示例，让您可以快速上手](../../examples/edgegap-lobby.md)
 
-### Setup
+### 设置 (Setup)
 
-Setup couldn't be simpler, all you need to do is deploy a lobby service. You can either do this [manually via the Edgegap API](https://docs.edgegap.com/api/#tag/Lobbies/operation/lobby-create) or use the built-in UI on the transport.
+设置非常简单，您只需要部署一个大厅服务。您可以通过 [Edgegap API 手动进行部署](https://docs.edgegap.com/api/#tag/Lobbies/operation/lobby-create)，或者使用传输中内置的 UI。
 
-<figure><img src="../../../.gitbook/assets/image (151).png" alt=""><figcaption><p>Create &#x26; Deploy Lobby button on the EdgegapLobbyKcpTransport</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (151).png" alt=""><figcaption><p>在 EdgegapLobbyKcpTransport 上的创建和部署大厅按钮</p></figcaption></figure>
 
-Once you have clicked the "Create\&Deploy Lobby" button, a window will open:
+点击“创建和部署大厅”按钮后，将会打开一个窗口：
 
-<figure><img src="../../../.gitbook/assets/image (154).png" alt=""><figcaption><p>Create &#x26; Deploy Lobby window</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (154).png" alt=""><figcaption><p>创建和部署大厅窗口</p></figcaption></figure>
 
-Simply enter your edgegap API key (if you don't have one, clicking the "I have no api key?" button will conveniently direct you to the edgegap dashboard page where you can create one) and a unique lobby name of your choosing and hit create. It will take a brief moment, as it waits until the service is fully deployed, and then the lobby url on the transport will be filled out for you.
+只需输入您的 Edgegap API 密钥（如果您没有，点击“我没有 API 密钥？”按钮将方便地将您引导到 Edgegap 仪表板页面，您可以在那里创建一个），然后输入您选择的唯一大厅名称，然后点击创建。它会花费一小段时间，因为它会等待服务完全部署，然后传输上的大厅 URL 将自动填充。
 
-Once you've done that, you're all ready to go.
+完成这些步骤后，您就可以开始了。

@@ -1,14 +1,14 @@
-# NGINX
+# NGINX (原文: NGINX)
 
-NGINX is a fast and lightweight web server that can also function as a reverse proxy. It is commonly used for high traffic websites and applications.
+NGINX是一个快速且轻量级的Web服务器，也可以作为反向代理。它通常用于高流量的网站和应用程序。
 
-Adding a reverse proxy to NGINX is as simple as defining a `server` directive definition. On Debian / Ubuntu this is usually done by creating a new file under `/etc/nginx/sites-enabled/` or `/etc/nginx/conf.d/` (double-check the NGINX `include` directive defined in the file `/etc/nginx/nginx.conf`). For this document we're going to assume NGINX is configured to include files from `/etc/nginx/sites-enabled/`.
+在NGINX中添加一个反向代理就像定义一个`server`指令一样简单。在Debian / Ubuntu中，通常通过在`/etc/nginx/sites-enabled/`或`/etc/nginx/conf.d/`下创建一个新文件来完成这个操作（请双重检查文件`/etc/nginx/nginx.conf`中定义的NGINX `include`指令）。对于本文档，我们将假设NGINX已配置为包含来自`/etc/nginx/sites-enabled/`的文件。
 
-For this document we're going to explore writing NGINX configuration for WebGL game clients and Mirror game servers.
+在本文档中，我们将探讨为WebGL游戏客户端和Mirror游戏服务器编写NGINX配置。
 
 ---
 
-It is worth noting that a the main `/etc/nginx/nginx.conf` file includes files from `/etc/nginx/sites-enabled/` into its `http` directive. The instruction to do this looks something like the following:
+值得注意的是，主要的`/etc/nginx/nginx.conf`文件将`/etc/nginx/sites-enabled/`中的文件包含到其`http`指令中。执行此操作的指令看起来类似于以下内容：
 
 ```nginx configuration
 # ...
@@ -21,9 +21,9 @@ http {
 
 ```
 
-This is relevant if you are trying to follow online guides as sometimes content authors anticipate you writing a new `nginx.conf` file and other content authors anticipate you writing new `*.conf` files in `sites-enabled`. A clue is if their code sample shows `http`, which is a directive used for TCP connections, and if `http` is in the code sample then you can't use the NGINX configuration without modification in the `sites-enabled` directory because an `http` directive cannot exist in an `http` block.
+如果您试图遵循在线指南，有时内容作者会预期您编写一个新的`nginx.conf`文件，而其他内容作者则预期您在`sites-enabled`中编写新的`*.conf`文件。一个线索是，如果他们的代码示例显示`http`，这是用于TCP连接的指令，如果代码示例中有`http`，那么您不能在`sites-enabled`目录中不经修改地使用NGINX配置，因为`http`指令不能存在于`http`块中。
 
-If you wanted to set up an NGINX server to reverse proxy UDP connections (for example if you are using KcpTransport) then you'd want to add a `stream` directive. Furthermore, if you wanted to set up a similar mechanism as `sites-enabled` but for the `stream` directive you can update the `nginx.conf` file as follows:
+如果您想要设置一个NGINX服务器来反向代理UDP连接（例如，如果您正在使用KcpTransport），那么您需要添加一个`stream`指令。此外，如果您想要为`stream`指令设置类似于`sites-enabled`的机制，您可以按照以下方式更新`nginx.conf`文件：
 
 ```nginx configuration
 # ...
@@ -37,15 +37,15 @@ stream {
 
 ```
 
-For now UDP connections will be out of scope for this document as this document exists to support the Simple Web Transport but hopefully this serves as a good starting point if you are interested in NGINX UDP connections.
+目前，UDP连接将超出本文档的范围，因为本文档的存在是为了支持Simple Web Transport，但希望这可以作为一个很好的起点，如果您对NGINX UDP连接感兴趣。
 
-### WebGL Game Client NGINX Configuration
+### WebGL 游戏客户端 NGINX 配置（WebGL Game Client NGINX Configuration）
 
-To serve the WebGL game client we must keep in mind that from the Unity Editor we can build Brotli (`.br`) compressed files, GZIP (`.gz`) compressed files, or we can build WebGL game clients without compression. In order to serve either `.br` or `.gz` compressed files in our web server we must pass back proper `Content-Encoding` header with either `br` or `gzip` and we should pass back the appropriate `Content-Type` header for the file.
+为了提供 WebGL 游戏客户端，我们必须记住，从 Unity 编辑器中，我们可以构建 Brotli（`.br`）压缩文件，GZIP（`.gz`）压缩文件，或者我们可以构建没有压缩的 WebGL 游戏客户端。为了在我们的 Web 服务器中提供 `.br` 或 `.gz` 压缩文件，我们必须返回正确的 `Content-Encoding` 头，其中包含 `br` 或 `gzip`，并且我们应该返回适当的 `Content-Type` 头给文件。
 
-You can follow [Unity's Server Configuration Documentation](https://docs.unity3d.com/Manual/webgl-server-configuration-code-samples.html) but I prefer this configuration. This configuration expects you to put your webGL game client build in `/usr/share/nginx/html`.
+你可以参考 [Unity 的服务器配置文档](https://docs.unity3d.com/Manual/webgl-server-configuration-code-samples.html)，但我更喜欢这个配置。这个配置期望你将你的 webGL 游戏客户端构建放在 `/usr/share/nginx/html` 中。
 
-Note: the `server_name` is set to `localhost` instead of your domain; this NGINX server will be used later.
+注意：`server_name` 被设置为 `localhost` 而不是你的域名；这个 NGINX 服务器将在以后使用。
 
 `/etc/nginx/sites-enabled/webgl-game-client.conf`
 ```nginx configuration
@@ -93,15 +93,17 @@ server {
 }
 ```
 
-### NGINX Configuration for a Mirror Game Server
+（WebGL Game Client NGINX Configuration）
 
-Now that we have accounted for the WebGL game client we can focus on appropriate NGINX configuration for the Mirror Game Server. The expectation is that you will produce a "Dedicated Server" with the _Target Platform_ of "Linux" as your Mirror Game Server. Starting the Mirror game server should be as simple as executing your produced x86_64 binary (e.g. `./mirror-game-server.x86_64` assuming a build name of `mirror-game-server`) after uploading all game server files. The expectation is that the Mirror game server is run on the same server as NGINX; thus requests are proxied locally (`127.0.0.1`).
+### Mirror 游戏服务器的 NGINX 配置（NGINX Configuration for a Mirror Game Server）
 
-The Mirror Game Server exposes an HTTP endpoint to allow client websocket connections (`ws://` protocol) or secure websocket connections (`wss://`) to use. When you start the Mirror Game Server with Simple Web Transport it will listen for these connections on the port defined by SWT.
+现在我们已经考虑了 WebGL 游戏客户端，我们可以专注于 Mirror 游戏服务器的适当 NGINX 配置。期望是你将生成一个 "Dedicated Server"，_目标平台_ 为 "Linux" 作为你的 Mirror 游戏服务器。启动 Mirror 游戏服务器应该就像执行你生成的 x86_64 二进制文件一样简单（例如 `./mirror-game-server.x86_64`，假设构建名称为 `mirror-game-server`），在上传所有游戏服务器文件后。期望是 Mirror 游戏服务器在与 NGINX 相同的服务器上运行；因此请求在本地被代理（`127.0.0.1`）。
 
-Our goal with the NGINX configuration is to expose an endpoint on a different port than SWT and proxy requests to the Mirror Game Server HTTP endpoint.
+Mirror 游戏服务器公开一个 HTTP 端点，以允许客户端 websocket 连接（`ws://` 协议）或安全 websocket 连接（`wss://`）使用。当你使用 Simple Web Transport 启动 Mirror 游戏服务器时，它将在 SWT 定义的端口上监听这些连接。
 
-The following config defines a reverse proxy listening on port 27778 to proxy to 127.0.0.1:7778.
+我们在 NGINX 配置中的目标是在不同的端口上公开一个端点，并将请求代理到 Mirror 游戏服务器的 HTTP 端点。
+
+以下配置定义了一个反向代理，监听端口27778，代理到127.0.0.1:7778。
 
 `/etc/nginx/sites-enabled/mirror-game-server-single.conf`
 
@@ -151,11 +153,11 @@ server {
 }
 ```
 
-### Reverse Proxy for Mirror Game Server(s) and a WebGL Game Client (SSL Enabled & SSL Termination)
+### 反向代理用于 Mirror 游戏服务器和 WebGL 游戏客户端（启用 SSL & SSL 终止）
 
-The following config defined a reverse proxy listening on port 8443 to serve WebGL game client and proxy to a Mirror game server. The `upstream` directive is used as an alias for the _web game client_ server and the _mirror game server_ server. Note: the `upstream` directive can be used to load balance requests across multiple servers as demonstrated in comments in the sample config.
+以下配置定义了一个反向代理，监听端口8443，用于提供 WebGL 游戏客户端并代理到 Mirror 游戏服务器。`upstream` 指令被用作 _web 游戏客户端_ 服务器和 _mirror 游戏服务器_ 服务器的别名。注意：`upstream` 指令可以用于在多个服务器之间负载均衡请求，如示例配置中的注释所示。
 
-SSL termination is the concept that a player interacts over HTTPS or WSS with a server configured to handle those requests (meaning certificates are configured with the server) but then the server proxies the requests to other servers over HTTP or WS. This configuration is common though to achieve "encryption in transit" SSL termination should not be used.
+SSL 终止是一个概念，玩家通过 HTTPS 或 WSS 与配置为处理这些请求的服务器进行交互（意味着服务器配置了证书），然后服务器代理请求到其他服务器通过 HTTP 或 WS。尽管这种配置很常见，但为了实现"传输中的加密"，不应使用 SSL 终止。
 
 `/etc/nginx/sites-enabled/reverse-proxy.conf`
 ```nginx configuration

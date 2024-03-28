@@ -1,18 +1,18 @@
-# SyncVars
+# SyncVars(同步变量)
 
-SyncVars are properties of classes that inherit from NetworkBehaviour, which are synchronized from the server to clients. When a game object is spawned, or a new player joins a game in progress, they are sent the latest state of all SyncVars on networked objects that are visible to them. Use the `SyncVar` custom attribute to specify which variables in your script you want to synchronize.
+SyncVars是从NetworkBehaviour类继承的属性，这些属性从服务器同步到客户端。当游戏对象被生成或新玩家加入进行中的游戏时，它们会接收到所有可见的网络对象上的所有SyncVars的最新状态。使用`SyncVar`自定义属性来指定您想要同步的脚本中的变量。
 
-The state of SyncVars is applied to game objects on clients before `OnStartClient()` is called, so the state of the object is always up-to-date inside `OnStartClient()`.
+在调用`OnStartClient()`之前，SyncVars的状态会应用到客户端的游戏对象上，因此在`OnStartClient()`内对象的状态始终是最新的。
 
-SyncVars can use any [type supported by Mirror](../data-types.md). You can have up to 64 SyncVars on a single NetworkBehaviour script, including SyncLists (see next section, below).
+SyncVars可以使用[Mirror支持的任何类型](../data-types.md)。您可以在单个NetworkBehaviour脚本上有多达64个SyncVars，包括SyncLists（请参见下面的下一节）。
 
-The server automatically sends SyncVar updates when the value of a SyncVar changes, so you do not need to track when they change or send information about the changes yourself. Changing a value in the inspector will not trigger an update.
+当SyncVar的值发生变化时，服务器会自动发送SyncVar更新，因此您无需跟踪它们何时更改或自己发送有关更改的信息。在检视器中更改值不会触发更新。
 
-> The [SyncVar hook](syncvar-hooks.md) attribute can be used to specify a method to be called when the SyncVar changes value on the client.
+> [SyncVar hook](syncvar-hooks.md)属性可用于指定在客户端SyncVar更改值时要调用的方法。
 
-## SyncVar Example <a href="#syncvar-example" id="syncvar-example"></a>
+## SyncVar示例 <a href="#syncvar-example" id="syncvar-example"></a>
 
-Let's say we have a networked object with a script called Enemy:
+假设我们有一个名为Enemy的带有脚本的网络对象：
 
 ```csharp
 public class Enemy : NetworkBehaviour
@@ -29,7 +29,7 @@ public class Enemy : NetworkBehaviour
 }
 ```
 
-The `PlayerController` might look like this:
+`PlayerController`可能如下所示：
 
 ```csharp
 public class PlayerController : NetworkBehaviour
@@ -53,11 +53,11 @@ public class PlayerController : NetworkBehaviour
 }
 ```
 
-In this example, when a Player clicks on an Enemy, the networked enemy game object is assigned to `PlayerController.currentTarget`. When the player presses X, with a correct target selected, that target is passed through a Command, which runs on the server, to decrement the `health` SyncVar. All clients will be updated with that new value. You can then have a UI on the enemy to show the current value.
+在这个示例中，当玩家点击Enemy时，网络敌人游戏对象被分配给`PlayerController.currentTarget`。当玩家按下X键时，选择了正确目标，该目标通过一个在服务器上运行的Command传递，以减少`health` SyncVar。所有客户端都将更新为该新值。然后您可以在敌人上有一个UI来显示当前值。
 
-## Class inheritance <a href="#class-inheritance" id="class-inheritance"></a>
+## 类继承 <a href="#class-inheritance" id="class-inheritance"></a>
 
-SyncVars work with class inheritance. Consider this example:
+SyncVars与类继承一起工作。考虑以下示例：
 
 ```csharp
 class Pet : NetworkBehaviour
@@ -73,6 +73,6 @@ class Cat : Pet
 }
 ```
 
-You can attach the Cat component to your cat prefab, and it will synchronize both it's `name` and `color`.
+您可以将Cat组件附加到您的猫预制件上，它将同步其`name`和`color`。
 
-> **Warning** Both `Cat` and `Pet` should be in the same assembly. If they are in separate assemblies, make sure not to change `name` from inside `Cat` directly, add a method to `Pet` instead.
+> **警告** `Cat`和`Pet`应该在同一个程序集中。如果它们在不同的程序集中，请确保不直接从`Cat`内部更改`name`，而是在`Pet`中添加一个方法。 (Warning: Both `Cat` and `Pet` should be in the same assembly. If they are in separate assemblies, make sure not to change `name` from inside `Cat` directly, add a method to `Pet` instead.)

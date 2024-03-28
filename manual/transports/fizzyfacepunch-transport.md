@@ -2,23 +2,23 @@
 description: https://github.com/Chykary/FizzyFacepunch/
 ---
 
-# FizzyFacepunch Transport
+# FizzyFacepunch 传输 (Transport)
 
-FizzyFacepunch is a Steam P2P transport for Mirror, it utilizes Steam's P2P service to directly connect or relay your connection to another player. FizzyFacepunch is based on the [Facepunch.Steamworks](https://github.com/Facepunch/Facepunch.Steamworks) wrapper.
+FizzyFacepunch 是 Mirror 的 Steam P2P 传输插件，它利用 Steam 的 P2P 服务直接连接或中继您与另一玩家的连接。FizzyFacepunch 基于 [Facepunch.Steamworks](https://github.com/Facepunch/Facepunch.Steamworks) 封装。
 
-You can get the release [**Here**](https://github.com/Chykary/FizzyFacepunch/releases) or you can clone the repo [**Here**](https://github.com/Chykary/FizzyFacepunch).
+您可以在这里获取发布版本 [**Here**](https://github.com/Chykary/FizzyFacepunch/releases)，或者您可以克隆仓库 [**Here**](https://github.com/Chykary/FizzyFacepunch)。
 
-## Features <a href="#features" id="features"></a>
+## 特性 (Features) <a href="#features" id="features"></a>
 
-* Multiple Customizable Channels : You can customize the channels in the transport, whether you want just 1 or 5 channels that are unreliable or reliable (best to leave channel 0 as reliable).
-* Steam Nat Punching & Relay : The transport will use Steam to do Nat Punching to your destination, and if that doesn't work, steam's relay Server will be used to ensure you can always connect (latency may vary).
-* No Code Changes Needed : If you Already use Mirror, you just need to slap this transport in (maybe add your steam App ID in your build), and everything should work the same like any other Mirror Transport. "It Just Works" -Todd Howard
+* 多个可自定义通道 (Channels)：您可以在传输中自定义通道，无论您只想要 1 个还是 5 个不可靠或可靠的通道 (最好将通道 0 设置为可靠)。
+* Steam Nat Punching & Relay：传输将使用 Steam 对目标进行 Nat Punching，如果这不起作用，将使用 Steam 的中继服务器来确保您始终可以连接 (延迟可能有所不同)。
+* 无需更改代码：如果您已经在使用 Mirror，您只需将此传输插件添加进去 (可能需要在构建中添加您的 Steam 应用程序 ID)，一切应该像任何其他 Mirror 传输插件一样工作。"它只是起作用" -Todd Howard
 
 ![](<../../.gitbook/assets/image (28).png>)
 
-## Credits <a href="#credits" id="credits"></a>
+## 鸣谢 (Credits) <a href="#credits" id="credits"></a>
 
-* [Chykary](https://github.com/Chykary/FizzyFacepunch) : The author of this Transport.
-* [Facepunch](https://github.com/Facepunch) : Creator of Facepunch.Steamworks.
-* [vis2k](https://github.com/vis2k) : Creator of Mirror.
-* Valve : Steam
+* [Chykary](https://github.com/Chykary/FizzyFacepunch)：本传输插件的作者。
+* [Facepunch](https://github.com/Facepunch)：Facepunch.Steamworks 的创建者。
+* [vis2k](https://github.com/vis2k)：Mirror 的创建者。
+* Valve：Steam

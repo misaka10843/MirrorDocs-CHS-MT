@@ -1,18 +1,18 @@
-# Remote Actions
+# 远程操作(Remote Actions)
 
-The network system has ways to perform actions across the network. These type of actions are sometimes called Remote Procedure Calls. There are two types of RPCs in the network system, Commands - which are called from the client and run on the server; and ClientRpc calls - which are called on the server and run on clients.
+网络系统有方法可以在网络上执行操作。这种类型的操作有时被称为远程过程调用(Remote Procedure Calls)。网络系统中有两种类型的RPCs，Commands - 从客户端调用并在服务器上运行；以及ClientRpc调用 - 在服务器上调用并在客户端上运行。
 
-The diagram below shows the directions that remote actions take:
+下面的图表显示了远程操作的方向：
 
 ![](<../../../.gitbook/assets/image (96).png>)
 
 ## Commands <a href="#commands" id="commands"></a>
 
-Commands are sent from player objects on the client to player objects on the server. For security, Commands can only be sent from YOUR player object by default, so you cannot control the objects of other players. You can bypass the authority check using `[Command(requiresAuthority = false)]`.
+Commands是从客户端的玩家对象发送到服务器上的玩家对象。出于安全考虑，默认情况下，Commands只能从您的玩家对象发送，因此您无法控制其他玩家的对象。您可以通过`[Command(requiresAuthority = false)]`来绕过权限检查。
 
-To make a function into a command, add the \[Command] custom attribute to it, and optionally add the “Cmd” prefix for naming convention. This function will now be run on the server when it is called on the client. Any parameters of [allowed data type](../data-types.md) will be automatically passed to the server with the command.
+要将函数转换为命令，将\[Command]自定义属性添加到函数中，并可选择为命名约定添加“Cmd”前缀。当在客户端调用时，此函数现在将在服务器上运行。任何[允许的数据类型](../data-types.md)的参数将自动传递到服务器与命令一起。
 
-Commands functions should have the prefix “Cmd” and cannot be static. This is a hint when reading code that calls the command - this function is special and is not invoked locally like a normal function.
+Commands函数应该具有前缀“Cmd”并且不能是静态的。这是在阅读调用命令的代码时的提示 - 此函数是特殊的，不像普通函数那样在本地调用。
 
 ```csharp
 public class Player : NetworkBehaviour
@@ -42,19 +42,19 @@ public class Player : NetworkBehaviour
 }
 ```
 
-Be careful of sending commands from the client every frame! This can cause a lot of network traffic.
+小心每帧从客户端发送命令！这可能会导致大量的网络流量。
 
-### Bypassing Authority
+### 绕过权限检查
 
-It is possible to invoke commands on non-player objects if any of the following are true:
+如果以下任一条件为真，则可以在非玩家对象上调用命令：
 
-* The object was spawned with client authority
-* The object has client authority set with `NetworkIdentity.AssignClientAuthority`
-* the Command has the `requiresAuthority` option set false.
-  * You can include an optional `NetworkConnectionToClient sender = null` parameter in the Command method signature and Mirror will fill in the sending client for you.
-  * Do not try to set a value for this optional parameter...it will be ignored.
+* 该对象是使用客户端权限生成的
+* 该对象已使用`NetworkIdentity.AssignClientAuthority`设置了客户端权限
+* 该Command的`requiresAuthority`选项设置为false。
+  * 您可以在Command方法签名中包含一个可选的`NetworkConnectionToClient sender = null`参数，Mirror将为您填充发送客户端。
+  * 不要尝试为此可选参数设置值...它将被忽略。
 
-Commands sent from these objects are run on the server instance of the object, not on the associated player object for the client.
+从这些对象发送的Commands在对象的服务器实例上运行，而不是在客户端的关联玩家对象上运行。
 
 ```csharp
 public enum DoorState : byte
@@ -96,11 +96,11 @@ public class Door : NetworkBehaviour
 }
 ```
 
-## ClientRpc Calls <a href="#clientrpc-calls" id="clientrpc-calls"></a>
+## ClientRpc 调用 <a href="#clientrpc-calls" id="clientrpc-calls"></a>
 
-ClientRpc calls are sent from objects on the server to objects on clients. They can be sent from any server object with a NetworkIdentity that has been spawned. Since the server has authority, then there no security issues with server objects being able to send these calls. To make a function into a ClientRpc call, add the \[ClientRpc] custom attribute to it, and optionally add the “Rpc” prefix for naming convention. This function will now be run on clients when it is called on the server. Any parameters of [allowed data type](../data-types.md) will automatically be passed to the clients with the ClientRpc call..
+ClientRpc 调用是从服务器上的对象发送到客户端上的对象。它们可以从任何已生成的具有 NetworkIdentity 的服务器对象发送。由于服务器具有权限，因此服务器对象能够发送这些调用没有安全问题。要将函数转换为 ClientRpc 调用，请向其添加 \[ClientRpc\] 自定义属性，并可选择为命名约定添加“Rpc”前缀。当在服务器上调用此函数时，该函数现在将在客户端上运行。任何 [允许的数据类型](../data-types.md) 的参数将自动通过 ClientRpc 调用传递给客户端。
 
-ClientRpc functions should have the prefix “Rpc” and cannot be static. This is a hint when reading code that calls the method - this function is special and is not invoked locally like a normal function.
+ClientRpc 函数应具有前缀“Rpc”并且不能是静态的。这是在阅读调用该方法的代码时的一个提示 - 此函数是特殊的，不像普通函数那样在本地调用。
 
 ```csharp
 public class Player : NetworkBehaviour
@@ -123,22 +123,22 @@ public class Player : NetworkBehaviour
 }
 ```
 
-When running a game as a host with a local client, ClientRpc calls will be invoked on the local client even though it is in the same process as the server. So the behaviours of local and remote clients are the same for ClientRpc calls.
+当作为主机运行游戏并具有本地客户端时，即使本地客户端与服务器在同一进程中，ClientRpc 调用也将在本地客户端上调用。因此，对于 ClientRpc 谦虚，本地客户端和远程客户端的行为是相同的。
 
-### Excluding Owner
+### 排除所有者
 
-ClientRpc messages are only sent to observers of an object according to its [Network Visibility](../../interest-management/). Player objects are always observers of themselves. In some cases, you may want to exclude the owner client when calling a ClientRpc. This is done with the `includeOwner` option: `[ClientRpc(includeOwner = false)]`.
+ClientRpc 消息仅发送给对象的观察者，根据其 [网络可见性](../../interest-management/)。玩家对象始终是自己的观察者。在某些情况下，您可能希望在调用 ClientRpc 时排除所有者客户端。这可以通过 `includeOwner` 选项来实现：`[ClientRpc(includeOwner = false)]`。
 
-## TargetRpc Calls <a href="#targetrpc-calls" id="targetrpc-calls"></a>
+## TargetRpc 调用 <a href="#targetrpc-calls" id="targetrpc-calls"></a>
 
-TargetRpc functions are called by user code on the server, and then invoked on the corresponding client object on the client of the specified `NetworkConnection`. The arguments to the RPC call are serialized across the network, so that the client function is invoked with the same values as the function on the server. These functions should begin with the prefix "Target" for naming convention and cannot be static.
+TargetRpc 函数由服务器上的用户代码调用，然后在指定的 `NetworkConnection` 的客户端对象上调用。RPC 调用的参数在网络上进行序列化，以便客户端函数以与服务器上函数相同的值调用。这些函数应以“Target”前缀开始，以符合命名约定，并且不能是静态的。
 
-**Context Matters:**
+**上下文很重要：** (Context Matters)
 
-* If the first parameter of your TargetRpc method is a `NetworkConnection` then that's the connection that will receive the message regardless of context.
-* If the first parameter is any other type, then the owner client of the object with the script containing your TargetRpc will receive the message.
+* 如果你的 TargetRpc 方法的第一个参数是 `NetworkConnection`，那么无论上下文如何，该连接都将接收到消息。
+* 如果第一个参数是其他任何类型，则包含你的 TargetRpc 的脚本对象的所有者客户端将接收到消息。
 
-This example shows how a client can use a Command to make a request to the server (`CmdMagic`) by including another Player's `connectionToClient` as one of the parameters of the TargetRpc invoked directly from that Command:
+这个示例展示了客户端如何使用 Command 向服务器发出请求(`CmdMagic`)，通过在从该 Command 直接调用的 TargetRpc 中包含另一个玩家的 `connectionToClient` 作为参数：
 
 ```csharp
 public class Player : NetworkBehaviour
@@ -178,8 +178,8 @@ public class Player : NetworkBehaviour
 }
 ```
 
-## Arguments to Remote Actions <a href="#arguments-to-remote-actions" id="arguments-to-remote-actions"></a>
+## 远程操作的参数 <a href="#arguments-to-remote-actions" id="arguments-to-remote-actions"></a> (Arguments to Remote Actions)
 
-The arguments passed to commands and ClientRpc calls are serialized and sent over the network. You can use any [supported mirror type](../data-types.md).
+传递给命令和 ClientRpc 调用的参数将被序列化并通过网络发送。你可以使用任何[支持的 Mirror 类型](../data-types.md)。
 
-Arguments to remote actions cannot be sub-components of game objects, such as script instances or Transforms.
+远程操作的参数不能是游戏对象的子组件，比如脚本实例或 Transforms。

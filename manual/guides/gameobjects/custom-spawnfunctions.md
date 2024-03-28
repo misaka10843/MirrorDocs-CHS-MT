@@ -1,12 +1,12 @@
-# Custom Spawn Functions
+# 自定义生成函数（Custom Spawn Functions）
 
-You can use spawn handler functions to customize the default behavior when creating spawned game objects on the client. Spawn handler functions ensure you have full control of how you spawn the game object, as well as how you destroy it.
+您可以使用生成处理函数来自定义在客户端创建生成的游戏对象时的默认行为。生成处理函数确保您完全控制如何生成游戏对象，以及如何销毁它。
 
-Use `NetworkClient.RegisterSpawnHandler` or `NetworkClient.RegisterPrefab` to register functions to spawn and destroy client game objects. The server creates game objects directly, and then spawns them on the clients through this functionality. This functions takes either the asset ID or a prefab and two function delegates: one to handle creating game objects on the client, and one to handle destroying game objects on the client. The asset ID can be a dynamic one, or just the asset ID found on the prefab game object you want to spawn.
+使用 `NetworkClient.RegisterSpawnHandler` 或 `NetworkClient.RegisterPrefab` 来注册生成和销毁客户端游戏对象的函数。服务器直接创建游戏对象，然后通过此功能在客户端生成它们。这些函数接受资产 ID 或预制体以及两个函数委托：一个用于处理在客户端创建游戏对象，另一个用于处理在客户端销毁游戏对象。资产 ID 可以是动态的，也可以是您想要生成的预制体游戏对象上找到的资产 ID。
 
-The Spawn / Unspawn delegates will look something like this:
+生成 / 销毁委托看起来类似于：
 
-**Spawn Handler**
+**生成处理函数**
 
 ```csharp
 GameObject SpawnDelegate(Vector3 position, System.Guid assetId) 
@@ -15,7 +15,7 @@ GameObject SpawnDelegate(Vector3 position, System.Guid assetId)
 }
 ```
 
-or
+或
 
 ```csharp
 GameObject SpawnDelegate(SpawnMessage msg) 
@@ -24,7 +24,7 @@ GameObject SpawnDelegate(SpawnMessage msg)
 }
 ```
 
-**UnSpawn Handler**
+**销毁处理函数**
 
 ```csharp
 void UnSpawnDelegate(GameObject spawned) 
@@ -33,9 +33,9 @@ void UnSpawnDelegate(GameObject spawned)
 }
 ```
 
-When a prefab is saved its `assetId` field will be automatically set. If you want to create prefabs at runtime you will have to generate a new GUID.
+当预制体保存时，其 `assetId` 字段将自动设置。如果要在运行时创建预制体，您将需要生成一个新的 GUID。
 
-### **Generate Prefab At Runtime**
+### **在运行时生成预制体**
 
 ```csharp
 // generate a new unique assetId 
@@ -45,21 +45,21 @@ System.Guid creatureAssetId = System.Guid.NewGuid();
 NetworkClient.RegisterSpawnHandler(creatureAssetId, SpawnCreature, UnSpawnCreature);
 ```
 
-**Use existing prefab**
+**使用现有预制体**
 
 ```csharp
-// register prefab you'd like to custom spawn and pass in handlers
+// 注册您想要自定义生成的预制体并传入处理程序
 NetworkClient.RegisterPrefab(coinAssetId, SpawnCoin, UnSpawnCoin);
 ```
 
-**Spawn on Server**
+**在服务器上生成**
 
 ```csharp
-// spawn a coin - SpawnCoin is called on client
+// 生成一个硬币 - 在客户端调用 SpawnCoin
 NetworkServer.Spawn(gameObject, coinAssetId);
 ```
 
-The spawn functions themselves are implemented with the delegate signature. Here is the coin spawner. The `SpawnCreature` would look the same, but have different spawn logic:
+生成函数本身是使用委托签名实现的。这是硬币生成器。`SpawnCreature` 看起来一样，但具有不同的生成逻辑：
 
 ```csharp
 public GameObject SpawnCoin(SpawnMessage msg)
@@ -73,17 +73,17 @@ public void UnSpawnCoin(GameObject spawned)
 }
 ```
 
-When using custom spawn functions, it is sometimes useful to be able to unspawn game objects without destroying them. This can be done by calling `NetworkServer.UnSpawn`. This causes the object to be `Reset` on the server and sends a `ObjectDestroyMessage` to clients. The `ObjectDestroyMessage` will cause the custom unspawn function to be called on the clients. If there is no unspawn function the object will instead be `Destroy`
+在使用自定义生成函数时，有时可以无需销毁游戏对象而取消生成它们。这可以通过调用 `NetworkServer.UnSpawn` 来实现。这会导致对象在服务器上被 `Reset`，并向客户端发送 `ObjectDestroyMessage`。`ObjectDestroyMessage` 将导致在客户端调用自定义取消生成函数。如果没有取消生成函数，则对象将被 `Destroy`。
 
-Note that on the host, game objects are not spawned for the local client, because they already exist on the server. This also means that no spawn or unspawn handler functions are called.
+注意，在主机上，本地客户端不会为游戏对象生成，因为它们已经存在于服务器上。这也意味着不会调用生成或销毁处理函数。
 
-### Pooling Game Objects
+### 游戏对象池
 
-To avoid Instantiating & Destroying heavily used GameObjects, it can be useful to pool them instead.
+为了避免频繁实例化和销毁使用频繁的游戏对象，将它们放入对象池可能会更有用。
 
 ![](../../../.gitbook/assets/2022-04-04\_20-21-49@2x.png)
 
-Here is an example of how you might set up a simple game object pooling system with custom spawn handlers. Spawning and unspawning then puts game objects in or out of the pool.
+以下是一个设置简单游戏对象池系统以及自定义生成处理程序的示例。生成和销毁将游戏对象放入或移出对象池。
 
 ```csharp
 using UnityEngine;
@@ -166,15 +166,15 @@ namespace Mirror.Examples
 
 ```
 
-To use this pool, add the `PrefabPool` component (code above) to the NetworkManager. Next, drag a prefab you want to spawn multiple times to the Prefab field.
+要使用此对象池，请将`PrefabPool`组件（上面的代码）添加到NetworkManager。然后，将要多次生成的预制体拖放到Prefab字段中。
 
 {% hint style="warning" %}
-Make sure to remove the prefab from NetworkManager's spawnable prefabs list. There should only be one way to spawn it. Otherwise Mirror show a warning.
+确保从NetworkManager的可生成预制体列表中移除预制体。应该只有一种方法来生成它。否则，Mirror会显示警告。
 {% endhint %}
 
-We can modify our Tanks example to showcase the Pooling system.
+我们可以修改我们的坦克示例来展示对象池系统。
 
-Open Tank.cs and find the CmdFire function:
+打开Tank.cs并找到CmdFire函数：
 
 ```csharp
 [Command]
@@ -186,7 +186,7 @@ void CmdFire()
 }
 ```
 
-Instead of Instantiating, grab a Prefab from the Pool:
+不要实例化，而是从对象池中获取一个预制体：
 
 ```csharp
 [Command]
@@ -198,7 +198,7 @@ void CmdFire()
 }
 ```
 
-Projectile.cs currently destroys itself via GameObject.Destroy:
+Projectile.cs当前通过GameObject.Destroy销毁自身：
 
 ```csharp
 [Server]
@@ -208,7 +208,7 @@ void DestroySelf()
 }
 ```
 
-Instead, we simply Unspawn it and return it to the pool:
+相反，我们只需将其取消生成并将其返回到对象池：
 
 ```csharp
 [Server]
@@ -220,6 +220,6 @@ void DestroySelf()
 }
 ```
 
-Press Play and fire some projectiles. Notice how nothing is instantiated. Instead, NetworkManager has a pool of children which are disabled until they are needed.
+按下播放并发射一些抛射物。注意到没有任何实例化。相反，NetworkManager有一组被禁用的子对象，直到需要它们为止。
 
 ![](../../../.gitbook/assets/2022-04-04\_20-22-58@2x.png)

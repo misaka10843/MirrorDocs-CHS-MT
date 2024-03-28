@@ -1,3 +1,3 @@
-# HA Proxy
+# HA Proxy (HA 代理)
 
-Content Needed
+内容需求

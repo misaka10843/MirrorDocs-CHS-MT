@@ -1,32 +1,31 @@
 ---
-description: Written by JesusLuvsYooh / StephenAllenGames.co.uk
----
+description: 由 JesusLuvsYooh / StephenAllenGames.co.uk 撰写
 
-# Ready Up And Die!
+# Ready Up And Die! (准备并死亡!)
 
-## End Result:
+## End Result: (最终结果:)
 
-1: To create a “ready up” feature, this will prevent players from moving until server/host says go.
+1: 创建一个“准备就绪”功能，这将阻止玩家移动，直到服务器/主机说开始。
 
-2: An “isDead” player status to create a death and respawn.
+2: 一个“isDead”玩家状态来创建死亡和重生。
 
 ![](../.gitbook/assets/RUAD9.jpg)
 
-## **Part 1:**
+## **Part 1: (部分 1:)**
 
-Blank Project, import Mirror from Asset Store/ Discord Releases unity package.&#x20;
+空项目，从 Asset Store/ Discord Releases Unity 包中导入 Mirror。
 
-Open up your scene, for this guide we will use Mirror/Examples/Tanks
+打开你的场景，本指南将使用 Mirror/Examples/Tanks。
 
-You should be familiar with the examples, if not, have a quick play, build and run, join yourself by having two games on same PC connecting via 'localhost'.
+你应该熟悉这些示例，如果不熟悉，请快速玩一下，构建并运行，通过“localhost”连接在同一台 PC 上拥有两个游戏来加入自己。
 
 ![Mirror/Examples/Tank/Scenes/Scene](../.gitbook/assets/Canvas2.jpg)
 
-## **Part 2:**
+## **Part 2: (部分 2:)**
 
-Create a script called SceneScript, due to this guide modifying Mirrors Example scenes, make sure it is in same folder as Tank script.
+创建一个名为 SceneScript 的脚本，由于本指南修改了 Mirror 示例场景，确保它与 Tank 脚本在同一个文件夹中。
 
-Add this script onto a game object in the scene, also named SceneScript, this will be our canvas to player link as well as our 'scene manager', then attach a NetworkIdentity component, like below.
+将此脚本添加到场景中的一个游戏对象上，也命名为 SceneScript，这将是我们与玩家链接的画布，同时也是我们的“场景管理器”，然后附加一个 NetworkIdentity 组件，如下所示。
 
 ![](../.gitbook/assets/RUAD3.jpg)
 
@@ -34,9 +33,9 @@ Add this script onto a game object in the scene, also named SceneScript, this wi
 
 ![](../.gitbook/assets/RUAD5.jpg)
 
-## **Part 3:**
+## **Part 3: (部分 3:)**
 
-Open up this SceneScript.cs, and add the following code, parts will be commented to explain  :)
+打开这个 SceneScript.cs，并添加以下代码，部分将被注释以解释 :)
 
 {% code title="SceneScript.cs" %}
 ```csharp
@@ -146,20 +145,20 @@ namespace Mirror.Examples.Tanks
 ```
 {% endcode %}
 
-## **Part 4:**
+## **Part 4: (部分 4:)**
 
-Now open Tank.cs, this is the guides equivalent to your eventual PlayerScript.
+现在打开 Tank.cs，这是指南中相当于你最终的 PlayerScript。
 
-And in the Update function, below the isLocalPlayerCheck, add:\
+在 Update 函数中，在 isLocalPlayerCheck 下方添加:\
 &#x20;if (sceneScript.readyStatus != 1) return;
 
-This will stop the tanks below code (movement and projectile firing) from running until ready.
+这将阻止坦克下方的代码（移动和发射项目）在准备就绪之前运行。
 
 ![](../.gitbook/assets/RUAD6.jpg)
 
-Add the code at the bottom of Tank.cs, after the “RpcOnFire” ends.
+在 Tank.cs 的底部添加代码，放在“RpcOnFire”结束之后。
 
-(But still inside the namespace { }  )
+(但仍在 namespace { } 内)
 
 {% code title="Tank" %}
 ```csharp
@@ -227,39 +226,36 @@ public void CmdPlayerStatus(bool _value)
 ```
 {% endcode %}
 
-## **Part 5:**
+## **Part 5: (部分 5:)**
 
-For this method during death and respawn, rather than destroying the player, we will hide and reshow it.
+对于这种死亡和重生的方法，而不是销毁玩家，我们将隐藏并重新显示它。
 
-Open up the Tank player prefab, and add the two child objects to the “Objects To Hide” array, “ProjectileMount” is just an empty position marker, and does not need to be added.
+打开 Tank 玩家预制件，并将两个子对象添加到“Objects To Hide”数组中，“ProjectileMount”只是一个空的位置标记，不需要添加。
 
-Upon the sync var change of “isDead”, the hook callback will cycle through this array.
+## **Part 6:** (Part 6:)
+
+在“isDead”同步变量更改时，hook回调将循环遍历此数组。
 
 ![](../.gitbook/assets/RUAD7.jpg)
 
-## **Part 6:**
-
-Create a Canvas in the scene, by either right clicking, UI canvas, or the menu at top, GameObject, UI, Canvas.\
-Set the canvas scaler to “Scale with Screen Size”, this will help with keeping everything same size, on both low and high resolution screens, and is best to set before adding Canvas contents.
+创建一个Canvas在场景中，可以通过右键单击，UI Canvas，或者在顶部菜单中选择GameObject，UI，Canvas。\
+将Canvas缩放器设置为“Scale with Screen Size”，这将有助于保持所有内容在低分辨率和高分辨率屏幕上大小相同，并且最好在添加Canvas内容之前设置。
 
 ![](../.gitbook/assets/Canvas4.jpg)
 
-Create your Unity Canvas UI, with a text, and 3 buttons, label them for easier reference.
+创建您的Unity Canvas UI，包括一个文本和3个按钮，为了更容易引用，给它们标签。
 
-Here I have placed Status text at top, Server Set Ready button in the middle, and the Die and Respawn buttons to the right.\
-After this set the variables to the correct UI on your SceneScript, like below.
+在这里，我将状态文本放在顶部，将服务器设置准备按钮放在中间，将死亡和重生按钮放在右侧。\
+之后，将变量设置为正确的UI在您的SceneScript中，如下所示。
 
 ![](../.gitbook/assets/RUAD8.jpg)
 
-## **Part 7:**
+## **Part 7:** (Part 7:)
 
-Build and Run!
+构建并运行！
 
-Enjoy  :)
+享受  :)
 
-(To help with side by side play testing - Project settings, Player, Resolution and Presentation, Fullscreen Mode to “Windowed”.)
+（为了帮助进行并行测试 - 项目设置，玩家，分辨率和演示，将全屏模式设置为“窗口化”。）
 
 ![](../.gitbook/assets/RUAD9.jpg)
-
-
-

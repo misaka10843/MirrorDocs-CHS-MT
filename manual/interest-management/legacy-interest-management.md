@@ -1,70 +1,65 @@
 ---
-description: Documentation for the legacy Network Visibility interest management system.
+description: 用于传统 Network Visibility（网络可见性）兴趣管理系统的文档。
 ---
 
-# Legacy
+# 传统（Legacy）
 
 {% hint style="danger" %}
-Component on this page are **obsolete** and will be removed from future versions of Mirror.
+本页面上的组件是**过时的**，将在 Mirror 未来版本中移除。
 {% endhint %}
 
-Multiplayer games use the concept of network visibility to determine which players can see which game objects at any given time during game play. In a game that has a moving viewpoint and moving game objects, it’s common that players cannot see everything that is happening in the game at once.
+多人游戏使用网络可见性的概念来确定在游戏过程中的任何时间点，哪些玩家可以看到哪些游戏对象。在一个具有移动视点和移动游戏对象的游戏中，通常玩家无法一次看到游戏中发生的所有事情。
 
-If a particular player, at a certain point in time during game play, cannot see most of the other players, non-player characters, or other moving or interactive things in your game, there is usually no need for the server to send information about those things to the player’s client.
+如果在游戏过程中的某个特定时间点，某个玩家无法看到大多数其他玩家、非玩家角色或游戏中的其他移动或交互式物体，通常服务器无需向玩家客户端发送关于这些物体的信息。
 
-This can benefit your game in two ways:
+这可以使您的游戏受益两方面：
 
-* It reduces the amount of data sent across the network between players. This can help improve the responsiveness of your game, and reduce bandwidth use. The bigger and more complex your multiplayer game, the more important this issue is.
-* It also helps prevent some cheating. Since a player client does not have information about things that can’t be seen, a hack on that player’s computer cannot reveal the information.
+- 减少玩家之间通过网络发送的数据量。这有助于提高游戏的响应性，减少带宽使用。您的多人游戏越大、越复杂，这个问题就越重要。
+- 还有助于防止一些作弊行为。由于玩家客户端没有关于看不见的事物的信息，因此该玩家计算机上的黑客无法获取这些信息。
 
-The idea of “visibility” in the context of networking doesn’t necessarily relate to whether game objects are directly visible on-screen. Instead, it relates to whether data should or shouldn’t be sent about the game object in question to a particular client. Put simply, if a client can’t ‘see’ an game object, it does not need to be sent information about that game object across the network. Ideally you want to limit the amount of data you are sending across the network to only what is necessary, because sending large amounts of unnecessary data across the network can cause network performance problems.
+在网络环境中，“可见性”的概念并不一定与游戏对象是否直接在屏幕上可见有关。相反，它与是否应向特定客户端发送有关所讨论的游戏对象的数据有关。简单地说，如果客户端无法“看到”一个游戏对象，那么就不需要通过网络向该客户端发送有关该游戏对象的信息。理想情况下，您希望将通过网络发送的数据量限制在必要的范围内，因为通过网络发送大量不必要的数据可能会导致网络性能问题。
 
-However, it can be also be resource intensive or complex to determine accurately whether a game object truly visible to a given player, so it’s often a good idea to use a more simple calculation for the purposes of determining whether a player should be sent networked data about it - i.e. whether it is ‘Network Visible’. The balance you want to achieve when considering this is between the cost of the complexity of the calculation for determining the visibility, and the cost of sending more information than necessary over the network. A very simple way to calculate this is a distance (proximity) check, and Mirror provides a built-in component for this purpose.
+然而，准确确定游戏对象对于给定玩家是否真正可见可能也会耗费资源或复杂，因此通常最好使用更简单的计算来确定是否应向玩家发送关于其的网络数据 - 即是否“Network Visible”（网络可见）。在考虑这一点时，您要达到的平衡是在确定可见性的计算复杂性成本和通过网络发送比必要更多信息的成本之间。一个非常简单的计算方法是距离（接近）检查，Mirror 为此提供了一个内置组件。
 
-## Network Proximity Checker Component <a href="#network-proximity-checker-component" id="network-proximity-checker-component"></a>
+## 网络接近检查器组件(Network Proximity Checker Component) <a href="#network-proximity-checker-component" id="network-proximity-checker-component"></a>
 
-Mirror’s [Network Proximity Checker](../components/deprecated/network-proximity-checker.md) component is simplest way to implement network visibility for players. It works in conjunction with the physics system to determine whether game objects are close enough (that is, “visible” for the purposes of sending network messages in your multiplayer game).
+Mirror的[网络接近检查器(Network Proximity Checker)](../components/deprecated/network-proximity-checker.md)组件是实现玩家网络可见性的最简单方式。它与物理系统一起工作，以确定游戏对象是否足够接近（即在多人游戏中发送网络消息的“可见”目的）。
 
-## Network Scene Checker Component <a href="#network-scene-checker-component" id="network-scene-checker-component"></a>
+## 网络场景检查器组件(Network Scene Checker Component) <a href="#network-scene-checker-component" id="network-scene-checker-component"></a>
 
-Mirror's [Network Scene Checker](../components/deprecated/network-scene-checker.md) component can be used to isolate players and networked objects on the server in additive scene instances.
+Mirror的[网络场景检查器(Network Scene Checker)](../components/deprecated/network-scene-checker.md)组件可用于在附加场景实例中隔离玩家和网络对象。
 
-## Network Visibility on Remote Clients <a href="#network-visibility-on-remote-clients" id="network-visibility-on-remote-clients"></a>
+## 远程客户端上的网络可见性(Network Visibility on Remote Clients) <a href="#network-visibility-on-remote-clients" id="network-visibility-on-remote-clients"></a>
 
-When a player on a remote client joins a networked game, only game objects that are network-visible to the player will be spawned on that remote client. This means that even if the player enters a large world with many networked game objects, the game can start quickly because it does not need to spawn every game object that exists in the world. Note that this applies to networked game objects in your Scene, but does not affect the loading of Assets. Unity still takes time to load the Assets for registered Prefabs and Scene game objects.
+当远程客户端上的玩家加入网络游戏时，只有对玩家可见的游戏对象才会在该远程客户端上生成。这意味着即使玩家进入一个拥有许多网络游戏对象的大世界，游戏也可以快速启动，因为它不需要生成世界中存在的每个游戏对象。请注意，这适用于场景中的网络游戏对象，但不影响资源的加载。Unity仍然需要时间来加载注册的预制体和场景游戏对象的资源。
 
-When a player moves within the world, the set of network-visible game objects changes. The player’s client is told about these changes as they happen. The `ObjectHide` message is sent to clients when a game object becomes no longer network-visible. By default, Mirror destroys the game object when it receives this message. When a game object becomes visible, the client receives an `ObjectSpawn` message, as if Mirror has spawned the game object for the first time. By default, the game object is instantiated like any other spawned game object.
+当玩家在世界中移动时，可见的网络游戏对象集合会发生变化。玩家的客户端会在发生这些变化时得到通知。当游戏对象不再可见时，客户端会收到`ObjectHide`消息。默认情况下，Mirror在接收到此消息时会销毁游戏对象。当游戏对象变得可见时，客户端会收到`ObjectSpawn`消息，就好像Mirror首次生成了游戏对象。默认情况下，游戏对象会像任何其他生成的游戏对象一样被实例化。
 
-## Network Visibility on the Host <a href="#network-visibility-on-the-host" id="network-visibility-on-the-host"></a>
+## 主机上的网络可见性(Network Visibility on the Host) <a href="#network-visibility-on-the-host" id="network-visibility-on-the-host"></a>
 
-The host shares the same Scene as the server, because it acts as both the server and the client to the player hosting the game. For this reason, it cannot destroy game objects that are not visible to the local player.
 
-Instead, there is the virtual method OnSetLocalVisibility in the NetworkVisibility class that is invoked. This method is invoked on all scripts that inherit from `NetworkVisibility` on game objects that change visibility state on the host.
+# 自定义网络可见性 (Customizing Network Visibility) <a href="#customizing-network-visibility" id="customizing-network-visibility"></a>
 
-The default implementation of `OnSetLocalVisibility` disables or enables all renderer components on the game object. If you want to customize this implementation, you can override the method in your script, and provide a new behavior for how the host (and therefore the local client) should respond when a game object becomes network-visible or invisible (such as disabling HUD elements or renderers).
+有时，您可能希望使用其他类型的可见性检查，例如基于网格的规则、视线测试、导航路径测试或适合您游戏的任何其他类型的测试。
 
-## Customizing Network Visibility <a href="#customizing-network-visibility" id="customizing-network-visibility"></a>
+为此，您可以通过单击“Create -> Mirror -> Network Observer”菜单中的[脚本模板](../general/script-templates.md)创建自己的自定义网络观察器。
 
-Sometimes you might want to use other kinds of visibility check, such as grid-based rules, line-of-sight tests, navigation path tests, or any other type of test that suits your game.
+了解网络接近检查器的工作原理可能会有所帮助。
 
-To do this, you can create your own custom Network Observer from a [Script Template](../general/script-templates.md) via the Assets menu by clicking Create -> Mirror -> Network Observer.
+网络接近检查器是使用 Mirror 的公共可见性接口实现的。使用相同的接口，您可以实现任何类型的可见性规则。每个`NetworkIdentity`都会跟踪其可见的玩家集合。一个`NetworkIdentity`游戏对象可见的玩家称为该`NetworkIdentity`的“观察者”。
 
-It may be helpful to understand how the Network Proximity Checker works.
+网络接近检查器以固定间隔（在检视器中设置的“Vis Update Interval”值）调用`Network Identity`组件上的`RebuildObservers`方法，以便随着玩家移动，每个玩家的网络可见游戏对象集合得到更新。
 
-The Network Proximity Checker is implemented using the public visibility interface of Mirror. Using this same interface, you can implement any kind of visibility rules you desire. Each `NetworkIdentity` keeps track of the set of players that it is visible to. The players that a NetworkIdentity game object is visible to are called the “observers” of the NetworkIdentity.
+### `NetworkVisibility`类（您的自定义观察者脚本继承自此类），其中包含一些用于确定可见性的虚拟函数。
 
-The Network Proximity Checker calls the `RebuildObservers` method on the Network Identity component at a fixed interval (set using the “Vis Update Interval” value in the inspector), so that the set of network-visible game objects for each player is updated as they move around.
+* **OnCheckObserver（检查观察者）**（OnCheckObserver）\
+  &#x20;此方法在服务器上调用，当新玩家进入游戏时，会对每个网络游戏对象进行调用。如果返回true，则将该玩家添加到对象的观察者列表中。网络接近检查器在此函数的实现中执行简单的距离检查，并使用`Physics.OverlapSphereNonAlloc`来查找在此对象的可见距离内的玩家。
+* **OnRebuildObservers（重建观察者）**（OnRebuildObservers）\
+  &#x20;此方法在调用`RebuildObservers`时在服务器上调用。此方法期望观察者集合中填充可以看到对象的玩家。然后，NetworkServer根据旧可见性集合和新可见性集合之间的差异发送`ObjectHide`和`ObjectSpawn`消息。
+* **OnSetHostVisibility（设置主机可见性）**（OnSetHostVisibility）\
+  &#x20;此方法由对象主机上的可见性系统调用。主机上的对象（具有本地客户端）在本地客户端看不到时不能被禁用或销毁。因此，调用此函数以允许自定义代码隐藏这些对象。典型的实现将在对象上禁用渲染器组件。仅在主机上的本地客户端上调用此方法。
 
-In the `NetworkVisibility` class (which your custom observer scripts inherit from), there are some virtual functions for determining visibility. These are:
-
-* **OnCheckObserver**\
-  &#x20;This method is called on the server, on each networked game object when a new player enters the game. If it returns true, that player is added to the object’s observers. The Network Proximity Checker does a simple distance check in its implementation of this function, and uses `Physics.OverlapSphereNonAlloc` to find the players that are within the visibility distance for this object.
-* **OnRebuildObservers**\
-  &#x20;This method is called on the server when `RebuildObservers` is invoked. This method expects the set of observers to be populated with the players that can see the object. The NetworkServer then handles sending `ObjectHide` and `ObjectSpawn` messages based on the differences between the old and new visibility sets.
-* **OnSetHostVisibility**\
-  &#x20;This method is called on the server by the visibility system for objects on a host. Objects on a host (with a local client) cannot be disabled or destroyed when they are not visibile to the local client. So this function is called to allow custom code to hide these objects. A typical implementation will disable renderer components on the object. This is only called on local clients on a host.
-
-You can check whether any given networked game object is a player by checking if its `NetworkIdentity` has a valid connectionToClient. For example:
+您可以通过检查`NetworkIdentity`是否具有有效的`connectionToClient`来检查任何给定的网络游戏对象是否为玩家。例如：
 
 ```csharp
 int hitCount = Physics.OverlapSphereNonAlloc(transform.position, visRange, hitsBuffer3D, castLayers);

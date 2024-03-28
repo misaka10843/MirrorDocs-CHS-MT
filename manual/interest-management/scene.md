@@ -1,47 +1,48 @@
 ---
-description: Scene Interest Management
+description: 场景兴趣管理
 ---
 
-# Scene
+# 场景 (Scene)
 
-## Scene Interest Management
+## 场景兴趣管理 (Scene Interest Management)
 
-Scene Interest Management is used with Additive Scenes to networked objects to subscenes with physics isolation.  That means that even if you have several instances of the same subscene loaded on the server, collisions and such between objects only happen within that subscene without interfering with others.
+场景兴趣管理用于将附加场景中的网络对象与具有物理隔离的子场景进行网络连接。这意味着即使在服务器上加载了同一子场景的多个实例，对象之间的碰撞等事件仅在该子场景内发生，而不会干扰其他场景。
 
 {% hint style="info" %}
-Server and connected clients always have the same main scene loaded. With additive scenes, this is typically a container scene, and additive subscenes have the actual scene contents.
+服务器和连接的客户端始终加载相同的主场景。使用附加场景时，这通常是一个容器场景，而附加子场景包含实际的场景内容。
 {% endhint %}
 
-### Setting Up
+### 设置
 
-Add the **Scene Interest Management** component to the same object as your **Network Manager**:
+将**Scene Interest Management**组件添加到与您的**Network Manager**相同的对象上：
 
 ![](<../../.gitbook/assets/image (94).png>)
 
-### Add Physics Simulator
+### 添加物理模拟器
 
-In each subscene, add an empty game object, and add a **Physics Simulator** component to that.  Since additive scenes will be loaded on the server as "[physics scenes](https://docs.unity3d.com/ScriptReference/PhysicsScene.html)" Unity doesn't simulate physics for them, so this component does that for you in each subscene.
+在每个子场景中，添加一个空的游戏对象，并向其添加一个**Physics Simulator(物理模拟器)**组件。由于附加场景将在服务器上加载为"[physics scenes(物理场景)](https://docs.unity3d.com/ScriptReference/PhysicsScene.html)"，Unity不会为它们模拟物理效果，因此此组件会在每个子场景中为您执行物理模拟。
 
 ![](<../../.gitbook/assets/image (24).png>)
 
-### Environment Content
+### 环境内容
 
-Also in each subscene, create an empty game object called **Environment** with a **Network Identity** and make all static non-networked content to be children of this object.  Typically this would include scenery, such as buildings, road meshes and other non-interactive content.
+同样在每个子场景中，创建一个名为**Environment(环境)**的空游戏对象，带有一个**Network Identity(网络标识)**，并将所有静态的非网络内容设置为此对象的子对象。通常，这将包括风景、建筑物、道路网格和其他非交互式内容。
 
 ![](<../../.gitbook/assets/image (15).png>)
 
 {% hint style="warning" %}
-Do not put anything under the Environment object that will be networked and/or may be interactive by players, e.g. doors, pickups, kiosks, etc.
+不要将任何可能由玩家进行网络连接和/或交互的内容放在环境对象下，例如门、拾取物、售货亭等。
 {% endhint %}
 
-### Spawning Players
+### 生成玩家
 
-When you instantiate a player or other networked object, Unity doesn't have any built-in mechanism to specify which subscene the object is instantiated to...it's always the active scene, which is our container scene.  After instantiating and before spawning the object, call `SceneManager.MoveGameObjectToScene` to move the object into the correct subscene. Once it's spawned it will be visible to clients with player objects in the same subscene.  If you move it to another subscene, visibility in both the new and previous subscenes will be updated automatically.
+当您实例化玩家或其他网络对象时，Unity没有任何内置机制来指定对象实例化到哪个子场景...它始终是活动场景，即我们的容器场景。在实例化后并在生成对象之前，调用`SceneManager.MoveGameObjectToScene`将对象移动到正确的子场景中。一旦生成，客户端中具有相同子场景中的玩家对象的可见性将被更新。如果将其移动到另一个子场景，新旧子场景中的可见性将自动更新。
+
 
 {% hint style="info" %}
-Note that the networked objects are only moved to subscenes on the server.  Clients spawn everything in the container scene, and there's no need to move objects to a subscene on the clients, since they only have one subscene loaded at a time.
+请注意，网络对象仅在服务器上移动到子场景中。客户端在容器场景中生成所有内容，因此无需将对象移动到客户端的子场景中，因为客户端一次只加载一个子场景。
 {% endhint %}
 
-### Raycasting and Such
+### 射线投射和类似功能
 
-Physics scenes have a special set of methods for Raycast and such that must be used on the server since the server has the subscenes as physics scenes.  You can read about those [here](https://docs.unity3d.com/ScriptReference/PhysicsScene.html).  On the remote (non-Host) clients, raycasting is done with the normal methods, since the client just merges the additive scene with the container without it being a physics scene.
+物理场景有一组特殊的方法用于射线投射等操作，必须在服务器上使用，因为服务器将子场景作为物理场景。您可以在[这里](https://docs.unity3d.com/ScriptReference/PhysicsScene.html)了解更多信息。在远程（非主机）客户端上，射线投射使用普通方法完成，因为客户端只是将附加场景与容器合并，而不将其视为物理场景。

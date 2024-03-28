@@ -1,16 +1,16 @@
-# SyncHashSet
+# SyncHashSet(同步哈希集合)
 
-`SyncHashSet` are sets similar to C# [HashSet](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.hashset-1) that synchronize their contents from the server to the clients.
+`SyncHashSet`是类似于 C# [HashSet](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.hashset-1)(哈希集合)的集合，它们会将其内容从服务器同步到客户端。
 
-A SyncHashSet can contain any [supported mirror type](../data-types.md)
+一个 SyncHashSet 可以包含任何[支持的 Mirror 类型](../data-types.md)(数据类型)
 
-## Usage <a href="#usage" id="usage"></a>
+## 用法 <a href="#usage" id="usage"></a>
 
 {% hint style="info" %}
-SyncHashSet must be declared **readonly** and initialized in the constructor.
+SyncHashSet 必须声明为 **readonly** 并在构造函数中初始化。
 {% endhint %}
 
-Add a SyncHashSet field to your NetworkBehaviour class. For example:
+在你的 NetworkBehaviour 类中添加一个 SyncHashSet 字段。例如：
 
 ```csharp
 public class Player : NetworkBehaviour
@@ -32,12 +32,12 @@ public class Player : NetworkBehaviour
 }
 ```
 
-You can also detect when a SyncHashSet changes. This is useful for refreshing your character in the client or determining when you need to update your database.
+你也可以检测 SyncHashSet 何时发生变化。这对于在客户端刷新角色或确定何时需要更新数据库非常有用。
 
-Subscribe to the Callback event typically during `Start`, `OnClientStart` or `OnServerStart` for that.
+通常在 `Start`、`OnClientStart` 或 `OnServerStart` 中订阅 Callback 事件。
 
 {% hint style="warning" %}
-Note that by the time you subscribe, the set will already be populated, so you will not get a call for the initial data, only updates.
+请注意，当你订阅时，集合已经被填充，因此你不会收到初始数据的调用，只有更新。
 {% endhint %}
 
 ```csharp

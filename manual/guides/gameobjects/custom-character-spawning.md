@@ -1,10 +1,10 @@
-# Custom Character Spawning
+# 自定义角色生成 (Custom Character Spawning)
 
-Many games need character customization. You may want to pick the color of the hair, eyes, skin, height, race, etc.
+许多游戏需要角色定制。您可能希望选择头发、眼睛、皮肤、身高、种族等的颜色。
 
-By default Mirror will instantiate the player for you. While that is convenient, it might prevent you from customizing it. Mirror provides the option of overriding player creation and customize it.
+默认情况下，Mirror会为您实例化玩家。虽然这很方便，但可能会阻止您进行自定义。Mirror提供了覆盖玩家创建并自定义的选项。
 
-1. Create a class that extends `NetworkManager` if you have not done so. For example:
+1. 如果尚未这样做，请创建一个扩展`NetworkManager`的类。例如:
 
 ```csharp
 public class MMONetworkManager : NetworkManager
@@ -13,10 +13,10 @@ public class MMONetworkManager : NetworkManager
 }
 ```
 
-and use it as your Network manager.
+并将其用作您的网络管理器。
 
-1. Open your Network Manager in the inspector and disable the "Auto Create Player" Boolean.
-2. Create a message that describes your player. For example:
+1. 在检视器中打开您的网络管理器并禁用“自动创建玩家”布尔值。
+2. 创建描述您的玩家的消息。例如:
 
 ```csharp
 public struct CreateMMOCharacterMessage : NetworkMessage
@@ -36,8 +36,8 @@ public enum Race
 }
 ```
 
-1. Create your player prefabs (as many as you need) and add them to the "Register Spawnable Prefabs" in your Network Manager, or add a single prefab to the player prefab field in the inspector.
-2. Send your message and register a player:
+1. 创建您的玩家预制体(根据需要创建多个)并将它们添加到您的网络管理器中的“注册可生成预制体”中，或者在检视器中的玩家预制体字段中添加单个预制体。
+2. 发送您的消息并注册一个玩家:
 
 ```csharp
 public class MMONetworkManager : NetworkManager
@@ -85,17 +85,17 @@ public class MMONetworkManager : NetworkManager
 }
 ```
 
-## Ready State <a href="#ready-state" id="ready-state"></a>
+## 就绪状态 (Ready State) <a href="#ready-state" id="ready-state"></a>
 
-In addition to players, client connections also have a “ready” state. The host sends clients that are ready information about spawned game objects and state synchronization updates; clients which are not ready are not sent these updates. When a client initially connects to a server, it is not ready. While in this non-ready state, the client can do things that don’t require real-time interactions with the game state on the server, such as loading Scenes, allowing the player to choose an avatar, or fill in log-in boxes. Once a client has completed all its pre-game work, and all its Assets are loaded, it can call `NetworkClient.Ready` to enter the “ready” state. The simple example above demonstrates implementation of ready states; because adding a player with `NetworkServer.AddPlayerForConnection` also puts the client into the ready state if it is not already in that state.
+除了玩家之外，客户端连接还有一个“就绪”状态。主机向准备好的客户端发送有关生成的游戏对象和状态同步更新的信息；未准备好的客户端不会收到这些更新。当客户端最初连接到服务器时，它是不准备好的。在这种非准备好状态下，客户端可以执行不需要与服务器上的游戏状态进行实时交互的操作，例如加载场景、允许玩家选择角色或填写登录框。一旦客户端完成了所有的游戏前工作，并且所有的资源都已加载，它可以调用`NetworkClient.Ready`进入“就绪”状态。上面简单的示例演示了就绪状态的实现；因为使用`NetworkServer.AddPlayerForConnection`添加玩家也会将客户端放入就绪状态（如果尚未处于该状态）。
 
-Clients can send and receive network messages without being ready, which also means they can do so without having an active player game object. So a client at a menu or selection screen can connect to the game and interact with it, even though they have no player game object. See documentation on [Network Messages](../communications/network-messages.md) for more details about sending messages without using commands and RPC calls.
+客户端可以在没有准备好的情况下发送和接收网络消息，这也意味着它们可以在没有活动玩家游戏对象的情况下这样做。因此，处于菜单或选择屏幕的客户端可以连接到游戏并与之交互，即使它们没有玩家游戏对象。有关发送消息而不使用命令和RPC调用的更多详细信息，请参阅[网络消息](../communications/network-messages.md)文档。
 
-## Switching Players <a href="#switching-players" id="switching-players"></a>
+## 切换玩家（Switching Players）
 
-To replace the player game object for a connection, use `NetworkServer.ReplacePlayerForConnection`. This is useful for restricting the commands that players can issue at certain times, such as in a pregame room screen. This function takes the same arguments as `AddPlayerForConnection`, but allows there to already be a player for that connection. The old player game object does not have to be destroyed. The `NetworkRoomManager` uses this technique to switch from the `NetworkRoomPlayer` game object to a game play player game object when all the players in the room are ready.
+要替换连接的玩家游戏对象，请使用 `NetworkServer.ReplacePlayerForConnection`。这在限制玩家在某些时候可以发出的命令时非常有用，比如在预备游戏房间屏幕中。这个函数接受与 `AddPlayerForConnection` 相同的参数，但允许为该连接已经存在一个玩家。旧的玩家游戏对象不必被销毁。`NetworkRoomManager` 使用这种技术，当房间中的所有玩家准备就绪时，从 `NetworkRoomPlayer` 游戏对象切换到游戏玩家游戏对象。
 
-You can also use `ReplacePlayerForConnection` to respawn a player or change the object that represents the player. In some cases it is better to just disable a game object and reset its game attributes on respawn. The following code sample demonstrates how to actually replace the player game object with a new game object:
+您还可以使用 `ReplacePlayerForConnection` 来重新生成玩家或更改代表玩家的对象。在某些情况下，最好只是禁用游戏对象，并在重新生成时重置其游戏属性。以下代码示例演示了如何实际替换玩家游戏对象为一个新的游戏对象：
 
 ```csharp
 public class MyNetworkManager : NetworkManager
@@ -116,8 +116,8 @@ public class MyNetworkManager : NetworkManager
 }
 ```
 
-If the player game object for a connection is destroyed, then that client cannot execute Commands. They can, however, still send network messages.
+如果连接的玩家游戏对象被销毁，则该客户端无法执行命令。但是，他们仍然可以发送网络消息。
 
-To use `ReplacePlayerForConnection` you must have the `NetworkConnection` game object for the player’s client to establish the relationship between the game object and the client. This is usually the property `connectionToClient` on the `NetworkBehaviour` class, but if the old player has already been destroyed, then that might not be readily available.
+要使用 `ReplacePlayerForConnection`，您必须拥有玩家客户端的 `NetworkConnection` 游戏对象，以建立游戏对象和客户端之间的关系。这通常是 `NetworkBehaviour` 类上的 `connectionToClient` 属性，但如果旧的玩家已经被销毁，则可能无法立即获得。
 
-To find the connection, there are some lists available. If using the `NetworkRoomManager`, then the room players are available in `roomSlots`. The `NetworkServer` also has lists of `connections`.
+要找到连接，有一些可用的列表。如果使用 `NetworkRoomManager`，则房间玩家可在 `roomSlots` 中找到。`NetworkServer` 也有 `connections` 的列表。

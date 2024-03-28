@@ -1,59 +1,59 @@
-# WebSockets Transport
+# WebSockets Transport(# WebSockets Transport)
 
-A Mirror transport that uses the [websocket protocol](https://en.wikipedia.org/wiki/WebSocket), thus enabling multiplayer in the browser from Unity WebGL builds!
+一个使用[websocket protocol(WebSocket协议)](https://en.wikipedia.org/wiki/WebSocket)的Mirror传输，从而使得在Unity WebGL构建中可以在浏览器中进行多人游戏！
 
 ![Simple Web Transport Inspector](../../../.gitbook/assets/simple-web-transport-current-inspector-view.png)
 
 ## SSL Settings <a href="#ssl-settings" id="ssl-settings"></a>
 
-SSL settings is obsolete and may be removed in a future release.
+SSL设置已经过时，可能会在未来的版本中移除。
 
 {% hint style="info" %}
-NOTE: WebGL performs a lot better with a Reverse Proxy, and that's generally easier to set up and maintain than using cert.json and PFX files.
+注意：使用反向代理可以让WebGL性能更好，通常比使用cert.json和PFX文件更容易设置和维护。
 
 \
-Go to the [Reverse Proxy](reverse-proxy/) page for instructions.
+查看[反向代理](reverse-proxy/)页面获取指令。
 {% endhint %}
 
-For legacy purposes, you can read more about simple web transport and SSL in this [SSL guide](ssl.md).
+出于传统目的，您可以在这个[SSL指南](ssl.md)中了解有关简单Web传输和SSL的更多信息。
 
 ## Server Settings <a href="#server-settings" id="server-settings"></a>
 
-Specify what port the websocket based game server listens on.
+指定基于websocket的游戏服务器监听的端口。
 
 ## Client Settings <a href="#client-settings" id="client-settings"></a>
 
-These settings allow for users to customize web game client behavior.
+这些设置允许用户自定义Web游戏客户端的行为。
 
-For example, you may want to introduce a reverse proxy server, and you want to configure the web game clients to connect to the reverse proxy server instead of the game server directly. These settings enable you to do that.
+例如，您可能希望引入一个反向代理服务器，并且您希望配置Web游戏客户端连接到反向代理服务器而不是直接连接到游戏服务器。这些设置使您能够实现这一点。
 
 ## Logging <a href="#logging" id="logging"></a>
 
-Supported log levels:
+支持的日志级别：
 
 * `None`
 * `Error`
-* `Warn` (default)
+* `Warn` (默认)
 * `Info`
 * `Verbose`
 * `Flood`
 
-Log levels can be set using the dropdown on the transport or setting `Mirror.SimpleWeb.Log.level` in code directly.
+可以使用传输中的下拉菜单或直接在代码中设置`Mirror.SimpleWeb.Log.level`来设置日志级别。
 
-For debugging purposes, it is encouraged to set the log level to `Verbose` (or `Flood` in extreme cases). For normal use `Info` or `Warn` is recommended.
+为了调试目的，建议将日志级别设置为`Verbose`（或在极端情况下设置为`Flood`）。对于正常使用，建议使用`Info`或`Warn`。
 
-Setting the log level to `None` will disable logging completely. Use this option with extreme caution.
+将日志级别设置为`None`将完全禁用日志记录。请谨慎使用此选项。
 
 {% hint style="info" %}
-The transport applies the dropdown value in its `Awake` and `OnValidate` methods.
+传输在其`Awake`和`OnValidate`方法中应用下拉菜单的值。
 {% endhint %}
 
 #### Log methods <a href="#log-methods" id="log-methods"></a>
 
-Log methods in this transport use [ConditionalAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.conditionalattribute?view=netstandard-2.0), so they are removed depending on the preprocessor defines.
+此传输中的日志方法使用[ConditionalAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.conditionalattribute?view=netstandard-2.0)，因此根据预处理器定义，它们会被移除。
 
-This preprocessor symbol effects the logging:
+这个预处理符号影响日志记录：
 
-* `DEBUG` allows warn/error logs.
+* `DEBUG` 允许警告/错误日志。
 
-See the [Unity docs](https://docs.unity3d.com/Manual/PlatformDependentCompilation.html) on how to set custom preprocessor defines.
+查看[Unity文档](https://docs.unity3d.com/Manual/PlatformDependentCompilation.html)了解如何设置自定义预处理定义。

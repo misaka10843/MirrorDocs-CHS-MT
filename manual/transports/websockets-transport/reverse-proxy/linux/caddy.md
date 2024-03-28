@@ -1,6 +1,6 @@
-# Caddy
+# Caddy(服务器)
 
-[Following the official guide](https://caddyserver.com/docs/quick-starts/reverse-proxy), it's as simple as defining a `Caddyfile`:
+[按照[官方指南](https://caddyserver.com/docs/quick-starts/reverse-proxy)的说明，只需简单地定义一个 `Caddyfile` 文件：
 
 ```
 example.com:7777
@@ -8,7 +8,7 @@ example.com:7777
 reverse_proxy:27777
 ```
 
-Or running caddy via:
+或者通过以下方式运行 Caddy：
 
 ```
 caddy reverse-proxy --from example.com:7777 --to :27777

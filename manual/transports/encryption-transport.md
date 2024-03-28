@@ -1,36 +1,56 @@
-# Encryption Transport
+# 加密传输(Encryption Transport)
 
-The Encryption Transport is not a transport itself, but it allows you to encrypt the data flowing through an existing transport.
+加密传输并不是一种传输方式，而是允许您加密通过现有传输流动的数据。
 
-### Technical details
+### 技术细节(Technical details)
 
-The transport does an asymmetric key exchange via [ECDH](https://en.wikipedia.org/wiki/Elliptic-curve\_Diffie%E2%80%93Hellman) and [HKDF](https://en.wikipedia.org/wiki/HKDF)-SHA256 to safely derive a common 256-bit symmetric key, which is then used for [AES](https://en.wikipedia.org/wiki/Advanced\_Encryption\_Standard)-[GCM](https://en.wikipedia.org/wiki/Galois/Counter\_Mode) with a 96-bit nonce and 128-bit mac ([similarly used for TLS 1.3](https://en.wikipedia.org/wiki/Transport\_Layer\_Security#Cipher)). AES-GCM secures the data in-flight and checks the integrity on the receiving end with the help of the mac (a "checksum" of sorts)
+该传输通过[ECDH](https://en.wikipedia.org/wiki/Elliptic-curve\_Diffie%E2%80%93Hellman)和[HKDF](https://en.wikipedia.org/wiki/HKDF)-SHA256进行非对称密钥交换，安全地推导出一个共同的256位对称密钥，然后用于[AES](https://en.wikipedia.org/wiki/Advanced\_Encryption\_Standard)-[GCM](https://en.wikipedia.org/wiki/Galois/Counter\_Mode)，使用96位nonce和128位mac（类似于[TLS 1.3](https://en.wikipedia.org/wiki/Transport\_Layer\_Security#Cipher)中使用的方式）。AES-GCM在传输过程中保护数据，并在接收端通过mac（一种“校验和”）检查完整性。
 
-The handshake process is entirely via unreliable and encryption is order/reliability agnostic, so will work with all kinds of transports. Once the handshake is complete, the connection is entirely secure. For complete [Man-In-The-Middle](https://en.wikipedia.org/wiki/Man-in-the-middle\_attack) security, at least one side needs to validate the public key (usually the client validates the server key).
+握手过程完全通过不可靠的方式进行，加密是无序/可靠性不可知的，因此将适用于所有类型的传输。一旦握手完成，连接就完全安全。为了完全防止[中间人攻击](https://en.wikipedia.org/wiki/Man-in-the-middle\_attack)，至少一方需要验证公钥（通常是客户端验证服务器密钥）。
 
-### Usage
+### 使用(Usage)
 
-In order to use the transport, assuming you have a transport set up already, you simply add the transport to the "Inner" field and assign the EncryptionTransport to your NetworkManager
+为了使用该传输，假设您已经设置了一个传输，只需将传输添加到“Inner”字段，并将EncryptionTransport分配给您的NetworkManager。
 
-<figure><img src="../../.gitbook/assets/image (147).png" alt=""><figcaption><p>Basic inspector setup</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (147).png" alt=""><figcaption><p>基本检查器设置</p></figcaption></figure>
 
+### 验证服务器公钥(Validating Server Public Key)
 
+如果不验证服务器公钥，初始握手容易受到中间人攻击的影响。
 
-### Validating Server Public Key
+虽然在所有托管模式下可能无法验证服务器密钥（特别是玩家托管的游戏可能会很困难），但如果可能的话，仍建议将其添加到游戏中。
 
-Without validating the server public key, the initial handshake is vulnerable to MITM attacks.&#x20;
+我们提供了3种验证模式：
 
-Although validating the server key might not be possible in all hosting modes (especially player hosted games may be difficult), it is still recommended to add to your game if possible.
+#### 关闭(Off)
 
-Out of the box, we provide 3 modes of validation:
+不进行任何验证，这是默认设置。适用于开发和无法进行验证的情况。
 
-#### Off
+#### 列表(List)
 
-Nothing is validated, this is the default. Good for development and where validation is simply not possible.
+公钥是从内置到构建中的受信任密钥列表中验证的。
 
-#### List
+这种模式适用于为玩家托管服务器的游戏，并且是最简单使用的，只需预先生成一个密钥文件加载到服务器上，服务器将自动将其添加到列表中。
 
-Public keys are validated from a list of trusted keys that are "baked in" to the build.
+<figure><img src="../../.gitbook/assets/image (149).png" alt=""><figcaption><p>检视器显示生成密钥对按钮</p></figcaption></figure>
+
+<figure><img src="../../.gitbook/assets/image (148).png" alt=""><figcaption><p>对话框自动将密钥添加到受信任列表</p></figcaption></figure>
+
+#### 回调 (Callback)
+
+在此模式下，当客户端连接到服务器时，将调用 `EncryptionTransport.onClientValidateServerPubKey` 回调，预期返回对于有效密钥的 `true`。
+
+这允许最大的灵活性，并允许您通过在连接之前交换它们来验证公钥，例如从大厅服务或登录 API。
+
+一旦客户端或服务器正在运行，可以从 `EncryptionTransport.EncryptionPublicKeyFingerprint` 检索指纹 (以及从 `EncryptionTransport.EncryptionPublicKey` 检索序列化的公钥本身)。
+
+### 性能 (Performance)
+
+目前，传输使用 BouncyCastle 进行所有加密操作，这对分配非常消耗资源。我们计划在未来的更新中解决这个问题，通过改进 BouncyCastle 本身并为大多数平台提供本机库来执行大部分工作，即 AES 加密/解密。 
+
+**原文:**
+
+# Public keys are validated from a list of trusted keys that are "baked in" to the build.
 
 This mode is good for games that host servers for their players and the easiest to use, simply pre-generate a key file to load on the server which will automatically add it to the list.
 

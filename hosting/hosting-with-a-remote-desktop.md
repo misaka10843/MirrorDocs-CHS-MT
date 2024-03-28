@@ -1,53 +1,53 @@
 ---
-description: Mischa's unusual, yet convenient remote desktop hosting method.
+description: Mischa的不寻常但方便的远程桌面托管方法。
 ---
 
-# Hosting with a Remote Desktop
+# 使用远程桌面进行托管
 
-Please refer to our "[Pragmatic Hosting Guide](pragmatic-hosting-guide.md)" for a modern, best practices hosting method.\
-This guide is about my unusual Remote Desktop hosting approach, without SSH, SCP, Terminal, etc.
-
-{% hint style="info" %}
-This is definitely not best practice, and not light on resources.\
-However, it is very easy to use :smile:.
-{% endhint %}
-
-Here is a preview of the final result, this is a Google Cloud VM instance, running Debian with a Desktop Environment, which I log into via Google Remote Desktop from my Browser:
-
-<figure><img src="../.gitbook/assets/image (65).png" alt=""><figcaption><p>A Google Cloud VM instance running with a desktop environment.</p></figcaption></figure>
-
-This allows for the same workflow as my local machine. I can easily navigate the file system, check resource usage, check on long running tasks, download files with Firefox etc. without worrying about terminal commands.
-
-Ease of use & convenience are more important to me than a few hundred megabytes of storage.\
-But again, this is not best practice.
-
-### Installation Instructions
+请参考我们的"[实用托管指南](pragmatic-hosting-guide.md)"，了解一种现代的最佳实践托管方法。\
+本指南介绍了我的不寻常的远程桌面托管方法，不涉及SSH、SCP、终端等。
 
 {% hint style="info" %}
-This guide specifically uses **Google Cloud**, **Debian**, **XFCE** and **Google Remote Desktop**,\
-because this combination was the easiest & most reliable. Feel free to try other methods.
+这绝对不是最佳实践，也不节约资源。\
+但非常易于使用 :smile:。
 {% endhint %}
 
-This method is based on Google Cloud's official [Guide for using Google Remote Desktop](https://cloud.google.com/solutions/chrome-desktop-remote-on-compute-engine) on their VM instances. However, with a few recommendations which I figured out over time:
+这是最终结果的预览，这是一个在Google Cloud VM实例上运行的Debian桌面环境，我通过Google远程桌面从浏览器登录：
 
-* Use at least **15 GB** of disk space.
-* Use **Debian**. Ubuntu did not work for this method.
-* A few install **errors are expected**, which is why Google has --fix-broken commands in there.
-* Use **XFCE** as desktop environment. Cinnamon did not work for this.
-* It's useful to also install **Firefox**, as mentioned in their guide.
+<figure><img src="../.gitbook/assets/image (65).png" alt=""><figcaption><p>一个运行着桌面环境的Google Cloud VM实例。</p></figcaption></figure>
 
-After following the Guide, you should be able to log in with [Google Remote Desktop](https://remotedesktop.google.com/access/).
+这使得我可以像在本地机器上一样工作流程。我可以轻松浏览文件系统，检查资源使用情况，查看长时间运行的任务，使用Firefox下载文件等，而无需担心终端命令。
 
-### Extra: File Transfers
+对我来说，易用性和便利性比几百兆字节的存储更重要。\
+但再次强调，这不是最佳实践。
 
-Google Remote Desktop's interface has a file transfer feature, which is not that convenient to use.
+### 安装说明
 
-I found it easier to use any of the popular cloud file sync tools.\
-[Mega](https://mega.nz/) works great for this, because of official Linux support as well as end-to-end encryption.\
+{% hint style="info" %}
+本指南专门使用**Google Cloud**、**Debian**、**XFCE**和**Google远程桌面**，\
+因为这种组合是最简单和最可靠的。欢迎尝试其他方法。
+{% endhint %}
+
+这种方法基于Google Cloud官方的[使用Google远程桌面指南](https://cloud.google.com/solutions/chrome-desktop-remote-on-compute-engine)在他们的VM实例上。然而，我在使用过程中发现了一些建议：
+
+* 使用至少**15 GB**的磁盘空间。
+* 使用**Debian**。Ubuntu不适用于此方法。
+* 预计会出现一些安装**错误**，这就是为什么Google在其中有--fix-broken命令。
+* 使用**XFCE**作为桌面环境。Cinnamon不适用于此。
+* 最好也安装**Firefox**，如他们的指南中所述。
+
+按照指南操作后，您应该能够使用[Google远程桌面](https://remotedesktop.google.com/access/)登录。
+
+### 额外: 文件传输(Extra: File Transfers)
+
+Google 远程桌面的界面具有文件传输功能，但使用起来并不是很方便。
+
+我发现使用任何流行的云文件同步工具更容易。\
+[Mega](https://mega.nz/) 在这方面效果很好，因为它有官方的 Linux 支持以及端到端加密。\
 \
-First install it on your local machine with the official download, and create a folder with a test file.\
+首先在本地计算机上使用官方下载安装它，并创建一个带有测试文件的文件夹。\
 \
-Afterwards install it on the cloud server, with the following steps:
+然后在云服务器上安装它，按照以下步骤进行：
 
 ```
   hostnamectl   // to see your debian version
@@ -56,12 +56,12 @@ Afterwards install it on the cloud server, with the following steps:
   open via applications->system->megasync
 ```
 
-### Summary
+### 摘要(Summary)
 
-We've learned how to install a desktop environment on our cloud server, how to log into it via Google Remote Desktop, and how to transfer files to it.
+我们学会了如何在云服务器上安装桌面环境，如何通过 Google 远程桌面登录，并如何向其传输文件。
 
-I hope this makes life easier for some of you who aren't that fond of the terminal.\
-We use this method for our Discord Bot (Alan), and a few other tools.\
-You can easily use this for a few game servers as well.\
+希望这对一些不太喜欢终端的人们更加方便。\
+我们使用这种方法来管理我们的 Discord 机器人 (Alan)，以及其他一些工具。\
+您也可以轻松地将其用于一些游戏服务器。\
 \
-But remember, our [Pragmatic Hosting Guide](pragmatic-hosting-guide.md) is better for serious games.
+但请记住，我们的 [务实托管指南](pragmatic-hosting-guide.md) 更适合严肃的游戏。

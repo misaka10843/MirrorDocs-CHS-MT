@@ -1,21 +1,21 @@
 ---
-description: Got ID?
+description: 有ID吗？
 ---
 
-# IDs
+# IDs (标识符)
 
-## Asset Id <a href="#asset-id" id="asset-id"></a>
+## 资源ID <a href="#asset-id" id="asset-id"></a>
 
-Mirror uses GUID for Asset Ids. Every prefab with a NetworkIdentity component has an Asset Id, which is simply Unity's AssetDatabase.AssetPathToGUID converted to 16 bytes. Mirror needs that to know which prefabs to spawn.
+Mirror 使用 GUID 作为资源ID。每个带有 NetworkIdentity 组件的预制体都有一个资源ID，它只是 Unity 的 AssetDatabase.AssetPathToGUID 转换为 16 字节。Mirror 需要知道这个以便知道要生成哪些预制体。
 
-## Scene Id <a href="#scene-id" id="scene-id"></a>
+## 场景ID <a href="#scene-id" id="scene-id"></a>
 
-Mirror uses uint for Scene Ids. Every game object with a NetworkIdentity in the scene (hierarchy) is assigned a scene id in OnPostProcessScene. Mirror needs that to distinguish scene objects from each other, because Unity has no unique id for different game objects in the scene.
+Mirror 使用 uint 作为场景ID。场景（层次结构）中每个带有 NetworkIdentity 的游戏对象在 OnPostProcessScene 中被分配一个场景ID。Mirror 需要知道这个以便区分场景中的不同对象，因为 Unity 没有为场景中不同游戏对象提供唯一ID。
 
-## Network Instance Id (aka NetId) <a href="#network-instance-id-aka-netid" id="network-instance-id-aka-netid"></a>
+## 网络实例ID（又名 NetId）<a href="#network-instance-id-aka-netid" id="network-instance-id-aka-netid"></a>
 
-Mirror uses uint for NetId. Every NetworkIdentity is assigned a NetId in NetworkIdentity.OnStartServer, or after spawning it. Mirror uses the id when passing messages between client and server to tell which object is the recipient of the message.
+Mirror 使用 uint 作为 NetId。每个 NetworkIdentity 在 NetworkIdentity.OnStartServer 中或生成后被分配一个 NetId。Mirror 在客户端和服务器之间传递消息时使用这个ID来告诉消息的接收者是哪个对象。
 
-## Connection Id <a href="#connection-id" id="connection-id"></a>
+## 连接ID <a href="#connection-id" id="connection-id"></a>
 
-Every network connection has a connection id, which is assigned by the low level Transport layer. Connection id 0 is reserved for the local connection when the server is also a client (host)
+每个网络连接都有一个连接ID，由底层传输层分配。连接ID 0 保留给服务器也是客户端（主机）时的本地连接。
