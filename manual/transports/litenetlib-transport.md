@@ -13,24 +13,24 @@ description: https://github.com/MirrorNetworking/LiteNetLibTransport/
 
 ## 特性 (Features) <a href="#features" id="features"></a>
 
-* UDP
-* 内置网络发现和 UPnP
-* 完全托管的代码
-* CPU 和 RAM 使用率低
-* 小的数据包大小开销（不可靠的 1 字节，可靠的数据包 3 字节）
-* 不同的发送机制
-* 有序可靠
-* 无序可靠
-* 有序但无法重复的不可靠
-* 简单的无序和不可靠的 UDP 数据包
-* 自动合并小数据包
-* 可靠数据包的自动分段
-* 自动 MTU 检测
-* NTP 时间请求
-* 数据包丢失和延迟模拟
-* IPv6 支持（双模式）
-* 连接统计信息（需要 DEBUG 或 STATS_ENABLED 标志）
-* 多播（用于在本地网络中发现主机）
+- UDP
+- 内置网络发现和 UPnP
+- 完全托管的代码
+- CPU 和 RAM 使用率低
+- 小的数据包大小开销（不可靠的 1 字节，可靠的数据包 3 字节）
+- 不同的发送机制
+- 有序可靠
+- 无序可靠
+- 有序但无法重复的不可靠
+- 简单的无序和不可靠的 UDP 数据包
+- 自动合并小数据包
+- 可靠数据包的自动分段
+- 自动 MTU 检测
+- NTP 时间请求
+- 数据包丢失和延迟模拟
+- IPv6 支持（双模式）
+- 连接统计信息（需要 DEBUG 或 STATS_ENABLED 标志）
+- 多播（用于在本地网络中发现主机）
 
 ## IL2CPP 警告！ (IL2CPP Warning!) <a href="#il2cpp-warning" id="il2cpp-warning"></a>
 
@@ -51,5 +51,3 @@ RevenantX - 为 [LiteNetLib](https://github.com/RevenantX/LiteNetLib/releases) �
 &#x20;Dankrushen - 帮助我找到了一个我两天找不到的小错误\
 &#x20;Lucas Ontivero - 为 [Open.Nat](https://github.com/lontivero/Open.NAT/releases) 贡献，用于 UPnP\
 &#x20;shiena - 为 NetworkDiscoveryHUD 贡献
-
-请粘贴您要翻译的 Markdown 内容。

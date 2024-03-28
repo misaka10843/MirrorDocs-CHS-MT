@@ -2,40 +2,40 @@
 description: Mirror的非官方Edgegap Hosting插件文档。
 ---
 
-# Edgegap Hosting插件指南（Guide）
+# Edgegap Hosting 插件指南（Guide）
 
-感谢**Edgegap**为Unity提供的Hosting插件，Mirror用户可以免费获得0.5 vCPU的云托管！
+感谢**Edgegap**为 Unity 提供的 Hosting 插件，Mirror 用户可以免费获得 0.5 vCPU 的云托管！
 
-您可以直接从Unity编辑器构建并启动游戏服务器到云端，完全不需要使用Linux或云端。
+您可以直接从 Unity 编辑器构建并启动游戏服务器到云端，完全不需要使用 Linux 或云端。
 
 <figure><img src="../.gitbook/assets/image (144).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="warning" %}
 这是一个**早期版本**。
 
-如果遇到问题，请在我们的Discord的**#edgegap**频道中报告。
+如果遇到问题，请在我们的 Discord 的**#edgegap**频道中报告。
 {% endhint %}
 
 ## 概述（Overview）
 
-设置仅需几分钟，包括4个基本步骤：
+设置仅需几分钟，包括 4 个基本步骤：
 
 1. 创建一个**Edgegap.com**账户
-2. 安装Unity **Linux**构建支持和**Docker**桌面
-3. 配置Unity **插件**
-4. **构建并推送**我们的服务器到Edgegap
+2. 安装 Unity **Linux**构建支持和**Docker**桌面
+3. 配置 Unity **插件**
+4. **构建并推送**我们的服务器到 Edgegap
 
-## 在Unity / Mirror中打开插件
+## 在 Unity / Mirror 中打开插件
 
-Edgegap的Hosting插件（版本2）现在始终包含在最新的Mirror版本中。
+Edgegap 的 Hosting 插件（版本 2）现在始终包含在最新的 Mirror 版本中。
 
-它至少需要Unity 2023 LTS，由于使用UIToolkit，它不适用于旧版本。
+它至少需要 Unity 2023 LTS，由于使用 UIToolkit，它不适用于旧版本。
 
-原始源代码在Github上，但我们对Mirror中的版本应用了一些修复。
+原始源代码在 Github 上，但我们对 Mirror 中的版本应用了一些修复。
 
 {% embed url="https://github.com/edgegap/edgegap-unity-plugin" %}
 
-如果您使用的是较旧的Mirror版本，您也可以从我们的Github存储库手动下载Assets/Mirror/Hosting文件夹。如果出现有关缺少'Newtonsoft Json'的错误，请将此包添加到您的包管理器：
+如果您使用的是较旧的 Mirror 版本，您也可以从我们的 Github 存储库手动下载 Assets/Mirror/Hosting 文件夹。如果出现有关缺少'Newtonsoft Json'的错误，请将此包添加到您的包管理器：
 
 <figure><img src="../.gitbook/assets/2023-11-05 - 13-14-02@2x.png" alt=""><figcaption></figcaption></figure>
 
@@ -47,13 +47,13 @@ Edgegap的Hosting插件（版本2）现在始终包含在最新的Mirror版本�
 
 默认情况下，这应该可以直接使用。
 
-一旦安装完成，请在Unity的顶部菜单中检查“**Edgegap** -> **Edgegap** Hosting”：
+一旦安装完成，请在 Unity 的顶部菜单中检查“**Edgegap** -> **Edgegap** Hosting”：
 
 <figure><img src="../.gitbook/assets/2023-12-07 - 13-18-23@2x.png" alt=""><figcaption><p>Edgegap Hosting插件V3</p></figcaption></figure>
 
 ## 获取令牌（Get a Token）
 
-下一步是从Edgegap网站获取一个**令牌**。
+下一步是从 Edgegap 网站获取一个**令牌**。
 
 只需点击**获取令牌**按钮，然后要么登录到您现有的 Edgegap.com 账户，要么点击页面上的**开始**链接创建一个新账户。
 
@@ -89,10 +89,9 @@ _“token ...”部分需要保留在那里。_
 \=> 如果您正在使用`Kcp`，则**协议类型**是`UDP`。\
 \=> 如果您正在使用`Telepathy`，则是`TCP`。
 
-<figure><img src="../.gitbook/assets/2023-12-07 - 14-05-19@2x.png" alt=""><figcaption></figcaption></figure> 
+<figure><img src="../.gitbook/assets/2023-12-07 - 14-05-19@2x.png" alt=""><figcaption></figcaption></figure>
 
 # 标题
-
 
 **快要完成了！**\
 在我们构建和推送之前，我们需要为 Unity 安装 Linux 构建支持和 Docker！
@@ -139,15 +138,16 @@ RUN chmod +x /root/build/ServerBuild
 ENTRYPOINT [ "/root/build/ServerBuild", "-batchmode", "-nographics"]
 
 ```
+
 {% endhint %}
 
 接下来，我们需要登录到 Edgegap 的 Docker 注册表。
 
 我们正在与 Edgegap 合作自动化这一过程。目前，你需要打开一个终端 / 控制台：
 
-* 在 Windows 上，按下 CTRL+R，输入 CMD，按回车键打开它。
-* 在 Mac 上，打开 Finder，转到 应用程序 -> 实用工具 -> 终端。
-* 在 Linux 上，你可能知道如何操作。
+- 在 Windows 上，按下 CTRL+R，输入 CMD，按回车键打开它。
+- 在 Mac 上，打开 Finder，转到 应用程序 -> 实用工具 -> 终端。
+- 在 Linux 上，你可能知道如何操作。
 
 {% hint style="info" %}
 不要害怕终端。它只是一个黑色背景和白色文字的地方，我们将在其中输入一条命令。这很快就会自动化。
@@ -271,13 +271,11 @@ Edgegap.Status status = Edgegap.EdgegapServerDataManager.GetServerStatus();
 
 如果您的服务器状态显示为**Ready**但似乎无法连接，请尝试以下操作：
 
-* 在Edgegap网站上，转到Deployments -> 选择您的Deployment -> 选择**Container Logs**，检查日志文件，查看您的游戏服务器是否实际启动或是否存在问题。
-  * 如果显示"exec user process caused: no such file or directory"：这可能是因为您将ARM构建推送到Edgegap的x86基础设施。我们已经更新了插件，以便从ARM正确交叉编译，因此通常不应再发生这种情况。
-* 如果一切看起来正常但仍无法连接，请在Mirror Discord的**#edgegap**频道与Edgegap员工交谈。&#x20;
+- 在 Edgegap 网站上，转到 Deployments -> 选择您的 Deployment -> 选择**Container Logs**，检查日志文件，查看您的游戏服务器是否实际启动或是否存在问题。
+  - 如果显示"exec user process caused: no such file or directory"：这可能是因为您将 ARM 构建推送到 Edgegap 的 x86 基础设施。我们已经更新了插件，以便从 ARM 正确交叉编译，因此通常不应再发生这种情况。
+- 如果一切看起来正常但仍无法连接，请在 Mirror Discord 的**#edgegap**频道与 Edgegap 员工交谈。&#x20;
 
 {% hint style="info" %}
-非常感谢我们加拿大🇨🇦的**Edgegap**朋友为Mirror用户提供免费的0.5 vCPU！\
-虽然我们希望未来有更大的免费层，但请记住，他们是为基础设施付费的人。如果有能力，请为更多vCPUs支付给他们！
+非常感谢我们加拿大 🇨🇦 的**Edgegap**朋友为 Mirror 用户提供免费的 0.5 vCPU！\
+虽然我们希望未来有更大的免费层，但请记住，他们是为基础设施付费的人。如果有能力，请为更多 vCPUs 支付给他们！
 {% endhint %}
-
-请粘贴您要翻译的 Markdown 内容。
