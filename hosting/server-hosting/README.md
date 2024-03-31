@@ -1,50 +1,47 @@
-# Cloud Hosting Guides
+# 云托管指南(Cloud Hosting Guides)
 
-During this guide we will set up a dedicated server and place the server build of our project on the dedicated server.
+在本指南中，我们将设置一个专用服务器，并将项目的服务器构建放在专用服务器上。
 
-**IMPORTANT:** Before we begin, there are some potential problems you may face, as no server is truly 'free':
+**重要提示:** 在我们开始之前，您可能会遇到一些潜在问题，因为没有真正“免费”的服务器：
 
-1. Service providers are NOT free.
-2. Most of the time you can start with free trials for a limited time, after x amount of time or x amount of used resources the trial will end and you might incur payment.
-3. Always read the providers free trial limitations.
-4. Some providers require a payment method for using a Windows instance, however as long as you do not go over the limitations the provider should not bill you.
+1. 服务提供商并非免费。
+2. 大多数情况下，您可以从有限的免费试用开始，一段时间后或使用的资源量达到一定数量后，试用将结束，您可能需要支付费用。
+3. 请始终阅读提供商的免费试用限制。
+4. 有些提供商要求使用 Windows 实例时提供付款方式，但只要您不超过限制，提供商就不会向您收费。
 
-> **NOTE**: Mirror is not affiliated and can not be held responsible for any charges or fees associated with service providers like [AWS](https://aws.amazon.com/), [Microsoft Azure](https://azure.microsoft.com/en-us/free/), [Google Compute Engine](https://cloud.google.com/compute/) and others...
+> **注意**: Mirror 与[亚马逊 AWS](https://aws.amazon.com/), [微软 Azure](https://azure.microsoft.com/en-us/free/), [谷歌计算引擎](https://cloud.google.com/compute/)等服务提供商的任何费用或费用无关，也不承担任何责任...
 
-## Introduction <a href="#introduction" id="introduction"></a>
+## 介绍(Introduction) <a href="#introduction" id="introduction"></a>
 
-During your development with Mirror you will need to test your project as a client and as a server. There are a few possible ways to test your project:
+在使用 Mirror 进行开发时，您需要将项目作为客户端和服务器进行测试。有几种可能的测试项目的方式：
 
-1. Default build: Host/client as one and connecting with another build/editor to the host locally on 1 computer.
-2. Server build: Server is a separate executable. You can place it on your computer run it and connect to it as a client.
-3. Dedicated Server: Same as the server build but placed on an external machine, you connect to it with the server's external ip.
+1. 默认构建: 将主机/客户端作为一个实体，并使用另一个构建/编辑器在同一台计算机上本地连接到主机。
+2. 服务器构建: 服务器是一个独立的可执行文件。您可以将其放在您的计算机上运行，并作为客户端连接到它。
+3. 专用服务器: 与服务器构建相同，但放置在外部机器上，您可以使用服务器的外部 IP 地址连接到它。
 
-This guide will focus on the "Dedicated Server" option. There are multiple providers and even self hosted dedicated machines. All possibilities still go through the same process to ensure connectivity to clients. A few requirements for a dedicated server:
+本指南将重点介绍“专用服务器”选项。有多个提供商甚至可以自行托管专用机器。所有可能性仍然需要通过相同的流程来确保与客户端的连接。专用服务器的一些要求：
 
-1. Port forwarding (Not strictly necessary but makes everything a lot easier without needing NAT punchthrough)
-2. Firewall exceptions
-3. Computer/machine that stays online and accessible whenever you need it.
+1. 端口转发(不是必需的，但在不需要 NAT 穿透的情况下，使一切变得更加容易)
+2. 防火墙例外
+3. 保持在线和可访问的计算机/机器，无论何时您需要。
 
-In the upcoming sections we will go through setting up a provider with the free tier.
+在接下来的部分中，我们将介绍如何设置一个具有免费套餐的提供商。
 
 {% hint style="info" %}
-Always double check that you do not select a paid feature as this is purely meant as a short term period to test out basic functionality during development of your project.
+始终要仔细检查，确保您没有选择付费功能，因为这纯粹是为了在开发项目期间测试基本功能的短期期间。
 {% endhint %}
 
-### Microsoft Azure <a href="#microsoft-azure" id="microsoft-azure"></a>
+### Microsoft Azure (Microsoft Azure)
+Microsoft Azure（截至撰写本文时）允许在免费试用期间设置Windows实例，而无需使用有效的付款方式。
 
-Microsoft Azure (as of time of writing) allows setting up a windows instance during the free trial without an active payment method.
+**待添加**
 
-**To be added**
+### Google Compute Engine (Google Compute Engine)
+Google Compute Engine（截至撰写本文时）不允许在免费试用期间设置Windows实例，而无需使用有效的付款方式。
 
-### Google Compute Engine <a href="#google-compute-engine" id="google-compute-engine"></a>
+**待添加**
 
-Google Compute Engine (as of time of writing) does not allow setting up a windows instance during the free trial without an active payment method.
+### Self Hosted Dedicated Server (自托管专用服务器)
+自托管专用服务器与其他提供商相同，但您需要提供硬件、互联网连接和运行计算机的费用。在开发过程中，如果您已经有一台额外的机器，这通常是最便宜的选择。最好将机器放在不同的网络上（以模拟其他提供商的条件）。这意味着您可以随时连接到该机器并放置您的服务器构建，并且可以访问路由器和机器的安全设置以进行端口转发和防火墙例外。
 
-**To be added**
-
-### Self Hosted Dedicated Server <a href="#self-hosted-dedicated-server" id="self-hosted-dedicated-server"></a>
-
-A self hosted dedicated server is the same as the other providers but you provide the hardware, internet connection and costs for running the computer. Most of the time this is the cheapest option during development if you already have an extra machine. Preferably you would put the machine on a different network (to simulate the conditions as the other providers). This would mean you could connect to the machine and put your server build on whenever you need and have access to the router and security settings of the machine for port forwarding and firewall exceptions.
-
-In essence, this is the simplest set up but does require extra hardware.
+本质上，这是最简单的设置，但确实需要额外的硬件。

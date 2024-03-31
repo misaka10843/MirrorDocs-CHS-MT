@@ -1,212 +1,215 @@
 ---
-description: Quick overview of why Mirror exists, and how we got here - by vis2k
+description: Mirror存在的快速概述以及我们是如何到达这里的 - 由 vis2k
 ---
 
-# A Brief History of Mirror
+# Mirror简史 (A Brief History of Mirror)
 
-Our community has grown a lot. Most of you weren't around when this all started, so here's a brief history of UNET/Mirror.
+我们的社区已经发展壮大。大多数人在这一切开始时并不在场，所以这里是UNET/Mirror的简史。
 
-Hopefully an entertaining read if you are new to Mirror. Perhaps a trip down memory lane with some nostalgia screenshots for those who've been around all this time.
+如果您是Mirror的新手，希望这篇文章能带给您一些乐趣。对于那些一直在这里的人来说，也许会带来一些怀旧的截图，让您回忆起过去。
 
 {% hint style="info" %}
-We will keep updating this article as Mirror develops over time.
+随着Mirror随着时间的发展，我们将不断更新这篇文章。
 {% endhint %}
 
 ## UNET
 
 ![](<../.gitbook/assets/image (49).png>)
 
-Back in summer 2015 Unity released a public beta of **UNET**. The idea of Unity worrying about networking so we could worry about our games sounded very tempting. UNET came with several interesting features:
+回到2015年夏天，Unity发布了**UNET**的公共测试版。Unity关注网络功能，让我们专注于游戏开发的想法听起来非常诱人。UNET带来了一些有趣的功能：
 
-* **Server & Client in one project**. Most of the code is shared. Some is marked as \[Server] or \[Client] only.
-  * This allows for a major gain productivity since terrain, models, assets and code are all shared between server & client.
-* **\[SyncVars]** for automated serialization of selected variables.
-  * This was significant when coming from hand built Serialize/Deserialize functions. Simply adding a \[SyncVar] in front of Player. level was so much easier.
-* **\[Commands/Rpcs]** - wrapping a function with a \[Command] tag to automatically call it on the server was another huge gain productivity
-  * Compared to manually sending a message, deserializing all parameters and calling a function manually.
+* **服务器和客户端在一个项目中**。大部分代码是共享的。有些标记为\[Server]或\[Client]。
+  * 这样做可以极大提高生产力，因为地形、模型、资源和代码在服务器和客户端之间都是共享的。
+* **\[SyncVars]** 用于自动序列化选定的变量。
+  * 当从手动构建的序列化/反序列化函数转换时，这是非常重要的。只需在Player.level前面添加一个\[SyncVar]就简单多了。
+* **\[Commands/Rpcs]** - 使用\[Command]标记包装一个函数，自动在服务器上调用它是另一个巨大的生产力提升。
+  * 相比手动发送消息、反序列化所有参数并手动调用函数。
 
-## Hype
+## 热度
 
-Back in 2015, there seemed to be almost monthly UNET talks and videos like [Democratizing Multiplayer Development](https://www.youtube.com/watch?v=gZbbYXzyXKk). Everyone was excited, and the UNET team was working hard.
+回到2015年，几乎每个月都有关于UNET的讨论和视频，比如[Democratizing Multiplayer Development](https://www.youtube.com/watch?v=gZbbYXzyXKk)。每个人都很兴奋，UNET团队也在努力工作。
 
-![Sean Riley demonstrating UNET at Unite 2014](../.gitbook/assets/2021-04-02\_18-35-53@2x.png)
+![Sean Riley在Unite 2014展示UNET](../.gitbook/assets/2021-04-02_18-35-53@2x.png)
 
-![One of the early UNET talks in 2015](../.gitbook/assets/2021-04-02\_12-36-24@2x.png)
+![2015年早期的UNET讨论之一](../.gitbook/assets/2021-04-02_12-36-24@2x.png)
 
-![Alexey Abramychev's talk about LLAPI](../.gitbook/assets/2021-04-02\_18-45-38@2x.png)
+![Alexey Abramychev关于LLAPI的讲话](../.gitbook/assets/2021-04-02_18-45-38@2x.png)
 
-Back then, it was mostly:
+那时候，主要是：
 
-* **Alexey Abramychev**: the friendly Russian guy who worked on the low level Transport (LLAPI)
-* **Sean Riley**: who worked on World of Warcraft, now developing the high level API (HLAPI/UNET)
-* **Erik Juhl:** the UNET team lead, who said _MMOs were his passion_
+* **Alexey Abramychev**：友好的俄罗斯人，负责低级传输（LLAPI）
+* **Sean Riley**：曾在魔兽世界工作，现在开发高级API（HLAPI/UNET）
+* **Erik Juhl**：UNET团队负责人，他说MMO是他的激情
 
-The UNET team had a big plans on their **roadmap**:
+UNET团队在他们的**路线图**上有很大的计划：
 
-* Cloud services like Relay/Matchmaking
-* One-click game server hosting right from the Unity Editor
-* The _simulation server_ which will power MMO scale networking
-* UNET 'Phase 3' aka automated server instances. Mark an area, it'll run as an instance.
+- 云服务，如中继/匹配
+- 从Unity编辑器直接进行一键式游戏服务器托管
+- 将支持MMO规模网络的_模拟服务器_
+- UNET的“第3阶段”也就是自动化服务器实例。标记一个区域，它将作为一个实例运行。
 
-Most multiplayer games never see the light of day, because finishing all that code is extremely difficult. With UNET, for the first time it seemed actually doable. An order of magnitude gain productivity for sure.
+大多数多人游戏永远不会问世，因为完成所有那些代码极其困难。有了UNET，第一次似乎真的是可行的。生产力提升了一个数量级。
 
-## Getting Started
+# Getting Started(开始)
 
-UNET was still in beta in 2015. There wasn't much documentation, but there were just a couple of demos. One of them was a movement demo with a couple of balls moving over the network.
+UNET在2015年仍处于测试版。没有太多文档，但只有几个演示。其中之一是一个带有几个球在网络上移动的移动演示。
 
-I was already working on my MMO project before UNET. Moving balls sounded close enough to moving players, so I gave UNET a try.
+在UNET之前，我已经在进行我的MMO项目。移动球听起来与移动玩家相似，所以我尝试了UNET。
 
-![UNET's movement demo with some early MMO features](../.gitbook/assets/2015-09-30\_unet\_noicons.png)
+![UNET的移动演示，带有一些早期MMO功能](../.gitbook/assets/2015-09-30\_unet\_noicons.png)
 
-**Networked** NavMeshAgent movement, skills, equipment and an inventory were added easily thanks to SyncLists and all the \[SyncVar]/\[Rpc] convenience.
+通过SyncLists和所有的\[SyncVar]/\[Rpc]便利，网络化的NavMeshAgent移动、技能、装备和库存很容易添加。
 
-UNET wasn't very stable during the beta, but the productivity gain was massive and it seemed like the obvious path into the future of multiplayer game development.
+在测试版期间，UNET并不是非常稳定，但生产力的提升是巨大的，看起来是未来多人游戏开发的明显路径。
 
-## Meet Damon
+## Meet Damon(遇见Damon)
 
-Around September I also started talking to Damon Slye, the guy who made [Red Baron](https://store.steampowered.com/app/263940/Red\_Baron\_Pack/) in 1990, published by Sierra.
+大约在九月份，我还开始与Damon Slye交谈，他是1990年制作的[Red Baron](https://store.steampowered.com/app/263940/Red\_Baron\_Pack/)的人，由Sierra发行。
 
 ![Red Baron](<../.gitbook/assets/image (85).png>)
 
-Damon and his new team Mad Otter Games actually made their own indie MMO, just like I planned to do. They didn't use Unity, but considered it for their next project. We've talked a lot about MMO tech, lessons learned and they even licensed me a couple of their models for my unnamed MMO project.
+Damon和他的新团队Mad Otter Games实际上制作了他们自己的独立MMO，就像我计划做的那样。他们没有使用Unity，但考虑将其用于下一个项目。我们讨论了很多关于MMO技术、经验教训，他们甚至为我的未命名的MMO项目许可了我几个模型。
 
-With the UNET team working tirelessly on networking and the MadOtter guys as living proof, it seemed like my indie MMO idea actually seemed almost doable for once.
+随着UNET团队不知疲倦地致力于网络工作，MadOtter团队作为活生生的证明，对我来说，独立MMO的想法似乎实际上几乎是可行的。
 
-## What if...
+## What if...(如果...)
 
-![The MMO Project in November 2015 with the licensed models.](../.gitbook/assets/2021-04-02\_13-00-01@2x.png)
+![2015年11月的MMO项目，带有许可的模型。](../.gitbook/assets/2021-04-02\_13-00-01@2x.png)
 
-In 2015, there wasn't any type of MMO toolkit available as far as I could tell. From my reverse engineering days I remembered Perfect World Entertainment licensing their MMO engine for $100,000 - $300,000. Which needless to say was out of my budget.
+2015年，据我所知，当时没有任何类型的大型多人在线游戏（MMO）工具包。在我逆向工程的日子里，我记得完美世界娱乐公司授权他们的 MMO 引擎售价为 10 万至 30 万美元。可以说这超出了我的预算。
 
-Since I was working on my own MMO code anyway, I figured might as well put it on the Asset Store and see what happens. Maybe it sells for $50/month and I can treat myself to a pizza every week or so.
+由于我本来就在开发自己的 MMO 代码，我想干脆将其放在 Asset Store 上，看看会发生什么。也许每月销售额为 50 美元，我就可以每周吃一次披萨。
 
-[uMMORPG](https://assetstore.unity.com/packages/templates/systems/ummorpg-remastered-159401) was released on the Asset Store at December 23rd, 2015. One day before Christmas.
+[uMMORPG](https://assetstore.unity.com/packages/templates/systems/ummorpg-remastered-159401) 于 2015 年 12 月 23 日发布在 Asset Store 上。就在圣诞节前一天。
 
-![An early version of uMMORPG](<../.gitbook/assets/2017-01-11\_10-42-44 (1).png>)
+![uMMORPG 的早期版本](<../.gitbook/assets/2017-01-11\_10-42-44 (1).png>)
 
-As it turns out, a lot of people had the same dream, but not enough money to license a AAA engine.
+事实证明，很多人有着相同的梦想，但没有足够的资金来授权 AAA 引擎。
 
-uMMORPG quickly became one of the top 10 assets on the store.
+uMMORPG 很快成为商店中前 10 名的资产之一。
 
-Yesterday, MMO development was my hobby, a dream to work on my free time. Over night it became a full time job, thanks to the Unity Engine, UNET and a huge bet.
+昨天，MMO 开发是我的爱好，是我业余时间工作的梦想。但一夜之间，由于 Unity 引擎、UNET 和一个巨大的赌注，它变成了全职工作。
 
-## In UNET We Trust
+## 在 UNET 我们信任
 
-Around that time, **Paul** and I crossed paths when he used uMMORPG for his Cubica game.
+大约在那个时候，**Paul** 和我相遇，他在他的 Cubica 游戏中使用了 uMMORPG。
 
-There was just one problem: UNET. We've put all our trust into a networking black box and a couple of professional networking engineers.
+只有一个问题：UNET。我们把所有的信任都放在一个网络黑匣子和几位专业的网络工程师身上。
 
-Yet, even after 30-50 bug reports and 1-2 years of begging every single person on the UNET team - nothing happened. Not a single bug was fixed. No improvements. No answers.
+然而，即使提交了 30-50 个 bug 报告，恳求 UNET 团队的每个人 1-2 年，仍然没有任何进展。没有一个 bug 被修复。没有改进。没有答复。
 
-Every single day our users/customers came in with new UNET bugs. Bad reviews. Random crashes. We've built our dreams on a blackbox that abandoned us, and there was nothing we could do about it.
+我们的用户/客户每天都会遇到新的 UNET bug。糟糕的评价。随机崩溃。我们的梦想建立在一个抛弃我们的黑匣子上，而我们却无能为力。
 
-Worst of all, UNET didn't scale. 30-70 CCU and a dozen monsters were all it could do.
+最糟糕的是，UNET 无法扩展。30-70 CCU 和几十只怪物就是它所能承受的极限。
 
-![An early UNET community test with 57 connections and lots of bugs.](<../.gitbook/assets/57 (1).png>)
+![UNET 早期社区测试，有 57 个连接和许多 bug。](<../.gitbook/assets/57 (1).png>)
 
-At one point, I used reflection to fix the serialization bug in UNET. At the time, it was the highest rated networking bug on the Unity issue tracker. I've made detailed forum posts on why the bug happens and how to fix it. I reached out to Alexey, Erik, Larus, the Asset Store team, and QA.
+有一次，我使用反射来修复 UNET 中的序列化 bug。当时，这是 Unity 问题跟踪器中评分最高的网络 bug。我在论坛上详细介绍了 bug 的原因以及如何修复它。我联系了 Alexey、Erik、Larus、Asset Store 团队和 QA。 
 
-It was closed _by design_. Twice.
+**（In 2015, there wasn't any type of MMO toolkit available as far as I could tell. From my reverse engineering days I remembered Perfect World Entertainment licensing their MMO engine for $100,000 - $300,000. Which needless to say was out of my budget.）**
+
+
+它被设计成了关闭。两次。
 
 !["By Design" - the UNET Bug that started Mirror](../.gitbook/assets/2021-04-02\_18-39-23@2x.png)
 
-We've built our dreams on UNET, and in my case my livelihood. I needed UNET to pay the rent and eat. Yet the people we've put our full trust in had abandoned us.
+我们的梦想建立在UNET上，而在我的情况下，我的生计也是如此。我需要UNET来支付房租和吃饭。然而，我们完全信任的人却抛弃了我们。
 
-* **Sean Riley** was the driving force behind UNET. As it turns out, he left the team around the beta.
-* **Alexey** tried to fill the void as best as he could. For a while, he was on the forum on Sundays and even replied to my email during his vacation. At some point, he wasn't with Unity anymore either though.
-* **Erik Juhl** (the UNET team lead) went on to work for a web development company.
+- **Sean Riley** 是UNET的主要推动力。事实证明，他在测试版发布后离开了团队。
+- **Alexey** 尽其所能填补空缺。有一段时间，他甚至在周日上论坛，甚至在度假期间回复了我的邮件。然而，某个时候，他也不再在Unity工作了。
+- **Erik Juhl**（UNET团队负责人）后来加入了一家Web开发公司。
 
-What's worse is that while everyone secretly left the sinking ship, there was no word from Unity. Dead silence. It took a couple of years for us to learn that the UNET core team wasn't even working for Unity anymore.
+更糟糕的是，当每个人悄悄离开这艘沉船时，Unity却没有任何消息。死一般的寂静。我们花了几年的时间才了解到，UNET核心团队甚至不再为Unity工作。
 
-At one point we even wrote an open letter to Joachim Ante. Desperate times.
+有一次，我们甚至给Joachim Ante写了一封公开信。绝望的时刻。
 
 ## HLAPI Pro
 
-In a surprising turn of events, someone at Unity **open sourced HLAPI** - the high level part of UNET.
+令人惊讶的是，Unity中的某人**开源了HLAPI** - UNET的高级部分。
 
-**LLAPI** - the low level transport - always remained closed source.
+**LLAPI** - 低级传输 - 一直保持封闭源代码。
 
-For HLAPI, one had to compile two csharp DLLs, manually overwrite them in their Unity installation and then pray that it was compatible with that particular Unity version.
+对于HLAPI，人们必须编译两个C# DLL，手动覆盖它们在Unity安装中，然后祈祷它与特定的Unity版本兼容。
 
-The code was uncommented, over engineered, full of bugs and full of magic.
+代码没有注释，过度设计，充满错误和魔法。
 
-But we had the source. Finally, a light at the end of the tunnel.
+但我们有源代码。终于，隧道尽头有了一丝曙光。
 
-So I made this forum post about "**HLAPI Pro - a drop in replacement for UNET**". Fully compatible, just with a couple of bug fixes that I previously had to use reflection for. The idea was to offer people a 100% risk free alternative. Use HLAPI Pro to fix your bugs. Go back to the original DLLs any time.
+所以我发了这篇关于“**HLAPI Pro - UNET的可替代方案**”的论坛帖子。完全兼容，只是修复了一些以前必须使用反射来解决的bug。这个想法是为人们提供一个100%无风险的替代方案。使用HLAPI Pro来修复您的bug。随时返回原始的DLL。
 
-As far as I remember, Paul actually worked on MLAPI with TwoTen at first. But he convinced me to **MIT** License HLAPI Pro, and so Mirror was born.
+据我记得，Paul实际上最初与TwoTen一起在MLAPI上工作。但他说服我**MIT**许可证HLAPI Pro，于是Mirror诞生了。
 
 {% hint style="info" %}
-**Fun fact**: over the years we never really figured out the elephant in the room. How is that Unity pulled off this complex UNET technology, but then couldn't fix it? The weaver is a true piece of alien technology, and it's still not obvious to us who made that thing.\
+**趣闻**: 多年来，我们从未真正弄清楚房间里的大象。Unity是如何实现这个复杂的UNET技术的，但后来却无法修复它？编织者是真正的外星技术，对于我们来说，制造这个东西的人仍然不明显。\
 \
-When digging through it, at one point we found code for **NetworkView**. That component was actually part of Unity's legacy Raknet networking. As far as we can tell, UNET was based on their legacy system.
+在研究时，有一次我们发现了**NetworkView**的代码。该组件实际上是Unity传统的Raknet网络的一部分。据我们所知，UNET是基于他们的传统系统。
 {% endhint %}
 
-## Meet Mirror
+## 遇见 Mirror（镜像）
 
-During the next couple of years, we fixed several hundred UNET bugs and cleaned up the code.
+在接下来的几年里，我们修复了数百个 UNET（Unity 网络）的 bug 并清理了代码。
 
-Still, nobody believed in UNET. Supposedly, the design didn't make sense, it would never scale and it would never work for any real game. The only people who believed in Mirror were those already using UNET for their projects, desperately needing bug fixes.
+然而，没有人相信 UNET。据说，设计毫无意义，永远无法扩展，并且永远无法适用于任何真正的游戏。唯一相信 Mirror 的人是那些已经在他们的项目中使用 UNET 并迫切需要 bug 修复的人。
 
-![Early Mirror stress test with hundreds of monsters](../.gitbook/assets/2017-08-13\_stresstest.png)
+![早期 Mirror 的数百只怪物压力测试](../.gitbook/assets/2017-08-13_stresstest.png)
 
-At one point, we asked Unity for a donation seeing how we carried their whole UNET community for free. They told us UNET wouldn't have a future and it makes no sense to invest into that technology anymore.
+有一次，我们向 Unity 请求捐赠，因为我们免费支持了他们整个 UNET 社区。他们告诉我们 UNET 没有未来，再投资这项技术毫无意义。
 
-Our networking heroes had abandoned us, and told us our work was pointless.
+我们的网络英雄们抛弃了我们，并告诉我们我们的工作毫无意义。
 
-## Breaking Chains
+## 打破枷锁
 
-Step by step, we broke all the chains that still tied us into UNET.
+逐步地，我们打破了仍然将我们与 UNET 联系在一起的所有枷锁。
 
-* Someone open sourced the **Weaver** after a while, so we could fix it too.
-* We replaced the **LLAPI** black box with Telepathy. We've got heavy criticism for using TCP. But at least, the black box was finally open and we could fix bugs for once. Over the years, we've added many other transports like KCP.
-* Paul figured out how to use **HLAPI** as source drop in, without DLL replacements.
-* **Websockets** were previously closed in LLAPI, now finally open too.
-* The UNET **Community** mostly converted to Mirror too.
+- 过了一段时间，有人开源了 **Weaver**，这样我们也可以修复它。
+- 我们用 Telepathy 替换了 **LLAPI** 的黑盒子。我们因为使用 TCP 而受到了严厉批评。但至少，黑盒子终于是开放的，我们可以一次性修复 bug。多年来，我们还添加了许多其他传输方式，比如 KCP。
+- Paul 找到了如何将 **HLAPI** 作为源代码插入，而无需替换 DLL。
+- **Websockets** 以前在 LLAPI 中是封闭的，现在也终于是开放的。
+- UNET **社区** 大部分也转向了 Mirror。
 
-Until today, most of our work on Mirror was about breaking the chains and fixing all the bugs.
+直到今天，我们在 Mirror 上的大部分工作都是关于打破枷锁和修复所有 bug。
 
-Here are some screenshots that we gathered over the years. Enjoy the nostalgia.
+以下是我们多年来收集的一些截图。享受怀旧之情。
 
-![UNET Weaver Project / DLL](../.gitbook/assets/2017-08-05\_patreon\_header.png)
+![UNET Weaver 项目 / DLL](../.gitbook/assets/2017-08-05_patreon_header.png)
 
-![Mirror's first example](../.gitbook/assets/2018-09-25\_movedemo.png)
+![Mirror 的第一个示例](../.gitbook/assets/2018-09-25_movedemo.png)
 
-![HLAPI's first community test](<../.gitbook/assets/Screenshot at Jul 28 13-09-17.png>)
+![HLAPI 的第一个社区测试](<../.gitbook/assets/Screenshot at Jul 28 13-09-17.png>)
 
-![Geno Online, jagatai's early MMO attempt with Mirror](../.gitbook/assets/2017-09-08\_jagatai\_stream.png)
+![Geno Online，jagatai 早期使用 Mirror 尝试的 MMO](../.gitbook/assets/2017-09-08_jagatai_stream.png)
 
-![uMMORPG 500 CCU test. UNET handled \~70 CCU when we started.](../.gitbook/assets/2021-04-02\_17-38-22@2x.png)
+![uMMORPG 500 CCU 测试。我们开始时，UNET 处理约 70 CCU。](../.gitbook/assets/2021-04-02_17-38-22@2x.png)
 
-![20,000 monsters in Mirror. UNET handled 12 monsters back then.](<../.gitbook/assets/2020-10-12\_20-45-17 - x branch 20k monsters 19 FPS.png>)
+![Mirror 中的 20,000 只怪物。当时 UNET 处理 12 只怪物。](<../.gitbook/assets/2020-10-12_20-45-17 - x branch 20k monsters 19 FPS.png>)
 
-## Community
+## 社区 (Community)
 
-It's been 6 years since the UNET beta. Mirror has grown to 100,000 downloads a year, a fantastic Discord community with 10,000 users, new team members like our famous networking legend MrGadget, Coburn, James, katori, Lymdum, uwee and many more.
+自UNET测试版发布以来已经过去了6年。Mirror每年的下载量已经增长到了10万次，拥有一个庞大的Discord社区，拥有1万名用户，新增了像我们著名的网络传奇人物MrGadget、Coburn、James、katori、Lymdum、uwee等许多新团队成员。
 
 ![](../.gitbook/assets/2021-04-02\_17-52-33@2x.png)
 
-Several [popular games](https://mirror-networking.com/showcase/) made with Mirror, and of course lots of [memes](https://www.youtube.com/watch?v=jNTFFYhNhiI).
+有几款[热门游戏](https://mirror-networking.com/showcase/)是使用Mirror制作的，当然还有很多[梗](https://www.youtube.com/watch?v=jNTFFYhNhiI)。
 
-![Population: ONE - made with Mirror](<../.gitbook/assets/image (69).png>)
+![Population: ONE - 使用Mirror制作](<../.gitbook/assets/image (69).png>)
 
-## What's Next
+## 接下来 (What's Next)
 
-We've spent all this time breaking the chains and fixing the bugs. Hundreds of them.
+我们花了很多时间打破束缚和修复bug。数以百计。
 
-But we also learned a lot about networking since then.
+但自那时以来，我们也学到了很多关于网络的知识。
 
-In the future, our [roadmap](https://trello.com/b/fgAE7Tud) is not so much about fixes anymore, but about core networking techniques.
+在未来，我们的[路线图](https://trello.com/b/fgAE7Tud)不再只是关于修复bug，而是关于核心网络技术。
 
-While stable, Mirror still has a long way to go and the original mission has never changed.
+虽然Mirror目前很稳定，但还有很长的路要走，原始使命从未改变。
 
-We just need it for our games.
+我们只是需要它来制作我们的游戏。
 
 {% hint style="success" %}
-**Mirror** required 10,000+ man hours on top of UNET.\
-**UNET** was developed over several years, likely on top of Unity's **legacy** networking.\
-**Legacy** networking must have been developed for years by people we don't even know.\
+**Mirror** 在UNET的基础上需要超过1万小时的工作量。\
+**UNET** 是在几年时间内开发的，很可能是在Unity的**传统**网络基础之上。\
+**传统**网络可能是由我们甚至不认识的人开发了好几年。\
 \
-Mirror is standing on the **shoulders of giants**.\
-It's hard to estimate how many years, man hours, sweat, tears went into this technology.
+Mirror站在**巨人的肩膀**上。\
+很难估计有多少年、多少工时、多少汗水、眼泪投入到这项技术中。
 {% endhint %}

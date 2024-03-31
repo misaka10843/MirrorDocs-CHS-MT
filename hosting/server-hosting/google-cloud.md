@@ -1,254 +1,253 @@
-# Google Cloud
+# Google Cloud (Google 云)
 
-## Google Cloud Services <a href="#google-cloud-services" id="google-cloud-services"></a>
+## Google Cloud 服务 (Google 云服务) <a href="#google-cloud-services" id="google-cloud-services"></a>
 
-This guide will explain how to set up a Linux server running on [Google Cloud](https://cloud.google.com/).
+本指南将解释如何在 [Google Cloud](https://cloud.google.com/) 上设置运行 Linux 服务器。
 
-Google cloud offers $300 free credits to new users for a limited time, and it also have "Always free products". See [overview](https://cloud.google.com/free) and [docs](https://cloud.google.com/free/docs/gcp-free-tier) for more information.
+Google 云为新用户提供有限时间内的 $300 免费信用额度，并且还有“始终免费产品”。请查看 [概览](https://cloud.google.com/free) 和 [文档](https://cloud.google.com/free/docs/gcp-free-tier) 获取更多信息。
 
-### Before you begin <a href="#before-you-begin" id="before-you-begin"></a>
+### 开始之前 <a href="#before-you-begin" id="before-you-begin"></a>
 
-1. In the Cloud Console, on the project selector page, select or create a Cloud project.
+1. 在 Cloud 控制台的项目选择器页面上，选择或创建一个 Cloud 项目。
 
-> Note: If you don't plan to keep the resources that you create in this procedure, create a project instead of selecting an existing project. After you finish these steps, you can delete the project, removing all resources associated with the project.
+> 注意：如果您不打算保留此过程中创建的资源，请创建一个项目，而不是选择现有项目。完成这些步骤后，您可以删除该项目，从而删除与项目关联的所有资源。
 
-[**Go to the project selector page**](https://console.cloud.google.com/projectselector2/home/dashboard)
+[**转到项目选择器页面**](https://console.cloud.google.com/projectselector2/home/dashboard)
 
-1. You may need to enable billing for your Google Cloud project. If you have free credits (see above) then these will be used first. [Learn how to confirm billing is enabled for your project.](https://cloud.google.com/billing/docs/how-to/modify-project)
+1. 您可能需要为您的 Google Cloud 项目启用计费。如果您有免费信用额度（请参见上文），那么这些将首先被使用。[了解如何确认为您的项目启用了计费。](https://cloud.google.com/billing/docs/how-to/modify-project)
 
-### Setting up a new Server <a href="#setting-up-a-new-server" id="setting-up-a-new-server"></a>
+### 设置新服务器 <a href="#setting-up-a-new-server" id="setting-up-a-new-server"></a>
 
-Start by creating and configuring a new Compute Engine instance.
+首先创建并配置一个新的 Compute Engine 实例。
 
-1. In the Cloud Console, go to the VM instances page:
+1. 在 Cloud 控制台中，转到 VM 实例页面：
 
-[**Go to the VM instances page**](https://console.cloud.google.com/compute/instances)
+[**转到 VM 实例页面**](https://console.cloud.google.com/compute/instances)
 
-If this is your first instance you will see a dialog prompting you to create a new virtual machine
+如果这是您的第一个实例，您将看到一个对话框提示您创建一个新的虚拟机
 
-![create new](../../.gitbook/assets/01-vm-instances.jpg)
+![创建新](../../.gitbook/assets/01-vm-instances.jpg)
 
-1. Click Create to get started.
-2. On the Create an instance page, configure your instance as follows:
-   * Name your instance. This tutorial uses the instance name `mirror-instance-demo` throughout.
-   * Select the region and zone in which you want your instance to be hosted. This tutorial uses the region `us-central1 (Iowa)` and the zone `us-central1-a` throughout.
-   * Machine configuration depends on the size of your game. For a simple example we can use a small server.
-     * select `N1` for series
-     * select `f1-micro` for machine type
-   * In the Boot disk section, click Change. The Boot disk dialog will pop up.
-   * Change the disk type to SSD Persistent Disk.
+1. 点击创建以开始。
+2. 在创建实例页面上，按照以下配置您的实例：
+   * 命名您的实例。本教程中始终使用实例名称 `mirror-instance-demo`。
+   * 选择您希望实例托管的区域和区域。本教程中始终使用区域 `us-central1（爱荷华州）` 和区域 `us-central1-a`。
+   * 机器配置取决于您的游戏大小。对于一个简单的示例，我们可以使用一个小型服务器。
+     * 选择 `N1` 系列
+     * 选择 `f1-micro` 作为机器类型
+   * 在启动磁盘部分，点击更改。将弹出启动磁盘对话框。
+   * 将磁盘类型更改为 SSD 持久磁盘。
 
-![create instance with name and region](../../.gitbook/assets/02-create-instance-name-region.jpg)
+![使用名称和区域创建实例](../../.gitbook/assets/02-create-instance-name-region.jpg)
 
-1. Boot disk can be left as default `10gb standard persistent disk` with `Debian GNU/Linux 9 (stretch)` for this tutorial.
+1. 对于本教程，引导磁盘可以保留为默认的`10gb标准持久磁盘`，使用`Debian GNU/Linux 9 (stretch)`。
 
-You may want to change it to best fit your needs. You can instead use an ssd or increase its size, however this will increase the monthly cost.
+您可以根据自己的需求进行更改。您可以选择使用固态硬盘或增加其大小，但这将增加每月的成本。
 
-![03Boot disk](../../.gitbook/assets/03-boot-disk.jpg)
+![03引导磁盘](../../.gitbook/assets/03-boot-disk.jpg)
 
-> Note: The monthly estimate should be shown at the top right next to `Name`
+> 注意：月度估算应显示在`Name`旁边的右上角
 
-1. To configure Network settings first example the `Management, security, disks, networking, solo tenancy` section, then click on the `Networking` tab.
+1. 要配置网络设置，首先查看`管理、安全、磁盘、网络、独占租户`部分，然后单击`Networking`选项卡。
 
-![expand network settings](../../.gitbook/assets/04-expand-network-settings.jpg)
+![展开网络设置](../../.gitbook/assets/04-expand-network-settings.jpg)
 
-1. Set a Network tag, this will allow you to set up firewall rules later on.
+1. 设置一个网络标记，这将允许您稍后设置防火墙规则。
 
-This tutorial use `mirror-demo` as the tag
+本教程使用`mirror-demo`作为标记
 
-![set network tag](../../.gitbook/assets/05-network-tag.jpg)
+![设置网络标记](../../.gitbook/assets/05-network-tag.jpg)
 
-1.  Set up a static IP address for your instance
+1.  为您的实例设置静态 IP 地址
 
-    a) Under **Network interfaces** click on `default` and it will bring up a config menu
+    a) 在**网络接口**下单击`default`，将会弹出一个配置菜单
 
-    b) Select the **External IP** dropdown and select `Create IP address`
+    b) 选择**外部 IP**下拉菜单，选择`Create IP address`
 
-    c) Enter a name for this ip and press **Reserve**. For this tutorial we will use `mirror-demo-ip`
+    c) 输入一个名称用于此 IP 并按**Reserve**。本教程中我们将使用`mirror-demo-ip`
 
-![reserve ip address](../../.gitbook/assets/06-ip-address.jpg)
+![保留 IP 地址](../../.gitbook/assets/06-ip-address.jpg)
 
-1. Create your instance.
+1. 创建您的实例。
 
-Press the **Create** button at the bottom of the page to finish set up and create your instance
+单击页面底部的**Create**按钮完成设置并创建您的实例
 
-### Configure Firewall <a href="#configure-firewall" id="configure-firewall"></a>
+### 配置防火墙 <a href="#configure-firewall" id="configure-firewall"></a>
 
-This will allow other people to connect to your server using its IP and port
+这将允许其他人使用其 IP 和端口连接到您的服务器
 
-1. In the Cloud Console, go to the Firewall page.
+1. 在 Cloud 控制台中，转到防火墙页面。
 
-[**Go to the Firewall page**](https://console.cloud.google.com/networking/firewalls/list)
+[**转到防火墙页面**](https://console.cloud.google.com/networking/firewalls/list)
 
-1. Click Create firewall rule.
-2. On the Create a firewall rule page, fill out the form as follows:
-   * Name: `mirror-demo-rule`
-   * Target tags: `mirror-demo`
-   * Source filter: IP ranges
-   * Source IP ranges: 0.0.0.0/0
-   * Protocols or ports: Select tcp, and then enter port 7777 into the field provided.
+1. 单击创建防火墙规则。
+2. 在创建防火墙规则页面上，填写以下表单：
+   * 名称：`mirror-demo-rule`
+   * 目标标记：`mirror-demo`
+   * 源过滤器：IP 范围
+   * 源 IP 范围：0.0.0.0/0
+   * 协议或端口：选择 tcp，并在提供的字段中输入端口 7777。
 
-> note tcp and port 7777 is default settings for telepathy, if you are using a different transport you will need to find out what settings that uses.&#x20;
+> 注意：tcp 和端口 7777 是 telepathy 的默认设置，如果您使用不同的传输方式，则需要了解其使用的设置。&#x20;
 >
-> If KCP is on your NetworkManager, unblock UDP, not TCP.
+> 如果 KCP 在您的 NetworkManager 上，解除 UDP 的阻止，而不是 TCP。
 
-![Create network rule](../../.gitbook/assets/07-create-network-rule.jpg)
+![创建网络规则](../../.gitbook/assets/07-create-network-rule.jpg)
 
-1. Press **Create** to confirm setting and create the rule.
+# 连接到您的新实例（Connect to your new instance）
 
-### Connect to your new instance <a href="#connect-to-your-new-instance" id="connect-to-your-new-instance"></a>
+一旦您的实例创建完成，您可以点击 **SSH** 按钮在您的网络浏览器中连接到您的实例
 
-Once your instance has finished being created you can press the **SSH** button to connect to your instance in your web browser
+![连接到实例](../../.gitbook/assets/08-connect-to-instance.jpg)
 
-![connect to instance](../../.gitbook/assets/08-connect-to-instance.jpg)
+# 设置 Linux 实例（Setting up the linux instance）
 
-### Setting up the linux instance <a href="#setting-up-the-linux-instance" id="setting-up-the-linux-instance"></a>
+当您首次连接时，您需要设置一些内容
 
-When you first connect you will need to set up a few things
-
-1. First update the list of packages
+1. 首先更新软件包列表
 
 ```bash
 sudo apt-get update
 ```
 
-1. Install `screen` and `unzip`
+2. 安装 `screen` 和 `unzip`
 
 ```bash
 sudo apt-get install -y screen unzip
 ```
 
-`screen` allows you to have multiple terminals, allows you do do other stuff while your game is running
+`screen` 允许您拥有多个终端，可以在游戏运行时进行其他操作
 
-`unzip` unzips can be used to extract files from a ZIP file after you upload it to the instance
+`unzip` 可以用于在将其上传到实例后从 ZIP 文件中提取文件
 
-![09update and install packages](../../.gitbook/assets/09-update-and-install.jpg)
+![更新和安装软件包](../../.gitbook/assets/09-update-and-install.jpg)
 
-### Build your game <a href="#build-your-game" id="build-your-game"></a>
+# 构建您的游戏（Build your game）
 
-Build your game with Target Platform `Linux` and **Server Build** ticked
+使用目标平台 `Linux` 并勾选 **Server Build** 来构建您的游戏
 
-![Server build](../../.gitbook/assets/10-server-build.jpg)
+![服务器构建](../../.gitbook/assets/10-server-build.jpg)
 
-### Upload and extract your game <a href="#upload-and-extract-your-game" id="upload-and-extract-your-game"></a>
+# 上传并解压您的游戏（Upload and extract your game）
 
-Once you have built your game zip the folder so that you can upload it to your server.
+一旦构建完成您的游戏，请将文件夹压缩，以便您可以将其上传到服务器。
 
-In the SSH connection window click on the settings cogwheel and select **Upload File** then find and select your zipped build folder.
+在 SSH 连接窗口中，点击设置齿轮图标并选择 **Upload File**，然后找到并选择您的压缩构建文件夹。
 
-![Upload a file](../../.gitbook/assets/12-uploading.jpg)
+![上传文件](../../.gitbook/assets/12-uploading.jpg)
 
-This should upload the game folder to the home directory.
+这将会将游戏文件夹上传到主目录。
 
-If you need to go to the home directory you can use:
+如果您需要进入主目录，您可以使用：
 
 ```
 cd ~
 ```
 
-> Note: the destination will be `/home/username` where username should be the cloud account you are logged into.
+> 注意：目标路径将会是 `/home/username`，其中 `username` 应该是您登录的云账户。
 
-![Uploading](../../.gitbook/assets/11-upload-a-file.jpg)
+![上传中](../../.gitbook/assets/11-upload-a-file.jpg)
 
-Once your file has finished upload you can extract the files
-
-```
-unzip ./mirror-demo.zip 
-```
-
-### Run server <a href="#run-server" id="run-server"></a>
-
-1. Move into game folder
+一旦您的文件上传完成，您可以解压文件
 
 ```
+unzip ./mirror-demo.zip
+```
+
+### 运行服务器（#run-server）
+
+1. 进入游戏文件夹
+
+```csharp
 cd mirror-demo
 ```
 
-1. Mark game as executable
+2. 将游戏标记为可执行文件
 
-```
+```csharp
 chmod +x ./mirror-demo.x86_64 
 ```
 
-You should now be able to run your game server!
+现在您应该可以运行游戏服务器了！
 
-The following is optional but will most likely be useful
+以下内容是可选的，但很可能会很有用
 
-1. Start your server in a detached screen
+1. 在一个分离的屏幕中启动服务器
 
-```
+```csharp
 screen -d -m -S mirrorServer ./mirror-demo.x86_64 -logfile ~/server.log
 ```
 
-The parts of the command above:
+上述命令的各部分：
 
-* `screen -d -m` will create the new terminal in detached mode
-* `-S mirrorServer` name of the screen
-* `./mirror-demo.x86_64` your game server file
-* `-logfile ~/server.log` unity argument for log file location, this will create a log file in the home directory
+* `screen -d -m` 将以分离模式创建新的终端
+* `-S mirrorServer` 屏幕的名称
+* `./mirror-demo.x86_64` 您的游戏服务器文件
+* `-logfile ~/server.log` Unity 的日志文件位置参数，这将在主目录中创建一个日志文件
 
-1.  Create start file so you can start your server the same way each time
+2. 创建启动文件，以便每次都可以以相同的方式启动服务器
 
-    a) create `start.sh`
+    a) 创建 `start.sh`
 
-    ```
+    ```csharp
     echo "screen -d -m -S mirrorServer ./mirror-demo.x86_64 -logfile ~/server.log" > ./start.sh
     ```
 
-    b) mark as executable
+    b) 标记为可执行
 
-    ```
+    ```csharp
     chmod +x ./start.sh 
     ```
-2. Run your server
 
-```
+3. 运行您的服务器
+
+```csharp
 ./start.sh
 ```
 
-#### Using Screen <a href="#using-screen" id="using-screen"></a>
+#### 使用 Screen（#using-screen）
 
-Here are a few useful commands for using `screen`
+以下是一些使用 `screen` 的有用命令
 
-* List active screens
+* 列出活动屏幕
 
-```
+```csharp
 screen -ls
 ```
 
-* Attach to existing screen,
-  * process-id is show when calling `screen -ls`
-  * screen name is given by `-S` when creating the screen, for this tutorial it was `mirrorServer`
+* 连接到现有屏幕，
+  * 当调用 `screen -ls` 时会显示进程 ID
+  * 创建屏幕时给出的屏幕名称，本教程中为 `mirrorServer`
 
-```
+```csharp
 screen -r <process-id | screen name>
 ```
 
-* Detach from screen press `CTRL A + D`
-* Stop your game
+* 从屏幕中分离，按 `CTRL A + D`
+* 停止游戏
 
-Once attached to a screen you can press `CTRL + C` to stop the process, this will stop your game and close the screen
+一旦连接到屏幕，您可以按 `CTRL + C` 来停止进程，这将停止您的游戏并关闭屏幕
 
-#### View log files <a href="#view-log-files" id="view-log-files"></a>
+#### 查看日志文件（#view-log-files）
 
-You can use the `-logfile ~/path/to/log.log` argument for Unity when starting your game server. This will cause the logs to be written to a file instead of to the terminal. This will means recent logs wont show up in `screen -r`.
+您可以在启动游戏服务器时使用 `-logfile ~/path/to/log.log` 参数来指定 Unity 的日志文件位置。这将导致日志被写入文件而不是终端。这意味着最近的日志不会显示在 `screen -r` 中。
 
-* you can use the `tail` command to view the the end of the log file
+* 您可以使用 `tail` 命令查看日志文件的末尾
 
-```
+```csharp
 tail -n 50 ./server.log 
 ```
 
-* you can use the `-n` argument to set how many lines to show
-* you can use the `-f` argument follow the end of the file stream showing you any new logs that are written to the file in real time. You will need to press `CTRL + C` to exit follow mode
+* 您可以使用 `-n` 参数设置要显示的行数
+* 您可以使用 `-f` 参数跟踪文件流的末尾，实时显示写入文件的任何新日志。您需要按 `CTRL + C` 退出跟踪模式
 
-### Clean up after tutorial <a href="#clean-up-after-tutorial" id="clean-up-after-tutorial"></a>
+### 教程结束后的清理 <a href="#clean-up-after-tutorial" id="clean-up-after-tutorial"></a>
 
-If you used an existing project you will need to delete the following:
+如果您使用了现有项目，则需要删除以下内容：
 
-* VM instance
-* Firewall rule
+- VM 实例
+- 防火墙规则
 
-If you have created a new project you should be able to just delete the project.
+如果您创建了新项目，您应该可以直接删除该项目。
 
-[**Go to the Manage resources page**](https://console.cloud.google.com/iam-admin/projects)
+[**转到管理资源页面**](https://console.cloud.google.com/iam-admin/projects)
